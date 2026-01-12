@@ -35,65 +35,121 @@ export function MyInfoScreen() {
 
     if (loading) {
         return (
-            <div style={{ padding: '0 16px', backgroundColor: '#fff', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <span>로딩 중...</span>
+            <div style={{ 
+                padding: '0 4vw', 
+                backgroundColor: '#fff', 
+                minHeight: '100vh', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                maxWidth: '768px',
+                margin: '0 auto'
+            }}>
+                <span style={{ fontSize: 'clamp(14px, 3.5vw, 16px)' }}>로딩 중...</span>
             </div>
         );
     }
 
     if (error || !profile) {
         return (
-            <div style={{ padding: '0 16px', backgroundColor: '#fff', minHeight: '100vh' }}>
-                <div style={{ padding: '20px 0' }}>
-                    <h1 style={{ fontSize: '24px', fontWeight: 'bold' }}>내 정보</h1>
+            <div style={{ 
+                padding: '0 4vw', 
+                backgroundColor: '#fff', 
+                minHeight: '100vh',
+                maxWidth: '768px',
+                margin: '0 auto'
+            }}>
+                <div style={{ padding: 'clamp(16px, 4vw, 20px) 0' }}>
+                    <h1 style={{ fontSize: 'clamp(20px, 5vw, 24px)', fontWeight: 'bold', margin: 0 }}>내 정보</h1>
                 </div>
-                <div style={{ textAlign: 'center', paddingTop: '40px' }}>
-                    <p style={{ color: '#f04452' }}>{error || '프로필을 찾을 수 없습니다'}</p>
+                <div style={{ textAlign: 'center', paddingTop: 'clamp(30px, 8vw, 40px)' }}>
+                    <p style={{ color: '#f04452', fontSize: 'clamp(14px, 3.5vw, 16px)' }}>{error || '프로필을 찾을 수 없습니다'}</p>
                 </div>
             </div>
         );
     }
 
     return (
-        <div style={{ padding: '0 16px', backgroundColor: '#fff', minHeight: '100vh' }}>
-            <div style={{ padding: '20px 0' }}>
-                <h1 style={{ fontSize: '24px', fontWeight: 'bold' }}>내 정보</h1>
+        <div style={{ 
+            padding: '0 4vw', 
+            backgroundColor: '#fff', 
+            minHeight: '100vh',
+            maxWidth: '768px',
+            margin: '0 auto'
+        }}>
+            <div style={{ padding: 'clamp(16px, 4vw, 20px) 0' }}>
+                <h1 style={{ fontSize: 'clamp(20px, 5vw, 24px)', fontWeight: 'bold', margin: 0 }}>내 정보</h1>
             </div>
 
-            <div style={{ textAlign: 'center', padding: '32px 0' }}>
+            <div style={{ textAlign: 'center', padding: 'clamp(24px, 6vw, 32px) 0' }}>
                 <div style={{
-                    width: '80px',
-                    height: '80px',
+                    width: 'clamp(70px, 16vw, 80px)',
+                    height: 'clamp(70px, 16vw, 80px)',
                     backgroundColor: '#f2f4f6',
-                    borderRadius: '40px',
-                    margin: '0 auto 16px',
+                    borderRadius: '50%',
+                    margin: '0 auto clamp(12px, 3vw, 16px)',
                     backgroundImage: profile.image ? `url(${profile.image})` : 'none',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    fontSize: '32px'
+                    fontSize: 'clamp(28px, 7vw, 32px)'
                 }}>
                     {!profile.image && '👤'}
                 </div>
-                <h2 style={{ fontSize: '20px', fontWeight: 'bold' }}>
+                <h2 style={{ 
+                    fontSize: 'clamp(18px, 4.5vw, 20px)', 
+                    fontWeight: 'bold',
+                    margin: 0
+                }}>
                     {profile.nickname || profile.username}
                 </h2>
-                <p style={{ color: '#4e5968', marginTop: '4px' }}>@{profile.username}</p>
+                <p style={{ 
+                    color: '#4e5968', 
+                    marginTop: '4px',
+                    fontSize: 'clamp(13px, 3.2vw, 14px)',
+                    margin: '4px 0 0 0'
+                }}>@{profile.username}</p>
             </div>
 
             <Spacing size={12} />
 
-            <div style={{ backgroundColor: '#f9fafb', borderRadius: '16px', padding: '16px' }}>
-                <div style={{ padding: '12px 0', borderBottom: '1px solid #f2f4f6' }}>
+            <div style={{ 
+                backgroundColor: '#f9fafb', 
+                borderRadius: '16px', 
+                padding: 'clamp(12px, 3vw, 16px)'
+            }}>
+                <div style={{ 
+                    padding: 'clamp(10px, 2.5vw, 12px) 0', 
+                    borderBottom: '1px solid #f2f4f6',
+                    fontSize: 'clamp(14px, 3.5vw, 15px)',
+                    minHeight: '44px',
+                    display: 'flex',
+                    alignItems: 'center'
+                }}>
                     개인정보 설정
                 </div>
-                <div style={{ padding: '12px 0', borderBottom: '1px solid #f2f4f6' }}>
+                <div style={{ 
+                    padding: 'clamp(10px, 2.5vw, 12px) 0', 
+                    borderBottom: '1px solid #f2f4f6',
+                    fontSize: 'clamp(14px, 3.5vw, 15px)',
+                    minHeight: '44px',
+                    display: 'flex',
+                    alignItems: 'center'
+                }}>
                     알림 설정
                 </div>
                 <div
-                    style={{ padding: '12px 0', cursor: 'pointer', color: '#f04452' }}
+                    style={{ 
+                        padding: 'clamp(10px, 2.5vw, 12px) 0', 
+                        cursor: 'pointer', 
+                        color: '#f04452',
+                        fontSize: 'clamp(14px, 3.5vw, 15px)',
+                        minHeight: '44px',
+                        display: 'flex',
+                        alignItems: 'center'
+                    }}
                     onClick={handleLogout}
                 >
                     로그아웃
