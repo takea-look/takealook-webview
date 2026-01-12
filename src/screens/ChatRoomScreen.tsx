@@ -104,27 +104,53 @@ export function ChatRoomScreen() {
     }
 
     return (
-        <div style={{ backgroundColor: '#fff', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ 
+            backgroundColor: '#fff', 
+            minHeight: '100vh', 
+            display: 'flex', 
+            flexDirection: 'column',
+            maxWidth: '100%'
+        }}>
             <div style={{
                 display: 'flex',
                 alignItems: 'center',
-                padding: '12px 16px',
+                padding: 'clamp(10px, 2.5vw, 12px) clamp(12px, 3vw, 16px)',
                 borderBottom: '1px solid #f2f4f6',
                 position: 'sticky',
                 top: 0,
                 backgroundColor: '#fff',
                 zIndex: 10
             }}>
-                <span onClick={() => navigate('/')} style={{ fontSize: '20px', cursor: 'pointer', marginRight: '12px' }}>⬅️</span>
-                <span style={{ fontSize: '18px', fontWeight: 'bold' }}>채팅방 {roomId}</span>
+                <span 
+                    onClick={() => navigate('/')} 
+                    style={{ 
+                        fontSize: 'clamp(18px, 4.5vw, 20px)', 
+                        cursor: 'pointer', 
+                        marginRight: 'clamp(10px, 2.5vw, 12px)',
+                        minWidth: '44px',
+                        minHeight: '44px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}
+                >⬅️</span>
+                <span style={{ fontSize: 'clamp(16px, 4vw, 18px)', fontWeight: 'bold' }}>채팅방 {roomId}</span>
                 {isConnected ? (
-                    <span style={{ marginLeft: 'auto', fontSize: '12px', color: '#00c73c' }}>● 연결됨</span>
+                    <span style={{ marginLeft: 'auto', fontSize: 'clamp(11px, 2.8vw, 12px)', color: '#00c73c' }}>● 연결됨</span>
                 ) : (
-                    <span style={{ marginLeft: 'auto', fontSize: '12px', color: '#8b95a1' }}>연결 중...</span>
+                    <span style={{ marginLeft: 'auto', fontSize: 'clamp(11px, 2.8vw, 12px)', color: '#8b95a1' }}>연결 중...</span>
                 )}
             </div>
 
-            <div style={{ flex: 1, padding: '16px', overflowY: 'auto' }}>
+            <div style={{ 
+                flex: 1, 
+                padding: 'clamp(12px, 3vw, 16px)', 
+                overflowY: 'auto',
+                maxWidth: '900px',
+                width: '100%',
+                margin: '0 auto',
+                boxSizing: 'border-box'
+            }}>
                 {allMessages.map((msg, index) => {
                     const isMyMessage = msg.sender.id === myUserId;
                     const timestamp = new Date(msg.createdAt);
@@ -134,29 +160,39 @@ export function ChatRoomScreen() {
                         <div key={`${msg.createdAt}-${index}`} style={{
                             display: 'flex',
                             justifyContent: isMyMessage ? 'flex-end' : 'flex-start',
-                            marginBottom: '16px'
+                            marginBottom: 'clamp(12px, 3vw, 16px)'
                         }}>
                             {!isMyMessage && (
                                 <div style={{
-                                    width: '40px',
-                                    height: '40px',
+                                    width: 'clamp(36px, 8vw, 40px)',
+                                    height: 'clamp(36px, 8vw, 40px)',
                                     backgroundColor: '#f2f4f6',
                                     borderRadius: '12px',
-                                    marginRight: '8px',
+                                    marginRight: 'clamp(6px, 1.5vw, 8px)',
                                     backgroundImage: msg.sender.image ? `url(${msg.sender.image})` : 'none',
                                     backgroundSize: 'cover',
                                     backgroundPosition: 'center',
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
-                                    fontSize: '20px'
+                                    fontSize: 'clamp(16px, 4vw, 20px)',
+                                    flexShrink: 0
                                 }}>
                                     {!msg.sender.image && '👤'}
                                 </div>
                             )}
-                            <div style={{ maxWidth: '70%', position: 'relative' }}>
+                            <div style={{ 
+                                maxWidth: 'min(70%, 400px)', 
+                                position: 'relative',
+                                minWidth: '120px'
+                            }}>
                                 {!isMyMessage && (
-                                    <p style={{ fontSize: '12px', color: '#4e5968', marginBottom: '4px' }}>
+                                    <p style={{ 
+                                        fontSize: 'clamp(11px, 2.8vw, 12px)', 
+                                        color: '#4e5968', 
+                                        marginBottom: '4px',
+                                        margin: '0 0 4px 0'
+                                    }}>
                                         {msg.sender.nickname || msg.sender.username}
                                     </p>
                                 )}
@@ -169,15 +205,22 @@ export function ChatRoomScreen() {
                                     <img
                                         src={msg.imageUrl}
                                         alt="Chat"
-                                        style={{ width: '100%', borderRadius: '8px', display: 'block' }}
+                                        style={{ 
+                                            width: '100%', 
+                                            borderRadius: '8px', 
+                                            display: 'block',
+                                            maxWidth: '100%',
+                                            height: 'auto'
+                                        }}
                                     />
                                 </div>
                                 <span style={{
-                                    fontSize: '11px',
+                                    fontSize: 'clamp(10px, 2.5vw, 11px)',
                                     color: '#8b95a1',
                                     position: 'absolute',
                                     bottom: 0,
-                                    [isMyMessage ? 'left' : 'right']: '-50px'
+                                    [isMyMessage ? 'left' : 'right']: '-50px',
+                                    whiteSpace: 'nowrap'
                                 }}>
                                     {timeString}
                                 </span>
@@ -186,14 +229,25 @@ export function ChatRoomScreen() {
                     );
                 })}
                 {isUploading && (
-                    <div style={{ textAlign: 'center', color: '#8b95a1', fontSize: '14px' }}>
+                    <div style={{ textAlign: 'center', color: '#8b95a1', fontSize: 'clamp(13px, 3.2vw, 14px)' }}>
                         사진 업로드 중...
                     </div>
                 )}
                 <div ref={messagesEndRef} />
             </div>
 
-            <div style={{ padding: '16px', borderTop: '1px solid #f2f4f6', display: 'flex', alignItems: 'center', backgroundColor: '#fff' }}>
+            <div style={{ 
+                padding: 'clamp(12px, 3vw, 16px)', 
+                borderTop: '1px solid #f2f4f6', 
+                display: 'flex', 
+                alignItems: 'center', 
+                backgroundColor: '#fff',
+                maxWidth: '900px',
+                width: '100%',
+                margin: '0 auto',
+                boxSizing: 'border-box',
+                gap: 'clamp(10px, 2.5vw, 12px)'
+            }}>
                 <input
                     type="file"
                     ref={fileInputRef}
@@ -203,30 +257,31 @@ export function ChatRoomScreen() {
                 />
                 <div style={{
                     flex: 1,
-                    height: '44px',
+                    minHeight: '44px',
                     backgroundColor: '#f2f4f6',
                     borderRadius: '22px',
                     display: 'flex',
                     alignItems: 'center',
-                    padding: '0 16px',
-                    color: '#8b95a1'
+                    padding: '0 clamp(12px, 3vw, 16px)',
+                    color: '#8b95a1',
+                    fontSize: 'clamp(13px, 3.2vw, 14px)'
                 }}>
                     사진으로만 대화할 수 있어요
                 </div>
                 <div
                     onClick={handleCameraClick}
                     style={{
-                        width: '44px',
-                        height: '44px',
+                        width: 'clamp(44px, 10vw, 48px)',
+                        height: 'clamp(44px, 10vw, 48px)',
                         backgroundColor: isUploading || !isConnected ? '#adb5bd' : '#3182f6',
-                        borderRadius: '22px',
-                        marginLeft: '12px',
+                        borderRadius: '50%',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         color: '#fff',
-                        fontSize: '24px',
-                        cursor: isUploading || !isConnected ? 'not-allowed' : 'pointer'
+                        fontSize: 'clamp(20px, 5vw, 24px)',
+                        cursor: isUploading || !isConnected ? 'not-allowed' : 'pointer',
+                        flexShrink: 0
                     }}
                 >
                     📷
