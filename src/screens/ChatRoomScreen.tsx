@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getChatMessages } from '../api/chat';
 import { getUploadUrl, uploadToR2 } from '../api/storage';
@@ -6,6 +6,7 @@ import { useWebSocket } from '../hooks/useWebSocket';
 import type { UserChatMessage } from '../types/api';
 import { MessageType } from '../types/api';
 import { getMyProfile } from '../api/user';
+import { ChevronLeftIcon, CameraIcon, UserIcon, ArrowDownIcon } from '../components/icons';
 
 export function ChatRoomScreen() {
     const { roomId } = useParams<{ roomId: string }>();
@@ -28,7 +29,6 @@ export function ChatRoomScreen() {
         if (!chatContainerRef.current) return;
         
         const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
-        // 100px threshold to consider as "at bottom"
         const isNearBottom = scrollHeight - scrollTop - clientHeight < 100;
         
         isAtBottomRef.current = isNearBottom;
@@ -71,25 +71,21 @@ export function ChatRoomScreen() {
         };
     }, [roomId, connect, disconnect]);
 
-    // Initial scroll on history load
     useEffect(() => {
         if (historyMessages.length > 0) {
             scrollToBottom('auto');
         }
     }, [historyMessages]);
 
-    // Smart scroll on new messages
     useEffect(() => {
         if (wsMessages.length === 0) return;
 
         const lastMessage = wsMessages[wsMessages.length - 1];
         const isMyMessage = lastMessage.sender.id === myUserId;
 
-        // Always scroll for my messages or if user is already at bottom
         if (isMyMessage || isAtBottomRef.current) {
             scrollToBottom();
         } else {
-            // Otherwise show notification
             setShowScrollButton(true);
         }
     }, [wsMessages, myUserId]);
@@ -106,23 +102,17 @@ export function ChatRoomScreen() {
 
         try {
             setIsUploading(true);
-
             const roomIdNum = parseInt(roomId, 10);
             const extension = file.name.split('.').pop();
             const filename = `chat/${roomIdNum}/${Date.now()}.${extension}`;
-
             const { url: presignedUrl } = await getUploadUrl(filename);
-
             await uploadToR2(presignedUrl, file);
-
             const imageUrl = `https://img.takealook.my/${filename}`;
 
             if (myUserId === null) {
                 console.error('User ID not loaded yet');
-                alert('사진 업로드에 실패했습니다.');
                 return;
             }
-
             sendMessage(roomIdNum, imageUrl, myUserId);
         } catch (error) {
             console.error('Upload failed:', error);
@@ -135,88 +125,79 @@ export function ChatRoomScreen() {
 
     if (loading) {
         return (
-            <div style={{ 
-                backgroundColor: '#fff', 
-                minHeight: '100vh', 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center' 
-            }}>
-                <p>로딩 중...</p>
+            <div style={{ backgroundColor: '#fff', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div className="spinner" style={{ width: 24, height: 24, border: '3px solid #f3f3f3', borderTop: '3px solid #3182f6', borderRadius: '50%', animation: 'spin 1s linear infinite' }}></div>
+                <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
             </div>
         );
     }
 
     return (
-        <div style={{ 
-            backgroundColor: '#fff', 
-            minHeight: '100vh', 
-            display: 'flex', 
-            flexDirection: 'column',
-            maxWidth: '100%'
-        }}>
-            <div style={{
+        <div style={{ backgroundColor: '#fff', height: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
+            {/* Header */}
+            <header style={{
+                height: '56px',
                 display: 'flex',
                 alignItems: 'center',
-                padding: 'clamp(10px, 2.5vw, 12px) clamp(12px, 3vw, 16px)',
-                borderBottom: '1px solid #f2f4f6',
+                padding: '0 16px',
+                borderBottom: '1px solid #F2F4F6',
                 position: 'sticky',
                 top: 0,
-                backgroundColor: '#fff',
-                zIndex: 10
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                backdropFilter: 'blur(10px)',
+                zIndex: 50,
+                justifyContent: 'space-between'
             }}>
-                <span 
-                    onClick={() => navigate('/')} 
-                    style={{ 
-                        fontSize: 'clamp(18px, 4.5vw, 20px)', 
-                        cursor: 'pointer', 
-                        marginRight: 'clamp(10px, 2.5vw, 12px)',
-                        minWidth: '44px',
-                        minHeight: '44px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                    }}
-                >⬅️</span>
-                <span style={{ fontSize: 'clamp(16px, 4vw, 18px)', fontWeight: 'bold' }}>채팅방 {roomId}</span>
-                {isConnected ? (
-                    <span style={{ marginLeft: 'auto', fontSize: 'clamp(11px, 2.8vw, 12px)', color: '#00c73c' }}>● 연결됨</span>
-                ) : (
-                    <span style={{ marginLeft: 'auto', fontSize: 'clamp(11px, 2.8vw, 12px)', color: '#8b95a1' }}>연결 중...</span>
-                )}
-            </div>
+                <button 
+                    onClick={() => navigate('/')}
+                    style={{ background: 'none', border: 'none', padding: '8px', marginLeft: '-8px', cursor: 'pointer' }}
+                >
+                    <ChevronLeftIcon size={26} />
+                </button>
+                
+                <h1 style={{ fontSize: '17px', fontWeight: 700, color: '#191F28', position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
+                    채팅방 {roomId}
+                </h1>
 
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <div style={{ 
+                        width: '8px', 
+                        height: '8px', 
+                        borderRadius: '50%', 
+                        backgroundColor: isConnected ? '#00C73C' : '#FFB23E',
+                        boxShadow: isConnected ? '0 0 0 2px rgba(0, 199, 60, 0.2)' : 'none'
+                    }} />
+                </div>
+            </header>
+
+            {/* Chat Area */}
             <div 
                 ref={chatContainerRef}
                 onScroll={checkScrollPosition}
                 style={{ 
                     flex: 1, 
-                    padding: 'clamp(12px, 3vw, 16px)', 
-                    overflowY: 'auto',
-                    maxWidth: '900px',
-                    width: '100%',
-                    margin: '0 auto',
-                    boxSizing: 'border-box',
-                    position: 'relative'
+                    overflowY: 'auto', 
+                    padding: '20px 16px', 
+                    backgroundColor: '#FFFFFF',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '12px'
                 }}
             >
                 {allMessages.map((msg, index) => {
+                    // System Message
                     if (msg.type === MessageType.JOIN || msg.type === MessageType.LEAVE) {
                         return (
-                            <div key={`${msg.createdAt}-${index}`} style={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                marginBottom: 'clamp(12px, 3vw, 16px)',
-                                width: '100%'
-                            }}>
+                            <div key={`${msg.createdAt}-${index}`} style={{ display: 'flex', justifyContent: 'center', margin: '12px 0' }}>
                                 <div style={{
-                                    backgroundColor: '#f2f4f6',
-                                    borderRadius: '16px',
-                                    padding: '4px 12px',
-                                    fontSize: 'clamp(11px, 2.8vw, 12px)',
-                                    color: '#8b95a1'
+                                    backgroundColor: '#F2F4F6',
+                                    padding: '6px 14px',
+                                    borderRadius: '20px',
+                                    fontSize: '12px',
+                                    color: '#6B7684',
+                                    fontWeight: 500
                                 }}>
-                                    {msg.sender.nickname || msg.sender.username}님이 {msg.type === MessageType.JOIN ? '입장하셨습니다.' : '퇴장하셨습니다.'}
+                                    {msg.sender.nickname || msg.sender.username}님이 {msg.type === MessageType.JOIN ? '입장했습니다' : '나갔습니다'}
                                 </div>
                             </div>
                         );
@@ -224,131 +205,133 @@ export function ChatRoomScreen() {
 
                     const isMyMessage = msg.sender.id === myUserId;
                     const timestamp = new Date(msg.createdAt);
-                    const timeString = timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                    const timeString = timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
 
                     return (
                         <div key={`${msg.createdAt}-${index}`} style={{
                             display: 'flex',
-                            justifyContent: isMyMessage ? 'flex-end' : 'flex-start',
-                            marginBottom: 'clamp(12px, 3vw, 16px)'
+                            flexDirection: isMyMessage ? 'row-reverse' : 'row',
+                            alignItems: 'flex-end',
+                            gap: '8px'
                         }}>
+                            {/* Avatar (Other) */}
                             {!isMyMessage && (
                                 <div style={{
-                                    width: 'clamp(36px, 8vw, 40px)',
-                                    height: 'clamp(36px, 8vw, 40px)',
-                                    backgroundColor: '#f2f4f6',
-                                    borderRadius: '12px',
-                                    marginRight: 'clamp(6px, 1.5vw, 8px)',
+                                    width: '36px',
+                                    height: '36px',
+                                    borderRadius: '16px',
+                                    backgroundColor: '#F2F4F6',
                                     backgroundImage: msg.sender.image ? `url(${msg.sender.image})` : 'none',
                                     backgroundSize: 'cover',
                                     backgroundPosition: 'center',
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
-                                    fontSize: 'clamp(16px, 4vw, 20px)',
-                                    flexShrink: 0
+                                    flexShrink: 0,
+                                    overflow: 'hidden'
                                 }}>
-                                    {!msg.sender.image && '👤'}
+                                    {!msg.sender.image && <UserIcon size={20} color="#B0B8C1" />}
                                 </div>
                             )}
-                            <div style={{ 
-                                maxWidth: 'min(70%, 400px)', 
-                                position: 'relative',
-                                minWidth: '120px'
-                            }}>
+
+                            {/* Message Bubble */}
+                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: isMyMessage ? 'flex-end' : 'flex-start', maxWidth: '70%' }}>
                                 {!isMyMessage && (
-                                    <p style={{ 
-                                        fontSize: 'clamp(11px, 2.8vw, 12px)', 
-                                        color: '#4e5968', 
-                                        marginBottom: '4px',
-                                        margin: '0 0 4px 0'
-                                    }}>
+                                    <span style={{ fontSize: '12px', color: '#6B7684', marginBottom: '4px', marginLeft: '2px' }}>
                                         {msg.sender.nickname || msg.sender.username}
-                                    </p>
+                                    </span>
                                 )}
+                                
                                 <div style={{
-                                    backgroundColor: isMyMessage ? '#3182f6' : '#f2f4f6',
-                                    borderRadius: '12px',
-                                    padding: '4px',
-                                    overflow: 'hidden'
+                                    borderRadius: isMyMessage ? '20px 4px 20px 20px' : '4px 20px 20px 20px',
+                                    overflow: 'hidden',
+                                    boxShadow: isMyMessage ? 'none' : '0 0 0 1px #F2F4F6',
+                                    backgroundColor: isMyMessage ? '#3182F6' : '#FFFFFF'
                                 }}>
                                     {msg.imageUrl && (
                                         <img
                                             src={msg.imageUrl}
                                             alt="Chat"
-                                            style={{ 
-                                                width: '100%', 
-                                                borderRadius: '8px', 
-                                                display: 'block',
-                                                maxWidth: '100%',
-                                                height: 'auto'
-                                            }}
+                                            style={{ display: 'block', maxWidth: '100%', maxHeight: '300px', objectFit: 'cover' }}
                                         />
                                     )}
                                 </div>
-                                <span style={{
-                                    fontSize: 'clamp(10px, 2.5vw, 11px)',
-                                    color: '#8b95a1',
-                                    position: 'absolute',
-                                    bottom: 0,
-                                    [isMyMessage ? 'left' : 'right']: '-50px',
-                                    whiteSpace: 'nowrap'
-                                }}>
-                                    {timeString}
-                                </span>
                             </div>
+
+                            {/* Timestamp */}
+                            <span style={{
+                                fontSize: '11px',
+                                color: '#ADB5BD',
+                                marginBottom: '2px',
+                                whiteSpace: 'nowrap'
+                            }}>
+                                {timeString}
+                            </span>
                         </div>
                     );
                 })}
                 {isUploading && (
-                    <div style={{ textAlign: 'center', color: '#8b95a1', fontSize: 'clamp(13px, 3.2vw, 14px)' }}>
+                    <div style={{ textAlign: 'center', color: '#8B95A1', fontSize: '13px', margin: '10px 0' }}>
                         사진 업로드 중...
                     </div>
                 )}
                 <div ref={messagesEndRef} />
-                
-                {/* Floating Action Button for New Messages */}
-                {showScrollButton && (
-                    <div 
-                        onClick={() => scrollToBottom()}
-                        style={{
-                            position: 'fixed',
-                            bottom: '80px',
-                            left: '50%',
-                            transform: 'translateX(-50%)',
-                            backgroundColor: '#3182f6',
-                            color: 'white',
-                            padding: '10px 20px',
-                            borderRadius: '30px',
-                            boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px',
-                            zIndex: 100,
-                            fontSize: '14px',
-                            fontWeight: 'bold',
-                            animation: 'fadeIn 0.3s ease-out'
-                        }}
-                    >
-                        <span>⬇️</span>
-                        <span>새 메시지</span>
-                    </div>
-                )}
             </div>
 
-            <div style={{ 
-                padding: 'clamp(12px, 3vw, 16px)', 
-                borderTop: '1px solid #f2f4f6', 
-                display: 'flex', 
-                alignItems: 'center', 
-                backgroundColor: '#fff',
-                maxWidth: '900px',
-                width: '100%',
-                margin: '0 auto',
-                boxSizing: 'border-box',
-                gap: 'clamp(10px, 2.5vw, 12px)'
+            {/* FAB */}
+            {showScrollButton && (
+                <button 
+                    onClick={() => scrollToBottom()}
+                    style={{
+                        position: 'absolute',
+                        bottom: '90px',
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                        backgroundColor: '#FFFFFF',
+                        border: '1px solid #F2F4F6',
+                        color: '#3182F6',
+                        padding: '10px 18px',
+                        borderRadius: '24px',
+                        boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        zIndex: 20,
+                        fontSize: '13px',
+                        fontWeight: 600,
+                        animation: 'fadeInUp 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
+                    }}
+                >
+                    <ArrowDownIcon size={16} color="#3182F6" />
+                    새 메시지
+                </button>
+            )}
+
+            {/* Input Area */}
+            <div style={{
+                padding: '12px 16px',
+                paddingBottom: 'max(12px, env(safe-area-inset-bottom))',
+                backgroundColor: '#FFFFFF',
+                borderTop: '1px solid #F2F4F6',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px'
             }}>
+                <div style={{
+                    flex: 1,
+                    height: '48px',
+                    backgroundColor: '#F9FAFB',
+                    borderRadius: '24px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '0 20px',
+                    color: '#8B95A1',
+                    fontSize: '15px'
+                }}>
+                    사진으로만 대화할 수 있어요
+                </div>
+
                 <input
                     type="file"
                     ref={fileInputRef}
@@ -356,42 +339,45 @@ export function ChatRoomScreen() {
                     accept="image/*"
                     onChange={handleFileChange}
                 />
-                <div style={{
-                    flex: 1,
-                    minHeight: '44px',
-                    backgroundColor: '#f2f4f6',
-                    borderRadius: '22px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    padding: '0 clamp(12px, 3vw, 16px)',
-                    color: '#8b95a1',
-                    fontSize: 'clamp(13px, 3.2vw, 14px)'
-                }}>
-                    사진으로만 대화할 수 있어요
-                </div>
-                <div
+                
+                <button
                     onClick={handleCameraClick}
+                    disabled={isUploading || !isConnected}
                     style={{
-                        width: 'clamp(44px, 10vw, 48px)',
-                        height: 'clamp(44px, 10vw, 48px)',
-                        backgroundColor: isUploading || !isConnected ? '#adb5bd' : '#3182f6',
+                        width: '48px',
+                        height: '48px',
                         borderRadius: '50%',
+                        backgroundColor: isUploading || !isConnected ? '#E5E8EB' : '#3182F6',
+                        border: 'none',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        color: '#fff',
-                        fontSize: 'clamp(20px, 5vw, 24px)',
                         cursor: isUploading || !isConnected ? 'not-allowed' : 'pointer',
-                        flexShrink: 0
+                        transition: 'transform 0.1s ease',
+                        boxShadow: isUploading || !isConnected ? 'none' : '0 4px 12px rgba(49, 130, 246, 0.3)'
                     }}
+                    onMouseDown={e => !isUploading && isConnected && (e.currentTarget.style.transform = 'scale(0.95)')}
+                    onMouseUp={e => !isUploading && isConnected && (e.currentTarget.style.transform = 'scale(1)')}
+                    onMouseLeave={e => !isUploading && isConnected && (e.currentTarget.style.transform = 'scale(1)')}
                 >
-                    📷
-                </div>
+                    <CameraIcon size={24} color="#FFFFFF" />
+                </button>
             </div>
+
             <style>{`
-                @keyframes fadeIn {
+                @keyframes fadeInUp {
                     from { opacity: 0; transform: translate(-50%, 10px); }
                     to { opacity: 1; transform: translate(-50%, 0); }
+                }
+                ::-webkit-scrollbar {
+                    width: 6px;
+                }
+                ::-webkit-scrollbar-thumb {
+                    background-color: rgba(0,0,0,0.1);
+                    border-radius: 3px;
+                }
+                ::-webkit-scrollbar-track {
+                    background-color: transparent;
                 }
             `}</style>
         </div>
