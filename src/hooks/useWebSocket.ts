@@ -34,6 +34,16 @@ export function useWebSocket(): UseWebSocketResult {
 
   const connect = useCallback(async (roomId: number) => {
     try {
+      // Close existing connection before creating a new one
+      if (wsRef.current) {
+        const existingState = wsRef.current.readyState;
+        if (existingState === WebSocket.OPEN || existingState === WebSocket.CONNECTING) {
+          console.log('[WS] Closing existing connection before reconnecting');
+          wsRef.current.close(1000, 'Reconnecting');
+          wsRef.current = null;
+        }
+      }
+
       const token = getAccessToken();
       if (!token) {
         console.error('No access token available');
@@ -47,12 +57,13 @@ export function useWebSocket(): UseWebSocketResult {
       console.log('[WS] Got ticket:', ticket);
       
       const wsUrl = `${WS_BASE_URL}/chat?ticket=${ticket}&roomId=${roomId}`;
-      console.log('[WS] Connecting to:', wsUrl);
+      const sessionId = Math.random().toString(36).substring(2, 9);
+      console.log('[WS] Connecting to:', wsUrl, '| Session ID:', sessionId);
       const ws = new WebSocket(wsUrl);
       wsRef.current = ws;
 
       ws.onopen = () => {
-        console.log('WebSocket connected');
+        console.log('[WS] Connected | Session ID:', sessionId);
         setIsConnected(true);
       };
 
@@ -72,12 +83,12 @@ export function useWebSocket(): UseWebSocketResult {
       };
 
       ws.onclose = (event) => {
-        console.log('WebSocket closed:', event.code, event.reason);
+        console.log('[WS] Closed | Session ID:', sessionId, '| Code:', event.code, '| Reason:', event.reason);
         setIsConnected(false);
         wsRef.current = null;
 
         if (event.code !== 1000 && currentRoomIdRef.current !== null) {
-          console.log('Reconnecting in 3 seconds...');
+          console.log('[WS] Reconnecting in 3 seconds...');
           const reconnectRoomId = currentRoomIdRef.current;
           reconnectTimeoutRef.current = setTimeout(() => {
             connect(reconnectRoomId);
