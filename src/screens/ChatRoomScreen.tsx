@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getChatMessages } from '../api/chat';
 import { getUploadUrl, uploadToR2 } from '../api/storage';
@@ -14,10 +14,34 @@ export function ChatRoomScreen() {
     const [myUserId, setMyUserId] = useState<number | null>(null);
     const [isUploading, setIsUploading] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [showScrollButton, setShowScrollButton] = useState(false);
+    
     const fileInputRef = useRef<HTMLInputElement>(null);
     const messagesEndRef = useRef<HTMLDivElement>(null);
+    const chatContainerRef = useRef<HTMLDivElement>(null);
+    const isAtBottomRef = useRef(true);
 
     const { messages: wsMessages, isConnected, sendMessage, connect, disconnect } = useWebSocket();
+
+    // Check if user is near bottom of scroll
+    const checkScrollPosition = useCallback(() => {
+        if (!chatContainerRef.current) return;
+        
+        const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
+        // 100px threshold to consider as "at bottom"
+        const isNearBottom = scrollHeight - scrollTop - clientHeight < 100;
+        
+        isAtBottomRef.current = isNearBottom;
+        
+        if (isNearBottom) {
+            setShowScrollButton(false);
+        }
+    }, []);
+
+    const scrollToBottom = (behavior: ScrollBehavior = 'smooth') => {
+        messagesEndRef.current?.scrollIntoView({ behavior });
+        setShowScrollButton(false);
+    };
 
     useEffect(() => {
         const init = async () => {
@@ -47,9 +71,28 @@ export function ChatRoomScreen() {
         };
     }, [roomId, connect, disconnect]);
 
+    // Initial scroll on history load
     useEffect(() => {
-        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, [historyMessages, wsMessages]);
+        if (historyMessages.length > 0) {
+            scrollToBottom('auto');
+        }
+    }, [historyMessages]);
+
+    // Smart scroll on new messages
+    useEffect(() => {
+        if (wsMessages.length === 0) return;
+
+        const lastMessage = wsMessages[wsMessages.length - 1];
+        const isMyMessage = lastMessage.sender.id === myUserId;
+
+        // Always scroll for my messages or if user is already at bottom
+        if (isMyMessage || isAtBottomRef.current) {
+            scrollToBottom();
+        } else {
+            // Otherwise show notification
+            setShowScrollButton(true);
+        }
+    }, [wsMessages, myUserId]);
 
     const allMessages = [...historyMessages, ...wsMessages];
 
@@ -143,15 +186,20 @@ export function ChatRoomScreen() {
                 )}
             </div>
 
-            <div style={{ 
-                flex: 1, 
-                padding: 'clamp(12px, 3vw, 16px)', 
-                overflowY: 'auto',
-                maxWidth: '900px',
-                width: '100%',
-                margin: '0 auto',
-                boxSizing: 'border-box'
-            }}>
+            <div 
+                ref={chatContainerRef}
+                onScroll={checkScrollPosition}
+                style={{ 
+                    flex: 1, 
+                    padding: 'clamp(12px, 3vw, 16px)', 
+                    overflowY: 'auto',
+                    maxWidth: '900px',
+                    width: '100%',
+                    margin: '0 auto',
+                    boxSizing: 'border-box',
+                    position: 'relative'
+                }}
+            >
                 {allMessages.map((msg, index) => {
                     if (msg.type === MessageType.JOIN || msg.type === MessageType.LEAVE) {
                         return (
@@ -258,6 +306,35 @@ export function ChatRoomScreen() {
                     </div>
                 )}
                 <div ref={messagesEndRef} />
+                
+                {/* Floating Action Button for New Messages */}
+                {showScrollButton && (
+                    <div 
+                        onClick={() => scrollToBottom()}
+                        style={{
+                            position: 'fixed',
+                            bottom: '80px',
+                            left: '50%',
+                            transform: 'translateX(-50%)',
+                            backgroundColor: '#3182f6',
+                            color: 'white',
+                            padding: '10px 20px',
+                            borderRadius: '30px',
+                            boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '8px',
+                            zIndex: 100,
+                            fontSize: '14px',
+                            fontWeight: 'bold',
+                            animation: 'fadeIn 0.3s ease-out'
+                        }}
+                    >
+                        <span>⬇️</span>
+                        <span>새 메시지</span>
+                    </div>
+                )}
             </div>
 
             <div style={{ 
@@ -311,6 +388,12 @@ export function ChatRoomScreen() {
                     📷
                 </div>
             </div>
+            <style>{`
+                @keyframes fadeIn {
+                    from { opacity: 0; transform: translate(-50%, 10px); }
+                    to { opacity: 1; transform: translate(-50%, 0); }
+                }
+            `}</style>
         </div>
     );
 }
