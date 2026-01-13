@@ -9,7 +9,7 @@ interface UseWebSocketResult {
   messages: UserChatMessage[];
   isConnected: boolean;
   sendMessage: (roomId: number, imageUrl: string, senderId: number, replyToId?: number) => void;
-  connect: () => Promise<void>;
+  connect: (roomId: number) => Promise<void>;
   disconnect: () => void;
 }
 
@@ -18,7 +18,7 @@ export function useWebSocket(): UseWebSocketResult {
   const [isConnected, setIsConnected] = useState(false);
   const wsRef = useRef<WebSocket | null>(null);
   const reconnectTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
-  const connectFnRef = useRef<(() => Promise<void>) | null>(null);
+  const currentRoomIdRef = useRef<number | null>(null);
 
   const disconnect = useCallback(() => {
     if (reconnectTimeoutRef.current) {
@@ -29,9 +29,10 @@ export function useWebSocket(): UseWebSocketResult {
       wsRef.current = null;
     }
     setIsConnected(false);
+    currentRoomIdRef.current = null;
   }, []);
 
-  const connect = useCallback(async () => {
+  const connect = useCallback(async (roomId: number) => {
     try {
       const token = getAccessToken();
       if (!token) {
@@ -39,11 +40,13 @@ export function useWebSocket(): UseWebSocketResult {
         return;
       }
 
+      currentRoomIdRef.current = roomId;
+
       console.log('[WS] Requesting ticket...');
       const { ticket } = await getWebSocketTicket();
       console.log('[WS] Got ticket:', ticket);
       
-      const wsUrl = `${WS_BASE_URL}/chat?ticket=${ticket}`;
+      const wsUrl = `${WS_BASE_URL}/chat?ticket=${ticket}&roomId=${roomId}`;
       console.log('[WS] Connecting to:', wsUrl);
       const ws = new WebSocket(wsUrl);
       wsRef.current = ws;
@@ -73,10 +76,11 @@ export function useWebSocket(): UseWebSocketResult {
         setIsConnected(false);
         wsRef.current = null;
 
-        if (event.code !== 1000) {
+        if (event.code !== 1000 && currentRoomIdRef.current !== null) {
           console.log('Reconnecting in 3 seconds...');
+          const reconnectRoomId = currentRoomIdRef.current;
           reconnectTimeoutRef.current = setTimeout(() => {
-            connectFnRef.current?.();
+            connect(reconnectRoomId);
           }, 3000);
         }
       };
@@ -85,10 +89,6 @@ export function useWebSocket(): UseWebSocketResult {
       setIsConnected(false);
     }
   }, []);
-
-  useEffect(() => {
-    connectFnRef.current = connect;
-  }, [connect]);
 
   const sendMessage = useCallback((roomId: number, imageUrl: string, senderId: number, replyToId?: number) => {
     if (!wsRef.current || wsRef.current.readyState !== WebSocket.OPEN) {
