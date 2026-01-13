@@ -32,10 +32,19 @@ export interface ChatMessage {
   createdAt: number;
 }
 
+export const MessageType = {
+  CHAT: 'CHAT',
+  JOIN: 'JOIN',
+  LEAVE: 'LEAVE'
+} as const;
+
+export type MessageType = typeof MessageType[keyof typeof MessageType];
+
 export interface UserChatMessage {
   roomId: number;
   sender: UserProfile;
-  imageUrl: string;
+  type?: MessageType;
+  imageUrl?: string;
   replyToId?: number;
   createdAt: number;
 }

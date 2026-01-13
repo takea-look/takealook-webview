@@ -4,6 +4,7 @@ import { getChatMessages } from '../api/chat';
 import { getUploadUrl, uploadToR2 } from '../api/storage';
 import { useWebSocket } from '../hooks/useWebSocket';
 import type { UserChatMessage } from '../types/api';
+import { MessageType } from '../types/api';
 import { getMyProfile } from '../api/user';
 
 export function ChatRoomScreen() {
@@ -152,6 +153,27 @@ export function ChatRoomScreen() {
                 boxSizing: 'border-box'
             }}>
                 {allMessages.map((msg, index) => {
+                    if (msg.type === MessageType.JOIN || msg.type === MessageType.LEAVE) {
+                        return (
+                            <div key={`${msg.createdAt}-${index}`} style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                marginBottom: 'clamp(12px, 3vw, 16px)',
+                                width: '100%'
+                            }}>
+                                <div style={{
+                                    backgroundColor: '#f2f4f6',
+                                    borderRadius: '16px',
+                                    padding: '4px 12px',
+                                    fontSize: 'clamp(11px, 2.8vw, 12px)',
+                                    color: '#8b95a1'
+                                }}>
+                                    {msg.sender.nickname || msg.sender.username}님이 {msg.type === MessageType.JOIN ? '입장하셨습니다.' : '퇴장하셨습니다.'}
+                                </div>
+                            </div>
+                        );
+                    }
+
                     const isMyMessage = msg.sender.id === myUserId;
                     const timestamp = new Date(msg.createdAt);
                     const timeString = timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -202,17 +224,19 @@ export function ChatRoomScreen() {
                                     padding: '4px',
                                     overflow: 'hidden'
                                 }}>
-                                    <img
-                                        src={msg.imageUrl}
-                                        alt="Chat"
-                                        style={{ 
-                                            width: '100%', 
-                                            borderRadius: '8px', 
-                                            display: 'block',
-                                            maxWidth: '100%',
-                                            height: 'auto'
-                                        }}
-                                    />
+                                    {msg.imageUrl && (
+                                        <img
+                                            src={msg.imageUrl}
+                                            alt="Chat"
+                                            style={{ 
+                                                width: '100%', 
+                                                borderRadius: '8px', 
+                                                display: 'block',
+                                                maxWidth: '100%',
+                                                height: 'auto'
+                                            }}
+                                        />
+                                    )}
                                 </div>
                                 <span style={{
                                     fontSize: 'clamp(10px, 2.5vw, 11px)',
