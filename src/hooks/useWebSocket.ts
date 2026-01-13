@@ -19,6 +19,7 @@ export function useWebSocket(): UseWebSocketResult {
   const wsRef = useRef<WebSocket | null>(null);
   const reconnectTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
   const currentRoomIdRef = useRef<number | null>(null);
+  const isConnectingRef = useRef(false);
 
   const disconnect = useCallback(() => {
     if (reconnectTimeoutRef.current) {
@@ -30,11 +31,16 @@ export function useWebSocket(): UseWebSocketResult {
     }
     setIsConnected(false);
     currentRoomIdRef.current = null;
+    isConnectingRef.current = false;
   }, []);
 
   const connect = useCallback(async (roomId: number) => {
     try {
-      // Close existing connection before creating a new one
+      if (isConnectingRef.current) {
+        console.log('[WS] Already connecting, skipping duplicate connect() call');
+        return;
+      }
+
       if (wsRef.current) {
         const existingState = wsRef.current.readyState;
         if (existingState === WebSocket.OPEN || existingState === WebSocket.CONNECTING) {
@@ -50,6 +56,7 @@ export function useWebSocket(): UseWebSocketResult {
         return;
       }
 
+      isConnectingRef.current = true;
       currentRoomIdRef.current = roomId;
 
       console.log('[WS] Requesting ticket...');
@@ -65,6 +72,7 @@ export function useWebSocket(): UseWebSocketResult {
       ws.onopen = () => {
         console.log('[WS] Connected | Session ID:', sessionId);
         setIsConnected(true);
+        isConnectingRef.current = false;
       };
 
       ws.onmessage = (event) => {
@@ -80,12 +88,14 @@ export function useWebSocket(): UseWebSocketResult {
 
       ws.onerror = (error) => {
         console.error('WebSocket error:', error);
+        isConnectingRef.current = false;
       };
 
       ws.onclose = (event) => {
         console.log('[WS] Closed | Session ID:', sessionId, '| Code:', event.code, '| Reason:', event.reason);
         setIsConnected(false);
         wsRef.current = null;
+        isConnectingRef.current = false;
 
         if (event.code !== 1000 && currentRoomIdRef.current !== null) {
           console.log('[WS] Reconnecting in 3 seconds...');
@@ -98,6 +108,7 @@ export function useWebSocket(): UseWebSocketResult {
     } catch (err) {
       console.error('Failed to connect WebSocket:', err);
       setIsConnected(false);
+      isConnectingRef.current = false;
     }
   }, []);
 
