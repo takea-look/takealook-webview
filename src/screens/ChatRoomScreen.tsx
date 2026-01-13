@@ -31,7 +31,7 @@ export function ChatRoomScreen() {
                 ]);
                 setMyUserId(profile.id!);
                 setHistoryMessages(messages);
-                await connect();
+                await connect(roomIdNum);
             } catch (err) {
                 console.error('Failed to initialize chat room:', err);
             } finally {
