@@ -95,8 +95,6 @@ export function ChatRoomListScreen() {
                 </div>
             </div>
 
-            <Spacing size={14} />
-
             <div style={{ padding: '0 8px', width: '100%' }}>
                 <ListHeader
                     title={
