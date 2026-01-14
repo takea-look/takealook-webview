@@ -201,8 +201,6 @@ export function ChatRoomListScreen() {
                     display: 'flex',
                     alignItems: 'center',
                     padding: '0 20px',
-                    maxWidth: '768px',
-                    margin: '0 auto',
                     width: '100%'
                 }}>
                     <h1 style={{ 
@@ -215,8 +213,7 @@ export function ChatRoomListScreen() {
             </div>
 
             <div style={{
-                maxWidth: '768px',
-                margin: '0 auto'
+                width: '100%'
             }}>
                 {chatRooms.map(room => (
                     <div

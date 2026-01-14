@@ -41,9 +41,7 @@ export function MyInfoScreen() {
                 minHeight: '100vh', 
                 display: 'flex', 
                 alignItems: 'center', 
-                justifyContent: 'center',
-                maxWidth: '768px',
-                margin: '0 auto'
+                justifyContent: 'center'
             }}>
                 <span style={{ fontSize: 'clamp(14px, 3.5vw, 16px)' }}>로딩 중...</span>
             </div>
@@ -55,9 +53,7 @@ export function MyInfoScreen() {
             <div style={{ 
                 padding: '0 4vw', 
                 backgroundColor: '#fff', 
-                minHeight: '100vh',
-                maxWidth: '768px',
-                margin: '0 auto'
+                minHeight: '100vh'
             }}>
                 <div style={{ padding: 'clamp(16px, 4vw, 20px) 0' }}>
                     <h1 style={{ fontSize: 'clamp(20px, 5vw, 24px)', fontWeight: 'bold', margin: 0 }}>내 정보</h1>
@@ -73,9 +69,7 @@ export function MyInfoScreen() {
         <div style={{ 
             padding: '0 4vw', 
             backgroundColor: '#fff', 
-            minHeight: '100vh',
-            maxWidth: '768px',
-            margin: '0 auto'
+            minHeight: '100vh'
         }}>
             <div style={{ padding: 'clamp(16px, 4vw, 20px) 0' }}>
                 <h1 style={{ fontSize: 'clamp(20px, 5vw, 24px)', fontWeight: 'bold', margin: 0 }}>내 정보</h1>
