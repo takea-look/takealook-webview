@@ -54,11 +54,11 @@ export function ChatRoomListScreen() {
                 display: 'flex', 
                 alignItems: 'center', 
                 justifyContent: 'space-between',
-                padding: '0 24px',
+                padding: '0 8px',
                 borderBottom: '1px solid #F2F4F6',
                 width: '100%'
             }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                     <Asset.Image 
                         frameShape={Asset.frameShape.CleanW16}
                         backgroundColor="transparent"
@@ -97,7 +97,7 @@ export function ChatRoomListScreen() {
 
             <Spacing size={14} />
 
-            <div style={{ padding: '0 24px', width: '100%' }}>
+            <div style={{ padding: '0 8px', width: '100%' }}>
                 <ListHeader
                     title={
                         <ListHeader.TitleParagraph
