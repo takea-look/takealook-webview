@@ -1,3 +1,5 @@
+import { MessageIcon, UserIcon } from './icons';
+
 interface Props {
     activeTab: 'chats' | 'myinfo';
     onTabChange: (tab: 'chats' | 'myinfo') => void;
@@ -13,7 +15,8 @@ export function BottomNavigation({ activeTab, onTabChange }: Props) {
             height: '64px',
             backgroundColor: 'rgba(255, 255, 255, 0.95)',
             backdropFilter: 'blur(10px)',
-            borderTop: '1px solid #f2f4f6',
+            WebkitBackdropFilter: 'blur(10px)',
+            borderTop: '1px solid #F2F4F6',
             display: 'flex',
             justifyContent: 'space-around',
             alignItems: 'center',
@@ -28,11 +31,20 @@ export function BottomNavigation({ activeTab, onTabChange }: Props) {
                     alignItems: 'center',
                     cursor: 'pointer',
                     flex: 1,
-                    color: activeTab === 'chats' ? '#191f28' : '#adb5bd'
+                    gap: '4px',
+                    padding: '8px 0',
+                    transition: 'transform 0.1s ease'
                 }}
+                onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
+                onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
             >
-                <span style={{ fontSize: '24px' }}>💬</span>
-                <span style={{ fontSize: '12px', fontWeight: activeTab === 'chats' ? '600' : '400', marginTop: '2px' }}>채팅</span>
+                <MessageIcon size={24} color={activeTab === 'chats' ? '#3182F6' : '#ADB5BD'} />
+                <span style={{ 
+                    fontSize: '11px', 
+                    fontWeight: activeTab === 'chats' ? 600 : 400,
+                    color: activeTab === 'chats' ? '#191F28' : '#ADB5BD'
+                }}>채팅</span>
             </div>
 
             <div
@@ -43,11 +55,20 @@ export function BottomNavigation({ activeTab, onTabChange }: Props) {
                     alignItems: 'center',
                     cursor: 'pointer',
                     flex: 1,
-                    color: activeTab === 'myinfo' ? '#191f28' : '#adb5bd'
+                    gap: '4px',
+                    padding: '8px 0',
+                    transition: 'transform 0.1s ease'
                 }}
+                onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
+                onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
             >
-                <span style={{ fontSize: '24px' }}>👤</span>
-                <span style={{ fontSize: '12px', fontWeight: activeTab === 'myinfo' ? '600' : '400', marginTop: '2px' }}>내 정보</span>
+                <UserIcon size={24} color={activeTab === 'myinfo' ? '#3182F6' : '#ADB5BD'} />
+                <span style={{ 
+                    fontSize: '11px', 
+                    fontWeight: activeTab === 'myinfo' ? 600 : 400,
+                    color: activeTab === 'myinfo' ? '#191F28' : '#ADB5BD'
+                }}>내 정보</span>
             </div>
         </div>
     )
