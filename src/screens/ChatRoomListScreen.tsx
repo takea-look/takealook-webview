@@ -54,11 +54,11 @@ export function ChatRoomListScreen() {
                 display: 'flex', 
                 alignItems: 'center', 
                 justifyContent: 'space-between',
-                padding: '0 16px',
+                padding: '0 24px',
                 borderBottom: '1px solid #F2F4F6',
                 width: '100%'
             }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                     <Asset.Image 
                         frameShape={Asset.frameShape.CleanW16}
                         backgroundColor="transparent"
@@ -66,7 +66,7 @@ export function ChatRoomListScreen() {
                         aria-hidden={true}
                         style={{ aspectRatio: '1/1', width: '24px' }}
                     />
-                    <Text color="grey900" typography="t6" fontWeight="semibold">
+                    <Text color="grey900" typography="t5" fontWeight="bold">
                         떼껄룩 : 사진으로 대화하는 채팅방
                     </Text>
                 </div>
@@ -97,7 +97,7 @@ export function ChatRoomListScreen() {
 
             <Spacing size={14} />
 
-            <div style={{ padding: '0 16px', width: '100%' }}>
+            <div style={{ padding: '0 24px', width: '100%' }}>
                 <ListHeader
                     title={
                         <ListHeader.TitleParagraph
