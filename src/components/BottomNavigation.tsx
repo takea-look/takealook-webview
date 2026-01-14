@@ -1,5 +1,4 @@
 import { Asset, Text } from '@toss/tds-mobile';
-import { adaptive } from '@toss/tds-colors';
 
 interface Props {
     activeTab: 'chats' | 'myinfo';
@@ -7,6 +6,9 @@ interface Props {
 }
 
 export function BottomNavigation({ activeTab, onTabChange }: Props) {
+    const activeColor = '#191F28';
+    const inactiveColor = '#B0B8C1';
+
     return (
         <div style={{
             position: 'fixed',
@@ -36,12 +38,12 @@ export function BottomNavigation({ activeTab, onTabChange }: Props) {
                 <Asset.Icon 
                     frameShape={Asset.frameShape.CleanW24}
                     name="icon-home-mono"
-                    color={activeTab === 'chats' ? adaptive.grey800 : adaptive.grey400}
+                    color={activeTab === 'chats' ? activeColor : inactiveColor}
                     aria-hidden={true}
                 />
                 <Text
                     display="block"
-                    color={activeTab === 'chats' ? adaptive.grey900 : adaptive.grey600}
+                    color={activeTab === 'chats' ? 'grey900' : 'grey400'}
                     typography="st13"
                     fontWeight="medium"
                     textAlign="center"
@@ -64,12 +66,12 @@ export function BottomNavigation({ activeTab, onTabChange }: Props) {
                 <Asset.Icon 
                     frameShape={Asset.frameShape.CleanW24}
                     name="icon-profile-mono"
-                    color={activeTab === 'myinfo' ? adaptive.grey800 : adaptive.grey400}
+                    color={activeTab === 'myinfo' ? activeColor : inactiveColor}
                     aria-hidden={true}
                 />
                 <Text
                     display="block"
-                    color={activeTab === 'myinfo' ? adaptive.grey900 : adaptive.grey600}
+                    color={activeTab === 'myinfo' ? 'grey900' : 'grey400'}
                     typography="st13"
                     fontWeight="medium"
                     textAlign="center"
