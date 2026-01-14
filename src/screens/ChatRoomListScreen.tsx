@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Spacing } from '@toss/tds-mobile';
 import { getChatRooms } from '../api/chat';
 import type { ChatRoom } from '../types/api';
+import { MessageIcon } from '../components/icons';
 
 export function ChatRoomListScreen() {
     const navigate = useNavigate();
@@ -30,17 +31,49 @@ export function ChatRoomListScreen() {
     if (loading) {
         return (
             <div style={{ 
-                padding: '0 4vw', 
-                backgroundColor: '#fff', 
+                backgroundColor: '#FFFFFF',
                 minHeight: '100vh',
-                maxWidth: '768px',
-                margin: '0 auto'
+                display: 'flex',
+                flexDirection: 'column'
             }}>
-                <div style={{ padding: 'clamp(16px, 4vw, 20px) 0' }}>
-                    <h1 style={{ fontSize: 'clamp(20px, 5vw, 24px)', fontWeight: 'bold', margin: 0 }}>채팅</h1>
+                <div style={{
+                    position: 'sticky',
+                    top: 0,
+                    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                    backdropFilter: 'blur(10px)',
+                    WebkitBackdropFilter: 'blur(10px)',
+                    borderBottom: '1px solid #F2F4F6',
+                    zIndex: 10
+                }}>
+                    <div style={{
+                        height: '56px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        padding: '0 20px',
+                        maxWidth: '768px',
+                        margin: '0 auto',
+                        width: '100%'
+                    }}>
+                        <h1 style={{ 
+                            fontSize: '17px', 
+                            fontWeight: 700, 
+                            margin: 0,
+                            color: '#191F28'
+                        }}>채팅</h1>
+                    </div>
                 </div>
-                <div style={{ textAlign: 'center', paddingTop: 'clamp(30px, 8vw, 40px)' }}>
-                    <p style={{ color: '#8b95a1', fontSize: 'clamp(14px, 3.5vw, 16px)' }}>로딩 중...</p>
+                <div style={{ 
+                    flex: 1,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '0 20px'
+                }}>
+                    <p style={{ 
+                        color: '#8B95A1', 
+                        fontSize: '15px',
+                        margin: 0
+                    }}>로딩 중...</p>
                 </div>
             </div>
         );
@@ -49,17 +82,49 @@ export function ChatRoomListScreen() {
     if (error) {
         return (
             <div style={{ 
-                padding: '0 4vw', 
-                backgroundColor: '#fff', 
+                backgroundColor: '#FFFFFF',
                 minHeight: '100vh',
-                maxWidth: '768px',
-                margin: '0 auto'
+                display: 'flex',
+                flexDirection: 'column'
             }}>
-                <div style={{ padding: 'clamp(16px, 4vw, 20px) 0' }}>
-                    <h1 style={{ fontSize: 'clamp(20px, 5vw, 24px)', fontWeight: 'bold', margin: 0 }}>채팅</h1>
+                <div style={{
+                    position: 'sticky',
+                    top: 0,
+                    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                    backdropFilter: 'blur(10px)',
+                    WebkitBackdropFilter: 'blur(10px)',
+                    borderBottom: '1px solid #F2F4F6',
+                    zIndex: 10
+                }}>
+                    <div style={{
+                        height: '56px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        padding: '0 20px',
+                        maxWidth: '768px',
+                        margin: '0 auto',
+                        width: '100%'
+                    }}>
+                        <h1 style={{ 
+                            fontSize: '17px', 
+                            fontWeight: 700, 
+                            margin: 0,
+                            color: '#191F28'
+                        }}>채팅</h1>
+                    </div>
                 </div>
-                <div style={{ textAlign: 'center', paddingTop: 'clamp(30px, 8vw, 40px)' }}>
-                    <p style={{ color: '#f04452', fontSize: 'clamp(14px, 3.5vw, 16px)' }}>{error}</p>
+                <div style={{ 
+                    flex: 1,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '0 20px'
+                }}>
+                    <p style={{ 
+                        color: '#F04452', 
+                        fontSize: '15px',
+                        margin: 0
+                    }}>{error}</p>
                 </div>
             </div>
         );
@@ -68,17 +133,49 @@ export function ChatRoomListScreen() {
     if (chatRooms.length === 0) {
         return (
             <div style={{ 
-                padding: '0 4vw', 
-                backgroundColor: '#fff', 
+                backgroundColor: '#FFFFFF',
                 minHeight: '100vh',
-                maxWidth: '768px',
-                margin: '0 auto'
+                display: 'flex',
+                flexDirection: 'column'
             }}>
-                <div style={{ padding: 'clamp(16px, 4vw, 20px) 0' }}>
-                    <h1 style={{ fontSize: 'clamp(20px, 5vw, 24px)', fontWeight: 'bold', margin: 0 }}>채팅</h1>
+                <div style={{
+                    position: 'sticky',
+                    top: 0,
+                    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                    backdropFilter: 'blur(10px)',
+                    WebkitBackdropFilter: 'blur(10px)',
+                    borderBottom: '1px solid #F2F4F6',
+                    zIndex: 10
+                }}>
+                    <div style={{
+                        height: '56px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        padding: '0 20px',
+                        maxWidth: '768px',
+                        margin: '0 auto',
+                        width: '100%'
+                    }}>
+                        <h1 style={{ 
+                            fontSize: '17px', 
+                            fontWeight: 700, 
+                            margin: 0,
+                            color: '#191F28'
+                        }}>채팅</h1>
+                    </div>
                 </div>
-                <div style={{ textAlign: 'center', paddingTop: 'clamp(30px, 8vw, 40px)' }}>
-                    <p style={{ color: '#8b95a1', fontSize: 'clamp(14px, 3.5vw, 16px)' }}>참여 중인 채팅방이 없습니다.</p>
+                <div style={{ 
+                    flex: 1,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '0 20px'
+                }}>
+                    <p style={{ 
+                        color: '#8B95A1', 
+                        fontSize: '15px',
+                        margin: 0
+                    }}>참여 중인 채팅방이 없습니다.</p>
                 </div>
             </div>
         );
@@ -86,61 +183,99 @@ export function ChatRoomListScreen() {
 
     return (
         <div style={{ 
-            padding: '0 4vw', 
-            backgroundColor: '#fff', 
+            backgroundColor: '#FFFFFF',
             minHeight: '100vh',
-            maxWidth: '768px',
-            margin: '0 auto'
+            paddingBottom: 'env(safe-area-inset-bottom)'
         }}>
-            <div style={{ padding: 'clamp(16px, 4vw, 20px) 0' }}>
-                <h1 style={{ fontSize: 'clamp(20px, 5vw, 24px)', fontWeight: 'bold', margin: 0 }}>채팅</h1>
+            <div style={{
+                position: 'sticky',
+                top: 0,
+                backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                backdropFilter: 'blur(10px)',
+                WebkitBackdropFilter: 'blur(10px)',
+                borderBottom: '1px solid #F2F4F6',
+                zIndex: 10
+            }}>
+                <div style={{
+                    height: '56px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '0 20px',
+                    maxWidth: '768px',
+                    margin: '0 auto',
+                    width: '100%'
+                }}>
+                    <h1 style={{ 
+                        fontSize: '17px', 
+                        fontWeight: 700, 
+                        margin: 0,
+                        color: '#191F28'
+                    }}>채팅</h1>
+                </div>
             </div>
 
-            <div>
+            <div style={{
+                maxWidth: '768px',
+                margin: '0 auto'
+            }}>
                 {chatRooms.map(room => (
                     <div
                         key={room.id}
                         onClick={() => navigate(`/room/${room.id}`)}
                         style={{
                             display: 'flex',
-                            padding: 'clamp(12px, 3vw, 16px) 0',
-                            borderBottom: '1px solid #f2f4f6',
+                            padding: '16px 20px',
+                            borderBottom: '1px solid #F2F4F6',
                             alignItems: 'center',
-                            cursor: 'pointer'
+                            cursor: 'pointer',
+                            transition: 'background-color 0.2s',
+                            backgroundColor: '#FFFFFF'
                         }}
+                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#F9FAFB'}
+                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#FFFFFF'}
                     >
                         <div style={{
-                            width: 'clamp(44px, 10vw, 48px)',
-                            height: 'clamp(44px, 10vw, 48px)',
-                            backgroundColor: '#f2f4f6',
+                            width: '48px',
+                            height: '48px',
+                            backgroundColor: '#F2F4F6',
                             borderRadius: '16px',
-                            marginRight: 'clamp(10px, 2.5vw, 12px)',
+                            marginRight: '12px',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            fontSize: 'clamp(18px, 4vw, 20px)',
                             flexShrink: 0
                         }}>
-                            💬
+                            <MessageIcon size={24} color="#3182F6" />
                         </div>
+
                         <div style={{ flex: 1, minWidth: 0 }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px', gap: '8px' }}>
+                            <div style={{ 
+                                display: 'flex', 
+                                justifyContent: 'space-between', 
+                                marginBottom: '4px', 
+                                gap: '8px',
+                                alignItems: 'center'
+                            }}>
                                 <span style={{ 
-                                    fontWeight: 'bold', 
-                                    fontSize: 'clamp(14px, 3.5vw, 16px)',
+                                    fontWeight: 600, 
+                                    fontSize: '15px',
                                     overflow: 'hidden',
                                     textOverflow: 'ellipsis',
-                                    whiteSpace: 'nowrap'
+                                    whiteSpace: 'nowrap',
+                                    color: '#191F28'
                                 }}>{room.name}</span>
                                 <span style={{ 
-                                    fontSize: 'clamp(12px, 3vw, 13px)', 
-                                    color: '#8b95a1',
+                                    fontSize: '13px', 
+                                    color: '#8B95A1',
                                     flexShrink: 0
                                 }}>
                                     {new Date(room.createdAt).toLocaleDateString()}
                                 </span>
                             </div>
-                            <div style={{ fontSize: 'clamp(13px, 3.2vw, 14px)', color: '#4e5968' }}>
+                            <div style={{ 
+                                fontSize: '14px', 
+                                color: '#6B7684'
+                            }}>
                                 {room.isPublic ? '공개' : '비공개'} · 최대 {room.maxParticipants}명
                             </div>
                         </div>
