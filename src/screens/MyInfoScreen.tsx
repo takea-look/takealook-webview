@@ -1,6 +1,7 @@
 import { Spacing } from '@toss/tds-mobile';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { LoadingView } from '../components/LoadingView';
 import { getMyProfile } from '../api/user';
 import { clearAccessToken } from '../api/client';
 import type { UserProfile } from '../types/api';
@@ -34,18 +35,7 @@ export function MyInfoScreen() {
     }, []);
 
     if (loading) {
-        return (
-            <div style={{ 
-                padding: '0 4vw', 
-                backgroundColor: '#fff', 
-                minHeight: '100vh', 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center'
-            }}>
-                <span style={{ fontSize: 'clamp(14px, 3.5vw, 16px)' }}>로딩 중...</span>
-            </div>
-        );
+        return <LoadingView />;
     }
 
     if (error || !profile) {

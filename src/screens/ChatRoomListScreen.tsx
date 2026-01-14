@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Asset, List, ListRow, ListHeader, Text, Spacing } from '@toss/tds-mobile';
+import { LoadingView } from '../components/LoadingView';
 import { getChatRooms } from '../api/chat';
 import type { ChatRoom } from '../types/api';
 
@@ -28,13 +29,7 @@ export function ChatRoomListScreen() {
     }, []);
 
     if (loading) {
-        return (
-            <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Text typography="t4" fontWeight="bold" color="grey500">
-                    로딩 중...
-                </Text>
-            </div>
-        );
+        return <LoadingView />;
     }
 
     if (error) {
