@@ -48,14 +48,15 @@ export function ChatRoomListScreen() {
     }
 
     return (
-        <div style={{ backgroundColor: '#FFFFFF', minHeight: '100vh' }}>
+        <div style={{ backgroundColor: '#FFFFFF', minHeight: '100vh', width: '100%' }}>
             <div style={{ 
                 height: '44px', 
                 display: 'flex', 
                 alignItems: 'center', 
                 justifyContent: 'space-between',
-                padding: '0 20px',
-                borderBottom: '1px solid #F2F4F6'
+                padding: '0 16px',
+                borderBottom: '1px solid #F2F4F6',
+                width: '100%'
             }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <Asset.Image 
@@ -96,58 +97,54 @@ export function ChatRoomListScreen() {
 
             <Spacing size={14} />
 
-            <ListHeader
-                title={
-                    <ListHeader.TitleParagraph
-                        color="grey800"
-                        fontWeight="bold"
-                        typography="t5"
-                    >
-                        My Rooms
-                    </ListHeader.TitleParagraph>
-                }
-                titleWidthRatio={0.6}
-                right={
-                    <ListHeader.RightText typography="t6" color="grey700">
-                        악세사리
-                    </ListHeader.RightText>
-                }
-                descriptionPosition="bottom"
-                rightAlignment="center"
-            />
+            <div style={{ padding: '0 16px', width: '100%' }}>
+                <ListHeader
+                    title={
+                        <ListHeader.TitleParagraph
+                            color="grey800"
+                            fontWeight="bold"
+                            typography="t5"
+                        >
+                            My Rooms
+                        </ListHeader.TitleParagraph>
+                    }
+                />
+            </div>
 
             {chatRooms.length === 0 ? (
-                <div style={{ padding: '40px 0', textAlign: 'center' }}>
+                <div style={{ padding: '40px 16px', textAlign: 'center', width: '100%' }}>
                     <Text typography="t6" color="grey500">
                         참여 중인 채팅방이 없습니다.
                     </Text>
                 </div>
             ) : (
-                <List>
-                    {chatRooms.map(room => (
-                        <ListRow
-                            key={room.id}
-                            left={
-                                <ListRow.Icon
-                                    shape="no-background"
-                                    url="https://static.toss.im/2d-emojis/png/4x/u1F4AC.png"
-                                />
-                            }
-                            contents={
-                                <ListRow.Texts
-                                    type="2RowTypeA"
-                                    top={room.name}
-                                    topProps={{ color: 'grey700', fontWeight: 'bold' }}
-                                    bottom={`${room.isPublic ? '공개' : '비공개'} · 최대 ${room.maxParticipants}명`}
-                                    bottomProps={{ color: 'grey600' }}
-                                />
-                            }
-                            verticalPadding="large"
-                            arrowType="right"
-                            onClick={() => navigate(`/room/${room.id}`)}
-                        />
-                    ))}
-                </List>
+                <div style={{ width: '100%' }}>
+                    <List>
+                        {chatRooms.map(room => (
+                            <ListRow
+                                key={room.id}
+                                left={
+                                    <ListRow.Icon
+                                        shape="no-background"
+                                        url="https://static.toss.im/2d-emojis/png/4x/u1F4AC.png"
+                                    />
+                                }
+                                contents={
+                                    <ListRow.Texts
+                                        type="2RowTypeA"
+                                        top={room.name}
+                                        topProps={{ color: 'grey700', fontWeight: 'bold' }}
+                                        bottom={`${room.isPublic ? '공개' : '비공개'} · 최대 ${room.maxParticipants}명`}
+                                        bottomProps={{ color: 'grey600' }}
+                                    />
+                                }
+                                verticalPadding="large"
+                                arrowType="right"
+                                onClick={() => navigate(`/room/${room.id}`)}
+                            />
+                        ))}
+                    </List>
+                </div>
             )}
 
             <Spacing size={370} />

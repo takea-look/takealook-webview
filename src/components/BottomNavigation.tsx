@@ -1,4 +1,5 @@
 import { Asset, Text } from '@toss/tds-mobile';
+import { adaptive } from '@toss/tds-colors';
 
 interface Props {
     activeTab: 'chats' | 'myinfo';
@@ -35,12 +36,12 @@ export function BottomNavigation({ activeTab, onTabChange }: Props) {
                 <Asset.Icon 
                     frameShape={Asset.frameShape.CleanW24}
                     name="icon-home-mono"
-                    color={activeTab === 'chats' ? 'grey800' : 'grey400'}
+                    color={activeTab === 'chats' ? adaptive.grey800 : adaptive.grey400}
                     aria-hidden={true}
                 />
                 <Text
                     display="block"
-                    color={activeTab === 'chats' ? 'grey900' : 'grey600'}
+                    color={activeTab === 'chats' ? adaptive.grey900 : adaptive.grey600}
                     typography="st13"
                     fontWeight="medium"
                     textAlign="center"
@@ -63,12 +64,12 @@ export function BottomNavigation({ activeTab, onTabChange }: Props) {
                 <Asset.Icon 
                     frameShape={Asset.frameShape.CleanW24}
                     name="icon-profile-mono"
-                    color={activeTab === 'myinfo' ? 'grey800' : 'grey400'}
+                    color={activeTab === 'myinfo' ? adaptive.grey800 : adaptive.grey400}
                     aria-hidden={true}
                 />
                 <Text
                     display="block"
-                    color={activeTab === 'myinfo' ? 'grey900' : 'grey600'}
+                    color={activeTab === 'myinfo' ? adaptive.grey900 : adaptive.grey600}
                     typography="st13"
                     fontWeight="medium"
                     textAlign="center"
