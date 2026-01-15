@@ -94,16 +94,18 @@ export function LoginScreen() {
                 <div style={{ flex: 1, paddingTop: '40px' }}>
                     <div style={{ textAlign: 'center' }}>
                         <div style={{
-                            width: '72px',
-                            height: '72px',
-                            backgroundColor: '#f2f4f6',
-                            borderRadius: '24px',
+                            width: '80px',
+                            height: '80px',
+                            backgroundColor: 'rgba(49, 130, 246, 0.06)',
+                            borderRadius: '26px',
                             margin: '0 auto',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center'
                         }}>
-                            <span style={{ fontSize: '32px' }}>📸</span>
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9 2L7.17 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4H16.83L15 2H9ZM12 17C9.24 17 7 14.76 7 12C7 9.24 9.24 7 12 7C14.76 7 17 9.24 17 12C17 14.76 14.76 17 12 17Z" fill="#3182F6"/>
+                            </svg>
                         </div>
 
                         <Spacing size={24} />
