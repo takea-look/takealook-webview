@@ -150,10 +150,8 @@ export function LoginScreen() {
                             transition: 'opacity 0.2s'
                         }}
                     >
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="24" height="24" rx="12" fill="white" fillOpacity="0.3"/>
-                            <path d="M12 4C8.4 4 4 6.6 8.8C8.8 12.4 7.6 15.2 6.4 20C6.4 20 4 20 4 19.2 4 17.6 4 17.6 6.8C6.8 15.2 8.8 12.4 8.8 12.4 11.2 8.8 6.4 11.2 4 12 4 6.4C4 3.2 4 4.8C4.8 3.2 6.4 8 8 6.4C8 8 6.4 8 6.4 8.4 12" fill="#fff"/>
-                            <path d="M12 16C13.1046 16 14 17.8954 14 17.8954 12 16C10.8954 12 10 11.1046 10 11.1046 12 16 14 16H9.5C9.5 16 8.4 16 8 4 4V4H8V2H2C2 2 4 2 4V6C2 8 12 8 12H4C4 12 8 16 16 17C8 18 15.1046 18 16 13.1046 18 12H12V16C12 14.5 13.5 14 16 17 18H17C17 18 16.5 18 16H17.5C18 14.5 18 14 17V6C17 6 16 5 5 6H13" stroke="#0064FF" strokeWidth="1.5" strokeLinecap="round"/>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 3C6.8 3 3 6.6 3 11.5C3 13.5 3.8 15.3 5.2 16.7L3.6 20.3C3.4 20.7 3.8 21.1 4.2 20.9L7.8 19.3C9.1 19.9 10.5 20.2 12 20.2C17.2 20.2 21 16.6 21 11.7C21 6.8 17.2 3 12 3Z" fill="white"/>
                         </svg>
                         {isLoading ? '로그인 중...' : '토스로 시작하기'}
                     </button>
