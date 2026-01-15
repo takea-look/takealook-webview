@@ -1,5 +1,6 @@
-const API_BASE_URL = 'https://s1.takealook.my';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
 const TOKEN_KEY = 'takealook_access_token';
+const REFRESH_TOKEN_KEY = 'takealook_refresh_token';
 
 interface ApiErrorType extends Error {
   status: number;
@@ -20,8 +21,17 @@ export function setAccessToken(token: string): void {
   localStorage.setItem(TOKEN_KEY, token);
 }
 
+export function getRefreshToken(): string | null {
+  return localStorage.getItem(REFRESH_TOKEN_KEY);
+}
+
+export function setRefreshToken(token: string): void {
+  localStorage.setItem(REFRESH_TOKEN_KEY, token);
+}
+
 export function clearAccessToken(): void {
   localStorage.removeItem(TOKEN_KEY);
+  localStorage.removeItem(REFRESH_TOKEN_KEY);
 }
 
 interface RequestOptions extends RequestInit {

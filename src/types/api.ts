@@ -5,6 +5,7 @@ export interface LoginRequest {
 
 export interface LoginResponse {
   accessToken: string;
+  refreshToken?: string;
 }
 
 export interface UserProfile {
@@ -56,4 +57,33 @@ export interface WsTicket {
 
 export interface PresignedUrlResponse {
   url: string;
+}
+
+export interface TossLoginRequest {
+  authorizationCode: string;
+  referrer: 'DEFAULT' | 'SANDBOX';
+}
+
+export interface TossUserInfo {
+  userKey: number;
+  scope: string;
+  agreedTerms: string[];
+  policy: string;
+  certTxId?: string;
+  name: string | null;
+  phone: string | null;
+  birthday: string | null;
+  ci: string | null;
+  di: string | null;
+  gender: string | null;
+  nationality: string | null;
+  email: string | null;
+}
+
+export interface RefreshTokenRequest {
+  refreshToken: string;
+}
+
+export interface LogoutByUserKeyRequest {
+  userKey: number;
 }
