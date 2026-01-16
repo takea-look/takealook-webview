@@ -180,20 +180,47 @@ export function ChatRoomScreen() {
                 }}
             >
                 {allMessages.map((msg, index) => {
+                    const currentCreatedAt = new Date(msg.createdAt);
+                    const previousMessage = allMessages[index - 1];
+                    const previousCreatedAt = previousMessage ? new Date(previousMessage.createdAt) : null;
+                    
+                    const isNewDay = !previousCreatedAt || 
+                        currentCreatedAt.getFullYear() !== previousCreatedAt.getFullYear() ||
+                        currentCreatedAt.getMonth() !== previousCreatedAt.getMonth() ||
+                        currentCreatedAt.getDate() !== previousCreatedAt.getDate();
+
+                    const DateDivider = () => (
+                        <div style={{ display: 'flex', justifyContent: 'center', margin: '24px 0 16px 0' }}>
+                            <div style={{
+                                backgroundColor: 'rgba(0, 0, 0, 0.05)',
+                                padding: '6px 14px',
+                                borderRadius: '100px',
+                                fontSize: '12px',
+                                color: '#6B7684',
+                                fontWeight: 500
+                            }}>
+                                {currentCreatedAt.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' })}
+                            </div>
+                        </div>
+                    );
+
                     if (msg.type === MessageType.JOIN || msg.type === MessageType.LEAVE) {
                         return (
-                            <div key={`${msg.createdAt}-${index}`} style={{ display: 'flex', justifyContent: 'center', margin: '12px 0' }}>
-                                <div style={{
-                                    backgroundColor: 'rgba(0, 27, 55, 0.04)',
-                                    padding: '6px 14px',
-                                    borderRadius: '100px',
-                                    fontSize: '12px',
-                                    color: '#6B7684',
-                                    fontWeight: 500
-                                }}>
-                                    {msg.sender.nickname || msg.sender.username}님이 {msg.type === MessageType.JOIN ? '입장했습니다' : '나갔습니다'}
+                            <React.Fragment key={`${msg.createdAt}-${index}`}>
+                                {isNewDay && <DateDivider />}
+                                <div style={{ display: 'flex', justifyContent: 'center', margin: '12px 0' }}>
+                                    <div style={{
+                                        backgroundColor: 'rgba(0, 27, 55, 0.04)',
+                                        padding: '6px 14px',
+                                        borderRadius: '100px',
+                                        fontSize: '12px',
+                                        color: '#6B7684',
+                                        fontWeight: 500
+                                    }}>
+                                        {msg.sender.nickname || msg.sender.username}님이 {msg.type === MessageType.JOIN ? '입장했습니다' : '나갔습니다'}
+                                    </div>
                                 </div>
-                            </div>
+                            </React.Fragment>
                         );
                     }
 
@@ -202,65 +229,68 @@ export function ChatRoomScreen() {
                     const timeString = timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
 
                     return (
-                        <div key={`${msg.createdAt}-${index}`} style={{
-                            display: 'flex',
-                            flexDirection: isMyMessage ? 'row-reverse' : 'row',
-                            alignItems: 'flex-end',
-                            gap: '8px'
-                        }}>
-                            {!isMyMessage && (
-                                <div style={{
-                                    width: '36px',
-                                    height: '36px',
-                                    borderRadius: '14px',
-                                    backgroundColor: '#F2F4F6',
-                                    backgroundImage: msg.sender.image ? `url(${msg.sender.image})` : 'none',
-                                    backgroundSize: 'cover',
-                                    backgroundPosition: 'center',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    flexShrink: 0,
-                                    overflow: 'hidden'
-                                }}>
-                                    {!msg.sender.image && <UserIcon size={20} color="#B0B8C1" />}
-                                </div>
-                            )}
-
-                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: isMyMessage ? 'flex-end' : 'flex-start', maxWidth: '70%' }}>
-                                {!isMyMessage && (
-                                    <span style={{ fontSize: '12px', color: '#6B7684', marginBottom: '4px', marginLeft: '2px' }}>
-                                        {msg.sender.nickname || msg.sender.username}
-                                    </span>
-                                )}
-                                
-                                <div style={{
-                                    borderRadius: isMyMessage ? '20px 4px 20px 20px' : '4px 20px 20px 20px',
-                                    overflow: 'hidden',
-                                    boxShadow: isMyMessage ? 'none' : 'inset 0 0 0 1px rgba(0,0,0,0.04)',
-                                    backgroundColor: isMyMessage ? '#3182F6' : '#F2F4F6',
-                                    color: isMyMessage ? '#fff' : '#333d4b'
-                                }}>
-                                    {msg.imageUrl && (
-                                        <img
-                                            src={msg.imageUrl}
-                                            alt="Chat"
-                                            style={{ display: 'block', maxWidth: '100%', maxHeight: '300px', objectFit: 'cover', cursor: 'pointer' }}
-                                            onClick={() => msg.imageUrl && handleImageClick(msg.imageUrl)}
-                                        />
-                                    )}
-                                </div>
-                            </div>
-
-                            <span style={{
-                                fontSize: '11px',
-                                color: '#b0b8c1',
-                                marginBottom: '2px',
-                                whiteSpace: 'nowrap'
+                        <React.Fragment key={`${msg.createdAt}-${index}`}>
+                            {isNewDay && <DateDivider />}
+                            <div style={{
+                                display: 'flex',
+                                flexDirection: isMyMessage ? 'row-reverse' : 'row',
+                                alignItems: 'flex-end',
+                                gap: '8px'
                             }}>
-                                {timeString}
-                            </span>
-                        </div>
+                                {!isMyMessage && (
+                                    <div style={{
+                                        width: '36px',
+                                        height: '36px',
+                                        borderRadius: '14px',
+                                        backgroundColor: '#F2F4F6',
+                                        backgroundImage: msg.sender.image ? `url(${msg.sender.image})` : 'none',
+                                        backgroundSize: 'cover',
+                                        backgroundPosition: 'center',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        flexShrink: 0,
+                                        overflow: 'hidden'
+                                    }}>
+                                        {!msg.sender.image && <UserIcon size={20} color="#B0B8C1" />}
+                                    </div>
+                                )}
+    
+                                <div style={{ display: 'flex', flexDirection: 'column', alignItems: isMyMessage ? 'flex-end' : 'flex-start', maxWidth: '70%' }}>
+                                    {!isMyMessage && (
+                                        <span style={{ fontSize: '12px', color: '#6B7684', marginBottom: '4px', marginLeft: '2px' }}>
+                                            {msg.sender.nickname || msg.sender.username}
+                                        </span>
+                                    )}
+                                    
+                                    <div style={{
+                                        borderRadius: isMyMessage ? '20px 4px 20px 20px' : '4px 20px 20px 20px',
+                                        overflow: 'hidden',
+                                        boxShadow: isMyMessage ? 'none' : 'inset 0 0 0 1px rgba(0,0,0,0.04)',
+                                        backgroundColor: isMyMessage ? '#3182F6' : '#F2F4F6',
+                                        color: isMyMessage ? '#fff' : '#333d4b'
+                                    }}>
+                                        {msg.imageUrl && (
+                                            <img
+                                                src={msg.imageUrl}
+                                                alt="Chat"
+                                                style={{ display: 'block', maxWidth: '100%', maxHeight: '300px', objectFit: 'cover', cursor: 'pointer' }}
+                                                onClick={() => msg.imageUrl && handleImageClick(msg.imageUrl)}
+                                            />
+                                        )}
+                                    </div>
+                                </div>
+    
+                                <span style={{
+                                    fontSize: '11px',
+                                    color: '#b0b8c1',
+                                    marginBottom: '2px',
+                                    whiteSpace: 'nowrap'
+                                }}>
+                                    {timeString}
+                                </span>
+                            </div>
+                        </React.Fragment>
                     );
                 })}
                 {isUploading && (
