@@ -65,61 +65,63 @@ export function ChatRoomListScreen() {
                     참여 중인 채팅방이 없습니다.
                 </div>
             ) : (
-                <List>
-                    {chatRooms.map(room => (
-                        <ListRow
-                            key={room.id}
-                            as="div"
-                            left={
-                                <div style={{
-                                    width: '48px',
-                                    height: '48px',
-                                    borderRadius: '20px',
-                                    backgroundColor: '#f2f4f6',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    fontSize: '24px'
-                                }}>
-                                    💬
-                                </div>
-                            }
-                            contents={
-                                <ListRow.Texts
-                                    type="2RowTypeA"
-                                    top={room.name}
-                                    topProps={{ 
-                                        color: '#333d4b', 
-                                        fontWeight: '600',
-                                        size: 17
-                                    }}
-                                    bottom={
-                                        <span style={{ color: '#8b95a1', fontSize: '14px' }}>
-                                            {room.isPublic ? '공개' : '비공개'} · {room.maxParticipants}명
-                                        </span>
-                                    }
-                                />
-                            }
-                            right={
-                                <div style={{ display: 'flex', alignItems: 'center' }}>
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                        <path d="M10 17L15 12L10 7" stroke="#b0b8c1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                    </svg>
-                                </div>
-                            }
-                            verticalPadding="medium"
-                            onClick={() => navigate(`/room/${room.id}`)}
-                            style={{
-                                cursor: 'pointer',
-                                transition: 'background-color 0.2s',
-                                borderRadius: '16px',
-                                padding: '12px 0'
-                            }}
-                            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f9fafb'}
-                            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                        />
-                    ))}
-                </List>
+                <div style={{ margin: '0 -24px' }}>
+                    <List>
+                        {chatRooms.map(room => (
+                            <ListRow
+                                key={room.id}
+                                as="div"
+                                left={
+                                    <div style={{
+                                        width: '48px',
+                                        height: '48px',
+                                        borderRadius: '20px',
+                                        backgroundColor: '#f2f4f6',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        fontSize: '24px',
+                                        marginLeft: '24px'
+                                    }}>
+                                        💬
+                                    </div>
+                                }
+                                contents={
+                                    <ListRow.Texts
+                                        type="2RowTypeA"
+                                        top={room.name}
+                                        topProps={{ 
+                                            color: '#333d4b', 
+                                            fontWeight: '600',
+                                            size: 17
+                                        }}
+                                        bottom={
+                                            <span style={{ color: '#8b95a1', fontSize: '14px' }}>
+                                                {room.isPublic ? '공개' : '비공개'} · {room.maxParticipants}명
+                                            </span>
+                                        }
+                                    />
+                                }
+                                right={
+                                    <div style={{ display: 'flex', alignItems: 'center', marginRight: '24px' }}>
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <path d="M10 17L15 12L10 7" stroke="#b0b8c1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                        </svg>
+                                    </div>
+                                }
+                                verticalPadding="medium"
+                                onClick={() => navigate(`/room/${room.id}`)}
+                                style={{
+                                    cursor: 'pointer',
+                                    transition: 'background-color 0.2s',
+                                    padding: '12px 0'
+                                }}
+                                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f9fafb'}
+                                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                            />
+                        ))}
+                    </List>
+                </div>
             )}
         </Layout>
     );
