@@ -13,8 +13,10 @@ export function BottomNavigation({ activeTab, onTabChange }: Props) {
         <div style={{
             position: 'fixed',
             bottom: '20px',
-            left: '20px',
-            right: '20px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: 'calc(100% - 40px)',
+            maxWidth: '440px',
             backgroundColor: '#FFFFFF',
             borderRadius: '30px',
             padding: '9px',

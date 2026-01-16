@@ -6,8 +6,9 @@ import { useWebSocket } from '../hooks/useWebSocket';
 import type { UserChatMessage } from '../types/api';
 import { MessageType } from '../types/api';
 import { getMyProfile } from '../api/user';
-import { ChevronLeftIcon, CameraIcon, UserIcon, ArrowDownIcon } from '../components/icons';
+import { CameraIcon, UserIcon, ArrowDownIcon } from '../components/icons';
 import { LoadingView } from '../components/LoadingView';
+import { Layout } from '../components/Layout';
 
 export function ChatRoomScreen() {
     const { roomId } = useParams<{ roomId: string }>();
@@ -25,7 +26,6 @@ export function ChatRoomScreen() {
 
     const { messages: wsMessages, isConnected, sendMessage, connect, disconnect } = useWebSocket();
 
-    // Check if user is near bottom of scroll
     const checkScrollPosition = useCallback(() => {
         if (!chatContainerRef.current) return;
         
@@ -129,44 +129,11 @@ export function ChatRoomScreen() {
     }
 
     return (
-        <div style={{ backgroundColor: '#fff', height: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
-            {/* Header */}
-            <header style={{
-                height: '56px',
-                display: 'flex',
-                alignItems: 'center',
-                padding: '0 16px',
-                borderBottom: '1px solid #F2F4F6',
-                position: 'sticky',
-                top: 0,
-                backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                backdropFilter: 'blur(10px)',
-                zIndex: 50,
-                justifyContent: 'space-between'
-            }}>
-                <button 
-                    onClick={() => navigate('/')}
-                    style={{ background: 'none', border: 'none', padding: '8px', marginLeft: '-8px', cursor: 'pointer' }}
-                >
-                    <ChevronLeftIcon size={26} />
-                </button>
-                
-                <h1 style={{ fontSize: '17px', fontWeight: 700, color: '#191F28', position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
-                    채팅방 {roomId}
-                </h1>
-
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <div style={{ 
-                        width: '8px', 
-                        height: '8px', 
-                        borderRadius: '50%', 
-                        backgroundColor: isConnected ? '#00C73C' : '#FFB23E',
-                        boxShadow: isConnected ? '0 0 0 2px rgba(0, 199, 60, 0.2)' : 'none'
-                    }} />
-                </div>
-            </header>
-
-            {/* Chat Area */}
+        <Layout 
+            fullBleed={true} 
+            style={{ height: '100vh', overflow: 'hidden' }}
+            contentStyle={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+        >
             <div 
                 ref={chatContainerRef}
                 onScroll={checkScrollPosition}
@@ -174,21 +141,22 @@ export function ChatRoomScreen() {
                     flex: 1, 
                     overflowY: 'auto', 
                     padding: '20px 16px', 
-                    backgroundColor: '#FFFFFF',
+                    backgroundColor: '#fff',
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: '12px'
+                    gap: '12px',
+                    scrollbarWidth: 'none',
+                    msOverflowStyle: 'none'
                 }}
             >
                 {allMessages.map((msg, index) => {
-                    // System Message
                     if (msg.type === MessageType.JOIN || msg.type === MessageType.LEAVE) {
                         return (
                             <div key={`${msg.createdAt}-${index}`} style={{ display: 'flex', justifyContent: 'center', margin: '12px 0' }}>
                                 <div style={{
-                                    backgroundColor: '#F2F4F6',
+                                    backgroundColor: 'rgba(0, 27, 55, 0.04)',
                                     padding: '6px 14px',
-                                    borderRadius: '20px',
+                                    borderRadius: '100px',
                                     fontSize: '12px',
                                     color: '#6B7684',
                                     fontWeight: 500
@@ -210,12 +178,11 @@ export function ChatRoomScreen() {
                             alignItems: 'flex-end',
                             gap: '8px'
                         }}>
-                            {/* Avatar (Other) */}
                             {!isMyMessage && (
                                 <div style={{
                                     width: '36px',
                                     height: '36px',
-                                    borderRadius: '16px',
+                                    borderRadius: '14px',
                                     backgroundColor: '#F2F4F6',
                                     backgroundImage: msg.sender.image ? `url(${msg.sender.image})` : 'none',
                                     backgroundSize: 'cover',
@@ -230,7 +197,6 @@ export function ChatRoomScreen() {
                                 </div>
                             )}
 
-                            {/* Message Bubble */}
                             <div style={{ display: 'flex', flexDirection: 'column', alignItems: isMyMessage ? 'flex-end' : 'flex-start', maxWidth: '70%' }}>
                                 {!isMyMessage && (
                                     <span style={{ fontSize: '12px', color: '#6B7684', marginBottom: '4px', marginLeft: '2px' }}>
@@ -241,8 +207,9 @@ export function ChatRoomScreen() {
                                 <div style={{
                                     borderRadius: isMyMessage ? '20px 4px 20px 20px' : '4px 20px 20px 20px',
                                     overflow: 'hidden',
-                                    boxShadow: isMyMessage ? 'none' : '0 0 0 1px #F2F4F6',
-                                    backgroundColor: isMyMessage ? '#3182F6' : '#FFFFFF'
+                                    boxShadow: isMyMessage ? 'none' : 'inset 0 0 0 1px rgba(0,0,0,0.04)',
+                                    backgroundColor: isMyMessage ? '#3182F6' : '#F2F4F6',
+                                    color: isMyMessage ? '#fff' : '#333d4b'
                                 }}>
                                     {msg.imageUrl && (
                                         <img
@@ -254,10 +221,9 @@ export function ChatRoomScreen() {
                                 </div>
                             </div>
 
-                            {/* Timestamp */}
                             <span style={{
                                 fontSize: '11px',
-                                color: '#ADB5BD',
+                                color: '#b0b8c1',
                                 marginBottom: '2px',
                                 whiteSpace: 'nowrap'
                             }}>
@@ -274,7 +240,6 @@ export function ChatRoomScreen() {
                 <div ref={messagesEndRef} />
             </div>
 
-            {/* FAB */}
             {showScrollButton && (
                 <button 
                     onClick={() => scrollToBottom()}
@@ -284,11 +249,11 @@ export function ChatRoomScreen() {
                         left: '50%',
                         transform: 'translateX(-50%)',
                         backgroundColor: '#FFFFFF',
-                        border: '1px solid #F2F4F6',
+                        border: '1px solid #e5e8eb',
                         color: '#3182F6',
                         padding: '10px 18px',
                         borderRadius: '24px',
-                        boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+                        boxShadow: '0 8px 20px rgba(0,0,0,0.08)',
                         cursor: 'pointer',
                         display: 'flex',
                         alignItems: 'center',
@@ -304,7 +269,6 @@ export function ChatRoomScreen() {
                 </button>
             )}
 
-            {/* Input Area */}
             <div style={{
                 padding: '12px 16px',
                 paddingBottom: 'max(12px, env(safe-area-inset-bottom))',
@@ -312,7 +276,10 @@ export function ChatRoomScreen() {
                 borderTop: '1px solid #F2F4F6',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '12px'
+                gap: '12px',
+                position: 'sticky',
+                bottom: 0,
+                zIndex: 10
             }}>
                 <div style={{
                     flex: 1,
@@ -349,7 +316,7 @@ export function ChatRoomScreen() {
                         alignItems: 'center',
                         justifyContent: 'center',
                         cursor: isUploading || !isConnected ? 'not-allowed' : 'pointer',
-                        transition: 'transform 0.1s ease',
+                        transition: 'all 0.1s ease',
                         boxShadow: isUploading || !isConnected ? 'none' : '0 4px 12px rgba(49, 130, 246, 0.3)'
                     }}
                     onMouseDown={e => !isUploading && isConnected && (e.currentTarget.style.transform = 'scale(0.95)')}
@@ -366,16 +333,10 @@ export function ChatRoomScreen() {
                     to { opacity: 1; transform: translate(-50%, 0); }
                 }
                 ::-webkit-scrollbar {
-                    width: 6px;
-                }
-                ::-webkit-scrollbar-thumb {
-                    background-color: rgba(0,0,0,0.1);
-                    border-radius: 3px;
-                }
-                ::-webkit-scrollbar-track {
-                    background-color: transparent;
+                    width: 0px;
+                    background: transparent;
                 }
             `}</style>
-        </div>
+        </Layout>
     );
 }
