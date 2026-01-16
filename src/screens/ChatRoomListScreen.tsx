@@ -44,51 +44,7 @@ export function ChatRoomListScreen() {
 
     return (
         <div style={{ backgroundColor: '#FFFFFF', minHeight: '100vh', width: '100%' }}>
-            <div style={{ 
-                height: '44px', 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'space-between',
-                padding: '0 8px',
-                borderBottom: '1px solid #F2F4F6',
-                width: '100%'
-            }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                    <Asset.Image 
-                        frameShape={Asset.frameShape.CleanW16}
-                        backgroundColor="transparent"
-                        src="https://static.toss.im/appsintoss/12369/c50b0c75-615e-4bca-aa3e-28ee07218b12.png"
-                        aria-hidden={true}
-                        style={{ aspectRatio: '1/1', width: '24px' }}
-                    />
-                    <Text color="grey900" typography="t5" fontWeight="bold">
-                        떼껄룩 : 사진으로 대화하는 채팅방
-                    </Text>
-                </div>
-                <div style={{ display: 'flex', gap: '12px' }}>
-                    <Asset.Icon 
-                        frameShape={Asset.frameShape.CleanW20}
-                        backgroundColor="transparent"
-                        name="icon-search-mono"
-                        color="greyOpacity600"
-                        aria-hidden={true}
-                    />
-                    <Asset.Icon 
-                        frameShape={Asset.frameShape.CleanW20}
-                        backgroundColor="transparent"
-                        name="icon-dots-mono"
-                        color="greyOpacity600"
-                        aria-hidden={true}
-                    />
-                    <Asset.Icon 
-                        frameShape={Asset.frameShape.CleanW20}
-                        backgroundColor="transparent"
-                        name="icon-x-mono"
-                        color="greyOpacity600"
-                        aria-hidden={true}
-                    />
-                </div>
-            </div>
+
 
             <div style={{ padding: '0 8px', width: '100%' }}>
                 <ListHeader
