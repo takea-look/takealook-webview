@@ -6,7 +6,7 @@ import { useWebSocket } from '../hooks/useWebSocket';
 import type { UserChatMessage } from '../types/api';
 import { MessageType } from '../types/api';
 import { getMyProfile } from '../api/user';
-import { ChevronLeftIcon, CameraIcon, UserIcon, ArrowDownIcon } from '../components/icons';
+import { CameraIcon, UserIcon, ArrowDownIcon } from '../components/icons';
 import { LoadingView } from '../components/LoadingView';
 
 export function ChatRoomScreen() {
@@ -130,41 +130,7 @@ export function ChatRoomScreen() {
 
     return (
         <div style={{ backgroundColor: '#fff', height: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
-            {/* Header */}
-            <header style={{
-                height: '56px',
-                display: 'flex',
-                alignItems: 'center',
-                padding: '0 16px',
-                borderBottom: '1px solid #F2F4F6',
-                position: 'sticky',
-                top: 0,
-                backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                backdropFilter: 'blur(10px)',
-                zIndex: 50,
-                justifyContent: 'space-between'
-            }}>
-                <button 
-                    onClick={() => navigate('/')}
-                    style={{ background: 'none', border: 'none', padding: '8px', marginLeft: '-8px', cursor: 'pointer' }}
-                >
-                    <ChevronLeftIcon size={26} />
-                </button>
-                
-                <h1 style={{ fontSize: '17px', fontWeight: 700, color: '#191F28', position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
-                    채팅방 {roomId}
-                </h1>
 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <div style={{ 
-                        width: '8px', 
-                        height: '8px', 
-                        borderRadius: '50%', 
-                        backgroundColor: isConnected ? '#00C73C' : '#FFB23E',
-                        boxShadow: isConnected ? '0 0 0 2px rgba(0, 199, 60, 0.2)' : 'none'
-                    }} />
-                </div>
-            </header>
 
             {/* Chat Area */}
             <div 
