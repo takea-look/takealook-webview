@@ -61,8 +61,6 @@ export function LoginScreen() {
             flexDirection: 'column',
             alignItems: 'center'
         }}>
-
-
             <main style={{ 
                 flex: 1,
                 display: 'flex',
