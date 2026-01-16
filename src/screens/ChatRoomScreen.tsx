@@ -23,7 +23,7 @@ export function ChatRoomScreen() {
     const [loading, setLoading] = useState(true);
     const [showScrollButton, setShowScrollButton] = useState(false);
     const [lightboxOpen, setLightboxOpen] = useState(false);
-    const [lightboxImage, setLightboxImage] = useState<string>('');
+    const [lightboxIndex, setLightboxIndex] = useState(-1);
     
     const fileInputRef = useRef<HTMLInputElement>(null);
     const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -98,6 +98,9 @@ export function ChatRoomScreen() {
     }, [wsMessages, myUserId]);
 
     const allMessages = [...historyMessages, ...wsMessages];
+    const slides = allMessages
+        .filter(msg => msg.imageUrl)
+        .map(msg => ({ src: msg.imageUrl! }));
 
     const handleCameraClick = () => {
         fileInputRef.current?.click();
@@ -131,7 +134,8 @@ export function ChatRoomScreen() {
     };
 
     const handleImageClick = (imageUrl: string) => {
-        setLightboxImage(imageUrl);
+        const index = slides.findIndex(slide => slide.src === imageUrl);
+        setLightboxIndex(index);
         setLightboxOpen(true);
         window.history.pushState({ lightbox: true }, '');
     };
@@ -368,8 +372,10 @@ export function ChatRoomScreen() {
             <Lightbox
                 open={lightboxOpen}
                 close={() => window.history.back()}
-                slides={[{ src: lightboxImage }]}
+                index={lightboxIndex}
+                slides={slides}
                 plugins={[Zoom, Download]}
+                on={{ view: ({ index: newIndex }) => setLightboxIndex(newIndex) }}
             />
         </Layout>
     );
