@@ -19,7 +19,7 @@ export function MainScreen() {
 
     const handleTabChange = (tab: 'chats' | 'myinfo') => {
         setActiveTab(tab);
-        navigate(tab === 'myinfo' ? '/myinfo' : '/');
+        navigate(tab === 'myinfo' ? '/myinfo' : '/', { replace: true });
     };
 
     return (
