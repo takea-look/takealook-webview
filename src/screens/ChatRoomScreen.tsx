@@ -9,6 +9,10 @@ import { getMyProfile } from '../api/user';
 import { CameraIcon, UserIcon, ArrowDownIcon } from '../components/icons';
 import { LoadingView } from '../components/LoadingView';
 import { Layout } from '../components/Layout';
+import Lightbox from "yet-another-react-lightbox";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
+import Download from "yet-another-react-lightbox/plugins/download";
+import "yet-another-react-lightbox/styles.css";
 
 export function ChatRoomScreen() {
     const { roomId } = useParams<{ roomId: string }>();
@@ -18,6 +22,8 @@ export function ChatRoomScreen() {
     const [isUploading, setIsUploading] = useState(false);
     const [loading, setLoading] = useState(true);
     const [showScrollButton, setShowScrollButton] = useState(false);
+    const [lightboxOpen, setLightboxOpen] = useState(false);
+    const [lightboxImage, setLightboxImage] = useState<string>('');
     
     const fileInputRef = useRef<HTMLInputElement>(null);
     const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -124,6 +130,11 @@ export function ChatRoomScreen() {
         }
     };
 
+    const handleImageClick = (imageUrl: string) => {
+        setLightboxImage(imageUrl);
+        setLightboxOpen(true);
+    };
+
     if (loading) {
         return <LoadingView />;
     }
@@ -215,7 +226,8 @@ export function ChatRoomScreen() {
                                         <img
                                             src={msg.imageUrl}
                                             alt="Chat"
-                                            style={{ display: 'block', maxWidth: '100%', maxHeight: '300px', objectFit: 'cover' }}
+                                            style={{ display: 'block', maxWidth: '100%', maxHeight: '300px', objectFit: 'cover', cursor: 'pointer' }}
+                                            onClick={() => msg.imageUrl && handleImageClick(msg.imageUrl)}
                                         />
                                     )}
                                 </div>
@@ -337,6 +349,13 @@ export function ChatRoomScreen() {
                     background: transparent;
                 }
             `}</style>
+            
+            <Lightbox
+                open={lightboxOpen}
+                close={() => setLightboxOpen(false)}
+                slides={[{ src: lightboxImage }]}
+                plugins={[Zoom, Download]}
+            />
         </Layout>
     );
 }
