@@ -1,7 +1,8 @@
-import { Spacing } from '@toss/tds-mobile';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Spacing } from '@toss/tds-mobile';
 import { LoadingView } from '../components/LoadingView';
+import { Layout } from '../components/Layout';
 import { getMyProfile } from '../api/user';
 import { clearAccessToken } from '../api/client';
 import type { UserProfile } from '../types/api';
@@ -40,107 +41,108 @@ export function MyInfoScreen() {
 
     if (error || !profile) {
         return (
-            <div style={{ 
-                padding: '0 4vw', 
-                backgroundColor: '#fff', 
-                minHeight: '100vh'
-            }}>
-                <div style={{ padding: 'clamp(16px, 4vw, 20px) 0' }}>
-                    <h1 style={{ fontSize: 'clamp(20px, 5vw, 24px)', fontWeight: 'bold', margin: 0 }}>내 정보</h1>
+            <Layout>
+                <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <p style={{ color: '#f04452' }}>{error || '프로필을 찾을 수 없습니다'}</p>
                 </div>
-                <div style={{ textAlign: 'center', paddingTop: 'clamp(30px, 8vw, 40px)' }}>
-                    <p style={{ color: '#f04452', fontSize: 'clamp(14px, 3.5vw, 16px)' }}>{error || '프로필을 찾을 수 없습니다'}</p>
-                </div>
-            </div>
+            </Layout>
         );
     }
 
     return (
-        <div style={{ 
-            padding: '0 4vw', 
-            backgroundColor: '#fff', 
-            minHeight: '100vh'
-        }}>
-            <div style={{ padding: 'clamp(16px, 4vw, 20px) 0' }}>
-                <h1 style={{ fontSize: 'clamp(20px, 5vw, 24px)', fontWeight: 'bold', margin: 0 }}>내 정보</h1>
-            </div>
+        <Layout>
+            <Spacing size={24} />
+            <h1 style={{ 
+                fontSize: '24px', 
+                fontWeight: 'bold', 
+                color: '#191f28', 
+                margin: '0 0 32px 0' 
+            }}>
+                내 정보
+            </h1>
 
-            <div style={{ textAlign: 'center', padding: 'clamp(24px, 6vw, 32px) 0' }}>
+            <div style={{ 
+                display: 'flex', 
+                flexDirection: 'column', 
+                alignItems: 'center',
+                marginBottom: '40px'
+            }}>
                 <div style={{
-                    width: 'clamp(70px, 16vw, 80px)',
-                    height: 'clamp(70px, 16vw, 80px)',
+                    width: '88px',
+                    height: '88px',
+                    borderRadius: '36px',
                     backgroundColor: '#f2f4f6',
-                    borderRadius: '50%',
-                    margin: '0 auto clamp(12px, 3vw, 16px)',
+                    marginBottom: '16px',
                     backgroundImage: profile.image ? `url(${profile.image})` : 'none',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    fontSize: 'clamp(28px, 7vw, 32px)'
+                    fontSize: '40px',
+                    boxShadow: '0 0 0 1px rgba(0,0,0,0.04)'
                 }}>
                     {!profile.image && '👤'}
                 </div>
                 <h2 style={{ 
-                    fontSize: 'clamp(18px, 4.5vw, 20px)', 
-                    fontWeight: 'bold',
-                    margin: 0
+                    fontSize: '22px', 
+                    fontWeight: 'bold', 
+                    color: '#191f28',
+                    margin: '0 0 6px 0'
                 }}>
                     {profile.nickname || profile.username}
                 </h2>
                 <p style={{ 
-                    color: '#4e5968', 
-                    marginTop: '4px',
-                    fontSize: 'clamp(13px, 3.2vw, 14px)',
-                    margin: '4px 0 0 0'
-                }}>@{profile.username}</p>
+                    fontSize: '15px', 
+                    color: '#8b95a1', 
+                    margin: 0 
+                }}>
+                    @{profile.username}
+                </p>
             </div>
 
-            <Spacing size={12} />
-
-            <div style={{ 
-                backgroundColor: '#f9fafb', 
-                borderRadius: '16px', 
-                padding: 'clamp(12px, 3vw, 16px)'
+            <div style={{
+                backgroundColor: '#f9fafb',
+                borderRadius: '20px',
+                overflow: 'hidden'
             }}>
-                <div style={{ 
-                    padding: 'clamp(10px, 2.5vw, 12px) 0', 
-                    borderBottom: '1px solid #f2f4f6',
-                    fontSize: 'clamp(14px, 3.5vw, 15px)',
-                    minHeight: '44px',
-                    display: 'flex',
-                    alignItems: 'center'
-                }}>
-                    개인정보 설정
-                </div>
-                <div style={{ 
-                    padding: 'clamp(10px, 2.5vw, 12px) 0', 
-                    borderBottom: '1px solid #f2f4f6',
-                    fontSize: 'clamp(14px, 3.5vw, 15px)',
-                    minHeight: '44px',
-                    display: 'flex',
-                    alignItems: 'center'
-                }}>
-                    알림 설정
-                </div>
-                <div
-                    style={{ 
-                        padding: 'clamp(10px, 2.5vw, 12px) 0', 
-                        cursor: 'pointer', 
-                        color: '#f04452',
-                        fontSize: 'clamp(14px, 3.5vw, 15px)',
-                        minHeight: '44px',
-                        display: 'flex',
-                        alignItems: 'center'
-                    }}
-                    onClick={handleLogout}
-                >
-                    로그아웃
-                </div>
+                <MenuItem text="개인정보 설정" />
+                <MenuItem text="알림 설정" />
+                <MenuItem text="로그아웃" isDestructive onClick={handleLogout} />
             </div>
+        </Layout>
+    );
+}
 
-            <Spacing size={80} />
+function MenuItem({ text, isDestructive = false, onClick }: { text: string, isDestructive?: boolean, onClick?: () => void }) {
+    return (
+        <div 
+            onClick={onClick}
+            style={{
+                padding: '18px 24px',
+                fontSize: '16px',
+                fontWeight: '500',
+                color: isDestructive ? '#f04452' : '#333d4b',
+                cursor: onClick ? 'pointer' : 'default',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                borderBottom: '1px solid #f2f4f6',
+                backgroundColor: '#f9fafb'
+            }}
+            onMouseEnter={(e) => {
+                if (onClick) e.currentTarget.style.backgroundColor = '#f2f4f6';
+            }}
+            onMouseLeave={(e) => {
+                if (onClick) e.currentTarget.style.backgroundColor = '#f9fafb';
+            }}
+        >
+            {text}
+            {onClick && !isDestructive && (
+                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path d="M10 17L15 12L10 7" stroke="#b0b8c1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+            )}
         </div>
     );
 }
