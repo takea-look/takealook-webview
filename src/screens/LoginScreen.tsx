@@ -61,7 +61,26 @@ export function LoginScreen() {
             flexDirection: 'column',
             alignItems: 'center'
         }}>
-
+            <div style={{
+                width: '100%',
+                borderBottom: '1px solid #f2f4f6',
+                display: 'flex',
+                justifyContent: 'center'
+            }}>
+                <div style={{
+                    width: '100%',
+                    maxWidth: '480px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '12px 20px',
+                    justifyContent: 'space-between',
+                    boxSizing: 'border-box'
+                }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <span style={{ fontSize: '16px', fontWeight: 'bold' }}>떼껄룩 : 로그인</span>
+                    </div>
+                </div>
+            </div>
 
             <main style={{ 
                 flex: 1,
