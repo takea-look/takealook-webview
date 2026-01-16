@@ -113,7 +113,7 @@ export function ChatRoomListScreen() {
                                 cursor: 'pointer',
                                 transition: 'background-color 0.2s',
                                 borderRadius: '16px',
-                                padding: '12px 8px'
+                                padding: '12px 0'
                             }}
                             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f9fafb'}
                             onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
