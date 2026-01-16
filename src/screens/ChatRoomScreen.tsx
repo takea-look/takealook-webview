@@ -133,7 +133,22 @@ export function ChatRoomScreen() {
     const handleImageClick = (imageUrl: string) => {
         setLightboxImage(imageUrl);
         setLightboxOpen(true);
+        window.history.pushState({ lightbox: true }, '');
     };
+
+    useEffect(() => {
+        if (!lightboxOpen) return;
+
+        const handlePopState = () => {
+            setLightboxOpen(false);
+        };
+
+        window.addEventListener('popstate', handlePopState);
+
+        return () => {
+            window.removeEventListener('popstate', handlePopState);
+        };
+    }, [lightboxOpen]);
 
     if (loading) {
         return <LoadingView />;
@@ -352,7 +367,7 @@ export function ChatRoomScreen() {
             
             <Lightbox
                 open={lightboxOpen}
-                close={() => setLightboxOpen(false)}
+                close={() => window.history.back()}
                 slides={[{ src: lightboxImage }]}
                 plugins={[Zoom, Download]}
             />
