@@ -29,7 +29,16 @@ export function ChatRoomScreen() {
     const chatContainerRef = useRef<HTMLDivElement>(null);
     const isAtBottomRef = useRef(true);
 
-    const { messages: wsMessages, isConnected, sendMessage, connect, disconnect } = useWebSocket();
+    const { messages: wsMessages, isConnected, connectionStatus } = useWebSocket();
+
+    // Simple connection indicator (can be refined with TDS component later)
+    const connectionLabel = connectionStatus === 'connected'
+        ? '연결됨'
+        : connectionStatus === 'reconnecting'
+            ? '재연결 중…'
+            : connectionStatus === 'connecting'
+                ? '연결 중…'
+                : '연결 끊김';
 
     const checkScrollPosition = useCallback(() => {
         if (!chatContainerRef.current) return;
@@ -75,7 +84,7 @@ export function ChatRoomScreen() {
         return () => {
             disconnect();
         };
-    }, [roomId, connect, disconnect]);
+    }, [roomId]);
 
     useEffect(() => {
         if (historyMessages.length > 0) {
@@ -346,6 +355,14 @@ export function ChatRoomScreen() {
                 bottom: 0,
                 zIndex: 10
             }}>
+                <div style={{
+                    fontSize: '12px',
+                    color: connectionStatus === 'connected' ? '#2DB400' : '#8B95A1',
+                    fontWeight: 600,
+                    whiteSpace: 'nowrap'
+                }}>
+                    {connectionLabel}
+                </div>
                 <div style={{
                     flex: 1,
                     height: '48px',
