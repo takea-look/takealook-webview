@@ -2,6 +2,13 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080
 const TOKEN_KEY = 'takealook_access_token';
 const REFRESH_TOKEN_KEY = 'takealook_refresh_token';
 
+type RefreshResponse = {
+  accessToken: string;
+  refreshToken?: string;
+};
+
+let refreshInFlight: Promise<void> | null = null;
+
 interface ApiErrorType extends Error {
   status: number;
 }
@@ -34,6 +41,45 @@ export function clearAccessToken(): void {
   localStorage.removeItem(REFRESH_TOKEN_KEY);
 }
 
+async function refreshAccessToken(): Promise<void> {
+  const token = getRefreshToken();
+  if (!token) {
+    throw createApiError(401, 'Unauthorized');
+  }
+
+  const response = await fetch(`${API_BASE_URL}/auth/toss/refresh`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ refreshToken: token }),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text().catch(() => 'Unknown error');
+    throw createApiError(response.status, errorText);
+  }
+
+  const data = (await response.json()) as RefreshResponse;
+  if (!data?.accessToken) {
+    throw createApiError(500, 'Invalid refresh response');
+  }
+
+  setAccessToken(data.accessToken);
+  if (data.refreshToken) {
+    setRefreshToken(data.refreshToken);
+  }
+}
+
+async function refreshAccessTokenOnce(): Promise<void> {
+  if (!refreshInFlight) {
+    refreshInFlight = refreshAccessToken().finally(() => {
+      refreshInFlight = null;
+    });
+  }
+  return refreshInFlight;
+}
+
 interface RequestOptions extends RequestInit {
   requiresAuth?: boolean;
 }
@@ -44,29 +90,47 @@ export async function apiRequest<T>(
 ): Promise<T> {
   const { requiresAuth = true, headers = {}, ...restOptions } = options;
 
-  const requestHeaders: Record<string, string> = {
-    'Content-Type': 'application/json',
-  };
-
-  Object.entries(headers).forEach(([key, value]) => {
-    if (typeof value === 'string') {
-      requestHeaders[key] = value;
-    }
-  });
-
-  if (requiresAuth) {
-    const token = getAccessToken();
-    if (token) {
-      requestHeaders['accessToken'] = token;
-    }
-  }
-
   const url = `${API_BASE_URL}${endpoint}`;
 
-  const response = await fetch(url, {
-    ...restOptions,
-    headers: requestHeaders,
-  });
+  const buildHeaders = (): Record<string, string> => {
+    const requestHeaders: Record<string, string> = {
+      'Content-Type': 'application/json',
+    };
+
+    Object.entries(headers).forEach(([key, value]) => {
+      if (typeof value === 'string') {
+        requestHeaders[key] = value;
+      }
+    });
+
+    if (requiresAuth) {
+      const token = getAccessToken();
+      if (token) {
+        requestHeaders['accessToken'] = token;
+      }
+    }
+
+    return requestHeaders;
+  };
+
+  const request = async (): Promise<Response> => {
+    return fetch(url, {
+      ...restOptions,
+      headers: buildHeaders(),
+    });
+  };
+
+  let response = await request();
+
+  if (response.status === 401 && requiresAuth) {
+    try {
+      await refreshAccessTokenOnce();
+      response = await request();
+    } catch {
+      clearAccessToken();
+      throw createApiError(401, 'Unauthorized');
+    }
+  }
 
   if (response.status === 401) {
     clearAccessToken();
