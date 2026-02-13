@@ -1,8 +1,18 @@
 import type { PresignedUrlResponse } from '../types/api';
 import { apiRequest } from './client';
 
-export async function getUploadUrl(key: string): Promise<PresignedUrlResponse> {
-  return apiRequest<PresignedUrlResponse>(`/storage/upload?key=${encodeURIComponent(key)}`);
+export const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_BASE_URL || 'https://img.takealook.my';
+
+export async function getUploadUrl(key: string, sizeBytes?: number): Promise<PresignedUrlResponse> {
+  const query = new URLSearchParams({ key });
+  if (sizeBytes != null) {
+    query.set('sizeBytes', String(sizeBytes));
+  }
+  return apiRequest<PresignedUrlResponse>(`/storage/upload?${query.toString()}`);
+}
+
+export function getPublicImageUrl(key: string): string {
+  return `${IMAGE_BASE_URL.replace(/\/$/, '')}/${key}`;
 }
 
 export async function uploadToR2(presignedUrl: string, file: File): Promise<void> {
