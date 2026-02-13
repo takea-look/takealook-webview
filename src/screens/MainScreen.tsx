@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ChatRoomListScreen } from './ChatRoomListScreen';
 import { MyInfoScreen } from './MyInfoScreen';
@@ -7,18 +6,11 @@ import { BottomNavigation } from '../components/BottomNavigation';
 export function MainScreen() {
     const location = useLocation();
     const navigate = useNavigate();
-    const [activeTab, setActiveTab] = useState<'chats' | 'myinfo'>('chats');
 
-    useEffect(() => {
-        if (location.pathname === '/myinfo') {
-            setActiveTab('myinfo');
-        } else {
-            setActiveTab('chats');
-        }
-    }, [location.pathname]);
+    // Derive UI state from the URL to avoid syncing with useEffect.
+    const activeTab: 'chats' | 'myinfo' = location.pathname === '/myinfo' ? 'myinfo' : 'chats';
 
     const handleTabChange = (tab: 'chats' | 'myinfo') => {
-        setActiveTab(tab);
         navigate(tab === 'myinfo' ? '/myinfo' : '/', { replace: true });
     };
 

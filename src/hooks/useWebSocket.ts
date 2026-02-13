@@ -34,7 +34,7 @@ export function useWebSocket(): UseWebSocketResult {
     isConnectingRef.current = false;
   }, []);
 
-  const connect = useCallback(async (roomId: number) => {
+  const connect = useCallback(async function connect(roomId: number) {
     try {
       if (isConnectingRef.current) {
         console.log('[WS] Already connecting, skipping duplicate connect() call');

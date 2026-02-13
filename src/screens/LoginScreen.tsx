@@ -46,6 +46,7 @@ export function LoginScreen() {
             }
             navigate('/');
         } catch (err) {
+            console.error(err);
             setError('토스 로그인에 실패했습니다.');
         } finally {
             setIsLoading(false);
