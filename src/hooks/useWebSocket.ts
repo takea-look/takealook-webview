@@ -8,6 +8,8 @@ const WS_BASE_URL = 'wss://s1.takealook.my';
 interface UseWebSocketResult {
   messages: UserChatMessage[];
   isConnected: boolean;
+  connectionStatus: 'disconnected' | 'connecting' | 'connected' | 'reconnecting';
+  lastError: string | null;
   sendMessage: (roomId: number, imageUrl: string, senderId: number, replyToId?: number) => void;
   connect: (roomId: number) => Promise<void>;
   disconnect: () => void;
@@ -16,20 +18,30 @@ interface UseWebSocketResult {
 export function useWebSocket(): UseWebSocketResult {
   const [messages, setMessages] = useState<UserChatMessage[]>([]);
   const [isConnected, setIsConnected] = useState(false);
+  const [connectionStatus, setConnectionStatus] = useState<UseWebSocketResult['connectionStatus']>('disconnected');
+  const [lastError, setLastError] = useState<string | null>(null);
   const wsRef = useRef<WebSocket | null>(null);
   const reconnectTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
   const currentRoomIdRef = useRef<number | null>(null);
   const isConnectingRef = useRef(false);
 
+  const reconnectAttemptRef = useRef(0);
+  const lastDisconnectReasonRef = useRef<string | null>(null);
+
   const disconnect = useCallback(() => {
     if (reconnectTimeoutRef.current) {
       clearTimeout(reconnectTimeoutRef.current);
     }
+    lastDisconnectReasonRef.current = 'User disconnected';
+    reconnectAttemptRef.current = 0;
+
     if (wsRef.current) {
       wsRef.current.close(1000, 'User disconnected');
       wsRef.current = null;
     }
+
     setIsConnected(false);
+    setConnectionStatus('disconnected');
     currentRoomIdRef.current = null;
     isConnectingRef.current = false;
   }, []);
@@ -41,10 +53,16 @@ export function useWebSocket(): UseWebSocketResult {
         return;
       }
 
+      // Clear any pending reconnect when user (re)connects explicitly.
+      if (reconnectTimeoutRef.current) {
+        clearTimeout(reconnectTimeoutRef.current);
+      }
+
       if (wsRef.current) {
         const existingState = wsRef.current.readyState;
         if (existingState === WebSocket.OPEN || existingState === WebSocket.CONNECTING) {
           console.log('[WS] Closing existing connection before reconnecting');
+          lastDisconnectReasonRef.current = 'Reconnecting';
           wsRef.current.close(1000, 'Reconnecting');
           wsRef.current = null;
         }
@@ -53,16 +71,22 @@ export function useWebSocket(): UseWebSocketResult {
       const token = getAccessToken();
       if (!token) {
         console.error('No access token available');
+        setLastError('No access token available');
+        setConnectionStatus('disconnected');
         return;
       }
 
       isConnectingRef.current = true;
       currentRoomIdRef.current = roomId;
+      setLastError(null);
+
+      // If we already tried before, we're reconnecting.
+      setConnectionStatus(reconnectAttemptRef.current > 0 ? 'reconnecting' : 'connecting');
 
       console.log('[WS] Requesting ticket...');
       const { ticket } = await getWebSocketTicket();
       console.log('[WS] Got ticket:', ticket);
-      
+
       const wsUrl = `${WS_BASE_URL}/chat?ticket=${ticket}&roomId=${roomId}`;
       const sessionId = Math.random().toString(36).substring(2, 9);
       console.log('[WS] Connecting to:', wsUrl, '| Session ID:', sessionId);
@@ -72,6 +96,8 @@ export function useWebSocket(): UseWebSocketResult {
       ws.onopen = () => {
         console.log('[WS] Connected | Session ID:', sessionId);
         setIsConnected(true);
+        setConnectionStatus('connected');
+        reconnectAttemptRef.current = 0;
         isConnectingRef.current = false;
       };
 
@@ -86,8 +112,9 @@ export function useWebSocket(): UseWebSocketResult {
         }
       };
 
-      ws.onerror = (error) => {
-        console.error('WebSocket error:', error);
+      ws.onerror = () => {
+        // Browser provides limited error detail for WebSocket errors.
+        setLastError('WebSocket error');
         isConnectingRef.current = false;
       };
 
@@ -97,17 +124,39 @@ export function useWebSocket(): UseWebSocketResult {
         wsRef.current = null;
         isConnectingRef.current = false;
 
-        if (event.code !== 1000 && currentRoomIdRef.current !== null) {
-          console.log('[WS] Reconnecting in 3 seconds...');
+        // Normal close: user-initiated or intentional close.
+        if (event.code === 1000) {
+          setConnectionStatus('disconnected');
+          return;
+        }
+
+        // Unexpected disconnect → retry with exponential backoff (cap).
+        if (currentRoomIdRef.current !== null) {
+          reconnectAttemptRef.current += 1;
+          const attempt = reconnectAttemptRef.current;
+          const baseDelayMs = 1000;
+          const maxDelayMs = 15000;
+          const delay = Math.min(maxDelayMs, baseDelayMs * Math.pow(2, attempt - 1));
+          const jitter = Math.floor(Math.random() * 300);
+          const waitMs = delay + jitter;
+
+          setConnectionStatus('reconnecting');
+          setLastError(event.reason || 'Disconnected');
+
+          console.log(`[WS] Reconnecting in ${waitMs}ms... (attempt ${attempt})`);
           const reconnectRoomId = currentRoomIdRef.current;
           reconnectTimeoutRef.current = setTimeout(() => {
             connect(reconnectRoomId);
-          }, 3000);
+          }, waitMs);
+        } else {
+          setConnectionStatus('disconnected');
         }
       };
     } catch (err) {
       console.error('Failed to connect WebSocket:', err);
+      setLastError('Failed to connect WebSocket');
       setIsConnected(false);
+      setConnectionStatus('disconnected');
       isConnectingRef.current = false;
     }
   }, []);
@@ -139,6 +188,8 @@ export function useWebSocket(): UseWebSocketResult {
   return {
     messages,
     isConnected,
+    connectionStatus,
+    lastError,
     sendMessage,
     connect,
     disconnect,
