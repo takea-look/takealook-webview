@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { getChatMessages } from '../api/chat';
-import { getUploadUrl, uploadToR2 } from '../api/storage';
+import { getPublicImageUrl, getUploadUrl, uploadToR2 } from '../api/storage';
 import { useWebSocket } from '../hooks/useWebSocket';
 import type { UserChatMessage } from '../types/api';
 import { MessageType } from '../types/api';
@@ -112,11 +112,16 @@ export function ChatRoomScreen() {
         try {
             setIsUploading(true);
             const roomIdNum = parseInt(roomId, 10);
-            const extension = file.name.split('.').pop();
+            const extension = (file.name.split('.').pop() || '').toLowerCase();
+            const allowedExt = new Set(['png', 'jpg', 'jpeg', 'webp']);
+            if (!allowedExt.has(extension)) {
+                throw new Error('지원하지 않는 이미지 형식입니다. png/jpg/jpeg/webp만 업로드할 수 있어요.');
+            }
+
             const filename = `chat/${roomIdNum}/${Date.now()}.${extension}`;
-            const { url: presignedUrl } = await getUploadUrl(filename);
+            const { url: presignedUrl } = await getUploadUrl(filename, file.size);
             await uploadToR2(presignedUrl, file);
-            const imageUrl = `https://img.takealook.my/${filename}`;
+            const imageUrl = getPublicImageUrl(filename);
 
             if (myUserId === null) {
                 console.error('User ID not loaded yet');
