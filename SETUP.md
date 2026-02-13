@@ -37,6 +37,24 @@
 
 ## 🛠️ 개발 명령어
 
+## 🔐 환경변수 설정 (.env)
+
+이 프로젝트는 API 서버 주소를 `VITE_API_BASE_URL` 환경변수로 설정합니다. (사용처: `src/api/client.ts`)
+
+1. 예시 파일 복사:
+```bash
+cp .env.example .env
+```
+
+2. `.env`에서 API Base URL 설정:
+```bash
+VITE_API_BASE_URL=http://localhost:8080
+```
+
+참고:
+- Vite에서 클라이언트에서 쓰는 환경변수는 `VITE_` 접두어가 필요합니다.
+- 미설정 시 기본값은 `http://localhost:8080` 입니다.
+
 ### 로컬 개발 서버 실행
 ```bash
 npm run dev
@@ -48,6 +66,14 @@ npm run dev
 npm run build
 ```
 빌드 결과물은 `dist/` 폴더에 생성됩니다.
+
+### 배포 (정적 호스팅)
+
+`npm run build` 후 생성된 `dist/`를 정적 파일로 서빙하면 됩니다.
+
+참고:
+- `VITE_API_BASE_URL`은 빌드 시점에 번들에 포함됩니다. 배포 환경에 맞는 값을 `.env`(또는 CI 환경변수)로 설정한 뒤 빌드하세요.
+- 로컬에서 빌드 결과 확인: `npm run preview`
 
 ### 실기기에서 테스트하기
 
