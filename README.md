@@ -17,6 +17,10 @@ VITE_API_BASE_URL=http://localhost:8080
 - Vite에서 클라이언트에서 쓰는 환경변수는 `VITE_` 접두어가 필요합니다.
 - 미설정 시 기본값은 `http://localhost:8080` 입니다.
 
+## E2E 테스트
+
+- WebView 앱 E2E 시나리오 테스트 플랜: `docs/E2E_TEST_PLAN.md`
+
 ## 배포 (정적 호스팅)
 
 ```bash
