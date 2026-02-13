@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { getChatMessages } from '../api/chat';
 import { getUploadUrl, uploadToR2 } from '../api/storage';
 import { useWebSocket } from '../hooks/useWebSocket';
@@ -16,7 +16,6 @@ import "yet-another-react-lightbox/styles.css";
 
 export function ChatRoomScreen() {
     const { roomId } = useParams<{ roomId: string }>();
-    const navigate = useNavigate();
     const [historyMessages, setHistoryMessages] = useState<UserChatMessage[]>([]);
     const [myUserId, setMyUserId] = useState<number | null>(null);
     const [isUploading, setIsUploading] = useState(false);
