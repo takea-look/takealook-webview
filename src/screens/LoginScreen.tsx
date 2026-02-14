@@ -1,35 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Spacing } from '@toss/tds-mobile';
-import { signin } from '../api/auth';
-import { setAccessToken } from '../api/client';
-import type { LoginRequest } from '../types/api';
 
 export function LoginScreen() {
     const navigate = useNavigate();
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
-
-    const handleLogin = async () => {
-        if (!username || !password) {
-            setError('아이디와 비밀번호를 입력해주세요');
-            return;
-        }
-
-        try {
-            setIsLoading(true);
-            setError('');
-            const response = await signin({ username, password } as LoginRequest);
-            setAccessToken(response.accessToken);
-            navigate('/');
-        } catch {
-            setError('로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.');
-        } finally {
-            setIsLoading(false);
-        }
-    };
 
     const handleTossLogin = async () => {
         try {
@@ -138,120 +114,15 @@ export function LoginScreen() {
                         {isLoading ? '로그인 중...' : '토스로 시작하기'}
                     </button>
 
-                    <Spacing size={24} />
+                    <Spacing size={16} />
 
-                    <div style={{ 
-                        display: 'flex', 
-                        alignItems: 'center', 
-                        gap: '8px',
-                        padding: '0 8px'
-                    }}>
-                        <div style={{ height: '1px', flex: 1, backgroundColor: '#f2f4f6' }}></div>
-                        <span style={{ color: '#b0b8c1', fontSize: '13px' }}>또는</span>
-                        <div style={{ height: '1px', flex: 1, backgroundColor: '#f2f4f6' }}></div>
-                    </div>
+                    {error && (
+                        <p style={{ color: '#f04452', fontSize: '13px', marginTop: '12px', textAlign: 'center' }}>{error}</p>
+                    )}
 
-                    <Spacing size={24} />
-
-                    <div>
-                        <div style={{ marginBottom: '16px' }}>
-                            <label style={{ 
-                                display: 'block', 
-                                fontSize: '14px', 
-                                fontWeight: '600', 
-                                marginBottom: '8px', 
-                                color: '#333d4b' 
-                            }}>
-                                아이디
-                            </label>
-                            <input
-                                type="text"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
-                                placeholder="아이디를 입력하세요"
-                                disabled={isLoading}
-                                style={{
-                                    width: '100%',
-                                    padding: '14px 16px',
-                                    fontSize: '15px',
-                                    border: '1px solid #e5e8eb',
-                                    borderRadius: '12px',
-                                    outline: 'none',
-                                    boxSizing: 'border-box',
-                                    minHeight: '48px',
-                                    backgroundColor: '#f9fafb'
-                                }}
-                            />
-                        </div>
-                        <div style={{ marginBottom: '16px' }}>
-                            <label style={{ 
-                                display: 'block', 
-                                fontSize: '14px', 
-                                fontWeight: '600', 
-                                marginBottom: '8px', 
-                                color: '#333d4b' 
-                            }}>
-                                비밀번호
-                            </label>
-                            <input
-                                type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                placeholder="비밀번호를 입력하세요"
-                                disabled={isLoading}
-                                onKeyPress={(e) => {
-                                    if (e.key === 'Enter') {
-                                        if (!username || !password) {
-                                            setError('아이디와 비밀번호를 입력해주세요');
-                                            return;
-                                        }
-                                        handleLogin();
-                                    }
-                                }}
-                                style={{
-                                    width: '100%',
-                                    padding: '14px 16px',
-                                    fontSize: '15px',
-                                    border: '1px solid #e5e8eb',
-                                    borderRadius: '12px',
-                                    outline: 'none',
-                                    boxSizing: 'border-box',
-                                    minHeight: '48px',
-                                    backgroundColor: '#f9fafb'
-                                }}
-                            />
-                        </div>
-                        {error && (
-                            <p style={{ color: '#f04452', fontSize: '13px', marginTop: '8px' }}>{error}</p>
-                        )}
-                    </div>
-                </div>
-
-                <div style={{ 
-                    padding: '24px 0',
-                    position: 'sticky',
-                    bottom: '0',
-                    backgroundColor: '#fff'
-                }}>
-                    <button
-                        type="button"
-                        onClick={handleLogin}
-                        disabled={isLoading}
-                        style={{
-                            width: '100%',
-                            padding: '14px 16px',
-                            fontSize: '16px',
-                            fontWeight: '600',
-                            color: '#fff',
-                            backgroundColor: isLoading ? '#b0c4de' : '#3182f6',
-                            border: 'none',
-                            borderRadius: '12px',
-                            cursor: isLoading ? 'not-allowed' : 'pointer',
-                            minHeight: '52px'
-                        }}
-                    >
-                        {isLoading ? '로그인 중...' : '로그인'}
-                    </button>
+                    <p style={{ color: '#8b95a1', fontSize: '13px', margin: '12px 0 0', textAlign: 'center' }}>
+                        현재는 토스 로그인 플로우만 지원합니다.
+                    </p>
                 </div>
             </main>
         </div>
