@@ -39,6 +39,8 @@ export function ChatRoomScreen() {
     const chatContainerRef = useRef<HTMLDivElement>(null);
     const isAtBottomRef = useRef(true);
 
+    const REACTION_EMOJIS = ['👍', '😂', '❤️', '😮', '🔥', '👏'];
+
     const {
         messages: wsMessages,
         isConnected,
@@ -46,7 +48,12 @@ export function ChatRoomScreen() {
         connect,
         disconnect,
         sendMessage,
+        sendReaction,
     } = useWebSocket();
+
+    const [reactionMenuMessageId, setReactionMenuMessageId] = useState<number | null>(null);
+    const [localReactionCounts, setLocalReactionCounts] = useState<Record<number, Record<string, number>>>({});
+    const reactionTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     // Simple connection indicator (can be refined with TDS component later)
     const connectionLabel = connectionStatus === 'connected'
@@ -127,7 +134,7 @@ export function ChatRoomScreen() {
         return () => {
             disconnect();
         };
-    }, [roomId]);
+    }, [roomId, connect, disconnect]);
 
     useEffect(() => {
         if (historyMessages.length > 0) {
@@ -147,6 +154,92 @@ export function ChatRoomScreen() {
             setShowScrollButton(true);
         }
     }, [wsMessages, myUserId]);
+
+    const getReactionCounts = useCallback((message: UserChatMessage) => {
+        const historyCounts = message.reactionCounts ?? {};
+        const localCounts = localReactionCounts[message.id ?? -1] ?? {};
+        const merged: Record<string, number> = { ...historyCounts };
+
+        Object.entries(localCounts).forEach(([emoji, count]) => {
+            merged[emoji] = (merged[emoji] ?? 0) + count;
+        });
+
+        return Object.entries(merged)
+            .map(([emoji, count]) => ({ emoji, count }))
+            .sort((a, b) => b.count - a.count)
+            .slice(0, 3);
+    }, [localReactionCounts]);
+
+    const applyLocalReaction = useCallback((messageId: number, emoji: string) => {
+        setLocalReactionCounts(prev => {
+            const prevMessage = prev[messageId] ?? {};
+            return {
+                ...prev,
+                [messageId]: {
+                    ...prevMessage,
+                    [emoji]: (prevMessage[emoji] ?? 0) + 1,
+                },
+            };
+        });
+    }, []);
+
+    const openReactionMenu = useCallback((messageId: number | undefined) => {
+        if (messageId == null) return;
+        setReactionMenuMessageId(messageId);
+    }, []);
+
+    const closeReactionMenu = useCallback(() => {
+        setReactionMenuMessageId(null);
+    }, []);
+
+    useEffect(() => {
+        const handlePointerDown = () => {
+            closeReactionMenu();
+        };
+
+        document.addEventListener('pointerdown', handlePointerDown);
+
+        return () => {
+            document.removeEventListener('pointerdown', handlePointerDown);
+        };
+    }, [closeReactionMenu]);
+
+    const handleReactionSelect = useCallback((messageId: number | undefined, emoji: string) => {
+        if (messageId == null) {
+            closeReactionMenu();
+            return;
+        }
+
+        if (myUserId == null) return;
+
+        const roomIdNum = Number(roomId);
+        if (!Number.isFinite(roomIdNum)) return;
+
+        sendReaction(roomIdNum, myUserId, messageId, emoji);
+        applyLocalReaction(messageId, emoji);
+        closeReactionMenu();
+    }, [closeReactionMenu, applyLocalReaction, myUserId, sendReaction, roomId]);
+
+    const handleMessagePointerDown = useCallback((messageId: number | undefined) => {
+        if (reactionTimeoutRef.current != null) {
+            clearTimeout(reactionTimeoutRef.current);
+        }
+
+        if (messageId == null) {
+            return;
+        }
+
+        reactionTimeoutRef.current = setTimeout(() => {
+            openReactionMenu(messageId);
+        }, 500);
+    }, [openReactionMenu]);
+
+    const handleMessagePointerUp = useCallback(() => {
+        if (reactionTimeoutRef.current != null) {
+            clearTimeout(reactionTimeoutRef.current);
+            reactionTimeoutRef.current = null;
+        }
+    }, []);
 
     const allMessages = [...historyMessages, ...wsMessages];
     const slides = allMessages
@@ -334,9 +427,12 @@ export function ChatRoomScreen() {
                                     <div
                                         onContextMenu={(e) => {
                                             e.preventDefault();
-                                            setReplyTarget(msg);
+                                            openReactionMenu(msg.id);
                                         }}
                                         onDoubleClick={() => setReplyTarget(msg)}
+                                        onPointerDown={() => handleMessagePointerDown(msg.id)}
+                                        onPointerUp={handleMessagePointerUp}
+                                        onPointerLeave={handleMessagePointerUp}
                                         style={{
                                             borderRadius: isMyMessage ? '20px 4px 20px 20px' : '4px 20px 20px 20px',
                                             overflow: 'hidden',
@@ -363,7 +459,66 @@ export function ChatRoomScreen() {
                                                 onClick={() => msg.imageUrl && handleImageClick(msg.imageUrl)}
                                             />
                                         )}
+                                        {getReactionCounts(msg).length > 0 && (
+                                            <div style={{
+                                                display: 'flex',
+                                                gap: '6px',
+                                                justifyContent: 'flex-end',
+                                                padding: '6px 8px',
+                                                fontSize: '11px',
+                                                color: isMyMessage ? 'rgba(255,255,255,0.9)' : '#8B95A1'
+                                            }}>
+                                                {getReactionCounts(msg).map(item => (
+                                                    <span
+                                                        key={`${msg.id}-${item.emoji}`}
+                                                        style={{
+                                                            display: 'inline-flex',
+                                                            alignItems: 'center',
+                                                            gap: '3px',
+                                                            background: isMyMessage ? 'rgba(0,0,0,0.2)' : '#EAF1FF',
+                                                            borderRadius: '12px',
+                                                            padding: '1px 7px'
+                                                        }}
+                                                    >
+                                                        <span>{item.emoji}</span>
+                                                        <span>{item.count}</span>
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        )}
                                     </div>
+                                    {reactionMenuMessageId === msg.id && (
+                                        <div
+                                            style={{
+                                                marginTop: '6px',
+                                                display: 'flex',
+                                                gap: '8px',
+                                                justifyContent: isMyMessage ? 'flex-end' : 'flex-start',
+                                                zIndex: 10,
+                                            }}
+                                            onPointerDown={(e) => e.stopPropagation()}
+                                        >
+                                            {REACTION_EMOJIS.map(emoji => (
+                                                <button
+                                                    key={emoji}
+                                                    type="button"
+                                                    onPointerDown={(e) => e.stopPropagation()}
+                                                    onClick={() => handleReactionSelect(msg.id, emoji)}
+                                                    style={{
+                                                        border: 'none',
+                                                        background: '#FFF',
+                                                        borderRadius: '16px',
+                                                        padding: '4px 8px',
+                                                        fontSize: '18px',
+                                                        cursor: 'pointer',
+                                                        boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+                                                    }}
+                                                >
+                                                    {emoji}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    )}
                                 </div>
     
                                 <span style={{

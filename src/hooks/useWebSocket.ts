@@ -11,6 +11,7 @@ interface UseWebSocketResult {
   connectionStatus: 'disconnected' | 'connecting' | 'connected' | 'reconnecting';
   lastError: string | null;
   sendMessage: (roomId: number, imageUrl: string, senderId: number, replyToId?: number) => void;
+  sendReaction: (roomId: number, senderId: number, targetMessageId: number, emoji: string) => void;
   connect: (roomId: number) => Promise<void>;
   disconnect: () => void;
 }
@@ -106,6 +107,36 @@ export function useWebSocket(): UseWebSocketResult {
         try {
           const message: UserChatMessage = JSON.parse(event.data);
           console.log('[WS] Parsed message:', message);
+
+          if (message.type === 'REACTION') {
+            const reactionMessageId = message.targetMessageId ?? message.id;
+            const emoji = message.emoji;
+
+            if (!reactionMessageId || !emoji) {
+              return;
+            }
+
+            setMessages((prev) =>
+              prev.map((item) => {
+                if (item.id !== reactionMessageId) {
+                  return item;
+                }
+
+                const prevCounts = item.reactionCounts ?? {};
+                const nextCount = (prevCounts[emoji] ?? 0) + 1;
+
+                return {
+                  ...item,
+                  reactionCounts: {
+                    ...prevCounts,
+                    [emoji]: nextCount,
+                  },
+                };
+              }),
+            );
+            return;
+          }
+
           setMessages(prev => [...prev, message]);
         } catch (err) {
           console.error('Failed to parse WebSocket message:', err);
@@ -170,12 +201,32 @@ export function useWebSocket(): UseWebSocketResult {
     const message = {
       roomId,
       senderId,
+      type: 'CHAT',
       imageUrl,
       replyToId: replyToId || null,
       createdAt: Date.now(),
     };
 
     console.log('[WS] Sending message:', message);
+    wsRef.current.send(JSON.stringify(message));
+  }, []);
+
+  const sendReaction = useCallback((roomId: number, senderId: number, targetMessageId: number, emoji: string) => {
+    if (!wsRef.current || wsRef.current.readyState !== WebSocket.OPEN) {
+      console.error('WebSocket is not connected');
+      return;
+    }
+
+    const message = {
+      roomId,
+      senderId,
+      type: 'REACTION',
+      targetMessageId,
+      emoji,
+      createdAt: Date.now(),
+    };
+
+    console.log('[WS] Sending reaction:', message);
     wsRef.current.send(JSON.stringify(message));
   }, []);
 
@@ -191,6 +242,7 @@ export function useWebSocket(): UseWebSocketResult {
     connectionStatus,
     lastError,
     sendMessage,
+    sendReaction,
     connect,
     disconnect,
   };
