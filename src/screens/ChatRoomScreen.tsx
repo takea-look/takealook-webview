@@ -31,6 +31,8 @@ export function ChatRoomScreen() {
     const [showScrollButton, setShowScrollButton] = useState(false);
     const [lightboxOpen, setLightboxOpen] = useState(false);
     const [lightboxIndex, setLightboxIndex] = useState(-1);
+
+    const [replyTarget, setReplyTarget] = useState<UserChatMessage | null>(null);
     
     const fileInputRef = useRef<HTMLInputElement>(null);
     const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -180,7 +182,8 @@ export function ChatRoomScreen() {
             const imageUrl = getPublicImageUrl(filename);
 
             setLastUpload({ file, roomIdNum, filename, imageUrl });
-            sendMessage(roomIdNum, imageUrl, myUserId);
+            sendMessage(roomIdNum, imageUrl, myUserId, replyTarget?.id);
+            setReplyTarget(null);
         } catch (error) {
             console.error('Upload failed:', error);
             const message = error instanceof Error ? error.message : '사진 업로드에 실패했습니다.';
@@ -321,13 +324,30 @@ export function ChatRoomScreen() {
                                         </span>
                                     )}
                                     
-                                    <div style={{
-                                        borderRadius: isMyMessage ? '20px 4px 20px 20px' : '4px 20px 20px 20px',
-                                        overflow: 'hidden',
-                                        boxShadow: isMyMessage ? 'none' : 'inset 0 0 0 1px rgba(0,0,0,0.04)',
-                                        backgroundColor: isMyMessage ? '#3182F6' : '#F2F4F6',
-                                        color: isMyMessage ? '#fff' : '#333d4b'
-                                    }}>
+                                    <div
+                                        onContextMenu={(e) => {
+                                            e.preventDefault();
+                                            setReplyTarget(msg);
+                                        }}
+                                        onDoubleClick={() => setReplyTarget(msg)}
+                                        style={{
+                                            borderRadius: isMyMessage ? '20px 4px 20px 20px' : '4px 20px 20px 20px',
+                                            overflow: 'hidden',
+                                            boxShadow: isMyMessage ? 'none' : 'inset 0 0 0 1px rgba(0,0,0,0.04)',
+                                            backgroundColor: isMyMessage ? '#3182F6' : '#F2F4F6',
+                                            color: isMyMessage ? '#fff' : '#333d4b'
+                                        }}
+                                    >
+                                        {msg.replyToId != null && (
+                                            <div style={{
+                                                padding: '8px 10px',
+                                                fontSize: '12px',
+                                                opacity: 0.9,
+                                                borderBottom: isMyMessage ? '1px solid rgba(255,255,255,0.2)' : '1px solid rgba(0,0,0,0.06)'
+                                            }}>
+                                                ↪ 답장 (replyToId: {msg.replyToId})
+                                            </div>
+                                        )}
                                         {msg.imageUrl && (
                                             <img
                                                 src={msg.imageUrl}
@@ -428,21 +448,71 @@ export function ChatRoomScreen() {
                 backgroundColor: '#FFFFFF',
                 borderTop: '1px solid #F2F4F6',
                 display: 'flex',
-                alignItems: 'center',
-                gap: '12px',
+                flexDirection: 'column',
+                gap: '10px',
                 position: 'sticky',
                 bottom: 0,
                 zIndex: 10
             }}>
+                {replyTarget && (
+                    <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '10px',
+                        padding: '10px 12px',
+                        borderRadius: '12px',
+                        backgroundColor: '#F9FAFB',
+                        border: '1px solid #E5E8EB'
+                    }}>
+                        <div style={{
+                            width: '36px',
+                            height: '36px',
+                            borderRadius: '10px',
+                            backgroundColor: '#EFF2F4',
+                            backgroundImage: replyTarget.imageUrl ? `url(${replyTarget.imageUrl})` : 'none',
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
+                            flexShrink: 0
+                        }} />
+                        <div style={{ flex: 1, minWidth: 0 }}>
+                            <div style={{ fontSize: '12px', fontWeight: 700, color: '#333D4B' }}>
+                                답장: {replyTarget.sender.nickname || replyTarget.sender.username}
+                            </div>
+                            <div style={{ fontSize: '11px', color: '#8B95A1' }}>
+                                {replyTarget.id != null ? `messageId: ${replyTarget.id}` : 'messageId 없음(서버 응답 확인 필요)'}
+                            </div>
+                        </div>
+                        <button
+                            type="button"
+                            onClick={() => setReplyTarget(null)}
+                            style={{
+                                border: 'none',
+                                background: 'transparent',
+                                color: '#3182F6',
+                                fontWeight: 800,
+                                cursor: 'pointer'
+                            }}
+                        >
+                            취소
+                        </button>
+                    </div>
+                )}
+
                 <div style={{
-                    fontSize: '12px',
-                    color: connectionStatus === 'connected' ? '#2DB400' : '#8B95A1',
-                    fontWeight: 600,
-                    whiteSpace: 'nowrap'
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px'
                 }}>
-                    {connectionLabel}
-                </div>
-                <div style={{
+                    <div style={{
+                        fontSize: '12px',
+                        color: connectionStatus === 'connected' ? '#2DB400' : '#8B95A1',
+                        fontWeight: 600,
+                        whiteSpace: 'nowrap'
+                    }}>
+                        {connectionLabel}
+                    </div>
+
+                    <div style={{
                     flex: 1,
                     height: '48px',
                     backgroundColor: '#F9FAFB',
@@ -453,7 +523,7 @@ export function ChatRoomScreen() {
                     color: '#8B95A1',
                     fontSize: '15px'
                 }}>
-                    사진으로만 대화할 수 있어요
+                    {replyTarget ? '답장할 사진을 보내세요' : '사진으로만 대화할 수 있어요'}
                 </div>
 
                 <input
@@ -486,6 +556,7 @@ export function ChatRoomScreen() {
                 >
                     <CameraIcon size={24} color="#FFFFFF" />
                 </button>
+            </div>
             </div>
 
             <style>{`

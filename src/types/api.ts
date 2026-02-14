@@ -42,6 +42,7 @@ export const MessageType = {
 export type MessageType = typeof MessageType[keyof typeof MessageType];
 
 export interface UserChatMessage {
+  id?: number;
   roomId: number;
   sender: UserProfile;
   type?: MessageType;
