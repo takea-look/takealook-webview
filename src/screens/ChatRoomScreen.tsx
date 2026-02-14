@@ -21,6 +21,12 @@ export function ChatRoomScreen() {
     const [isLoadingHistory, setIsLoadingHistory] = useState(false);
     const [myUserId, setMyUserId] = useState<number | null>(null);
     const [isUploading, setIsUploading] = useState(false);
+    const [lastUpload, setLastUpload] = useState<{
+        file: File;
+        roomIdNum: number;
+        filename: string;
+        imageUrl: string;
+    } | null>(null);
     const [loading, setLoading] = useState(true);
     const [showScrollButton, setShowScrollButton] = useState(false);
     const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -142,32 +148,43 @@ export function ChatRoomScreen() {
         fileInputRef.current?.click();
     };
 
+    const MAX_UPLOAD_BYTES = 10 * 1024 * 1024; // 10MB
+
     const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (!file || !roomId) return;
 
         try {
-            setIsUploading(true);
             const roomIdNum = parseInt(roomId, 10);
+
+            // Front-side validation
+            if (file.size > MAX_UPLOAD_BYTES) {
+                throw new Error('파일이 너무 커요. 10MB 이하 이미지만 업로드할 수 있어요.');
+            }
+
             const extension = (file.name.split('.').pop() || '').toLowerCase();
             const allowedExt = new Set(['png', 'jpg', 'jpeg', 'webp']);
             if (!allowedExt.has(extension)) {
                 throw new Error('지원하지 않는 이미지 형식입니다. png/jpg/jpeg/webp만 업로드할 수 있어요.');
             }
 
+            if (myUserId === null) {
+                throw new Error('사용자 정보를 불러오는 중입니다. 잠시 후 다시 시도해주세요.');
+            }
+
+            setIsUploading(true);
+
             const filename = `chat/${roomIdNum}/${Date.now()}.${extension}`;
             const { url: presignedUrl } = await getUploadUrl(filename, file.size);
             await uploadToR2(presignedUrl, file);
             const imageUrl = getPublicImageUrl(filename);
 
-            if (myUserId === null) {
-                console.error('User ID not loaded yet');
-                return;
-            }
+            setLastUpload({ file, roomIdNum, filename, imageUrl });
             sendMessage(roomIdNum, imageUrl, myUserId);
         } catch (error) {
             console.error('Upload failed:', error);
-            alert('사진 업로드에 실패했습니다.');
+            const message = error instanceof Error ? error.message : '사진 업로드에 실패했습니다.';
+            alert(message);
         } finally {
             setIsUploading(false);
             if (fileInputRef.current) fileInputRef.current.value = '';
@@ -337,6 +354,40 @@ export function ChatRoomScreen() {
                 {isUploading && (
                     <div style={{ textAlign: 'center', color: '#8B95A1', fontSize: '13px', margin: '10px 0' }}>
                         사진 업로드 중...
+                    </div>
+                )}
+                {!isUploading && lastUpload && (
+                    <div style={{ textAlign: 'center', color: '#8B95A1', fontSize: '13px', margin: '10px 0' }}>
+                        업로드가 실패했나요?
+                        <button
+                            type="button"
+                            onClick={async () => {
+                                try {
+                                    setIsUploading(true);
+                                    const { url: presignedUrl } = await getUploadUrl(lastUpload.filename, lastUpload.file.size);
+                                    await uploadToR2(presignedUrl, lastUpload.file);
+                                    // Re-send message (same imageUrl)
+                                    if (myUserId != null) {
+                                        sendMessage(lastUpload.roomIdNum, lastUpload.imageUrl, myUserId);
+                                    }
+                                } catch (e) {
+                                    console.error('Retry upload failed:', e);
+                                    alert('재시도에 실패했습니다.');
+                                } finally {
+                                    setIsUploading(false);
+                                }
+                            }}
+                            style={{
+                                marginLeft: '8px',
+                                border: 'none',
+                                background: 'transparent',
+                                color: '#3182F6',
+                                fontWeight: 700,
+                                cursor: 'pointer'
+                            }}
+                        >
+                            재시도
+                        </button>
                     </div>
                 )}
                 <div ref={messagesEndRef} />
