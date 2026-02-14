@@ -22,7 +22,7 @@ export function ChatRoomScreen() {
     const [isLoadingHistory, setIsLoadingHistory] = useState(false);
     const [myUserId, setMyUserId] = useState<number | null>(null);
     const [isUploading, setIsUploading] = useState(false);
-    const [lastUpload, setLastUpload] = useState<{
+    const [lastFailedUpload, setLastFailedUpload] = useState<{
         file: File;
         roomIdNum: number;
         filename: string;
@@ -201,11 +201,22 @@ export function ChatRoomScreen() {
             await uploadToR2(presignedUrl, optimizedFile);
             const imageUrl = getPublicImageUrl(filename);
 
-            setLastUpload({ file: optimizedFile, roomIdNum, filename, imageUrl });
+            setLastFailedUpload(null);
             sendMessage(roomIdNum, imageUrl, myUserId, replyTarget?.id);
             setReplyTarget(null);
         } catch (error) {
             console.error('Upload failed:', error);
+            // Keep the last chosen image for retry UX.
+            try {
+                const roomIdNum = parseInt(roomId, 10);
+                const extension = (file.name.split('.').pop() || '').toLowerCase();
+                const filename = `chat/${roomIdNum}/${Date.now()}.${extension}`;
+                const imageUrl = getPublicImageUrl(filename);
+                setLastFailedUpload({ file, roomIdNum, filename, imageUrl });
+            } catch {
+                // ignore
+            }
+
             const message = error instanceof Error ? error.message : '사진 업로드에 실패했습니다.';
             alert(message);
         } finally {
@@ -396,7 +407,7 @@ export function ChatRoomScreen() {
                         사진 업로드 중...
                     </div>
                 )}
-                {!isUploading && lastUpload && (
+                {!isUploading && lastFailedUpload && (
                     <div style={{ textAlign: 'center', color: '#8B95A1', fontSize: '13px', margin: '10px 0' }}>
                         업로드가 실패했나요?
                         <button
@@ -404,12 +415,13 @@ export function ChatRoomScreen() {
                             onClick={async () => {
                                 try {
                                     setIsUploading(true);
-                                    const { url: presignedUrl } = await getUploadUrl(lastUpload.filename, lastUpload.file.size);
-                                    await uploadToR2(presignedUrl, lastUpload.file);
+                                    const { url: presignedUrl } = await getUploadUrl(lastFailedUpload.filename, lastFailedUpload.file.size);
+                                    await uploadToR2(presignedUrl, lastFailedUpload.file);
                                     // Re-send message (same imageUrl)
                                     if (myUserId != null) {
-                                        sendMessage(lastUpload.roomIdNum, lastUpload.imageUrl, myUserId, replyTarget?.id);
+                                        sendMessage(lastFailedUpload.roomIdNum, lastFailedUpload.imageUrl, myUserId, replyTarget?.id);
                                     }
+                                    setLastFailedUpload(null);
                                 } catch (e) {
                                     console.error('Retry upload failed:', e);
                                     alert('재시도에 실패했습니다.');
