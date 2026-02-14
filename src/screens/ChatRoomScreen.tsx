@@ -39,7 +39,14 @@ export function ChatRoomScreen() {
     const chatContainerRef = useRef<HTMLDivElement>(null);
     const isAtBottomRef = useRef(true);
 
-    const { messages: wsMessages, isConnected, connectionStatus } = useWebSocket();
+    const {
+        messages: wsMessages,
+        isConnected,
+        connectionStatus,
+        connect,
+        disconnect,
+        sendMessage,
+    } = useWebSocket();
 
     // Simple connection indicator (can be refined with TDS component later)
     const connectionLabel = connectionStatus === 'connected'
