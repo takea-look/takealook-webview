@@ -5,8 +5,17 @@ export async function getChatRooms(): Promise<ChatRoom[]> {
   return apiRequest<ChatRoom[]>('/chat/rooms');
 }
 
-export async function getChatMessages(roomId: number): Promise<UserChatMessage[]> {
-  return apiRequest<UserChatMessage[]>(`/chat/messages?roomId=${roomId}`);
+export async function getChatMessages(
+  roomId: number,
+  options?: {
+    limit?: number;
+    before?: number; // messageId or createdAt cursor (server spec TBD)
+  }
+): Promise<UserChatMessage[]> {
+  const query = new URLSearchParams({ roomId: String(roomId) });
+  if (options?.limit != null) query.set('limit', String(options.limit));
+  if (options?.before != null) query.set('before', String(options.before));
+  return apiRequest<UserChatMessage[]>(`/chat/messages?${query.toString()}`);
 }
 
 export async function getWebSocketTicket(): Promise<WsTicket> {

@@ -17,6 +17,8 @@ import "yet-another-react-lightbox/styles.css";
 export function ChatRoomScreen() {
     const { roomId } = useParams<{ roomId: string }>();
     const [historyMessages, setHistoryMessages] = useState<UserChatMessage[]>([]);
+    const [hasMoreHistory, setHasMoreHistory] = useState(true);
+    const [isLoadingHistory, setIsLoadingHistory] = useState(false);
     const [myUserId, setMyUserId] = useState<number | null>(null);
     const [isUploading, setIsUploading] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -40,18 +42,43 @@ export function ChatRoomScreen() {
                 ? '연결 중…'
                 : '연결 끊김';
 
+    const loadMoreHistory = useCallback(async () => {
+        if (!roomId || isLoadingHistory || !hasMoreHistory) return;
+        const roomIdNum = parseInt(roomId, 10);
+
+        const oldest = historyMessages[0];
+        if (!oldest) return;
+
+        try {
+            setIsLoadingHistory(true);
+            // NOTE: server spec says before can be messageId or createdAt. We send createdAt for now.
+            const older = await getChatMessages(roomIdNum, { limit: 30, before: oldest.createdAt });
+            setHistoryMessages(prev => [...older, ...prev]);
+            setHasMoreHistory(older.length >= 30);
+        } catch (err) {
+            console.error('Failed to load more history:', err);
+        } finally {
+            setIsLoadingHistory(false);
+        }
+    }, [roomId, isLoadingHistory, hasMoreHistory, historyMessages]);
+
     const checkScrollPosition = useCallback(() => {
         if (!chatContainerRef.current) return;
-        
+
         const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
         const isNearBottom = scrollHeight - scrollTop - clientHeight < 100;
-        
+
         isAtBottomRef.current = isNearBottom;
-        
+
         if (isNearBottom) {
             setShowScrollButton(false);
         }
-    }, []);
+
+        // Near top → load older messages
+        if (scrollTop < 80 && !isLoadingHistory && hasMoreHistory) {
+            loadMoreHistory();
+        }
+    }, [isLoadingHistory, hasMoreHistory, loadMoreHistory]);
 
     const scrollToBottom = (behavior: ScrollBehavior = 'smooth') => {
         messagesEndRef.current?.scrollIntoView({ behavior });
@@ -67,10 +94,11 @@ export function ChatRoomScreen() {
                 const roomIdNum = parseInt(roomId, 10);
                 const [profile, messages] = await Promise.all([
                     getMyProfile(),
-                    getChatMessages(roomIdNum)
+                    getChatMessages(roomIdNum, { limit: 30 })
                 ]);
                 setMyUserId(profile.id!);
                 setHistoryMessages(messages);
+                setHasMoreHistory(messages.length >= 30);
                 await connect(roomIdNum);
             } catch (err) {
                 console.error('Failed to initialize chat room:', err);
