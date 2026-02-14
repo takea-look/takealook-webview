@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { getChatMessages } from '../api/chat';
 import { getPublicImageUrl, getUploadUrl, uploadToR2 } from '../api/storage';
+import { downsampleImageFile } from '../utils/image';
 import { useWebSocket } from '../hooks/useWebSocket';
 import type { UserChatMessage } from '../types/api';
 import { MessageType } from '../types/api';
@@ -127,7 +128,7 @@ export function ChatRoomScreen() {
         return () => {
             disconnect();
         };
-    }, [roomId]);
+    }, [roomId, connect, disconnect]);
 
     useEffect(() => {
         if (historyMessages.length > 0) {
@@ -171,24 +172,36 @@ export function ChatRoomScreen() {
                 throw new Error('파일이 너무 커요. 10MB 이하 이미지만 업로드할 수 있어요.');
             }
 
-            const extension = (file.name.split('.').pop() || '').toLowerCase();
+            if (myUserId === null) {
+                throw new Error('사용자 정보를 불러오는 중입니다. 잠시 후 다시 시도해주세요.');
+            }
+
+            // Downsample/convert before upload (data saving + faster load)
+            const { file: optimizedFile } = await downsampleImageFile(file, {
+                maxWidth: 1280,
+                maxHeight: 1280,
+                quality: 0.82,
+                mimeType: 'image/webp',
+            });
+
+            if (optimizedFile.size > MAX_UPLOAD_BYTES) {
+                throw new Error('압축 후에도 파일이 10MB를 초과합니다. 더 작은 이미지를 선택해주세요.');
+            }
+
+            const extension = (optimizedFile.name.split('.').pop() || '').toLowerCase();
             const allowedExt = new Set(['png', 'jpg', 'jpeg', 'webp']);
             if (!allowedExt.has(extension)) {
                 throw new Error('지원하지 않는 이미지 형식입니다. png/jpg/jpeg/webp만 업로드할 수 있어요.');
             }
 
-            if (myUserId === null) {
-                throw new Error('사용자 정보를 불러오는 중입니다. 잠시 후 다시 시도해주세요.');
-            }
-
             setIsUploading(true);
 
             const filename = `chat/${roomIdNum}/${Date.now()}.${extension}`;
-            const { url: presignedUrl } = await getUploadUrl(filename, file.size);
-            await uploadToR2(presignedUrl, file);
+            const { url: presignedUrl } = await getUploadUrl(filename, optimizedFile.size);
+            await uploadToR2(presignedUrl, optimizedFile);
             const imageUrl = getPublicImageUrl(filename);
 
-            setLastUpload({ file, roomIdNum, filename, imageUrl });
+            setLastUpload({ file: optimizedFile, roomIdNum, filename, imageUrl });
             sendMessage(roomIdNum, imageUrl, myUserId, replyTarget?.id);
             setReplyTarget(null);
         } catch (error) {
@@ -395,7 +408,7 @@ export function ChatRoomScreen() {
                                     await uploadToR2(presignedUrl, lastUpload.file);
                                     // Re-send message (same imageUrl)
                                     if (myUserId != null) {
-                                        sendMessage(lastUpload.roomIdNum, lastUpload.imageUrl, myUserId);
+                                        sendMessage(lastUpload.roomIdNum, lastUpload.imageUrl, myUserId, replyTarget?.id);
                                     }
                                 } catch (e) {
                                     console.error('Retry upload failed:', e);

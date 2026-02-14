@@ -5,7 +5,6 @@ export function useImage(src: string | null | undefined, crossOrigin: string | n
 
   useEffect(() => {
     if (!src) {
-      setImage(null);
       return;
     }
 
@@ -27,6 +26,6 @@ export function useImage(src: string | null | undefined, crossOrigin: string | n
     };
   }, [src, crossOrigin]);
 
-  return image;
+  return src ? image : null;
 }
 
