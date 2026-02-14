@@ -92,8 +92,7 @@ export function ChatRoomListScreen() {
                                         top={room.name}
                                         topProps={{ 
                                             color: '#333d4b', 
-                                            fontWeight: '600',
-                                            size: 17
+                                            fontWeight: 'bold'
                                         }}
                                         bottom={
                                             <span style={{ color: '#8b95a1', fontSize: '14px' }}>
