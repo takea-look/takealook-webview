@@ -36,10 +36,13 @@ export interface ChatMessage {
 export const MessageType = {
   CHAT: 'CHAT',
   JOIN: 'JOIN',
-  LEAVE: 'LEAVE'
+  LEAVE: 'LEAVE',
+  REACTION: 'REACTION',
 } as const;
 
 export type MessageType = typeof MessageType[keyof typeof MessageType];
+
+export type MessageReactionCounts = Record<string, number>;
 
 export interface UserChatMessage {
   id?: number;
@@ -49,6 +52,11 @@ export interface UserChatMessage {
   imageUrl?: string;
   replyToId?: number;
   createdAt: number;
+  reactionCounts?: MessageReactionCounts;
+  reactionMessageId?: number;
+  emoji?: string;
+  senderId?: number;
+  targetMessageId?: number;
 }
 
 export interface WsTicket {
