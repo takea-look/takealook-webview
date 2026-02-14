@@ -108,6 +108,7 @@ export function MyInfoScreen() {
             }}>
                 <MenuItem text="개인정보 설정" />
                 <MenuItem text="알림 설정" />
+                <MenuItem text="스토리 편집기 (MVP)" onClick={() => navigate('/story-editor')} />
                 <MenuItem text="로그아웃" isDestructive onClick={handleLogout} />
             </div>
         </Layout>
