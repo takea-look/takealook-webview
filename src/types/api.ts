@@ -24,6 +24,12 @@ export interface ChatRoom {
   createdAt: number;
 }
 
+export interface ChatRoomCreation {
+  name: string;
+  isPublic: boolean;
+  maxParticipants: number;
+}
+
 export interface ChatMessage {
   id?: number;
   roomId: number;

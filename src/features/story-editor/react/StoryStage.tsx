@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef } from 'react';
 import type { CSSProperties } from 'react';
 import { Image as KonvaImage, Layer as KonvaLayer, Rect, Stage, Text as KonvaText, Transformer } from 'react-konva';
 import type Konva from 'konva';
+import type { Box } from 'konva/lib/shapes/Transformer';
 import type { EditorController } from '../core/controller';
 import type { EditorState, StickerLayer, TextLayer } from '../core/types';
 import { exportStageToBlob } from './exportStage';
@@ -17,6 +18,7 @@ interface Props {
 const STORY_W = 1080;
 const STORY_H = 1920;
 const TEXT_BOX_W = 900;
+
 
 export function StoryStage({ state, controller, viewportWidth, viewportHeight }: Props) {
   const stageRef = useRef<Konva.Stage | null>(null);
@@ -98,15 +100,15 @@ export function StoryStage({ state, controller, viewportWidth, viewportHeight }:
   return (
     <div style={wrapperStyle}>
       <Stage
-        ref={(node) => {
+        ref={(node: Konva.Stage | null) => {
           stageRef.current = node;
         }}
         width={STORY_W}
         height={STORY_H}
-        onMouseDown={(e) => {
+        onMouseDown={(e: Konva.KonvaEventObject<MouseEvent>) => {
           if (e.target === e.target.getStage()) controller.select(null);
         }}
-        onTouchStart={(e) => {
+        onTouchStart={(e: Konva.KonvaEventObject<TouchEvent>) => {
           if (e.target === e.target.getStage()) controller.select(null);
         }}
         style={{ background: '#000' }}
@@ -135,13 +137,13 @@ export function StoryStage({ state, controller, viewportWidth, viewportHeight }:
           })}
 
           <Transformer
-            ref={(node) => {
+            ref={(node: Konva.Transformer | null) => {
               transformerRef.current = node;
             }}
             rotateEnabled={true}
             keepRatio={true}
             enabledAnchors={['top-left', 'top-right', 'bottom-left', 'bottom-right']}
-            boundBoxFunc={(oldBox, nextBox) => {
+            boundBoxFunc={(oldBox: Box, nextBox: Box) => {
               if (nextBox.width < 40 || nextBox.height < 40) return oldBox;
               return nextBox;
             }}
@@ -174,10 +176,10 @@ function TextNode({ layer, controller }: { layer: TextLayer; controller: EditorC
       draggable={true}
       onClick={() => controller.select(layer.id)}
       onTap={() => controller.select(layer.id)}
-      onDragEnd={(e) => {
+      onDragEnd={(e: Konva.KonvaEventObject<DragEvent>) => {
         controller.setTransform(layer.id, { position: { x: e.target.x(), y: e.target.y() } });
       }}
-      onTransformEnd={(e) => {
+      onTransformEnd={(e: Konva.KonvaEventObject<Event>) => {
         const n = e.target;
         controller.setTransform(layer.id, {
           position: { x: n.x(), y: n.y() },
@@ -208,10 +210,10 @@ function StickerNode({ layer, controller }: { layer: StickerLayer; controller: E
       draggable={true}
       onClick={() => controller.select(layer.id)}
       onTap={() => controller.select(layer.id)}
-      onDragEnd={(e) => {
+      onDragEnd={(e: Konva.KonvaEventObject<DragEvent>) => {
         controller.setTransform(layer.id, { position: { x: e.target.x(), y: e.target.y() } });
       }}
-      onTransformEnd={(e) => {
+      onTransformEnd={(e: Konva.KonvaEventObject<Event>) => {
         const n = e.target;
         controller.setTransform(layer.id, {
           position: { x: n.x(), y: n.y() },
