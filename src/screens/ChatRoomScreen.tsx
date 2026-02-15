@@ -29,6 +29,14 @@ export function ChatRoomScreen() {
         filename: string;
         imageUrl: string;
     } | null>(null);
+
+    const [previewOpen, setPreviewOpen] = useState(false);
+    const [pendingFile, setPendingFile] = useState<File | null>(null);
+    const [pendingPreviewUrl, setPendingPreviewUrl] = useState<string | null>(null);
+    const [editRotateDeg, setEditRotateDeg] = useState<0 | 90 | 180 | 270>(0);
+    const [editCropSquare, setEditCropSquare] = useState(false);
+    const [editError, setEditError] = useState('');
+
     const [loading, setLoading] = useState(true);
     const [showScrollButton, setShowScrollButton] = useState(false);
     const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -297,24 +305,93 @@ export function ChatRoomScreen() {
 
     const MAX_UPLOAD_BYTES = 10 * 1024 * 1024; // 10MB
 
-    const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
-        if (!file || !roomId) return;
+    const openPreview = (file: File) => {
+        setEditError('');
+        setEditRotateDeg(0);
+        setEditCropSquare(false);
+
+        if (pendingPreviewUrl) {
+            URL.revokeObjectURL(pendingPreviewUrl);
+        }
+
+        const url = URL.createObjectURL(file);
+        setPendingPreviewUrl(url);
+        setPendingFile(file);
+        setPreviewOpen(true);
+    };
+
+    const closePreview = () => {
+        setPreviewOpen(false);
+        setPendingFile(null);
+        if (pendingPreviewUrl) {
+            URL.revokeObjectURL(pendingPreviewUrl);
+        }
+        setPendingPreviewUrl(null);
+        setEditError('');
+    };
+
+    const buildEditedImageFile = async (file: File) => {
+        const bitmap = await createImageBitmap(file);
+        const rotate = editRotateDeg;
+
+        // Crop rect in source bitmap space.
+        let sx = 0;
+        let sy = 0;
+        let sw = bitmap.width;
+        let sh = bitmap.height;
+
+        if (editCropSquare) {
+            const side = Math.min(bitmap.width, bitmap.height);
+            sx = Math.floor((bitmap.width - side) / 2);
+            sy = Math.floor((bitmap.height - side) / 2);
+            sw = side;
+            sh = side;
+        }
+
+        const rotated = rotate === 90 || rotate === 270;
+        const outW = rotated ? sh : sw;
+        const outH = rotated ? sw : sh;
+
+        const canvas = document.createElement('canvas');
+        canvas.width = outW;
+        canvas.height = outH;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) throw new Error('이미지 편집에 실패했습니다. (canvas)');
+
+        // Move origin to center for rotation.
+        ctx.translate(outW / 2, outH / 2);
+        ctx.rotate((rotate * Math.PI) / 180);
+
+        // Draw cropped src centered.
+        ctx.drawImage(bitmap, sx, sy, sw, sh, -sw / 2, -sh / 2, sw, sh);
+
+        const blob: Blob | null = await new Promise((resolve) => {
+            canvas.toBlob((b) => resolve(b), 'image/webp', 0.9);
+        });
+
+        if (!blob) {
+            throw new Error('이미지 편집에 실패했습니다. (toBlob)');
+        }
+
+        const name = file.name.replace(/\.[^.]+$/, '.webp');
+        return new File([blob], name, { type: 'image/webp' });
+    };
+
+    const confirmAndUpload = async () => {
+        if (!pendingFile || !roomId) return;
 
         try {
+            setEditError('');
             const roomIdNum = parseInt(roomId, 10);
-
-            // Front-side validation
-            if (file.size > MAX_UPLOAD_BYTES) {
-                throw new Error('파일이 너무 커요. 10MB 이하 이미지만 업로드할 수 있어요.');
-            }
 
             if (myUserId === null) {
                 throw new Error('사용자 정보를 불러오는 중입니다. 잠시 후 다시 시도해주세요.');
             }
 
-            // Downsample/convert before upload (data saving + faster load)
-            const { file: optimizedFile } = await downsampleImageFile(file, {
+            setIsUploading(true);
+
+            const edited = await buildEditedImageFile(pendingFile);
+            const { file: optimizedFile } = await downsampleImageFile(edited, {
                 maxWidth: 1280,
                 maxHeight: 1280,
                 quality: 0.82,
@@ -325,15 +402,7 @@ export function ChatRoomScreen() {
                 throw new Error('압축 후에도 파일이 10MB를 초과합니다. 더 작은 이미지를 선택해주세요.');
             }
 
-            const extension = (optimizedFile.name.split('.').pop() || '').toLowerCase();
-            const allowedExt = new Set(['png', 'jpg', 'jpeg', 'webp']);
-            if (!allowedExt.has(extension)) {
-                throw new Error('지원하지 않는 이미지 형식입니다. png/jpg/jpeg/webp만 업로드할 수 있어요.');
-            }
-
-            setIsUploading(true);
-
-            const filename = `chat/${roomIdNum}/${Date.now()}.${extension}`;
+            const filename = `chat/${roomIdNum}/${Date.now()}.webp`;
             const { url: presignedUrl } = await getUploadUrl(filename, optimizedFile.size);
             await uploadToR2(presignedUrl, optimizedFile);
             const imageUrl = getPublicImageUrl(filename);
@@ -341,23 +410,38 @@ export function ChatRoomScreen() {
             setLastFailedUpload(null);
             sendMessage(roomIdNum, imageUrl, myUserId, replyTarget?.id);
             setReplyTarget(null);
+            closePreview();
         } catch (error) {
             console.error('Upload failed:', error);
-            // Keep the last chosen image for retry UX.
-            try {
-                const roomIdNum = parseInt(roomId, 10);
-                const extension = (file.name.split('.').pop() || '').toLowerCase();
-                const filename = `chat/${roomIdNum}/${Date.now()}.${extension}`;
-                const imageUrl = getPublicImageUrl(filename);
-                setLastFailedUpload({ file, roomIdNum, filename, imageUrl });
-            } catch {
-                // ignore
-            }
-
             const message = error instanceof Error ? error.message : '사진 업로드에 실패했습니다.';
-            alert(message);
+            setEditError(message);
         } finally {
             setIsUploading(false);
+        }
+    };
+
+    const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (!file || !roomId) return;
+
+        try {
+            // Front-side validation
+            if (file.size > MAX_UPLOAD_BYTES) {
+                throw new Error('파일이 너무 커요. 10MB 이하 이미지만 업로드할 수 있어요.');
+            }
+
+            const extension = (file.name.split('.').pop() || '').toLowerCase();
+            const allowedExt = new Set(['png', 'jpg', 'jpeg', 'webp']);
+            if (!allowedExt.has(extension)) {
+                throw new Error('지원하지 않는 이미지 형식입니다. png/jpg/jpeg/webp만 업로드할 수 있어요.');
+            }
+
+            openPreview(file);
+        } catch (error) {
+            console.error('File selection failed:', error);
+            const message = error instanceof Error ? error.message : '사진을 불러오지 못했습니다.';
+            alert(message);
+        } finally {
             if (fileInputRef.current) fileInputRef.current.value = '';
         }
     };
@@ -644,6 +728,157 @@ export function ChatRoomScreen() {
                 )}
                 <div ref={messagesEndRef} />
             </div>
+
+            {previewOpen && pendingPreviewUrl && (
+                <div
+                    role="dialog"
+                    aria-modal="true"
+                    style={{
+                        position: 'fixed',
+                        inset: 0,
+                        background: 'rgba(0,0,0,0.55)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: '16px',
+                        zIndex: 200,
+                    }}
+                    onClick={() => !isUploading && closePreview()}
+                >
+                    <div
+                        style={{
+                            width: 'min(520px, 100%)',
+                            background: '#fff',
+                            borderRadius: '20px',
+                            overflow: 'hidden',
+                            boxShadow: '0 24px 80px rgba(0,0,0,0.35)',
+                        }}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <div style={{
+                            padding: '14px 16px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            borderBottom: '1px solid #F2F4F6'
+                        }}>
+                            <div style={{ fontWeight: 900, color: '#191F28' }}>전송 전 미리보기</div>
+                            <button
+                                type="button"
+                                disabled={isUploading}
+                                onClick={closePreview}
+                                style={{ border: 'none', background: 'transparent', cursor: isUploading ? 'not-allowed' : 'pointer', fontSize: '18px' }}
+                            >
+                                ✕
+                            </button>
+                        </div>
+
+                        <div style={{ padding: '14px 16px' }}>
+                            <div style={{
+                                width: '100%',
+                                aspectRatio: '1 / 1',
+                                borderRadius: '16px',
+                                overflow: 'hidden',
+                                background: '#111',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                marginBottom: '12px'
+                            }}>
+                                <img
+                                    src={pendingPreviewUrl}
+                                    alt="preview"
+                                    style={{
+                                        width: '100%',
+                                        height: '100%',
+                                        objectFit: editCropSquare ? 'cover' : 'contain',
+                                        transform: `rotate(${editRotateDeg}deg)`,
+                                        background: '#111'
+                                    }}
+                                />
+                            </div>
+
+                            <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginBottom: '10px' }}>
+                                <button
+                                    type="button"
+                                    disabled={isUploading}
+                                    onClick={() => setEditRotateDeg((prev) => (prev === 270 ? 0 : ((prev + 90) as 0 | 90 | 180 | 270)))}
+                                    style={{
+                                        flex: 1,
+                                        minWidth: '120px',
+                                        height: '40px',
+                                        borderRadius: '12px',
+                                        border: '1px solid #E5E8EB',
+                                        background: '#fff',
+                                        fontWeight: 800,
+                                        cursor: isUploading ? 'not-allowed' : 'pointer'
+                                    }}
+                                >
+                                    ⟲ 회전
+                                </button>
+
+                                <button
+                                    type="button"
+                                    disabled={isUploading}
+                                    onClick={() => setEditCropSquare((prev) => !prev)}
+                                    style={{
+                                        flex: 1,
+                                        minWidth: '120px',
+                                        height: '40px',
+                                        borderRadius: '12px',
+                                        border: '1px solid #E5E8EB',
+                                        background: editCropSquare ? '#EAF1FF' : '#fff',
+                                        fontWeight: 800,
+                                        cursor: isUploading ? 'not-allowed' : 'pointer'
+                                    }}
+                                >
+                                    □ 정사각 크롭
+                                </button>
+                            </div>
+
+                            {editError && (
+                                <div style={{ color: '#F04452', fontSize: '13px', fontWeight: 700, marginBottom: '10px' }}>{editError}</div>
+                            )}
+
+                            <div style={{ display: 'flex', gap: '10px' }}>
+                                <button
+                                    type="button"
+                                    disabled={isUploading}
+                                    onClick={closePreview}
+                                    style={{
+                                        flex: 1,
+                                        height: '46px',
+                                        borderRadius: '14px',
+                                        border: '1px solid #E5E8EB',
+                                        background: '#fff',
+                                        fontWeight: 900,
+                                        cursor: isUploading ? 'not-allowed' : 'pointer'
+                                    }}
+                                >
+                                    취소
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={confirmAndUpload}
+                                    disabled={isUploading}
+                                    style={{
+                                        flex: 1,
+                                        height: '46px',
+                                        borderRadius: '14px',
+                                        border: 'none',
+                                        background: isUploading ? '#B0B8C1' : '#3182F6',
+                                        color: '#fff',
+                                        fontWeight: 900,
+                                        cursor: isUploading ? 'not-allowed' : 'pointer'
+                                    }}
+                                >
+                                    {isUploading ? '전송 중…' : '전송'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {showScrollButton && (
                 <button 
