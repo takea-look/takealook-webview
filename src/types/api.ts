@@ -63,6 +63,12 @@ export interface UserChatMessage {
   emoji?: string;
   senderId?: number;
   targetMessageId?: number;
+
+  /**
+   * Whether the message has been blinded/hidden due to report/moderation.
+   * Not yet documented in Swagger, but FE supports it for forward-compat.
+   */
+  isBlinded?: boolean;
 }
 
 export interface WsTicket {
