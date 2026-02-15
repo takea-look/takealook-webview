@@ -30,3 +30,17 @@ export async function getWebSocketTicket(): Promise<WsTicket> {
     method: 'POST',
   });
 }
+
+export async function reportChatMessage(
+  messageId: number,
+  payload?: {
+    reason?: string;
+  },
+): Promise<void> {
+  // NOTE: Report endpoint is not currently exposed in Swagger (s1.takealook.my/v3/api-docs).
+  // Keeping this minimal and aligned with existing /chat/* routing.
+  await apiRequest<void>(`/chat/messages/${messageId}/report`, {
+    method: 'POST',
+    body: JSON.stringify({ reason: payload?.reason ?? null }),
+  });
+}
