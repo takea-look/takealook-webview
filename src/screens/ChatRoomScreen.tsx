@@ -70,6 +70,8 @@ export function ChatRoomScreen() {
     const [reactionMenuMessageId, setReactionMenuMessageId] = useState<number | null>(null);
     const [reportConfirmMessageId, setReportConfirmMessageId] = useState<number | null>(null);
     const [isReporting, setIsReporting] = useState(false);
+    const [toast, setToast] = useState<{ message: string; kind: 'success' | 'error' } | null>(null);
+    const toastTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const [localReactionCounts, setLocalReactionCounts] = useState<Record<number, Record<string, number>>>({});
     const reactionTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -210,6 +212,16 @@ export function ChatRoomScreen() {
         setReactionMenuMessageId(null);
     }, []);
 
+    const showToast = useCallback((message: string, kind: 'success' | 'error') => {
+        setToast({ message, kind });
+        if (toastTimeoutRef.current != null) {
+            clearTimeout(toastTimeoutRef.current);
+        }
+        toastTimeoutRef.current = setTimeout(() => {
+            setToast(null);
+        }, 2200);
+    }, []);
+
     useEffect(() => {
         const handlePointerDown = () => {
             closeReactionMenu();
@@ -250,15 +262,15 @@ export function ChatRoomScreen() {
         try {
             setIsReporting(true);
             await reportChatMessage(reportConfirmMessageId);
-            alert('신고가 접수되었습니다.');
+            showToast('신고가 접수되었습니다.', 'success');
             setReportConfirmMessageId(null);
         } catch (e) {
             console.error('Report failed:', e);
-            alert('신고에 실패했습니다. 잠시 후 다시 시도해주세요.');
+            showToast('신고에 실패했습니다. 잠시 후 다시 시도해주세요.', 'error');
         } finally {
             setIsReporting(false);
         }
-    }, [reportConfirmMessageId]);
+    }, [reportConfirmMessageId, showToast]);
 
     const handleMessagePointerDown = useCallback((messageId: number | undefined, e?: React.PointerEvent) => {
         if (reactionTimeoutRef.current != null) {
@@ -1076,6 +1088,30 @@ export function ChatRoomScreen() {
                 </button>
             </div>
             </div>
+
+            {toast != null && (
+                <div
+                    role="status"
+                    aria-live="polite"
+                    style={{
+                        position: 'fixed',
+                        left: '50%',
+                        bottom: 'max(18px, env(safe-area-inset-bottom))',
+                        transform: 'translateX(-50%)',
+                        zIndex: 260,
+                        background: toast.kind === 'success' ? 'rgba(25, 31, 40, 0.92)' : 'rgba(255, 59, 48, 0.92)',
+                        color: '#fff',
+                        padding: '10px 14px',
+                        borderRadius: '12px',
+                        boxShadow: '0 12px 40px rgba(0,0,0,0.25)',
+                        maxWidth: 'min(520px, calc(100% - 32px))',
+                        fontSize: '13px',
+                        fontWeight: 600,
+                    }}
+                >
+                    {toast.message}
+                </div>
+            )}
 
             {reportConfirmMessageId != null && (
                 <div
