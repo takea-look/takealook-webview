@@ -38,9 +38,9 @@ export async function reportChatMessage(
   },
 ): Promise<void> {
   // NOTE: Report endpoint is not currently exposed in Swagger (s1.takealook.my/v3/api-docs).
-  // Keeping this minimal and aligned with existing /chat/* routing.
-  await apiRequest<void>(`/chat/messages/${messageId}/report`, {
+  // Based on BE contract in issue #55: call POST /report.
+  await apiRequest<void>('/report', {
     method: 'POST',
-    body: JSON.stringify({ reason: payload?.reason ?? null }),
+    body: JSON.stringify({ messageId, reason: payload?.reason ?? null }),
   });
 }
