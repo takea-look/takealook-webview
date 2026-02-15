@@ -1,8 +1,15 @@
-import type { ChatRoom, UserChatMessage, WsTicket } from '../types/api';
+import type { ChatRoom, ChatRoomCreation, UserChatMessage, WsTicket } from '../types/api';
 import { apiRequest } from './client';
 
 export async function getChatRooms(): Promise<ChatRoom[]> {
   return apiRequest<ChatRoom[]>('/chat/rooms');
+}
+
+export async function createChatRoom(payload: ChatRoomCreation): Promise<ChatRoom> {
+  return apiRequest<ChatRoom>('/chat/rooms', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  });
 }
 
 export async function getChatMessages(
