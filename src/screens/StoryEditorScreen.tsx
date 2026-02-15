@@ -5,6 +5,9 @@ import { useEditorController } from '../features/story-editor/core/useEditorCont
 import { StoryStage } from '../features/story-editor/react/StoryStage';
 import { useElementSize } from '../features/story-editor/react/useElementSize';
 import type { Layer } from '../features/story-editor/core/types';
+import { useWebSocket } from '../hooks/useWebSocket';
+import { getMyProfile } from '../api/user';
+import { getPublicImageUrl, getUploadUrl, uploadToR2 } from '../api/storage';
 
 export function StoryEditorScreen() {
   const navigate = useNavigate();
@@ -12,8 +15,26 @@ export function StoryEditorScreen() {
 
   const query = useMemo(() => new URLSearchParams(location.search), [location.search]);
   const initialBaseSrc = query.get('src');
+  const roomIdParam = query.get('roomId');
+  const replyToIdParam = query.get('replyToId');
+
+  const replyRoomId = roomIdParam ? Number(roomIdParam) : null;
+  const replyToId = replyToIdParam ? Number(replyToIdParam) : null;
+  const isReplyFlow = Number.isFinite(replyRoomId) && Number.isFinite(replyToId);
 
   const { controller, state } = useEditorController(initialBaseSrc ? { baseSrc: initialBaseSrc } : undefined);
+
+  const {
+    isConnected,
+    connectionStatus,
+    connect,
+    disconnect,
+    sendMessage,
+  } = useWebSocket();
+
+  const [senderId, setSenderId] = useState<number | null>(null);
+  const [sendError, setSendError] = useState('');
+  const [isSending, setIsSending] = useState(false);
 
   const stageHostRef = useRef<HTMLDivElement | null>(null);
   const { width, height } = useElementSize(stageHostRef);
@@ -38,6 +59,27 @@ export function StoryEditorScreen() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!isReplyFlow || replyRoomId == null) return;
+
+    const init = async () => {
+      try {
+        const profile = await getMyProfile();
+        setSenderId(profile.id ?? null);
+        await connect(replyRoomId);
+      } catch (err) {
+        console.error('Failed to init reply flow:', err);
+        setSendError('전송 준비에 실패했습니다. 잠시 후 다시 시도해주세요.');
+      }
+    };
+
+    init();
+
+    return () => {
+      disconnect();
+    };
+  }, [isReplyFlow, replyRoomId, connect, disconnect]);
+
   const openTextEditor = () => {
     if (!selectedLayer || selectedLayer.kind !== 'text') return;
     setTextDraft(selectedLayer.text);
@@ -53,17 +95,44 @@ export function StoryEditorScreen() {
 
   const runExport = async () => {
     try {
+      setSendError('');
+
       const blob = await controller.requestExport({ mime: 'image/png', pixelRatio: 2 });
 
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `story_${Date.now()}.png`;
-      a.click();
-      URL.revokeObjectURL(url);
+      if (!isReplyFlow) {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `story_${Date.now()}.png`;
+        a.click();
+        URL.revokeObjectURL(url);
+        return;
+      }
+
+      if (replyRoomId == null || replyToId == null || senderId == null) {
+        setSendError('전송 정보가 부족합니다. 뒤로 갔다가 다시 시도해주세요.');
+        return;
+      }
+
+      if (!isConnected) {
+        setSendError(connectionStatus === 'reconnecting' ? '재연결 중입니다. 잠시만 기다려주세요.' : '채팅 연결이 끊겨있어요. 잠시 후 다시 시도해주세요.');
+        return;
+      }
+
+      setIsSending(true);
+      const filename = `chat/${replyRoomId}/${Date.now()}_reply.png`;
+      const { url: presignedUrl } = await getUploadUrl(filename, blob.size);
+      const file = new File([blob], `reply_${Date.now()}.png`, { type: 'image/png' });
+      await uploadToR2(presignedUrl, file);
+      const imageUrl = getPublicImageUrl(filename);
+
+      sendMessage(replyRoomId, imageUrl, senderId, replyToId);
+      navigate(`/room/${replyRoomId}`);
     } catch (err) {
-      console.error('Export failed:', err);
-      alert('Export failed. See console for details.');
+      console.error('Export/send failed:', err);
+      setSendError('전송에 실패했습니다. 잠시 후 다시 시도해주세요.');
+    } finally {
+      setIsSending(false);
     }
   };
 
@@ -100,7 +169,7 @@ export function StoryEditorScreen() {
         >
           ←
         </button>
-        <div style={{ flex: 1, textAlign: 'center', fontWeight: 700, letterSpacing: '0.2px' }}>Story Editor</div>
+        <div style={{ flex: 1, textAlign: 'center', fontWeight: 700, letterSpacing: '0.2px' }}>{isReplyFlow ? '사진 답장' : 'Story Editor'}</div>
         <button
           onClick={() => fileInputRef.current?.click()}
           style={textButtonStyle}
@@ -134,6 +203,11 @@ export function StoryEditorScreen() {
         }}
       >
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'center' }}>
+          {sendError ? (
+            <div style={{ width: '100%', textAlign: 'center', color: '#F04452', fontSize: 13, fontWeight: 700 }}>
+              {sendError}
+            </div>
+          ) : null}
           <button onClick={() => controller.addText({ text: 'Text' })} style={pillStyle} type="button">
             Text
           </button>
@@ -165,8 +239,8 @@ export function StoryEditorScreen() {
           >
             Edit
           </button>
-          <button onClick={runExport} style={primaryPillStyle} disabled={exporting} type="button">
-            {exporting ? 'Exporting…' : 'Export'}
+          <button onClick={runExport} style={primaryPillStyle} disabled={exporting || isSending} type="button">
+            {exporting || isSending ? (isReplyFlow ? '전송 중…' : 'Exporting…') : (isReplyFlow ? '전송' : 'Export')}
           </button>
         </div>
       </footer>
