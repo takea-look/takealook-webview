@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getChatMessages } from '../api/chat';
 import { getPublicImageUrl, getUploadUrl, uploadToR2 } from '../api/storage';
 import { downsampleImageFile } from '../utils/image';
@@ -16,6 +16,7 @@ import Download from "yet-another-react-lightbox/plugins/download";
 import "yet-another-react-lightbox/styles.css";
 
 export function ChatRoomScreen() {
+    const navigate = useNavigate();
     const { roomId } = useParams<{ roomId: string }>();
     const [historyMessages, setHistoryMessages] = useState<UserChatMessage[]>([]);
     const [hasMoreHistory, setHasMoreHistory] = useState(true);
@@ -39,6 +40,11 @@ export function ChatRoomScreen() {
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const chatContainerRef = useRef<HTMLDivElement>(null);
     const isAtBottomRef = useRef(true);
+
+    const swipeTargetMessageIdRef = useRef<number | null>(null);
+    const swipeStartXRef = useRef<number | null>(null);
+    const swipeStartYRef = useRef<number | null>(null);
+    const swipeTriggeredRef = useRef(false);
 
     const REACTION_EMOJIS = ['👍', '😂', '❤️', '😮', '🔥', '👏'];
 
@@ -221,7 +227,7 @@ export function ChatRoomScreen() {
         closeReactionMenu();
     }, [closeReactionMenu, applyLocalReaction, myUserId, sendReaction, roomId]);
 
-    const handleMessagePointerDown = useCallback((messageId: number | undefined) => {
+    const handleMessagePointerDown = useCallback((messageId: number | undefined, e?: React.PointerEvent) => {
         if (reactionTimeoutRef.current != null) {
             clearTimeout(reactionTimeoutRef.current);
         }
@@ -230,16 +236,54 @@ export function ChatRoomScreen() {
             return;
         }
 
+        if (e) {
+            swipeTargetMessageIdRef.current = messageId;
+            swipeStartXRef.current = e.clientX;
+            swipeStartYRef.current = e.clientY;
+            swipeTriggeredRef.current = false;
+        }
+
         reactionTimeoutRef.current = setTimeout(() => {
             openReactionMenu(messageId);
         }, 500);
     }, [openReactionMenu]);
+
+    const handleMessagePointerMove = useCallback((msg: UserChatMessage, e: React.PointerEvent) => {
+        if (!msg.imageUrl) return;
+        if (swipeTargetMessageIdRef.current !== msg.id) return;
+        if (swipeStartXRef.current == null || swipeStartYRef.current == null) return;
+        if (swipeTriggeredRef.current) return;
+
+        const dx = e.clientX - swipeStartXRef.current;
+        const dy = e.clientY - swipeStartYRef.current;
+
+        // Horizontal swipe detection (right swipe).
+        if (dx > 70 && Math.abs(dy) < 30) {
+            swipeTriggeredRef.current = true;
+
+            const roomIdNum = Number(roomId);
+            if (!Number.isFinite(roomIdNum) || msg.id == null) return;
+
+            const query = new URLSearchParams({
+                src: msg.imageUrl,
+                roomId: String(roomIdNum),
+                replyToId: String(msg.id),
+            });
+
+            navigate(`/story-editor?${query.toString()}`);
+        }
+    }, [navigate, roomId]);
 
     const handleMessagePointerUp = useCallback(() => {
         if (reactionTimeoutRef.current != null) {
             clearTimeout(reactionTimeoutRef.current);
             reactionTimeoutRef.current = null;
         }
+
+        swipeTargetMessageIdRef.current = null;
+        swipeStartXRef.current = null;
+        swipeStartYRef.current = null;
+        swipeTriggeredRef.current = false;
     }, []);
 
     const allMessages = [...historyMessages, ...wsMessages];
@@ -454,7 +498,8 @@ export function ChatRoomScreen() {
                                             openReactionMenu(msg.id);
                                         }}
                                         onDoubleClick={() => setReplyTarget(msg)}
-                                        onPointerDown={() => handleMessagePointerDown(msg.id)}
+                                        onPointerDown={(e) => handleMessagePointerDown(msg.id, e)}
+                                        onPointerMove={(e) => handleMessagePointerMove(msg, e)}
                                         onPointerUp={handleMessagePointerUp}
                                         onPointerLeave={handleMessagePointerUp}
                                         style={{
