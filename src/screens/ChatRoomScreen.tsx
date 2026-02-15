@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getChatMessages } from '../api/chat';
+import { getChatMessages, reportChatMessage } from '../api/chat';
+import { Button, Text } from '@toss/tds-mobile';
 import { getPublicImageUrl, getUploadUrl, uploadToR2 } from '../api/storage';
 import { downsampleImageFile } from '../utils/image';
 import { useWebSocket } from '../hooks/useWebSocket';
@@ -67,6 +68,8 @@ export function ChatRoomScreen() {
     } = useWebSocket();
 
     const [reactionMenuMessageId, setReactionMenuMessageId] = useState<number | null>(null);
+    const [reportConfirmMessageId, setReportConfirmMessageId] = useState<number | null>(null);
+    const [isReporting, setIsReporting] = useState(false);
     const [localReactionCounts, setLocalReactionCounts] = useState<Record<number, Record<string, number>>>({});
     const reactionTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -234,6 +237,28 @@ export function ChatRoomScreen() {
         applyLocalReaction(messageId, emoji);
         closeReactionMenu();
     }, [closeReactionMenu, applyLocalReaction, myUserId, sendReaction, roomId]);
+
+    const handleReportEntry = useCallback((messageId: number | undefined) => {
+        if (messageId == null) return;
+        setReportConfirmMessageId(messageId);
+        closeReactionMenu();
+    }, [closeReactionMenu]);
+
+    const confirmReport = useCallback(async () => {
+        if (reportConfirmMessageId == null) return;
+
+        try {
+            setIsReporting(true);
+            await reportChatMessage(reportConfirmMessageId);
+            alert('신고가 접수되었습니다.');
+            setReportConfirmMessageId(null);
+        } catch (e) {
+            console.error('Report failed:', e);
+            alert('신고에 실패했습니다. 잠시 후 다시 시도해주세요.');
+        } finally {
+            setIsReporting(false);
+        }
+    }, [reportConfirmMessageId]);
 
     const handleMessagePointerDown = useCallback((messageId: number | undefined, e?: React.PointerEvent) => {
         if (reactionTimeoutRef.current != null) {
@@ -604,6 +629,21 @@ export function ChatRoomScreen() {
                                                 ↪ 답장 (replyToId: {msg.replyToId})
                                             </div>
                                         )}
+                                        {msg.type === MessageType.CHAT && !msg.imageUrl && (
+                                            <div style={{
+                                                padding: '12px 14px',
+                                                backgroundColor: isMyMessage ? 'rgba(0,0,0,0.15)' : 'rgba(0, 27, 55, 0.06)',
+                                            }}>
+                                                <Text
+                                                    display="block"
+                                                    color={isMyMessage ? 'grey50' : 'grey700'}
+                                                    typography="st13"
+                                                    fontWeight="medium"
+                                                >
+                                                    블라인드 처리된 메시지입니다
+                                                </Text>
+                                            </div>
+                                        )}
                                         {msg.imageUrl && (
                                             <img
                                                 src={msg.imageUrl}
@@ -670,6 +710,17 @@ export function ChatRoomScreen() {
                                                     {emoji}
                                                 </button>
                                             ))}
+                                            <div style={{ width: '1px', background: 'rgba(0,0,0,0.08)', margin: '0 2px' }} />
+                                            <div onPointerDown={(e) => e.stopPropagation()}>
+                                                <Button
+                                                    size="small"
+                                                    color="danger"
+                                                    variant="weak"
+                                                    onClick={() => handleReportEntry(msg.id)}
+                                                >
+                                                    신고
+                                                </Button>
+                                            </div>
                                         </div>
                                     )}
                                 </div>
@@ -1025,6 +1076,70 @@ export function ChatRoomScreen() {
                 </button>
             </div>
             </div>
+
+            {reportConfirmMessageId != null && (
+                <div
+                    role="dialog"
+                    aria-modal="true"
+                    style={{
+                        position: 'fixed',
+                        inset: 0,
+                        background: 'rgba(0,0,0,0.55)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: '16px',
+                        zIndex: 250,
+                    }}
+                    onClick={() => !isReporting && setReportConfirmMessageId(null)}
+                >
+                    <div
+                        style={{
+                            width: 'min(420px, 100%)',
+                            background: '#fff',
+                            borderRadius: '16px',
+                            padding: '18px 16px 16px 16px',
+                            boxShadow: '0 24px 80px rgba(0,0,0,0.35)',
+                        }}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <Text display="block" color="grey900" typography="st13" fontWeight="bold">
+                            이 메시지를 신고할까요?
+                        </Text>
+                        <Text
+                            display="block"
+                            color="grey600"
+                            typography="st13"
+                            style={{ marginTop: '8px' } as React.CSSProperties}
+                        >
+                            신고가 접수되면 운영팀에서 검토합니다.
+                        </Text>
+
+                        <div style={{ display: 'flex', gap: '8px', marginTop: '14px' }}>
+                            <Button
+                                display="full"
+                                color="light"
+                                variant="weak"
+                                size="large"
+                                disabled={isReporting}
+                                onClick={() => setReportConfirmMessageId(null)}
+                            >
+                                취소
+                            </Button>
+                            <Button
+                                display="full"
+                                color="danger"
+                                variant="fill"
+                                size="large"
+                                loading={isReporting}
+                                onClick={confirmReport}
+                            >
+                                신고
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             <style>{`
                 @keyframes fadeInUp {
