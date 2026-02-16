@@ -51,6 +51,22 @@ Created to resolve issue #70.
 - Newly created issue should include: Why / Scope / Acceptance Criteria / References.
 - First seeded issue: #73 (`[P2] Docs: README 실행/환경변수 섹션 보강`).
 
+## Gap / Risk checklist (for #76)
+- [ ] Swagger 명세와 FE 구현 엔드포인트 일치 여부 점검 (`/report`, `/user/profile/me` PATCH)
+- [ ] 런타임 payload 스키마와 `src/types/api.ts` 타입 일치 여부 확인
+- [ ] 모바일(안드로이드) 실기기에서 신고/블라인드/온보딩 플로우 smoke test
+- [ ] 에러 피드백 일관성 점검 (alert 제거, toast 공용화 대상 식별)
+- [ ] `takealook.ait` 산출물 변경이 실제 코드 변경 의도와 일치하는지 PR마다 확인
+
+## Next split candidates (actionable 3~5)
+| Priority | Title | Owner | Notes |
+| --- | --- | --- | --- |
+| P0 | 닉네임 API 스펙 확정 후 FE 에러코드 매핑 | @unassigned | #1 항목 구체 이슈화 |
+| P1 | 신고 API Swagger 반영 + blind 상태 필드 합의 | @unassigned | #2 항목 구체 이슈화 |
+| P1 | ChatRoomScreen 분리 1차(MessageBubble, ReportDialog) | @unassigned | 리스크 낮은 단위부터 분리 |
+| P2 | 공용 Toast 컴포넌트(`useToast`) 도입 | @unassigned | 최소 2개 화면 적용 |
+| P2 | README + SETUP 중복 정리 및 단일 진입 문서화 | @unassigned | 온보딩 비용 절감 |
+
 ## References
 - Swagger UI: https://s1.takealook.my/webjars/swagger-ui/index.html
 - OpenAPI JSON: https://s1.takealook.my/v3/api-docs
