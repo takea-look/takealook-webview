@@ -1,13 +1,13 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getChatMessages } from '../api/chat';
+import { getChatMessages, reportChatMessage } from '../api/chat';
+import { Button, Text } from '@toss/tds-mobile';
 import { getPublicImageUrl, getUploadUrl, uploadToR2 } from '../api/storage';
 import { downsampleImageFile } from '../utils/image';
 import { useWebSocket } from '../hooks/useWebSocket';
 import type { UserChatMessage } from '../types/api';
 import { MessageType } from '../types/api';
 import { getMyProfile } from '../api/user';
-import { reportChatMessage } from '../api/report';
 import { CameraIcon, UserIcon, ArrowDownIcon } from '../components/icons';
 import { LoadingView } from '../components/LoadingView';
 import { Layout } from '../components/Layout';
@@ -68,14 +68,12 @@ export function ChatRoomScreen() {
     } = useWebSocket();
 
     const [reactionMenuMessageId, setReactionMenuMessageId] = useState<number | null>(null);
+    const [reportConfirmMessageId, setReportConfirmMessageId] = useState<number | null>(null);
+    const [isReporting, setIsReporting] = useState(false);
+    const [toast, setToast] = useState<{ message: string; kind: 'success' | 'error' } | null>(null);
+    const toastTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const [localReactionCounts, setLocalReactionCounts] = useState<Record<number, Record<string, number>>>({});
     const reactionTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-    const [toastMessage, setToastMessage] = useState<string | null>(null);
-    const toastTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-    // Optimistic UI for "blinded" messages right after reporting.
-    const [locallyBlindedMessageIds, setLocallyBlindedMessageIds] = useState<Set<number>>(new Set());
 
     // Simple connection indicator (can be refined with TDS component later)
     const connectionLabel = connectionStatus === 'connected'
@@ -85,17 +83,6 @@ export function ChatRoomScreen() {
             : connectionStatus === 'connecting'
                 ? '연결 중…'
                 : '연결 끊김';
-
-    const showToast = useCallback((message: string) => {
-        setToastMessage(message);
-        if (toastTimeoutRef.current != null) {
-            clearTimeout(toastTimeoutRef.current);
-        }
-        toastTimeoutRef.current = setTimeout(() => {
-            setToastMessage(null);
-            toastTimeoutRef.current = null;
-        }, 2200);
-    }, []);
 
     const loadMoreHistory = useCallback(async () => {
         if (!roomId || isLoadingHistory || !hasMoreHistory) return;
@@ -225,6 +212,16 @@ export function ChatRoomScreen() {
         setReactionMenuMessageId(null);
     }, []);
 
+    const showToast = useCallback((message: string, kind: 'success' | 'error') => {
+        setToast({ message, kind });
+        if (toastTimeoutRef.current != null) {
+            clearTimeout(toastTimeoutRef.current);
+        }
+        toastTimeoutRef.current = setTimeout(() => {
+            setToast(null);
+        }, 2200);
+    }, []);
+
     useEffect(() => {
         const handlePointerDown = () => {
             closeReactionMenu();
@@ -236,15 +233,6 @@ export function ChatRoomScreen() {
             document.removeEventListener('pointerdown', handlePointerDown);
         };
     }, [closeReactionMenu]);
-
-    useEffect(() => {
-        return () => {
-            if (toastTimeoutRef.current != null) {
-                clearTimeout(toastTimeoutRef.current);
-                toastTimeoutRef.current = null;
-            }
-        };
-    }, []);
 
     const handleReactionSelect = useCallback((messageId: number | undefined, emoji: string) => {
         if (messageId == null) {
@@ -262,36 +250,27 @@ export function ChatRoomScreen() {
         closeReactionMenu();
     }, [closeReactionMenu, applyLocalReaction, myUserId, sendReaction, roomId]);
 
-    const handleReportMessage = useCallback(async (msg: UserChatMessage) => {
-        if (msg.id == null) return;
-        if (!roomId) return;
+    const handleReportEntry = useCallback((messageId: number | undefined) => {
+        if (messageId == null) return;
+        setReportConfirmMessageId(messageId);
+        closeReactionMenu();
+    }, [closeReactionMenu]);
 
-        const roomIdNum = Number(roomId);
-        if (!Number.isFinite(roomIdNum)) return;
-
-        const confirmed = window.confirm('이 메시지를 신고할까요?');
-        if (!confirmed) return;
+    const confirmReport = useCallback(async () => {
+        if (reportConfirmMessageId == null) return;
 
         try {
-            await reportChatMessage({
-                roomId: roomIdNum,
-                messageId: msg.id,
-            });
-
-            setLocallyBlindedMessageIds(prev => {
-                const next = new Set(prev);
-                next.add(msg.id!);
-                return next;
-            });
-
-            showToast('신고가 접수됐어요');
-        } catch (error) {
-            console.error('Report failed:', error);
-            showToast('신고에 실패했어요. 잠시 후 다시 시도해주세요');
+            setIsReporting(true);
+            await reportChatMessage(reportConfirmMessageId);
+            showToast('신고가 접수되었습니다.', 'success');
+            setReportConfirmMessageId(null);
+        } catch (e) {
+            console.error('Report failed:', e);
+            showToast('신고에 실패했습니다. 잠시 후 다시 시도해주세요.', 'error');
         } finally {
-            closeReactionMenu();
+            setIsReporting(false);
         }
-    }, [roomId, showToast, closeReactionMenu]);
+    }, [reportConfirmMessageId, showToast]);
 
     const handleMessagePointerDown = useCallback((messageId: number | undefined, e?: React.PointerEvent) => {
         if (reactionTimeoutRef.current != null) {
@@ -315,8 +294,7 @@ export function ChatRoomScreen() {
     }, [openReactionMenu]);
 
     const handleMessagePointerMove = useCallback((msg: UserChatMessage, e: React.PointerEvent) => {
-        const isBlinded = (msg.isBlinded === true) || (msg.id != null && locallyBlindedMessageIds.has(msg.id));
-        if (!msg.imageUrl || isBlinded) return;
+        if (!msg.imageUrl) return;
         if (swipeTargetMessageIdRef.current !== msg.id) return;
         if (swipeStartXRef.current == null || swipeStartYRef.current == null) return;
         if (swipeTriggeredRef.current) return;
@@ -339,7 +317,7 @@ export function ChatRoomScreen() {
 
             navigate(`/story-editor?${query.toString()}`);
         }
-    }, [navigate, roomId, locallyBlindedMessageIds]);
+    }, [navigate, roomId]);
 
     const handleMessagePointerUp = useCallback(() => {
         if (reactionTimeoutRef.current != null) {
@@ -597,7 +575,6 @@ export function ChatRoomScreen() {
                     }
 
                     const isMyMessage = msg.sender.id === myUserId;
-                    const isBlinded = (msg.isBlinded === true) || (msg.id != null && locallyBlindedMessageIds.has(msg.id));
                     const timestamp = new Date(msg.createdAt);
                     const timeString = timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
 
@@ -664,32 +641,28 @@ export function ChatRoomScreen() {
                                                 ↪ 답장 (replyToId: {msg.replyToId})
                                             </div>
                                         )}
-                                        {msg.imageUrl && (
-                                            isBlinded ? (
-                                                <div
-                                                    style={{
-                                                        width: 'min(240px, 70vw)',
-                                                        height: '160px',
-                                                        background: isMyMessage ? 'rgba(255,255,255,0.18)' : 'rgba(0,0,0,0.06)',
-                                                        display: 'flex',
-                                                        alignItems: 'center',
-                                                        justifyContent: 'center',
-                                                        padding: '14px',
-                                                        color: isMyMessage ? 'rgba(255,255,255,0.92)' : '#6B7684',
-                                                        fontSize: '13px',
-                                                        fontWeight: 700,
-                                                    }}
+                                        {msg.type === MessageType.CHAT && !msg.imageUrl && (
+                                            <div style={{
+                                                padding: '12px 14px',
+                                                backgroundColor: isMyMessage ? 'rgba(0,0,0,0.15)' : 'rgba(0, 27, 55, 0.06)',
+                                            }}>
+                                                <Text
+                                                    display="block"
+                                                    color={isMyMessage ? 'grey50' : 'grey700'}
+                                                    typography="st13"
+                                                    fontWeight="medium"
                                                 >
-                                                    블라인드된 메시지
-                                                </div>
-                                            ) : (
-                                                <img
-                                                    src={msg.imageUrl}
-                                                    alt="Chat"
-                                                    style={{ display: 'block', maxWidth: '100%', maxHeight: '300px', objectFit: 'cover', cursor: 'pointer' }}
-                                                    onClick={() => msg.imageUrl && handleImageClick(msg.imageUrl)}
-                                                />
-                                            )
+                                                    블라인드 처리된 메시지입니다
+                                                </Text>
+                                            </div>
+                                        )}
+                                        {msg.imageUrl && (
+                                            <img
+                                                src={msg.imageUrl}
+                                                alt="Chat"
+                                                style={{ display: 'block', maxWidth: '100%', maxHeight: '300px', objectFit: 'cover', cursor: 'pointer' }}
+                                                onClick={() => msg.imageUrl && handleImageClick(msg.imageUrl)}
+                                            />
                                         )}
                                         {getReactionCounts(msg).length > 0 && (
                                             <div style={{
@@ -749,27 +722,17 @@ export function ChatRoomScreen() {
                                                     {emoji}
                                                 </button>
                                             ))}
-
-                                            {!isMyMessage && msg.id != null && (
-                                                <button
-                                                    type="button"
-                                                    onPointerDown={(e) => e.stopPropagation()}
-                                                    onClick={() => handleReportMessage(msg)}
-                                                    style={{
-                                                        border: 'none',
-                                                        background: '#FFF',
-                                                        borderRadius: '16px',
-                                                        padding: '6px 10px',
-                                                        fontSize: '13px',
-                                                        cursor: 'pointer',
-                                                        fontWeight: 900,
-                                                        color: '#F04452',
-                                                        boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
-                                                    }}
+                                            <div style={{ width: '1px', background: 'rgba(0,0,0,0.08)', margin: '0 2px' }} />
+                                            <div onPointerDown={(e) => e.stopPropagation()}>
+                                                <Button
+                                                    size="small"
+                                                    color="danger"
+                                                    variant="weak"
+                                                    onClick={() => handleReportEntry(msg.id)}
                                                 >
                                                     신고
-                                                </button>
-                                            )}
+                                                </Button>
+                                            </div>
                                         </div>
                                     )}
                                 </div>
@@ -1126,6 +1089,94 @@ export function ChatRoomScreen() {
             </div>
             </div>
 
+            {toast != null && (
+                <div
+                    role="status"
+                    aria-live="polite"
+                    style={{
+                        position: 'fixed',
+                        left: '50%',
+                        bottom: 'max(18px, env(safe-area-inset-bottom))',
+                        transform: 'translateX(-50%)',
+                        zIndex: 260,
+                        background: toast.kind === 'success' ? 'rgba(25, 31, 40, 0.92)' : 'rgba(255, 59, 48, 0.92)',
+                        color: '#fff',
+                        padding: '10px 14px',
+                        borderRadius: '12px',
+                        boxShadow: '0 12px 40px rgba(0,0,0,0.25)',
+                        maxWidth: 'min(520px, calc(100% - 32px))',
+                        fontSize: '13px',
+                        fontWeight: 600,
+                    }}
+                >
+                    {toast.message}
+                </div>
+            )}
+
+            {reportConfirmMessageId != null && (
+                <div
+                    role="dialog"
+                    aria-modal="true"
+                    style={{
+                        position: 'fixed',
+                        inset: 0,
+                        background: 'rgba(0,0,0,0.55)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: '16px',
+                        zIndex: 250,
+                    }}
+                    onClick={() => !isReporting && setReportConfirmMessageId(null)}
+                >
+                    <div
+                        style={{
+                            width: 'min(420px, 100%)',
+                            background: '#fff',
+                            borderRadius: '16px',
+                            padding: '18px 16px 16px 16px',
+                            boxShadow: '0 24px 80px rgba(0,0,0,0.35)',
+                        }}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <Text display="block" color="grey900" typography="st13" fontWeight="bold">
+                            이 메시지를 신고할까요?
+                        </Text>
+                        <Text
+                            display="block"
+                            color="grey600"
+                            typography="st13"
+                            style={{ marginTop: '8px' } as React.CSSProperties}
+                        >
+                            신고가 접수되면 운영팀에서 검토합니다.
+                        </Text>
+
+                        <div style={{ display: 'flex', gap: '8px', marginTop: '14px' }}>
+                            <Button
+                                display="full"
+                                color="light"
+                                variant="weak"
+                                size="large"
+                                disabled={isReporting}
+                                onClick={() => setReportConfirmMessageId(null)}
+                            >
+                                취소
+                            </Button>
+                            <Button
+                                display="full"
+                                color="danger"
+                                variant="fill"
+                                size="large"
+                                loading={isReporting}
+                                onClick={confirmReport}
+                            >
+                                신고
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             <style>{`
                 @keyframes fadeInUp {
                     from { opacity: 0; transform: translate(-50%, 10px); }
@@ -1137,31 +1188,6 @@ export function ChatRoomScreen() {
                 }
             `}</style>
             
-            {toastMessage && (
-                <div
-                    role="status"
-                    aria-live="polite"
-                    style={{
-                        position: 'fixed',
-                        left: '50%',
-                        bottom: '86px',
-                        transform: 'translateX(-50%)',
-                        background: 'rgba(0,0,0,0.78)',
-                        color: '#fff',
-                        padding: '10px 14px',
-                        borderRadius: '14px',
-                        fontSize: '13px',
-                        fontWeight: 800,
-                        zIndex: 500,
-                        maxWidth: 'calc(100vw - 32px)',
-                        textAlign: 'center',
-                        animation: 'fadeInUp 0.18s ease-out'
-                    }}
-                >
-                    {toastMessage}
-                </div>
-            )}
-
             <Lightbox
                 open={lightboxOpen}
                 close={() => window.history.back()}
