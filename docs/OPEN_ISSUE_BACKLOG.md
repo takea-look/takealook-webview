@@ -64,13 +64,20 @@ Created to resolve issue #70.
 - [ ] `takealook.ait` 산출물 변경이 실제 코드 변경 의도와 일치하는지 PR마다 확인
 
 ## Next split candidates (actionable 3~5)
-| Priority | Title | Owner | Notes |
+| Priority | Title | Issue | Notes |
 | --- | --- | --- | --- |
-| P0 | 닉네임 API 스펙 확정 후 FE 에러코드 매핑 | @unassigned | #1 항목 구체 이슈화 |
-| P1 | 신고 API Swagger 반영 + blind 상태 필드 합의 | @unassigned | #2 항목 구체 이슈화 |
-| P1 | ChatRoomScreen 분리 1차(MessageBubble, ReportDialog) | @unassigned | 리스크 낮은 단위부터 분리 |
-| P2 | 공용 Toast 컴포넌트(`useToast`) 도입 | @unassigned | 최소 2개 화면 적용 |
-| P2 | README + SETUP 중복 정리 및 단일 진입 문서화 | @unassigned | 온보딩 비용 절감 |
+| P0 | 닉네임 API 스펙 확정 후 FE 에러코드 매핑 | [#95](https://github.com/takea-look/takealook-webview/issues/95) | #1 항목 구체 이슈화 |
+| P1 | 신고 API Swagger 반영 + blind 상태 필드 합의 | [#96](https://github.com/takea-look/takealook-webview/issues/96) | #2 항목 구체 이슈화 |
+| P1 | ChatRoomScreen 분리 1차(MessageBubble, ReportDialog) | [#97](https://github.com/takea-look/takealook-webview/issues/97) | 리스크 낮은 단위부터 분리 |
+| P2 | 공용 Toast 컴포넌트(`useToast`) 도입 | (TBD) | 최소 2개 화면 적용 |
+| P2 | README + SETUP 중복 정리 및 단일 진입 문서화 | (TBD) | 온보딩 비용 절감 |
+
+## Heartbeat backlog guard follow-up (#92)
+- Added/seeded actionable issues so backlog doesn't stay guard-only:
+  - [#95](https://github.com/takea-look/takealook-webview/issues/95) P0 닉네임 API 스펙 확정 및 FE 에러코드 매핑
+  - [#96](https://github.com/takea-look/takealook-webview/issues/96) P1 신고 API Swagger 반영 + blind 상태 필드 합의
+  - [#97](https://github.com/takea-look/takealook-webview/issues/97) P1 ChatRoomScreen 분리 1차
+- This satisfies the guard TODO/AC (리스크 정리 + 우선순위 이슈 3개 이상 도출).
 
 ## References
 - Swagger UI: https://s1.takealook.my/webjars/swagger-ui/index.html
