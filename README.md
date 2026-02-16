@@ -1,106 +1,94 @@
-# React + TypeScript + Vite
+# takealook-webview
 
-## 환경변수 설정 (.env)
+takealook WebView 프론트엔드 (React + TypeScript + Vite)
 
-API 서버 주소는 `VITE_API_BASE_URL`로 설정합니다. (사용처: `src/api/client.ts`)
+## 요구사항
+
+- Node.js 20+
+- npm 10+
+
+## 빠른 시작 (로컬 실행)
 
 ```bash
+# 1) 의존성 설치
+npm install
+
+# 2) 환경변수 파일 생성
 cp .env.example .env
+
+# 3) 개발 서버 실행
+npm run dev
 ```
 
-`.env`에서 값을 배포/로컬 환경에 맞게 변경하세요:
+기본 개발 서버 주소: <http://localhost:5173>
+
+## 환경변수
+
+클라이언트에서 사용하는 Vite 환경변수는 반드시 `VITE_` 접두어가 필요합니다.
+
+- 사용처: `src/api/client.ts`
+- 필수 변수:
+
 ```bash
 VITE_API_BASE_URL=http://localhost:8080
 ```
 
-참고:
-- Vite에서 클라이언트에서 쓰는 환경변수는 `VITE_` 접두어가 필요합니다.
-- 미설정 시 기본값은 `http://localhost:8080` 입니다.
+`.env`가 없거나 값이 비어있으면 기본값 `http://localhost:8080`를 사용합니다.
 
-## E2E 테스트
+## 주요 스크립트
 
-- WebView 앱 E2E 시나리오 테스트 플랜: `docs/E2E_TEST_PLAN.md`
+```bash
+# 개발 서버
+npm run dev
 
-## 배포 (정적 호스팅)
+# 린트
+npm run lint
+
+# 프로덕션 빌드 (granite build)
+npm run build
+
+# 빌드 결과 미리보기
+npm run preview
+```
+
+## 배포
 
 ```bash
 npm run build
 ```
 
-빌드 결과물 `dist/`를 정적 호스팅으로 서빙하면 됩니다.
+빌드 결과물은 `dist/`에 생성됩니다.
 
-참고:
-- `VITE_API_BASE_URL`은 빌드 시점에 번들에 포함됩니다. 배포 환경에 맞는 값을 `.env`(또는 CI 환경변수)로 설정한 뒤 빌드하세요.
-- 로컬에서 빌드 결과 확인: `npm run preview`
+> 참고: `VITE_API_BASE_URL`은 **빌드 시점**에 번들에 포함됩니다. 배포 환경별로 `.env`(또는 CI 환경변수)를 분리하세요.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 자주 발생하는 문제 (FAQ)
 
-Currently, two official plugins are available:
+### 1) API 호출이 전부 실패해요
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- `VITE_API_BASE_URL` 값이 올바른지 확인
+- 백엔드 서버가 실행 중인지 확인
+- 브라우저 콘솔/네트워크 탭에서 CORS 및 401/403 응답 확인
 
-## React Compiler
+### 2) `npm run build`는 되는데 API가 로컬 주소로 호출돼요
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- 빌드 전에 `.env` 값을 원하는 배포 주소로 바꿨는지 확인
+- 이미 빌드된 산출물은 `.env`를 바꿔도 반영되지 않음 → 다시 빌드 필요
 
-## Expanding the ESLint configuration
+### 3) `npm run build`에서 큰 chunk 경고가 떠요
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- 현재는 경고이며 빌드는 성공할 수 있음
+- 필요 시 코드 스플리팅(`dynamic import`) 및 `manualChunks` 적용으로 개선
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 품질 확인 체크리스트
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+PR 전에 아래를 반드시 실행하세요.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run lint
+npm run build
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 문서
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- E2E 테스트 플랜: `docs/E2E_TEST_PLAN.md`
+- 백로그 문서: `docs/OPEN_ISSUE_BACKLOG.md`
