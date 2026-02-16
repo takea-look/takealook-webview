@@ -38,7 +38,7 @@ VITE_API_BASE_URL=http://localhost:8080
 ## 주요 스크립트
 
 ```bash
-# 개발 서버
+# 개발 서버 (granite)
 npm run dev
 
 # 린트
@@ -50,6 +50,21 @@ npm run build
 # 빌드 결과 미리보기
 npm run preview
 ```
+
+## Dev 서버 주의사항 (granite 404 이슈)
+
+일부 로컬 환경에서 `npm run dev`(granite dev) 실행 시 루트(`/`)가 404를 반환할 수 있습니다.
+
+이 경우 임시 워크어라운드로 Vite를 직접 실행하세요.
+
+```bash
+npx vite --host 0.0.0.0 --port 5173
+```
+
+접속 예시:
+- 로컬: `http://localhost:5173/`
+- 네트워크: `http://<내-IP>:5173/`
+- Tailscale: `http://<tailscale-ip>:5173/`
 
 ## 배포
 
