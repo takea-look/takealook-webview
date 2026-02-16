@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://s1.takealook.my';
 const TOKEN_KEY = 'takealook_access_token';
 const REFRESH_TOKEN_KEY = 'takealook_refresh_token';
 
