@@ -46,10 +46,14 @@ Created to resolve issue #70.
   - 최소 2개 화면에서 공용 컴포넌트 사용
   - 접근성(`role=status`, `aria-live`) 유지
 
-## Backlog guard (added for #72)
+## Backlog guard (added for #72, reinforced by #78)
 - If open issue count reaches 0 during heartbeat, create at least one actionable issue immediately.
 - Newly created issue should include: Why / Scope / Acceptance Criteria / References.
-- First seeded issue: #73 (`[P2] Docs: README 실행/환경변수 섹션 보강`).
+- Keep at least **1 non-meta actionable issue** open at all times (avoid only guard issues remaining).
+- When closing a guard issue, seed the next actionable issue first.
+- Seed history:
+  - #73 (`[P2] Docs: README 실행/환경변수 섹션 보강`)
+  - #79 (`[P2] Investigate granite dev 404 on root path`)
 
 ## Gap / Risk checklist (for #76)
 - [ ] Swagger 명세와 FE 구현 엔드포인트 일치 여부 점검 (`/report`, `/user/profile/me` PATCH)
