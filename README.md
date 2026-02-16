@@ -30,10 +30,10 @@ npm run dev
 - 필수 변수:
 
 ```bash
-VITE_API_BASE_URL=http://localhost:8080
+VITE_API_BASE_URL=https://s1.takealook.my
 ```
 
-`.env`가 없거나 값이 비어있으면 기본값 `http://localhost:8080`를 사용합니다.
+`.env`가 없거나 값이 비어있으면 기본값 `https://s1.takealook.my`를 사용합니다. (로컬 서버 테스트 시에는 `http://localhost:8080`로 변경)
 
 ## 주요 스크립트
 
