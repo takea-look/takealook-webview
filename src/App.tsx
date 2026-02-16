@@ -4,6 +4,7 @@ import { MainScreen } from './screens/MainScreen'
 import { ChatRoomScreen } from './screens/ChatRoomScreen'
 import { StoryEditorScreen } from './screens/StoryEditorScreen'
 import { ProtectedRoute } from './components/ProtectedRoute'
+import { NicknameOnboardingScreen } from './screens/NicknameOnboardingScreen'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function AppContent() {
       <Routes>
         <Route path="/login" element={<LoginScreen />} />
         <Route element={<ProtectedRoute />}>
+          <Route path="/onboarding/nickname" element={<NicknameOnboardingScreen />} />
           <Route path="/room/:roomId" element={<ChatRoomScreen />} />
           <Route path="/story-editor" element={<StoryEditorScreen />} />
           <Route path="/*" element={<MainScreen />} />
