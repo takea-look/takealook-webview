@@ -414,6 +414,38 @@ export function ChatRoomScreen() {
         return new File([blob], name, { type: 'image/webp' });
     };
 
+    const uploadSingleImageFile = async (roomIdNum: number, senderUserId: number, file: File, replyToMessageId?: number) => {
+        const { file: optimizedFile } = await downsampleImageFile(file, {
+            maxWidth: 1280,
+            maxHeight: 1280,
+            quality: 0.82,
+            mimeType: 'image/webp',
+        });
+
+        if (optimizedFile.size > MAX_UPLOAD_BYTES) {
+            throw new Error('압축 후에도 파일이 10MB를 초과합니다. 더 작은 이미지를 선택해주세요.');
+        }
+
+        const filename = `chat/${roomIdNum}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.webp`;
+        const { url: presignedUrl } = await getUploadUrl(filename, optimizedFile.size);
+        await uploadToR2(presignedUrl, optimizedFile);
+        const imageUrl = getPublicImageUrl(filename);
+
+        sendMessage(roomIdNum, imageUrl, senderUserId, replyToMessageId);
+    };
+
+    const validateUploadFile = (file: File) => {
+        if (file.size > MAX_UPLOAD_BYTES) {
+            throw new Error('파일이 너무 커요. 10MB 이하 이미지만 업로드할 수 있어요.');
+        }
+
+        const extension = (file.name.split('.').pop() || '').toLowerCase();
+        const allowedExt = new Set(['png', 'jpg', 'jpeg', 'webp']);
+        if (!allowedExt.has(extension)) {
+            throw new Error('지원하지 않는 이미지 형식입니다. png/jpg/jpeg/webp만 업로드할 수 있어요.');
+        }
+    };
+
     const confirmAndUpload = async () => {
         if (!pendingFile || !roomId) return;
 
@@ -426,26 +458,13 @@ export function ChatRoomScreen() {
             }
 
             setIsUploading(true);
+            const senderUserId = myUserId;
 
             const edited = await buildEditedImageFile(pendingFile);
-            const { file: optimizedFile } = await downsampleImageFile(edited, {
-                maxWidth: 1280,
-                maxHeight: 1280,
-                quality: 0.82,
-                mimeType: 'image/webp',
-            });
-
-            if (optimizedFile.size > MAX_UPLOAD_BYTES) {
-                throw new Error('압축 후에도 파일이 10MB를 초과합니다. 더 작은 이미지를 선택해주세요.');
-            }
-
-            const filename = `chat/${roomIdNum}/${Date.now()}.webp`;
-            const { url: presignedUrl } = await getUploadUrl(filename, optimizedFile.size);
-            await uploadToR2(presignedUrl, optimizedFile);
-            const imageUrl = getPublicImageUrl(filename);
+            validateUploadFile(edited);
+            await uploadSingleImageFile(roomIdNum, senderUserId, edited, replyTarget?.id);
 
             setLastFailedUpload(null);
-            sendMessage(roomIdNum, imageUrl, myUserId, replyTarget?.id);
             setReplyTarget(null);
             closePreview();
         } catch (error) {
@@ -458,27 +477,39 @@ export function ChatRoomScreen() {
     };
 
     const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
-        if (!file || !roomId) return;
+        const files = event.target.files;
+        if (!files || files.length === 0 || !roomId) return;
 
         try {
-            // Front-side validation
-            if (file.size > MAX_UPLOAD_BYTES) {
-                throw new Error('파일이 너무 커요. 10MB 이하 이미지만 업로드할 수 있어요.');
+            if (myUserId === null) {
+                throw new Error('사용자 정보를 불러오는 중입니다. 잠시 후 다시 시도해주세요.');
             }
 
-            const extension = (file.name.split('.').pop() || '').toLowerCase();
-            const allowedExt = new Set(['png', 'jpg', 'jpeg', 'webp']);
-            if (!allowedExt.has(extension)) {
-                throw new Error('지원하지 않는 이미지 형식입니다. png/jpg/jpeg/webp만 업로드할 수 있어요.');
+            const selectedFiles = Array.from(files);
+            selectedFiles.forEach(validateUploadFile);
+            const senderUserId = myUserId;
+
+            if (selectedFiles.length === 1) {
+                openPreview(selectedFiles[0]);
+                return;
             }
 
-            openPreview(file);
+            const roomIdNum = parseInt(roomId, 10);
+            setIsUploading(true);
+
+            const replyToMessageId = replyTarget?.id;
+            for (const file of selectedFiles) {
+                await uploadSingleImageFile(roomIdNum, senderUserId, file, replyToMessageId);
+            }
+
+            setReplyTarget(null);
+            showToast(`사진 ${selectedFiles.length}장을 보냈어요.`, 'success');
         } catch (error) {
-            console.error('File selection failed:', error);
+            console.error('File selection/upload failed:', error);
             const message = error instanceof Error ? error.message : '사진을 불러오지 못했습니다.';
-            alert(message);
+            showToast(message, 'error');
         } finally {
+            setIsUploading(false);
             if (fileInputRef.current) fileInputRef.current.value = '';
         }
     };
@@ -1053,7 +1084,7 @@ export function ChatRoomScreen() {
                     color: '#8B95A1',
                     fontSize: '15px'
                 }}>
-                    {replyTarget ? '답장할 사진을 보내세요' : '사진으로만 대화할 수 있어요'}
+                    {replyTarget ? '답장할 사진(여러 장 가능)을 보내세요' : '사진으로만 대화할 수 있어요 (여러 장 선택 가능)'}
                 </div>
 
                 <input
@@ -1061,6 +1092,7 @@ export function ChatRoomScreen() {
                     ref={fileInputRef}
                     style={{ display: 'none' }}
                     accept="image/*"
+                    multiple
                     onChange={handleFileChange}
                 />
                 
