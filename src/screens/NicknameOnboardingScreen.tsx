@@ -4,6 +4,7 @@ import { Button, Text } from '@toss/tds-mobile';
 import { Layout } from '../components/Layout';
 import { LoadingView } from '../components/LoadingView';
 import { getMyProfile, updateMyNickname } from '../api/user';
+import { isApiError } from '../api/client';
 
 const NICKNAME_MIN = 2;
 const NICKNAME_MAX = 12;
@@ -16,6 +17,34 @@ function validateNickname(nickname: string): string | null {
   // Basic allowed chars: Korean/English/numbers/underscore
   if (!/^[0-9A-Za-z가-힣_]+$/.test(trimmed)) return '한글/영문/숫자/_ 만 사용할 수 있어요.';
   return null;
+}
+
+function mapNicknameUpdateError(error: unknown): string {
+  const fallback = '닉네임 저장에 실패했어요. 잠시 후 다시 시도하거나 건너뛰어 주세요.';
+
+  if (!isApiError(error)) {
+    return fallback;
+  }
+
+  const normalized = `${error.code ?? ''} ${error.message}`.toUpperCase();
+
+  if (error.status === 409 || normalized.includes('DUPLICATE') || normalized.includes('ALREADY')) {
+    return '이미 사용 중인 닉네임이에요. 다른 닉네임을 입력해주세요.';
+  }
+
+  if (error.status === 400 && (normalized.includes('BANNED') || normalized.includes('FORBIDDEN_WORD') || normalized.includes('PROFANITY'))) {
+    return '사용할 수 없는 단어가 포함되어 있어요. 다른 닉네임을 입력해주세요.';
+  }
+
+  if (error.status === 400 && (normalized.includes('LENGTH') || normalized.includes('TOO_LONG') || normalized.includes('TOO_SHORT'))) {
+    return `닉네임은 ${NICKNAME_MIN}~${NICKNAME_MAX}자 사이여야 해요.`;
+  }
+
+  if (error.status === 404 || error.status === 405) {
+    return '아직 닉네임 저장 API가 준비되지 않았어요. 잠시 후 다시 시도하거나 건너뛰어 주세요.';
+  }
+
+  return fallback;
 }
 
 export function NicknameOnboardingScreen() {
@@ -66,12 +95,15 @@ export function NicknameOnboardingScreen() {
 
     try {
       setSubmitting(true);
+      setError(null);
       await updateMyNickname(trimmed);
       setToast('닉네임이 저장됐어요.');
       navigate(nextPath, { replace: true });
     } catch (e) {
       console.error(e);
-      setToast('닉네임 저장에 실패했어요. 잠시 후 다시 시도하거나 건너뛰어 주세요.');
+      const mappedMessage = mapNicknameUpdateError(e);
+      setError(mappedMessage);
+      setToast(mappedMessage);
     } finally {
       setSubmitting(false);
     }

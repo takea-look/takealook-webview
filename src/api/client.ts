@@ -9,15 +9,54 @@ type RefreshResponse = {
 
 let refreshInFlight: Promise<void> | null = null;
 
-interface ApiErrorType extends Error {
+export interface ApiErrorType extends Error {
   status: number;
+  code?: string;
+  details?: unknown;
 }
 
-function createApiError(status: number, message: string): ApiErrorType {
+function createApiError(status: number, message: string, code?: string, details?: unknown): ApiErrorType {
   const error = new Error(message) as ApiErrorType;
   error.status = status;
   error.name = 'ApiError';
+  error.code = code;
+  error.details = details;
   return error;
+}
+
+export function isApiError(error: unknown): error is ApiErrorType {
+  return error instanceof Error && (error as ApiErrorType).name === 'ApiError' && typeof (error as ApiErrorType).status === 'number';
+}
+
+type ParsedErrorBody = {
+  message?: string;
+  error?: string;
+  code?: string;
+  errorCode?: string;
+  status?: number;
+} & Record<string, unknown>;
+
+async function parseErrorResponse(response: Response): Promise<{ message: string; code?: string; details?: unknown }> {
+  const text = await response.text().catch(() => 'Unknown error');
+
+  if (!text) {
+    return { message: `Request failed (${response.status})` };
+  }
+
+  try {
+    const json = JSON.parse(text) as ParsedErrorBody;
+    const message =
+      (typeof json.message === 'string' && json.message) ||
+      (typeof json.error === 'string' && json.error) ||
+      text;
+    const code =
+      (typeof json.code === 'string' && json.code) ||
+      (typeof json.errorCode === 'string' && json.errorCode) ||
+      undefined;
+    return { message, code, details: json };
+  } catch {
+    return { message: text };
+  }
 }
 
 export function getAccessToken(): string | null {
@@ -56,8 +95,8 @@ async function refreshAccessToken(): Promise<void> {
   });
 
   if (!response.ok) {
-    const errorText = await response.text().catch(() => 'Unknown error');
-    throw createApiError(response.status, errorText);
+    const parsedError = await parseErrorResponse(response);
+    throw createApiError(response.status, parsedError.message, parsedError.code, parsedError.details);
   }
 
   const data = (await response.json()) as RefreshResponse;
@@ -138,8 +177,8 @@ export async function apiRequest<T>(
   }
 
   if (!response.ok) {
-    const errorText = await response.text().catch(() => 'Unknown error');
-    throw createApiError(response.status, errorText);
+    const parsedError = await parseErrorResponse(response);
+    throw createApiError(response.status, parsedError.message, parsedError.code, parsedError.details);
   }
 
   if (response.status === 204) {
