@@ -7,6 +7,7 @@ import { getMyProfile, updateMyNickname } from '../api/user';
 
 const NICKNAME_MIN = 2;
 const NICKNAME_MAX = 12;
+const NICKNAME_UPDATE_ENABLED = import.meta.env.VITE_ENABLE_NICKNAME_UPDATE === 'true';
 
 function validateNickname(nickname: string): string | null {
   const trimmed = nickname.trim();
@@ -53,6 +54,11 @@ export function NicknameOnboardingScreen() {
   }, [navigate, nextPath]);
 
   const submit = useCallback(async () => {
+    if (!NICKNAME_UPDATE_ENABLED) {
+      navigate(nextPath, { replace: true });
+      return;
+    }
+
     const trimmed = nickname.trim();
     const validationError = validateNickname(trimmed);
     setError(validationError);
@@ -65,7 +71,7 @@ export function NicknameOnboardingScreen() {
       navigate(nextPath, { replace: true });
     } catch (e) {
       console.error(e);
-      setToast('닉네임 저장에 실패했어요. (서버 API 준비 필요)');
+      setToast('닉네임 저장에 실패했어요. 잠시 후 다시 시도하거나 건너뛰어 주세요.');
     } finally {
       setSubmitting(false);
     }
@@ -80,35 +86,40 @@ export function NicknameOnboardingScreen() {
           닉네임을 설정해주세요
         </Text>
         <Text display="block" color="grey600" typography="st13" style={{ marginTop: '8px' } as React.CSSProperties}>
-          최초 1회 설정 후 변경이 제한될 수 있어요.
+          {NICKNAME_UPDATE_ENABLED
+            ? '최초 1회 설정 후 변경이 제한될 수 있어요.'
+            : '현재 서버 점검으로 닉네임 저장이 잠시 비활성화되어 있어요. 일단 건너뛰고 시작할 수 있어요.'}
         </Text>
 
-        <div style={{ marginTop: '18px' }}>
-          <input
-            value={nickname}
-            onChange={(e) => setNickname(e.target.value)}
-            placeholder="닉네임 (2~12자)"
-            autoComplete="off"
-            inputMode="text"
-            style={{
-              width: '100%',
-              padding: '14px 14px',
-              borderRadius: '12px',
-              border: error ? '1px solid #f04452' : '1px solid #E5E8EB',
-              outline: 'none',
-              fontSize: '14px',
-            }}
-          />
-          {error && (
-            <div style={{ marginTop: '8px' }}>
-              <Text display="block" color="red500" typography="st13">
-                {error}
-              </Text>
-            </div>
-          )}
-        </div>
+        {NICKNAME_UPDATE_ENABLED && (
+          <div style={{ marginTop: '18px' }}>
+            <input
+              value={nickname}
+              onChange={(e) => setNickname(e.target.value)}
+              placeholder="닉네임 (2~12자)"
+              autoComplete="off"
+              inputMode="text"
+              style={{
+                width: '100%',
+                padding: '14px 14px',
+                borderRadius: '12px',
+                border: error ? '1px solid #f04452' : '1px solid #E5E8EB',
+                outline: 'none',
+                fontSize: '14px',
+                color: '#191F28',
+              }}
+            />
+            {error && (
+              <div style={{ marginTop: '8px' }}>
+                <Text display="block" color="red500" typography="st13">
+                  {error}
+                </Text>
+              </div>
+            )}
+          </div>
+        )}
 
-        <div style={{ marginTop: '16px' }}>
+        <div style={{ marginTop: '16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
           <Button
             display="full"
             size="large"
@@ -117,8 +128,20 @@ export function NicknameOnboardingScreen() {
             loading={submitting}
             onClick={submit}
           >
-            저장하고 시작하기
+            {NICKNAME_UPDATE_ENABLED ? '저장하고 시작하기' : '건너뛰고 시작하기'}
           </Button>
+          {NICKNAME_UPDATE_ENABLED && (
+            <Button
+              display="full"
+              size="large"
+              color="primary"
+              variant="weak"
+              disabled={submitting}
+              onClick={() => navigate(nextPath, { replace: true })}
+            >
+              나중에 할게요
+            </Button>
+          )}
         </div>
 
         {toast && (
