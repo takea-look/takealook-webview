@@ -54,6 +54,7 @@ Created to resolve issue #70.
 - Seed history:
   - #73 (`[P2] Docs: README 실행/환경변수 섹션 보강`)
   - #79 (`[P2] Investigate granite dev 404 on root path`)
+  - #84 (`[P1] Auth flows consolidation: ID/PW + Toss UX and API contract`)
 
 ## Gap / Risk checklist (for #76)
 - [ ] Swagger 명세와 FE 구현 엔드포인트 일치 여부 점검 (`/report`, `/user/profile/me` PATCH)
