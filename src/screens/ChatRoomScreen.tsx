@@ -1,16 +1,17 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getChatMessages, reportChatMessage } from '../api/chat';
-import { Button, Text } from '@toss/tds-mobile';
 import { getPublicImageUrl, getUploadUrl, uploadToR2 } from '../api/storage';
 import { downsampleImageFile } from '../utils/image';
 import { useWebSocket } from '../hooks/useWebSocket';
 import type { UserChatMessage } from '../types/api';
 import { MessageType } from '../types/api';
 import { getMyProfile } from '../api/user';
-import { CameraIcon, UserIcon, ArrowDownIcon } from '../components/icons';
+import { CameraIcon, ArrowDownIcon } from '../components/icons';
 import { LoadingView } from '../components/LoadingView';
 import { Layout } from '../components/Layout';
+import { MessageBubble } from '../components/chat/MessageBubble';
+import { ReportConfirmDialog } from '../components/chat/ReportConfirmDialog';
 import Lightbox from "yet-another-react-lightbox";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import Download from "yet-another-react-lightbox/plugins/download";
@@ -605,178 +606,28 @@ export function ChatRoomScreen() {
                         );
                     }
 
-                    const isMyMessage = msg.sender.id === myUserId;
                     const timestamp = new Date(msg.createdAt);
                     const timeString = timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
 
                     return (
                         <React.Fragment key={`${msg.createdAt}-${index}`}>
                             {isNewDay && <DateDivider />}
-                            <div style={{
-                                display: 'flex',
-                                flexDirection: isMyMessage ? 'row-reverse' : 'row',
-                                alignItems: 'flex-end',
-                                gap: '8px'
-                            }}>
-                                {!isMyMessage && (
-                                    <div style={{
-                                        width: '36px',
-                                        height: '36px',
-                                        borderRadius: '14px',
-                                        backgroundColor: '#F2F4F6',
-                                        backgroundImage: msg.sender.image ? `url(${msg.sender.image})` : 'none',
-                                        backgroundSize: 'cover',
-                                        backgroundPosition: 'center',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        flexShrink: 0,
-                                        overflow: 'hidden'
-                                    }}>
-                                        {!msg.sender.image && <UserIcon size={20} color="#B0B8C1" />}
-                                    </div>
-                                )}
-    
-                                <div style={{ display: 'flex', flexDirection: 'column', alignItems: isMyMessage ? 'flex-end' : 'flex-start', maxWidth: '70%' }}>
-                                    {!isMyMessage && (
-                                        <span style={{ fontSize: '12px', color: '#6B7684', marginBottom: '4px', marginLeft: '2px' }}>
-                                            {msg.sender.nickname || msg.sender.username}
-                                        </span>
-                                    )}
-                                    
-                                    <div
-                                        onContextMenu={(e) => {
-                                            e.preventDefault();
-                                            openReactionMenu(msg.id);
-                                        }}
-                                        onDoubleClick={() => setReplyTarget(msg)}
-                                        onPointerDown={(e) => handleMessagePointerDown(msg.id, e)}
-                                        onPointerMove={(e) => handleMessagePointerMove(msg, e)}
-                                        onPointerUp={handleMessagePointerUp}
-                                        onPointerLeave={handleMessagePointerUp}
-                                        style={{
-                                            borderRadius: isMyMessage ? '20px 4px 20px 20px' : '4px 20px 20px 20px',
-                                            overflow: 'hidden',
-                                            boxShadow: isMyMessage ? 'none' : 'inset 0 0 0 1px rgba(0,0,0,0.04)',
-                                            backgroundColor: isMyMessage ? '#3182F6' : '#F2F4F6',
-                                            color: isMyMessage ? '#fff' : '#333d4b'
-                                        }}
-                                    >
-                                        {msg.replyToId != null && (
-                                            <div style={{
-                                                padding: '8px 10px',
-                                                fontSize: '12px',
-                                                opacity: 0.9,
-                                                borderBottom: isMyMessage ? '1px solid rgba(255,255,255,0.2)' : '1px solid rgba(0,0,0,0.06)'
-                                            }}>
-                                                ↪ 답장 (replyToId: {msg.replyToId})
-                                            </div>
-                                        )}
-                                        {msg.type === MessageType.CHAT && !msg.imageUrl && (
-                                            <div style={{
-                                                padding: '12px 14px',
-                                                backgroundColor: isMyMessage ? 'rgba(0,0,0,0.15)' : 'rgba(0, 27, 55, 0.06)',
-                                            }}>
-                                                <Text
-                                                    display="block"
-                                                    color={isMyMessage ? 'grey50' : 'grey700'}
-                                                    typography="st13"
-                                                    fontWeight="medium"
-                                                >
-                                                    블라인드 처리된 메시지입니다
-                                                </Text>
-                                            </div>
-                                        )}
-                                        {msg.imageUrl && (
-                                            <img
-                                                src={msg.imageUrl}
-                                                alt="Chat"
-                                                style={{ display: 'block', maxWidth: '100%', maxHeight: '300px', objectFit: 'cover', cursor: 'pointer' }}
-                                                onClick={() => msg.imageUrl && handleImageClick(msg.imageUrl)}
-                                            />
-                                        )}
-                                        {getReactionCounts(msg).length > 0 && (
-                                            <div style={{
-                                                display: 'flex',
-                                                gap: '6px',
-                                                justifyContent: 'flex-end',
-                                                padding: '6px 8px',
-                                                fontSize: '11px',
-                                                color: isMyMessage ? 'rgba(255,255,255,0.9)' : '#8B95A1'
-                                            }}>
-                                                {getReactionCounts(msg).map(item => (
-                                                    <span
-                                                        key={`${msg.id}-${item.emoji}`}
-                                                        style={{
-                                                            display: 'inline-flex',
-                                                            alignItems: 'center',
-                                                            gap: '3px',
-                                                            background: isMyMessage ? 'rgba(0,0,0,0.2)' : '#EAF1FF',
-                                                            borderRadius: '12px',
-                                                            padding: '1px 7px'
-                                                        }}
-                                                    >
-                                                        <span>{item.emoji}</span>
-                                                        <span>{item.count}</span>
-                                                    </span>
-                                                ))}
-                                            </div>
-                                        )}
-                                    </div>
-                                    {reactionMenuMessageId === msg.id && (
-                                        <div
-                                            style={{
-                                                marginTop: '6px',
-                                                display: 'flex',
-                                                gap: '8px',
-                                                justifyContent: isMyMessage ? 'flex-end' : 'flex-start',
-                                                zIndex: 10,
-                                            }}
-                                            onPointerDown={(e) => e.stopPropagation()}
-                                        >
-                                            {REACTION_EMOJIS.map(emoji => (
-                                                <button
-                                                    key={emoji}
-                                                    type="button"
-                                                    onPointerDown={(e) => e.stopPropagation()}
-                                                    onClick={() => handleReactionSelect(msg.id, emoji)}
-                                                    style={{
-                                                        border: 'none',
-                                                        background: '#FFF',
-                                                        borderRadius: '16px',
-                                                        padding: '4px 8px',
-                                                        fontSize: '18px',
-                                                        cursor: 'pointer',
-                                                        boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
-                                                    }}
-                                                >
-                                                    {emoji}
-                                                </button>
-                                            ))}
-                                            <div style={{ width: '1px', background: 'rgba(0,0,0,0.08)', margin: '0 2px' }} />
-                                            <div onPointerDown={(e) => e.stopPropagation()}>
-                                                <Button
-                                                    size="small"
-                                                    color="danger"
-                                                    variant="weak"
-                                                    onClick={() => handleReportEntry(msg.id)}
-                                                >
-                                                    신고
-                                                </Button>
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
-    
-                                <span style={{
-                                    fontSize: '11px',
-                                    color: '#b0b8c1',
-                                    marginBottom: '2px',
-                                    whiteSpace: 'nowrap'
-                                }}>
-                                    {timeString}
-                                </span>
-                            </div>
+                            <MessageBubble
+                                message={msg}
+                                myUserId={myUserId}
+                                timeString={timeString}
+                                reactionEmojis={REACTION_EMOJIS}
+                                reactionMenuOpen={reactionMenuMessageId === msg.id}
+                                reactionCounts={getReactionCounts(msg)}
+                                onOpenReactionMenu={openReactionMenu}
+                                onSetReplyTarget={setReplyTarget}
+                                onPointerDown={handleMessagePointerDown}
+                                onPointerMove={handleMessagePointerMove}
+                                onPointerUp={handleMessagePointerUp}
+                                onSelectReaction={handleReactionSelect}
+                                onReportEntry={handleReportEntry}
+                                onImageClick={handleImageClick}
+                            />
                         </React.Fragment>
                     );
                 })}
@@ -1145,69 +996,12 @@ export function ChatRoomScreen() {
                 </div>
             )}
 
-            {reportConfirmMessageId != null && (
-                <div
-                    role="dialog"
-                    aria-modal="true"
-                    style={{
-                        position: 'fixed',
-                        inset: 0,
-                        background: 'rgba(0,0,0,0.55)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        padding: '16px',
-                        zIndex: 250,
-                    }}
-                    onClick={() => !isReporting && setReportConfirmMessageId(null)}
-                >
-                    <div
-                        style={{
-                            width: 'min(420px, 100%)',
-                            background: '#fff',
-                            borderRadius: '16px',
-                            padding: '18px 16px 16px 16px',
-                            boxShadow: '0 24px 80px rgba(0,0,0,0.35)',
-                        }}
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        <Text display="block" color="grey900" typography="st13" fontWeight="bold">
-                            이 메시지를 신고할까요?
-                        </Text>
-                        <Text
-                            display="block"
-                            color="grey600"
-                            typography="st13"
-                            style={{ marginTop: '8px' } as React.CSSProperties}
-                        >
-                            신고가 접수되면 운영팀에서 검토합니다.
-                        </Text>
-
-                        <div style={{ display: 'flex', gap: '8px', marginTop: '14px' }}>
-                            <Button
-                                display="full"
-                                color="light"
-                                variant="weak"
-                                size="large"
-                                disabled={isReporting}
-                                onClick={() => setReportConfirmMessageId(null)}
-                            >
-                                취소
-                            </Button>
-                            <Button
-                                display="full"
-                                color="danger"
-                                variant="fill"
-                                size="large"
-                                loading={isReporting}
-                                onClick={confirmReport}
-                            >
-                                신고
-                            </Button>
-                        </div>
-                    </div>
-                </div>
-            )}
+            <ReportConfirmDialog
+                open={reportConfirmMessageId != null}
+                isReporting={isReporting}
+                onClose={() => setReportConfirmMessageId(null)}
+                onConfirm={confirmReport}
+            />
 
             <style>{`
                 @keyframes fadeInUp {
