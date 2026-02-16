@@ -46,6 +46,11 @@ Created to resolve issue #70.
   - 최소 2개 화면에서 공용 컴포넌트 사용
   - 접근성(`role=status`, `aria-live`) 유지
 
+## Backlog guard (added for #72)
+- If open issue count reaches 0 during heartbeat, create at least one actionable issue immediately.
+- Newly created issue should include: Why / Scope / Acceptance Criteria / References.
+- First seeded issue: #73 (`[P2] Docs: README 실행/환경변수 섹션 보강`).
+
 ## References
 - Swagger UI: https://s1.takealook.my/webjars/swagger-ui/index.html
 - OpenAPI JSON: https://s1.takealook.my/v3/api-docs
