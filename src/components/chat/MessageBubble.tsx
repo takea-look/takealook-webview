@@ -40,6 +40,9 @@ export function MessageBubble({
     onImageClick,
 }: MessageBubbleProps) {
     const isMyMessage = message.sender.id === myUserId;
+    const isBlinded = message.isBlinded === true;
+    const canRenderImage = !!message.imageUrl && !isBlinded;
+    const shouldRenderBlindPlaceholder = isBlinded || (message.type === MessageType.CHAT && !message.imageUrl);
 
     return (
         <div style={{
@@ -102,7 +105,7 @@ export function MessageBubble({
                             ↪ 답장 (replyToId: {message.replyToId})
                         </div>
                     )}
-                    {message.type === MessageType.CHAT && !message.imageUrl && (
+                    {shouldRenderBlindPlaceholder && (
                         <div style={{
                             padding: '12px 14px',
                             backgroundColor: isMyMessage ? 'rgba(0,0,0,0.15)' : 'rgba(0, 27, 55, 0.06)',
@@ -117,7 +120,7 @@ export function MessageBubble({
                             </Text>
                         </div>
                     )}
-                    {message.imageUrl && (
+                    {canRenderImage && message.imageUrl && (
                         <img
                             src={message.imageUrl}
                             alt="Chat"

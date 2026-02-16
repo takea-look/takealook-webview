@@ -295,7 +295,7 @@ export function ChatRoomScreen() {
     }, [openReactionMenu]);
 
     const handleMessagePointerMove = useCallback((msg: UserChatMessage, e: React.PointerEvent) => {
-        if (!msg.imageUrl) return;
+        if (!msg.imageUrl || msg.isBlinded) return;
         if (swipeTargetMessageIdRef.current !== msg.id) return;
         if (swipeStartXRef.current == null || swipeStartYRef.current == null) return;
         if (swipeTriggeredRef.current) return;
@@ -334,7 +334,7 @@ export function ChatRoomScreen() {
 
     const allMessages = [...historyMessages, ...wsMessages];
     const slides = allMessages
-        .filter(msg => msg.imageUrl)
+.filter(msg => msg.imageUrl && !msg.isBlinded)
         .map(msg => ({ src: msg.imageUrl! }));
 
     const handleCameraClick = () => {
