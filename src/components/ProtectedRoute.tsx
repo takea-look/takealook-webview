@@ -33,7 +33,9 @@ export function ProtectedRoute() {
   }, [isAuthenticated]);
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
+    const next = `${location.pathname}${location.search}`;
+    const params = new URLSearchParams({ next });
+    return <Navigate to={`/login?${params.toString()}`} replace />;
   }
 
   if (loading) {
