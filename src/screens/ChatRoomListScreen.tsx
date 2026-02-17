@@ -78,7 +78,7 @@ export function ChatRoomListScreen() {
         }
 
         handleCloseJoin();
-        navigate(`/room/${roomId}`);
+        navigate(`/chat/${roomId}`);
     };
 
     const handleCreate = async () => {
@@ -108,7 +108,7 @@ export function ChatRoomListScreen() {
             resetCreateForm();
 
             // Immediately navigate to the created room.
-            navigate(`/room/${room.id}`);
+            navigate(`/chat/${room.id}`);
         } catch (err) {
             console.error('Failed to create chat room:', err);
             setCreateError('채팅방 생성에 실패했습니다. 잠시 후 다시 시도해주세요.');
@@ -253,7 +253,7 @@ export function ChatRoomListScreen() {
                                     </div>
                                 }
                                 verticalPadding="medium"
-                                onClick={() => navigate(`/room/${room.id}`)}
+                                onClick={() => navigate(`/chat/${room.id}`)}
                                 style={{
                                     cursor: 'pointer',
                                     transition: 'background-color 0.2s',
