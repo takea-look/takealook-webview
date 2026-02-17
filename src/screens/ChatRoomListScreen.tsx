@@ -124,8 +124,25 @@ export function ChatRoomListScreen() {
     if (error) {
         return (
             <Layout>
-                <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <p style={{ color: '#f04452', fontSize: '15px' }}>{error}</p>
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                    <p style={{ color: '#f04452', fontSize: '15px', margin: 0 }}>{error}</p>
+                    <Spacing size={12} />
+                    <button
+                        type="button"
+                        onClick={() => void loadRooms()}
+                        style={{
+                            border: '1px solid #E5E8EB',
+                            background: '#fff',
+                            color: '#333D4B',
+                            fontWeight: 800,
+                            padding: '10px 14px',
+                            borderRadius: '12px',
+                            cursor: 'pointer',
+                            fontSize: '13px',
+                        }}
+                    >
+                        다시 시도
+                    </button>
                 </div>
             </Layout>
         );
