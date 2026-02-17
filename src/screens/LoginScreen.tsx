@@ -6,6 +6,8 @@ import { setAccessToken, setRefreshToken } from '../api/client';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://s1.takealook.my';
 
+const POST_LOGIN_NEXT_KEY = 'takealook_post_login_next';
+
 const PROVIDERS: Array<{ key: SNSProvider; label: string; background: string; color: string }> = [
   { key: 'google', label: 'Google로 시작하기', background: '#FFFFFF', color: '#191F28' },
   { key: 'apple', label: 'Apple로 시작하기', background: '#191F28', color: '#FFFFFF' },
@@ -23,11 +25,12 @@ export function LoginScreen() {
     const provider = params.get('provider') as SNSProvider | null;
     const authorizationCode = params.get('authorizationCode');
     const referrer = params.get('referrer') || 'DEFAULT';
+    const next = params.get('next') || '/';
 
     if (!provider || !authorizationCode) return null;
     if (!PROVIDERS.some((item) => item.key === provider)) return null;
 
-    return { provider, authorizationCode, referrer };
+    return { provider, authorizationCode, referrer, next };
   }, [location.search]);
 
   useEffect(() => {
@@ -47,7 +50,9 @@ export function LoginScreen() {
           setRefreshToken(response.refreshToken);
         }
 
-        navigate('/', { replace: true });
+        const storedNext = window.localStorage.getItem(POST_LOGIN_NEXT_KEY);
+        window.localStorage.removeItem(POST_LOGIN_NEXT_KEY);
+        navigate(storedNext || callbackPayload.next || '/', { replace: true });
       } catch (err) {
         console.error(err);
         setError('SNS 로그인에 실패했습니다. 잠시 후 다시 시도해주세요.');
@@ -60,7 +65,11 @@ export function LoginScreen() {
   }, [callbackPayload, navigate]);
 
   const startProviderLogin = (provider: SNSProvider) => {
-    const redirectUri = `${window.location.origin}/login`;
+    const params = new URLSearchParams(location.search);
+    const next = params.get('next') || '/';
+    window.localStorage.setItem(POST_LOGIN_NEXT_KEY, next);
+
+    const redirectUri = `${window.location.origin}/login?next=${encodeURIComponent(next)}`;
     const authUrl = `${API_BASE_URL}/auth/${provider}/authorize?redirectUri=${encodeURIComponent(redirectUri)}`;
     window.location.href = authUrl;
   };
