@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { signinWithProvider, logout as apiLogout, refreshToken as apiRefreshToken } from '../api/auth';
+import { signin, tossSignin, logout as apiLogout, refreshToken as apiRefreshToken } from '../api/auth';
 import { getAccessToken, setAccessToken, clearAccessToken, setRefreshToken, getRefreshToken } from '../api/client';
 import type { LoginRequest } from '../types/api';
 
@@ -8,8 +8,25 @@ export function useAuth() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const login = async (_credentials: LoginRequest) => {
-    throw new Error('ID/PW login is deprecated. Use social provider login flow.');
+  const login = async (credentials: LoginRequest) => {
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      const response = await signin(credentials);
+      setAccessToken(response.accessToken);
+
+      if (response.refreshToken) {
+        setRefreshToken(response.refreshToken);
+      }
+
+      setIsAuthenticated(true);
+    } catch (err) {
+      setError('아이디/비밀번호 로그인에 실패했습니다.');
+      throw err;
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const tossLogin = async () => {
@@ -20,8 +37,7 @@ export function useAuth() {
       const { appLogin } = await import('@apps-in-toss/web-framework');
       const { authorizationCode, referrer } = await appLogin();
 
-      // Keep compatibility path by mapping Toss app login to kakao provider signin.
-      const response = await signinWithProvider('kakao', { authorizationCode, referrer });
+      const response = await tossSignin({ authorizationCode, referrer });
       setAccessToken(response.accessToken);
 
       if (response.refreshToken) {
@@ -30,7 +46,7 @@ export function useAuth() {
 
       setIsAuthenticated(true);
     } catch (err) {
-      setError('SNS 로그인에 실패했습니다.');
+      setError('토스 로그인에 실패했습니다.');
       throw err;
     } finally {
       setIsLoading(false);
@@ -56,14 +72,16 @@ export function useAuth() {
   const logout = async () => {
     try {
       await apiLogout();
-    } catch (e) {
-      console.error('Logout error:', e);
+    } catch {
+      // Ignore: logout failure shouldn't block local token clear.
     }
     clearAccessToken();
     setIsAuthenticated(false);
   };
 
-  const logoutByUserKey = async (_userKey: number) => {
+  const logoutByUserKey = async (userKey: number) => {
+    // Placeholder for future server-side logout-by-userKey support.
+    void userKey;
     await logout();
   };
 
