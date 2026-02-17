@@ -1,0 +1,32 @@
+name: "Feature"
+description: "Propose a new feature"
+labels: ["feat"]
+body:
+  - type: textarea
+    id: context
+    attributes:
+      label: Context / Why
+      description: Why do we need this?
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: What is in scope / out of scope?
+    validations:
+      required: true
+  - type: textarea
+    id: ac
+    attributes:
+      label: Acceptance Criteria
+      description: Bullet list of checks for done.
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes / Links
+      description: Related docs, API contracts, screenshots, etc.
+    validations:
+      required: false
