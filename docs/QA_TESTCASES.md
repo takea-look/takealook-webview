@@ -13,8 +13,13 @@
 
 - [x] **TC-ADB-DEEPLINK-01** (AVD) Apps in Toss Sandbox: launch `viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity` via deeplink `intoss://takealook` and confirm activity focused. Evidence: `artifacts/avd_intoss_takealook_20260218_032452.png`, `artifacts/logcat_tail_20260218_032430.txt`
 
+- [ ] **TC-ADB-DEEPLINK-02** (AVD) Deeplink launch stability (should stay in app, not return to launcher) — **failed**
+  - Command: `adb shell am start -W -n viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity -a android.intent.action.VIEW -d intoss://takealook`
+  - Observed: `am start` returned `Status: ok` but device remained on launcher; logcat shows app process obituary shortly after.
+  - Evidence: `artifacts/avd_takealook_roomlist_20260218_045107.png` (launcher), `artifacts/focus_20260218_045107.txt`, `artifacts/logcat_tail_20260218_045107.txt`, `artifacts/am_start_20260218_045107.txt`
+
 - Notes:
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-18 03:35 KST
+- Last update: 2026-02-18 04:55 KST
