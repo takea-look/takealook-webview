@@ -84,6 +84,25 @@ export function ChatRoomScreen() {
                 ? '연결 중…'
                 : '연결 끊김';
 
+
+    const normalizeMessages = useCallback((messages: UserChatMessage[]) => {
+        const seen = new Set<string>();
+
+        return [...messages]
+            .sort((a, b) => {
+                if (a.createdAt === b.createdAt) {
+                    return (a.id ?? 0) - (b.id ?? 0);
+                }
+                return a.createdAt - b.createdAt;
+            })
+            .filter((msg) => {
+                const key = msg.id != null ? `id:${msg.id}` : `ts:${msg.createdAt}:sender:${msg.sender?.id ?? 'unknown'}`;
+                if (seen.has(key)) return false;
+                seen.add(key);
+                return true;
+            });
+    }, []);
+
     const loadMoreHistory = useCallback(async () => {
         if (!roomId || isLoadingHistory || !hasMoreHistory) return;
         const roomIdNum = parseInt(roomId, 10);
@@ -96,17 +115,7 @@ export function ChatRoomScreen() {
             // Prefer stable cursor by message id; fallback to createdAt for legacy payloads.
             const beforeCursor = oldest.id ?? oldest.createdAt;
             const older = await getChatMessages(roomIdNum, { limit: 30, before: beforeCursor });
-            setHistoryMessages(prev => {
-                const merged = [...older, ...prev];
-                const seen = new Set<string>();
-
-                return merged.filter((msg) => {
-                    const key = msg.id != null ? `id:${msg.id}` : `ts:${msg.createdAt}:sender:${msg.sender?.id ?? 'unknown'}`;
-                    if (seen.has(key)) return false;
-                    seen.add(key);
-                    return true;
-                });
-            });
+            setHistoryMessages(prev => normalizeMessages([...older, ...prev]));
 
             // If all returned rows were duplicates, stop further pagination loop.
             const uniqueOlderCount = older.filter((msg, idx, arr) =>
@@ -118,7 +127,7 @@ export function ChatRoomScreen() {
         } finally {
             setIsLoadingHistory(false);
         }
-    }, [roomId, isLoadingHistory, hasMoreHistory, historyMessages]);
+    }, [roomId, isLoadingHistory, hasMoreHistory, historyMessages, normalizeMessages]);
 
     const checkScrollPosition = useCallback(() => {
         if (!chatContainerRef.current) return;
@@ -155,7 +164,7 @@ export function ChatRoomScreen() {
                     getChatMessages(roomIdNum, { limit: 30 })
                 ]);
                 setMyUserId(profile.id!);
-                setHistoryMessages(messages);
+                setHistoryMessages(normalizeMessages(messages));
                 setHasMoreHistory(messages.length >= 30);
                 await connect(roomIdNum);
             } catch (err) {
@@ -170,7 +179,7 @@ export function ChatRoomScreen() {
         return () => {
             disconnect();
         };
-    }, [roomId, connect, disconnect]);
+    }, [roomId, connect, disconnect, normalizeMessages]);
 
     useEffect(() => {
         if (historyMessages.length > 0) {
@@ -347,7 +356,7 @@ export function ChatRoomScreen() {
         swipeTriggeredRef.current = false;
     }, []);
 
-    const allMessages = [...historyMessages, ...wsMessages];
+    const allMessages = normalizeMessages([...historyMessages, ...wsMessages]);
     const slides = allMessages
 .filter(msg => msg.imageUrl && !msg.isBlinded)
         .map(msg => ({ src: msg.imageUrl! }));
@@ -589,6 +598,11 @@ export function ChatRoomScreen() {
                     msOverflowStyle: 'none'
                 }}
             >
+                {allMessages.length === 0 && !isLoadingHistory && (
+                    <div style={{ textAlign: 'center', color: '#8B95A1', fontSize: '13px', margin: '16px 0' }}>
+                        아직 메시지가 없어요. 첫 사진을 보내보세요.
+                    </div>
+                )}
                 {allMessages.map((msg, index) => {
                     const currentCreatedAt = new Date(msg.createdAt);
                     const previousMessage = allMessages[index - 1];
