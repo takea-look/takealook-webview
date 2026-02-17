@@ -28,8 +28,7 @@ export function ChatRoomScreen() {
     const [lastFailedUpload, setLastFailedUpload] = useState<{
         file: File;
         roomIdNum: number;
-        filename: string;
-        imageUrl: string;
+        replyToMessageId?: number;
     } | null>(null);
 
     const [previewOpen, setPreviewOpen] = useState(false);
@@ -487,6 +486,11 @@ export function ChatRoomScreen() {
         } catch (error) {
             console.error('Upload failed:', error);
             const message = error instanceof Error ? error.message : '사진 업로드에 실패했습니다.';
+            setLastFailedUpload({
+                file: pendingFile,
+                roomIdNum: parseInt(roomId, 10),
+                replyToMessageId: replyTarget?.id,
+            });
             setEditError(message);
         } finally {
             setIsUploading(false);
@@ -524,6 +528,14 @@ export function ChatRoomScreen() {
         } catch (error) {
             console.error('File selection/upload failed:', error);
             const message = error instanceof Error ? error.message : '사진을 불러오지 못했습니다.';
+            const firstFile = files?.[0] ?? null;
+            if (firstFile) {
+                setLastFailedUpload({
+                    file: firstFile,
+                    roomIdNum: parseInt(roomId, 10),
+                    replyToMessageId: replyTarget?.id,
+                });
+            }
             showToast(message, 'error');
         } finally {
             setIsUploading(false);
@@ -660,16 +672,21 @@ export function ChatRoomScreen() {
                             onClick={async () => {
                                 try {
                                     setIsUploading(true);
-                                    const { url: presignedUrl } = await getUploadUrl(lastFailedUpload.filename, lastFailedUpload.file.size);
-                                    await uploadToR2(presignedUrl, lastFailedUpload.file);
-                                    // Re-send message (same imageUrl)
-                                    if (myUserId != null) {
-                                        sendMessage(lastFailedUpload.roomIdNum, lastFailedUpload.imageUrl, myUserId, replyTarget?.id);
+                                    if (myUserId == null) {
+                                        throw new Error('사용자 정보를 불러오는 중입니다. 잠시 후 다시 시도해주세요.');
                                     }
+                                    await uploadSingleImageFile(
+                                        lastFailedUpload.roomIdNum,
+                                        myUserId,
+                                        lastFailedUpload.file,
+                                        lastFailedUpload.replyToMessageId,
+                                    );
                                     setLastFailedUpload(null);
+                                    showToast('업로드 재시도에 성공했어요.', 'success');
                                 } catch (e) {
                                     console.error('Retry upload failed:', e);
-                                    alert('재시도에 실패했습니다.');
+                                    const message = e instanceof Error ? e.message : '재시도에 실패했습니다.';
+                                    showToast(message, 'error');
                                 } finally {
                                     setIsUploading(false);
                                 }
