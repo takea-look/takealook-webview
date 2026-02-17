@@ -94,10 +94,26 @@ export function ChatRoomScreen() {
 
         try {
             setIsLoadingHistory(true);
-            // NOTE: server spec says before can be messageId or createdAt. We send createdAt for now.
-            const older = await getChatMessages(roomIdNum, { limit: 30, before: oldest.createdAt });
-            setHistoryMessages(prev => [...older, ...prev]);
-            setHasMoreHistory(older.length >= 30);
+            // Prefer stable cursor by message id; fallback to createdAt for legacy payloads.
+            const beforeCursor = oldest.id ?? oldest.createdAt;
+            const older = await getChatMessages(roomIdNum, { limit: 30, before: beforeCursor });
+            setHistoryMessages(prev => {
+                const merged = [...older, ...prev];
+                const seen = new Set<string>();
+
+                return merged.filter((msg) => {
+                    const key = msg.id != null ? `id:${msg.id}` : `ts:${msg.createdAt}:sender:${msg.sender?.id ?? 'unknown'}`;
+                    if (seen.has(key)) return false;
+                    seen.add(key);
+                    return true;
+                });
+            });
+
+            // If all returned rows were duplicates, stop further pagination loop.
+            const uniqueOlderCount = older.filter((msg, idx, arr) =>
+                arr.findIndex((x) => (x.id != null && msg.id != null ? x.id === msg.id : x.createdAt === msg.createdAt && x.sender?.id === msg.sender?.id)) === idx
+            ).length;
+            setHasMoreHistory(uniqueOlderCount >= 30);
         } catch (err) {
             console.error('Failed to load more history:', err);
         } finally {
@@ -755,6 +771,7 @@ export function ChatRoomScreen() {
                                         borderRadius: '12px',
                                         border: '1px solid #E5E8EB',
                                         background: '#fff',
+                                        color: '#191F28',
                                         fontWeight: 800,
                                         cursor: isUploading ? 'not-allowed' : 'pointer'
                                     }}
@@ -773,6 +790,7 @@ export function ChatRoomScreen() {
                                         borderRadius: '12px',
                                         border: '1px solid #E5E8EB',
                                         background: editCropSquare ? '#EAF1FF' : '#fff',
+                                        color: '#191F28',
                                         fontWeight: 800,
                                         cursor: isUploading ? 'not-allowed' : 'pointer'
                                     }}
@@ -796,6 +814,7 @@ export function ChatRoomScreen() {
                                         borderRadius: '14px',
                                         border: '1px solid #E5E8EB',
                                         background: '#fff',
+                                        color: '#191F28',
                                         fontWeight: 900,
                                         cursor: isUploading ? 'not-allowed' : 'pointer'
                                     }}
