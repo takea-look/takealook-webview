@@ -1,41 +1,35 @@
-# Auth Flows Contract (Issue #84)
+# Auth Flows Contract (Issue #102)
 
 ## Goals
-- Align FE login UX between ID/PW and Toss login.
-- Normalize loading/error handling for both flows.
-- Document expected API contract and error mapping.
+- Align login UX with spec providers: Google / Apple / Kakao.
+- Remove ID/PW login UI from webview login screen.
+- Use unified backend auth routes (`/auth/{provider}/signin`, `/auth/logout`, `/auth/refresh`) with backward compatibility.
 
 ## Flows
 
-### 1) ID/PW login
-- Endpoint: `POST /auth/signin`
-- Request: `{ username, password }`
-- Success: `{ accessToken, refreshToken? }`
+### 1) SNS login (Google/Apple/Kakao)
+- Entry: `GET /auth/{provider}/authorize?redirectUri=<webview-login-url>`
+- Callback to FE login route with query:
+  - `provider`
+  - `authorizationCode`
+  - optional `referrer`
+- Token exchange endpoint:
+  - `POST /auth/{provider}/signin`
+  - request: `{ authorizationCode, referrer? }`
+  - success: `{ accessToken, refreshToken? }`
 - FE action: store tokens, navigate `/`
 
-### 2) Toss login
-- Endpoint: `POST /auth/toss/signin`
-- Request: `{ authorizationCode, referrer }`
-- Success: `{ accessToken, refreshToken? }`
-- FE action: store tokens, navigate `/`
+### 2) Refresh / Logout
+- Refresh: `POST /auth/refresh` (fallback to `/auth/toss/refresh` if 404/405)
+- Logout: `POST /auth/logout` (fallback to `/auth/toss/logout` if 404/405)
 
 ## Error UX policy
 
 | Case | FE message |
 | --- | --- |
-| Empty username/password | `아이디와 비밀번호를 입력해주세요.` |
-| ID/PW auth failed | `아이디/비밀번호 로그인에 실패했습니다.` |
-| Toss auth failed | `토스 로그인에 실패했습니다.` |
-| Network/server unknown | Use flow-specific generic failure message |
+| SNS callback signin failed | `SNS 로그인에 실패했습니다. 잠시 후 다시 시도해주세요.` |
+| Network/server unknown | same generic SNS failure message |
 
-## State model recommendation
-- Keep loading flags split by flow:
-  - `isIdPwLoading`
-  - `isTossLoading`
-- Keep one shared top-level `error` string for display.
-- Disable both submit actions while either loading is active.
-
-## Follow-up implementation candidates
-1. Map API status codes (401/403/429/5xx) to tailored messages.
-2. Add telemetry/logging tags to distinguish ID/PW vs Toss failures.
-3. Add integration test for both login success/failure paths.
+## Notes
+- ID/PW 로그인 UI는 제거되어 spec-first SNS 흐름만 노출한다.
+- 구형 Toss-only 백엔드와의 호환을 위해 refresh/logout은 fallback 로직을 유지한다.
