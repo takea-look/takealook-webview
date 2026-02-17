@@ -1,6 +1,7 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Spacing } from '@toss/tds-mobile';
+import { getAccessToken } from '../api/client';
 
 export function LoginScreen() {
   const navigate = useNavigate();
@@ -10,6 +11,14 @@ export function LoginScreen() {
     const params = new URLSearchParams(location.search);
     return params.get('next') || '/';
   }, [location.search]);
+
+  useEffect(() => {
+    if (!getAccessToken()) return;
+
+    // Already authenticated users should never land on /login.
+    const safeNext = nextPath.startsWith('/login') ? '/' : nextPath;
+    navigate(safeNext, { replace: true });
+  }, [navigate, nextPath]);
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -34,7 +43,7 @@ export function LoginScreen() {
       if (response.refreshToken) {
         setRefreshToken(response.refreshToken);
       }
-      navigate(nextPath);
+      navigate(nextPath, { replace: true });
     } catch {
       setError('아이디/비밀번호 로그인에 실패했습니다.');
     } finally {
@@ -55,7 +64,7 @@ export function LoginScreen() {
       if (response.refreshToken) {
         setRefreshToken(response.refreshToken);
       }
-      navigate(nextPath);
+      navigate(nextPath, { replace: true });
     } catch {
       setError('토스 로그인에 실패했습니다.');
     } finally {
