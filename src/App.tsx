@@ -54,6 +54,20 @@ function DeepLinkBridge() {
     }
   }, [navigate])
 
+  useEffect(() => {
+    const handleUnauthorized = () => {
+      const next = `${window.location.pathname}${window.location.search}`
+      const params = new URLSearchParams({ next })
+      navigate(`/login?${params.toString()}`, { replace: true })
+    }
+
+    window.addEventListener('takealook:unauthorized', handleUnauthorized)
+
+    return () => {
+      window.removeEventListener('takealook:unauthorized', handleUnauthorized)
+    }
+  }, [navigate])
+
   return null
 }
 

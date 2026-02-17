@@ -75,6 +75,11 @@ export function setRefreshToken(token: string): void {
   localStorage.setItem(REFRESH_TOKEN_KEY, token);
 }
 
+function emitUnauthorized(): void {
+  // Let the app react (e.g., redirect to /login) without coupling this module to react-router.
+  window.dispatchEvent(new CustomEvent('takealook:unauthorized'));
+}
+
 export function clearAccessToken(): void {
   localStorage.removeItem(TOKEN_KEY);
   localStorage.removeItem(REFRESH_TOKEN_KEY);
@@ -167,12 +172,14 @@ export async function apiRequest<T>(
       response = await request();
     } catch {
       clearAccessToken();
+      emitUnauthorized();
       throw createApiError(401, 'Unauthorized');
     }
   }
 
   if (response.status === 401) {
     clearAccessToken();
+    emitUnauthorized();
     throw createApiError(401, 'Unauthorized');
   }
 
