@@ -19,6 +19,10 @@ export function ChatRoomListScreen() {
     const [createError, setCreateError] = useState('');
     const [isCreating, setIsCreating] = useState(false);
 
+    const [joinOpen, setJoinOpen] = useState(false);
+    const [joinRoomId, setJoinRoomId] = useState('');
+    const [joinError, setJoinError] = useState('');
+
     const loadRooms = async () => {
         try {
             setLoading(true);
@@ -52,6 +56,29 @@ export function ChatRoomListScreen() {
     const handleCloseCreate = () => {
         setCreateOpen(false);
         resetCreateForm();
+    };
+
+
+    const handleOpenJoin = () => {
+        setJoinOpen(true);
+        setJoinError('');
+    };
+
+    const handleCloseJoin = () => {
+        setJoinOpen(false);
+        setJoinRoomId('');
+        setJoinError('');
+    };
+
+    const handleJoin = () => {
+        const roomId = Number(joinRoomId);
+        if (!Number.isInteger(roomId) || roomId <= 0) {
+            setJoinError('유효한 채팅방 ID를 입력해주세요.');
+            return;
+        }
+
+        handleCloseJoin();
+        navigate(`/room/${roomId}`);
     };
 
     const handleCreate = async () => {
@@ -117,23 +144,42 @@ export function ChatRoomListScreen() {
                     채팅
                 </h1>
 
-                <button
-                    type="button"
-                    onClick={handleOpenCreate}
-                    style={{
-                        border: 'none',
-                        background: '#3182F6',
-                        color: '#fff',
-                        fontWeight: 800,
-                        padding: '10px 14px',
-                        borderRadius: '12px',
-                        cursor: 'pointer',
-                        fontSize: '13px',
-                        whiteSpace: 'nowrap',
-                    }}
-                >
-                    + 채팅방 만들기
-                </button>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                    <button
+                        type="button"
+                        onClick={handleOpenJoin}
+                        style={{
+                            border: '1px solid #E5E8EB',
+                            background: '#fff',
+                            color: '#333D4B',
+                            fontWeight: 800,
+                            padding: '10px 12px',
+                            borderRadius: '12px',
+                            cursor: 'pointer',
+                            fontSize: '13px',
+                            whiteSpace: 'nowrap',
+                        }}
+                    >
+                        참여하기
+                    </button>
+                    <button
+                        type="button"
+                        onClick={handleOpenCreate}
+                        style={{
+                            border: 'none',
+                            background: '#3182F6',
+                            color: '#fff',
+                            fontWeight: 800,
+                            padding: '10px 14px',
+                            borderRadius: '12px',
+                            cursor: 'pointer',
+                            fontSize: '13px',
+                            whiteSpace: 'nowrap',
+                        }}
+                    >
+                        + 채팅방 만들기
+                    </button>
+                </div>
             </div>
 
             {chatRooms.length === 0 ? (
@@ -334,6 +380,71 @@ export function ChatRoomListScreen() {
                     </div>
                 </div>
             )}
+
+            {joinOpen && (
+                <div
+                    role="dialog"
+                    aria-modal="true"
+                    style={{
+                        position: 'fixed',
+                        inset: 0,
+                        background: 'rgba(0,0,0,0.35)',
+                        display: 'flex',
+                        alignItems: 'flex-end',
+                        justifyContent: 'center',
+                        padding: '24px',
+                        zIndex: 110,
+                    }}
+                    onClick={handleCloseJoin}
+                >
+                    <div
+                        style={{
+                            width: '100%',
+                            maxWidth: '520px',
+                            background: '#fff',
+                            borderRadius: '24px',
+                            padding: '20px 18px',
+                            boxShadow: '0 12px 40px rgba(0,0,0,0.2)',
+                        }}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <div style={{ fontSize: '18px', fontWeight: 800, color: '#191f28', marginBottom: '12px' }}>채팅방 참여하기</div>
+                        <input
+                            value={joinRoomId}
+                            onChange={(e) => setJoinRoomId(e.target.value)}
+                            placeholder="채팅방 ID를 입력하세요"
+                            inputMode="numeric"
+                            style={{
+                                width: '100%',
+                                height: '44px',
+                                borderRadius: '12px',
+                                border: '1px solid #E5E8EB',
+                                padding: '0 12px',
+                                fontSize: '15px',
+                                boxSizing: 'border-box',
+                            }}
+                        />
+                        {joinError && <div style={{ marginTop: '10px', color: '#F04452', fontSize: '13px', fontWeight: 700 }}>{joinError}</div>}
+                        <div style={{ display: 'flex', gap: '10px', marginTop: '12px' }}>
+                            <button
+                                type="button"
+                                onClick={handleCloseJoin}
+                                style={{ flex: 1, height: '46px', borderRadius: '14px', border: '1px solid #E5E8EB', background: '#fff', color: '#333D4B', fontWeight: 800, cursor: 'pointer' }}
+                            >
+                                취소
+                            </button>
+                            <button
+                                type="button"
+                                onClick={handleJoin}
+                                style={{ flex: 1, height: '46px', borderRadius: '14px', border: 'none', background: '#3182F6', color: '#fff', fontWeight: 900, cursor: 'pointer' }}
+                            >
+                                이동
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
         </Layout>
     );
 }
