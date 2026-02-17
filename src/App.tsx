@@ -1,12 +1,14 @@
 import { useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 import { LoginScreen } from './screens/LoginScreen'
-import { MainScreen } from './screens/MainScreen'
+import { ChatRoomListScreen } from './screens/ChatRoomListScreen'
+import { MyInfoScreen } from './screens/MyInfoScreen'
 import { ChatRoomScreen } from './screens/ChatRoomScreen'
 import { StoryEditorScreen } from './screens/StoryEditorScreen'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { NicknameOnboardingScreen } from './screens/NicknameOnboardingScreen'
 import { SettingsScreen } from './screens/SettingsScreen'
+import { TabShell } from './components/TabShell'
 
 type DeepLinkPayload = {
   type?: 'deeplink'
@@ -70,11 +72,21 @@ function AppContent() {
       <Routes>
         <Route path="/login" element={<LoginScreen />} />
         <Route element={<ProtectedRoute />}>
+          {/* Tab shell routes */}
+          <Route element={<TabShell />}>
+            <Route index element={<Navigate to="/chat" replace />} />
+            <Route path="/chat" element={<ChatRoomListScreen />} />
+            <Route path="/mypage" element={<MyInfoScreen />} />
+            {/* Backward/alias routes */}
+            <Route path="/myinfo" element={<Navigate to="/mypage" replace />} />
+          </Route>
+
+          {/* Non-tab routes */}
           <Route path="/onboarding/nickname" element={<NicknameOnboardingScreen />} />
+          <Route path="/chat/:roomId" element={<ChatRoomScreen />} />
           <Route path="/room/:roomId" element={<ChatRoomScreen />} />
           <Route path="/story-editor" element={<StoryEditorScreen />} />
           <Route path="/settings" element={<SettingsScreen />} />
-          <Route path="/*" element={<MainScreen />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

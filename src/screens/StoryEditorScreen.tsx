@@ -127,7 +127,7 @@ export function StoryEditorScreen() {
       const imageUrl = getPublicImageUrl(filename);
 
       sendMessage(replyRoomId, imageUrl, senderId, replyToId);
-      navigate(`/room/${replyRoomId}`);
+      navigate(`/chat/${replyRoomId}`);
     } catch (err) {
       console.error('Export/send failed:', err);
       setSendError('전송에 실패했습니다. 잠시 후 다시 시도해주세요.');
