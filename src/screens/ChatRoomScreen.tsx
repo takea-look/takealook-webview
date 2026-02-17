@@ -320,7 +320,7 @@ export function ChatRoomScreen() {
         const dy = e.clientY - swipeStartYRef.current;
 
         // Horizontal swipe detection (right swipe).
-        if (dx > 70 && Math.abs(dy) < 30) {
+        if (dx > 45 && Math.abs(dy) < 40) {
             swipeTriggeredRef.current = true;
 
             const roomIdNum = Number(roomId);
