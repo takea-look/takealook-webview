@@ -92,7 +92,10 @@ export function MessageBubble({
                         overflow: 'hidden',
                         boxShadow: isMyMessage ? 'none' : 'inset 0 0 0 1px rgba(0,0,0,0.04)',
                         backgroundColor: isMyMessage ? '#3182F6' : '#F2F4F6',
-                        color: isMyMessage ? '#fff' : '#333d4b'
+                        color: isMyMessage ? '#fff' : '#333d4b',
+                        touchAction: 'pan-y',
+                        userSelect: 'none',
+                        WebkitUserSelect: 'none'
                     }}
                 >
                     {message.replyToId != null && (
@@ -124,6 +127,8 @@ export function MessageBubble({
                         <img
                             src={message.imageUrl}
                             alt="Chat"
+                            draggable={false}
+                            onDragStart={(e) => e.preventDefault()}
                             style={{ display: 'block', maxWidth: '100%', maxHeight: '300px', objectFit: 'cover', cursor: 'pointer' }}
                             onClick={() => message.imageUrl && onImageClick(message.imageUrl)}
                         />
