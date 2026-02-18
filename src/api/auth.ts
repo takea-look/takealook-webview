@@ -9,6 +9,17 @@ export async function signin(credentials: LoginRequest): Promise<LoginResponse> 
   });
 }
 
+export async function providerSignin(
+  provider: string,
+  payload: { authorizationCode: string; referrer?: string }
+): Promise<LoginResponse> {
+  return apiRequest<LoginResponse>(`/auth/${provider}/signin`, {
+    method: 'POST',
+    body: JSON.stringify(payload),
+    requiresAuth: false,
+  });
+}
+
 export async function tossSignin(credentials: TossLoginRequest): Promise<LoginResponse> {
   return apiRequest<LoginResponse>('/auth/toss/signin', {
     method: 'POST',
