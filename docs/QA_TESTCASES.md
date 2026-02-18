@@ -18,6 +18,14 @@
   - Observed: `am start` returned `Status: ok` but device remained on launcher; logcat shows app process obituary shortly after.
   - Evidence: `artifacts/avd_takealook_roomlist_20260218_045107.png` (launcher), `artifacts/focus_20260218_045107.txt`, `artifacts/logcat_tail_20260218_045107.txt`, `artifacts/am_start_20260218_045107.txt`
 
+- [ ] **TC-ADB-DEEPLINK-03** (AVD) Deeplink implicit start (pkg only) — **failed**
+  - Command: `adb shell am start -W -a android.intent.action.VIEW -d intoss://takealook viva.republica.toss.test`
+  - Observed:
+    - `am start` returned `Status: ok` / `Activity: viva.republica.toss.test/.MiniAppSchemeActivity`
+    - Focus stayed on launcher (`NexusLauncherActivity`)
+    - logcat shows **ANR**: `viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity` input dispatch timeout
+  - Evidence: `artifacts/avd_intoss_implicit_20260219_025847.png` (launcher), `artifacts/focus_implicit_20260219_025847.txt`, `artifacts/logcat_implicit_20260219_025847.txt`, `artifacts/am_start_implicit_20260219_025847.txt`
+
 - [ ] **TC-ADB-UI-TAP-01** (AVD) "건너뛰고 시작하기" tap responsiveness — **failed (suspected)**
   - Setup: app focused on `viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity` after `intoss://takealook`.
   - Action: `adb shell input tap 540 2100` (screen 1080x2400, bottom CTA area assumed)
@@ -28,4 +36,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-18 08:59 KST
+- Last update: 2026-02-19 03:01 KST
