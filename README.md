@@ -31,14 +31,14 @@ npm run dev
 
 ```bash
 VITE_API_BASE_URL=https://s1.takealook.my
-VITE_ENABLE_NICKNAME_UPDATE=false
+VITE_ENABLE_NICKNAME_UPDATE=true
 ```
 
 `.env`가 없거나 값이 비어있으면 기본값 `https://s1.takealook.my`를 사용합니다. (로컬 서버 테스트 시에는 `http://localhost:8080`로 변경)
 
-`VITE_ENABLE_NICKNAME_UPDATE`는 닉네임 저장 API 준비 여부에 따른 온보딩 fallback 스위치입니다.
-- `false`(기본): 닉네임 저장 UI 대신 "건너뛰고 시작" UX 제공
-- `true`: 닉네임 입력/저장 플로우 활성화
+`VITE_ENABLE_NICKNAME_UPDATE`는 닉네임 온보딩 활성화 스위치입니다.
+- `true`(기본): 닉네임 입력/저장 플로우 활성화
+- `false`: 닉네임 저장 UI 대신 "건너뛰고 시작" UX 제공 (백엔드 점검/비활성화 시 사용)
 
 ## 주요 스크립트
 
