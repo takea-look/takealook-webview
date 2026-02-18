@@ -26,6 +26,7 @@ export function ChatRoomScreen() {
     const [isLoadingHistory, setIsLoadingHistory] = useState(false);
     const [myUserId, setMyUserId] = useState<number | null>(null);
     const [isUploading, setIsUploading] = useState(false);
+    const [uploadProgress, setUploadProgress] = useState<{ loaded: number; total?: number } | null>(null);
     const [lastFailedUpload, setLastFailedUpload] = useState<{
         file: File;
         roomIdNum: number;
@@ -462,7 +463,13 @@ export function ChatRoomScreen() {
 
         const filename = `chat/${roomIdNum}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.webp`;
         const { url: presignedUrl } = await getUploadUrl(filename, optimizedFile.size);
-        await uploadToR2(presignedUrl, optimizedFile);
+
+        setUploadProgress({ loaded: 0, total: optimizedFile.size });
+        await uploadToR2(presignedUrl, optimizedFile, (progress) => {
+            setUploadProgress(progress);
+        });
+        setUploadProgress(null);
+
         const imageUrl = getPublicImageUrl(filename);
 
         sendMessage(roomIdNum, imageUrl, senderUserId, replyToMessageId);
@@ -492,6 +499,7 @@ export function ChatRoomScreen() {
             }
 
             setIsUploading(true);
+            setUploadProgress(null);
             const senderUserId = myUserId;
 
             const edited = await buildEditedImageFile(pendingFile);
@@ -512,6 +520,7 @@ export function ChatRoomScreen() {
             setEditError(message);
         } finally {
             setIsUploading(false);
+            setUploadProgress(null);
         }
     };
 
@@ -535,6 +544,7 @@ export function ChatRoomScreen() {
 
             const roomIdNum = parseInt(roomId, 10);
             setIsUploading(true);
+            setUploadProgress(null);
 
             const replyToMessageId = replyTarget?.id;
             for (const file of selectedFiles) {
@@ -557,6 +567,7 @@ export function ChatRoomScreen() {
             showToast(message, 'error');
         } finally {
             setIsUploading(false);
+            setUploadProgress(null);
             if (fileInputRef.current) fileInputRef.current.value = '';
         }
     };
@@ -718,7 +729,9 @@ export function ChatRoomScreen() {
                 })}
                 {isUploading && (
                     <div style={{ textAlign: 'center', color: '#8B95A1', fontSize: '13px', margin: '10px 0' }}>
-                        사진 업로드 중...
+                        {uploadProgress && uploadProgress.total
+                            ? `사진 업로드 중... (${Math.floor((uploadProgress.loaded / uploadProgress.total) * 100)}%)`
+                            : '사진 업로드 중...'}
                     </div>
                 )}
                 {!isUploading && lastFailedUpload && (
@@ -729,6 +742,7 @@ export function ChatRoomScreen() {
                             onClick={async () => {
                                 try {
                                     setIsUploading(true);
+                                    setUploadProgress(null);
                                     if (myUserId == null) {
                                         throw new Error('사용자 정보를 불러오는 중입니다. 잠시 후 다시 시도해주세요.');
                                     }
@@ -746,6 +760,7 @@ export function ChatRoomScreen() {
                                     showToast(message, 'error');
                                 } finally {
                                     setIsUploading(false);
+                                    setUploadProgress(null);
                                 }
                             }}
                             style={{
