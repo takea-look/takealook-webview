@@ -10,6 +10,7 @@ import { getMyProfile } from '../api/user';
 import { CameraIcon, ArrowDownIcon } from '../components/icons';
 import { LoadingView } from '../components/LoadingView';
 import { Layout } from '../components/Layout';
+import { Button, Text } from '@toss/tds-mobile';
 import { MessageBubble } from '../components/chat/MessageBubble';
 import { ReportConfirmDialog } from '../components/chat/ReportConfirmDialog';
 import Lightbox from "yet-another-react-lightbox";
@@ -75,7 +76,7 @@ export function ChatRoomScreen() {
     const [localReactionCounts, setLocalReactionCounts] = useState<Record<number, Record<string, number>>>({});
     const reactionTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-    // Simple connection indicator (can be refined with TDS component later)
+    // Connection status label + banner
     const connectionLabel = connectionStatus === 'connected'
         ? '연결됨'
         : connectionStatus === 'reconnecting'
@@ -83,6 +84,14 @@ export function ChatRoomScreen() {
             : connectionStatus === 'connecting'
                 ? '연결 중…'
                 : '연결 끊김';
+
+    const reconnectBannerText = connectionStatus === 'connected'
+        ? null
+        : connectionStatus === 'reconnecting'
+            ? '네트워크가 불안정해요. 재연결 중입니다…'
+            : connectionStatus === 'connecting'
+                ? '연결 중입니다…'
+                : '연결이 끊겼어요. 다시 연결해주세요.';
 
 
     const normalizeMessages = useCallback((messages: UserChatMessage[]) => {
@@ -577,12 +586,46 @@ export function ChatRoomScreen() {
         return <LoadingView />;
     }
 
+    const roomIdNum = roomId ? parseInt(roomId, 10) : NaN;
+
     return (
         <Layout 
             fullBleed={true} 
             style={{ height: '100vh', overflow: 'hidden' }}
             contentStyle={{ height: '100%', display: 'flex', flexDirection: 'column' }}
         >
+            {reconnectBannerText && (
+                <div
+                    role="status"
+                    aria-live="polite"
+                    style={{
+                        padding: '10px 14px',
+                        backgroundColor: connectionStatus === 'disconnected' ? '#FFF3F2' : '#F2F4F6',
+                        borderBottom: '1px solid rgba(0,0,0,0.06)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        gap: '12px',
+                    }}
+                >
+                    <Text style={{ fontSize: '13px', fontWeight: 600, color: '#333D4B', lineHeight: 1.2 }}>
+                        {reconnectBannerText}
+                    </Text>
+                    <Button
+                        type="button"
+                        size="small"
+                        variant="weak"
+                        disabled={!Number.isFinite(roomIdNum) || isUploading}
+                        onClick={() => {
+                            if (!Number.isFinite(roomIdNum)) return;
+                            connect(roomIdNum);
+                        }}
+                    >
+                        재시도
+                    </Button>
+                </div>
+            )}
+
             <div 
                 ref={chatContainerRef}
                 onScroll={checkScrollPosition}
