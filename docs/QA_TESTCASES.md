@@ -18,13 +18,13 @@
   - Observed: `am start` returned `Status: ok`; focus remained on `GraniteActivity` at 4s and 10s after launch (no launcher fallback observed).
   - Evidence: `artifacts/20260219_051916_deeplink_stability/after_start.png`, `artifacts/20260219_051916_deeplink_stability/after_10s.png`, `artifacts/20260219_051916_deeplink_stability/focus_after_4s.txt`, `artifacts/20260219_051916_deeplink_stability/focus_after_10s.txt`, `artifacts/20260219_051916_deeplink_stability/logcat_tail.txt`, `artifacts/20260219_051916_deeplink_stability/am_start.txt`
 
-- [ ] **TC-ADB-DEEPLINK-03** (AVD) Deeplink implicit start (pkg only) — **failed**
+- [x] **TC-ADB-DEEPLINK-03** (AVD) Deeplink implicit start (pkg only) — **passed (re-test)**
   - Command: `adb shell am start -W -a android.intent.action.VIEW -d intoss://takealook viva.republica.toss.test`
   - Observed:
     - `am start` returned `Status: ok` / `Activity: viva.republica.toss.test/.MiniAppSchemeActivity`
-    - Focus stayed on launcher (`NexusLauncherActivity`)
-    - logcat shows **ANR**: `viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity` input dispatch timeout
-  - Evidence: `artifacts/avd_intoss_implicit_20260219_025847.png` (launcher), `artifacts/focus_implicit_20260219_025847.txt`, `artifacts/logcat_implicit_20260219_025847.txt`, `artifacts/am_start_implicit_20260219_025847.txt`
+    - Focus moved to and stayed on `GraniteActivity` at 4s/10s (no launcher fallback)
+    - logcat tail에서 ANR/FATAL/obituary 미검출
+  - Evidence: `artifacts/20260219_052223_deeplink_implicit_retest/implicit_after_4s.png`, `artifacts/20260219_052223_deeplink_implicit_retest/implicit_after_10s.png`, `artifacts/20260219_052223_deeplink_implicit_retest/focus_after_4s.txt`, `artifacts/20260219_052223_deeplink_implicit_retest/focus_after_10s.txt`, `artifacts/20260219_052223_deeplink_implicit_retest/logcat_tail.txt`, `artifacts/20260219_052223_deeplink_implicit_retest/am_start_implicit.txt`
 
 - [ ] **TC-ADB-UI-TAP-01** (AVD) "건너뛰고 시작하기" tap responsiveness — **failed (suspected)**
   - Setup: app focused on `viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity` after `intoss://takealook`.
@@ -36,4 +36,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 05:20 KST
+- Last update: 2026-02-19 05:23 KST
