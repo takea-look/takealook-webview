@@ -3,14 +3,26 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Spacing } from '@toss/tds-mobile';
 import { getAccessToken } from '../api/client';
 
+const ENABLE_IDPW_LOGIN = import.meta.env.VITE_ENABLE_IDPW_LOGIN === 'true';
+
 export function LoginScreen() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const query = useMemo(() => new URLSearchParams(location.search), [location.search]);
+
   const nextPath = useMemo(() => {
-    const params = new URLSearchParams(location.search);
-    return params.get('next') || '/';
-  }, [location.search]);
+    return query.get('next') || '/';
+  }, [query]);
+
+  const snsCallbackParams = useMemo(() => {
+    const provider = query.get('provider') || '';
+    const authorizationCode = query.get('authorizationCode') || '';
+    const referrer = query.get('referrer') || undefined;
+
+    if (!provider || !authorizationCode) return null;
+    return { provider, authorizationCode, referrer };
+  }, [query]);
 
   useEffect(() => {
     if (!getAccessToken()) return;
@@ -19,6 +31,51 @@ export function LoginScreen() {
     const safeNext = nextPath.startsWith('/login') ? '/' : nextPath;
     navigate(safeNext, { replace: true });
   }, [navigate, nextPath]);
+
+  useEffect(() => {
+    if (!snsCallbackParams) return;
+    if (getAccessToken()) return;
+
+    let cancelled = false;
+
+    const run = async () => {
+      try {
+        setIsTossLoading(true);
+        setError('');
+
+        const { providerSignin } = await import('../api/auth');
+        const { setAccessToken, setRefreshToken } = await import('../api/client');
+
+        const response = await providerSignin(snsCallbackParams.provider, {
+          authorizationCode: snsCallbackParams.authorizationCode,
+          referrer: snsCallbackParams.referrer,
+        });
+
+        if (cancelled) return;
+
+        setAccessToken(response.accessToken);
+        if (response.refreshToken) {
+          setRefreshToken(response.refreshToken);
+        }
+
+        const safeNext = nextPath.startsWith('/login') ? '/' : nextPath;
+        navigate(safeNext, { replace: true });
+      } catch {
+        if (cancelled) return;
+        setError('SNS 로그인에 실패했습니다. 잠시 후 다시 시도해주세요.');
+      } finally {
+        if (!cancelled) {
+          setIsTossLoading(false);
+        }
+      }
+    };
+
+    void run();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [navigate, nextPath, snsCallbackParams]);
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -57,16 +114,18 @@ export function LoginScreen() {
       setError('');
       const { appLogin } = await import('@apps-in-toss/web-framework');
       const { authorizationCode, referrer } = await appLogin();
-      const { tossSignin } = await import('../api/auth');
+
+      const { providerSignin } = await import('../api/auth');
       const { setAccessToken, setRefreshToken } = await import('../api/client');
-      const response = await tossSignin({ authorizationCode, referrer });
+
+      const response = await providerSignin('toss', { authorizationCode, referrer });
       setAccessToken(response.accessToken);
       if (response.refreshToken) {
         setRefreshToken(response.refreshToken);
       }
       navigate(nextPath, { replace: true });
     } catch {
-      setError('토스 로그인에 실패했습니다.');
+      setError('SNS 로그인에 실패했습니다. 잠시 후 다시 시도해주세요.');
     } finally {
       setIsTossLoading(false);
     }
@@ -135,96 +194,100 @@ export function LoginScreen() {
 
             <Spacing size={8} />
 
-            <p style={{ color: '#8b95a1', fontSize: '15px', margin: '0' }}>ID/PW 또는 토스로 로그인할 수 있어요</p>
+            <p style={{ color: '#8b95a1', fontSize: '15px', margin: '0' }}>SNS로 로그인할 수 있어요</p>
           </div>
 
           <Spacing size={32} />
 
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '10px',
-              padding: '18px',
-              border: '1px solid #F2F4F6',
-              borderRadius: '16px',
-              background: '#FCFCFD',
-            }}
-          >
-            <input
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="아이디"
-              autoComplete="username"
-              disabled={isLoading}
-              style={{
-                width: '100%',
-                boxSizing: 'border-box',
-                borderRadius: '10px',
-                border: '1px solid #E5E8EB',
-                background: '#fff',
-                padding: '12px 14px',
-                fontSize: '14px',
-                outline: 'none',
-                color: '#191F28',
-              }}
-            />
-            <input
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="비밀번호"
-              type="password"
-              autoComplete="current-password"
-              disabled={isLoading}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' && !isLoading) {
-                  void handleIdPwLogin();
-                }
-              }}
-              style={{
-                width: '100%',
-                boxSizing: 'border-box',
-                borderRadius: '10px',
-                border: '1px solid #E5E8EB',
-                background: '#fff',
-                padding: '12px 14px',
-                fontSize: '14px',
-                outline: 'none',
-                color: '#191F28',
-              }}
-            />
+          {ENABLE_IDPW_LOGIN && (
+            <>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '10px',
+                  padding: '18px',
+                  border: '1px solid #F2F4F6',
+                  borderRadius: '16px',
+                  background: '#FCFCFD',
+                }}
+              >
+                <input
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="아이디"
+                  autoComplete="username"
+                  disabled={isLoading}
+                  style={{
+                    width: '100%',
+                    boxSizing: 'border-box',
+                    borderRadius: '10px',
+                    border: '1px solid #E5E8EB',
+                    background: '#fff',
+                    padding: '12px 14px',
+                    fontSize: '14px',
+                    outline: 'none',
+                    color: '#191F28',
+                  }}
+                />
+                <input
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="비밀번호"
+                  type="password"
+                  autoComplete="current-password"
+                  disabled={isLoading}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && !isLoading) {
+                      void handleIdPwLogin();
+                    }
+                  }}
+                  style={{
+                    width: '100%',
+                    boxSizing: 'border-box',
+                    borderRadius: '10px',
+                    border: '1px solid #E5E8EB',
+                    background: '#fff',
+                    padding: '12px 14px',
+                    fontSize: '14px',
+                    outline: 'none',
+                    color: '#191F28',
+                  }}
+                />
 
-            <button
-              type="button"
-              onClick={() => void handleIdPwLogin()}
-              disabled={isLoading}
-              style={{
-                width: '100%',
-                padding: '12px 16px',
-                fontSize: '15px',
-                fontWeight: 700,
-                color: '#fff',
-                backgroundColor: '#191F28',
-                border: 'none',
-                borderRadius: '10px',
-                cursor: isLoading ? 'not-allowed' : 'pointer',
-                minHeight: '46px',
-                marginTop: '2px',
-              }}
-            >
-              {isIdPwLoading ? '로그인 중...' : 'ID/PW로 로그인'}
-            </button>
-          </div>
+                <button
+                  type="button"
+                  onClick={() => void handleIdPwLogin()}
+                  disabled={isLoading}
+                  style={{
+                    width: '100%',
+                    padding: '12px 16px',
+                    fontSize: '15px',
+                    fontWeight: 700,
+                    color: '#fff',
+                    backgroundColor: '#191F28',
+                    border: 'none',
+                    borderRadius: '10px',
+                    cursor: isLoading ? 'not-allowed' : 'pointer',
+                    minHeight: '46px',
+                    marginTop: '2px',
+                  }}
+                >
+                  {isIdPwLoading ? '로그인 중...' : 'ID/PW로 로그인'}
+                </button>
+              </div>
 
-          <Spacing size={20} />
+              <Spacing size={20} />
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <div style={{ flex: 1, height: '1px', background: '#F2F4F6' }} />
-            <span style={{ fontSize: '12px', color: '#8B95A1' }}>또는</span>
-            <div style={{ flex: 1, height: '1px', background: '#F2F4F6' }} />
-          </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <div style={{ flex: 1, height: '1px', background: '#F2F4F6' }} />
+                <span style={{ fontSize: '12px', color: '#8B95A1' }}>또는</span>
+                <div style={{ flex: 1, height: '1px', background: '#F2F4F6' }} />
+              </div>
 
-          <Spacing size={20} />
+              <Spacing size={20} />
+            </>
+          )}
 
           <button
             type="button"
