@@ -7,7 +7,7 @@ import { getMyProfile, updateMyNickname } from '../api/user';
 import { isApiError } from '../api/client';
 
 const NICKNAME_MIN = 2;
-const NICKNAME_MAX = 12;
+const NICKNAME_MAX = 16;
 const NICKNAME_UPDATE_ENABLED = import.meta.env.VITE_ENABLE_NICKNAME_UPDATE === 'true';
 
 function validateNickname(nickname: string): string | null {
@@ -128,7 +128,7 @@ export function NicknameOnboardingScreen() {
             <input
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
-              placeholder="닉네임 (2~12자)"
+              placeholder="닉네임 (2~16자)"
               autoComplete="off"
               inputMode="text"
               style={{

@@ -18,8 +18,14 @@
   - Observed: `am start` returned `Status: ok` but device remained on launcher; logcat shows app process obituary shortly after.
   - Evidence: `artifacts/avd_takealook_roomlist_20260218_045107.png` (launcher), `artifacts/focus_20260218_045107.txt`, `artifacts/logcat_tail_20260218_045107.txt`, `artifacts/am_start_20260218_045107.txt`
 
+- [ ] **TC-ADB-UI-TAP-01** (AVD) "건너뛰고 시작하기" tap responsiveness — **failed (suspected)**
+  - Setup: app focused on `viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity` after `intoss://takealook`.
+  - Action: `adb shell input tap 540 2100` (screen 1080x2400, bottom CTA area assumed)
+  - Observed: screenshot hash identical before/after tap (no visible UI change) and focused activity unchanged.
+  - Evidence: `artifacts/20260218_085704/02_before_tap.png`, `artifacts/20260218_085704/03_after_tap.png`, `artifacts/20260218_085704/window_focus_after_tap.txt`
+
 - Notes:
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-18 04:55 KST
+- Last update: 2026-02-18 08:59 KST
