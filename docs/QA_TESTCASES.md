@@ -321,6 +321,15 @@
   - Verdict: 앱 랜딩 실패로 Back 반응성을 앱 내부에서 검증하지 못함
   - Evidence: `artifacts/20260219_100413_adb_backpress_double/am_start.txt`, `artifacts/20260219_100413_adb_backpress_double/focus_before_back.txt`, `artifacts/20260219_100413_adb_backpress_double/focus_after_back1.txt`, `artifacts/20260219_100413_adb_backpress_double/focus_after_back2.txt`, `artifacts/20260219_100413_adb_backpress_double/before_back.png`, `artifacts/20260219_100413_adb_backpress_double/after_back1.png`, `artifacts/20260219_100413_adb_backpress_double/after_back2.png`, `artifacts/20260219_100413_adb_backpress_double/screenshot_hashes.txt`, `artifacts/20260219_100413_adb_backpress_double/logcat_tail.txt`
 
+- [x] **TC-ADB-BACK-04** (AVD) 안정 랜딩 상태에서 Back key 2회 반응성 — **failed (no transition)**
+  - Steps: explicit deeplink로 안정 진입 후 `KEYCODE_BACK` 2회 입력
+  - Observed:
+    - `am start`: `Status: ok`, `LaunchState: HOT`, `TotalTime: 5395ms`, `WaitTime: 5424ms`
+    - back 전/1회 후/2회 후 focus 모두 `GraniteActivity`
+    - logcat 스캔에서 ANR/FATAL/obituary/"ANR likely to follow" 키워드 미검출
+  - Verdict: 안정 상태에서도 Back 2회 입력으로 화면 전환/종료 반응 미확인
+  - Evidence: `artifacts/20260219_120153_adb_back_double_from_stable/am_start.txt`, `artifacts/20260219_120153_adb_back_double_from_stable/focus_before_back.txt`, `artifacts/20260219_120153_adb_back_double_from_stable/focus_after_back1.txt`, `artifacts/20260219_120153_adb_back_double_from_stable/focus_after_back2.txt`, `artifacts/20260219_120153_adb_back_double_from_stable/after_back2.png`, `artifacts/20260219_120153_adb_back_double_from_stable/logcat_tail.txt`, `artifacts/20260219_120153_adb_back_double_from_stable/log_hits.txt`
+
 - [x] **TC-ADB-TASKSWITCH-01** (AVD) Deeplink 진입 후 타 앱 전환/복귀 안정성 — **failed**
   - Steps: deeplink 진입 → Settings 앱 전환 → 최근앱(App Switch)에서 이전 앱 복귀 시도
   - Observed:
@@ -452,4 +461,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 12:01 KST
+- Last update: 2026-02-19 12:03 KST
