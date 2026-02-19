@@ -1453,8 +1453,19 @@
   - Verdict: force-stop 이후 explicit 재진입에서 launcher fallback 발생으로 fail
   - Evidence: `artifacts/20260219_183729_adb_home_forcestop_then_explicit_v3/am_start_1_implicit.txt`, `artifacts/20260219_183729_adb_home_forcestop_then_explicit_v3/focus_after_implicit.txt`, `artifacts/20260219_183729_adb_home_forcestop_then_explicit_v3/pid_after_forcestop.txt`, `artifacts/20260219_183729_adb_home_forcestop_then_explicit_v3/am_start_2_explicit.txt`, `artifacts/20260219_183729_adb_home_forcestop_then_explicit_v3/focus_after_explicit.txt`, `artifacts/20260219_183729_adb_home_forcestop_then_explicit_v3/after_explicit.png`, `artifacts/20260219_183729_adb_home_forcestop_then_explicit_v3/logcat_tail.txt`, `artifacts/20260219_183729_adb_home_forcestop_then_explicit_v3/log_hits.txt`
 
+- [x] **TC-ADB-HOME-FORCESTOP-IMPLICIT-03** (AVD) Home 후 force-stop 뒤 implicit 재진입 추가 재검증 — **failed (1차 launcher fallback)**
+  - Steps: implicit deeplink 진입 → `HOME` → `am force-stop` → implicit deeplink 재실행
+  - Observed:
+    - 1차 implicit: `Status: ok`, `LaunchState: UNKNOWN (0)`, `Activity: .MiniAppSchemeActivity`, `WaitTime: 14972ms`
+    - 1차 실행 후 focus: `NexusLauncherActivity` (초기 진입 실패)
+    - force-stop 직후 pid 조회: 프로세스 미존재(정상 종료)
+    - 2차 implicit: `Status: ok`, `LaunchState: COLD`, `Activity: .MiniAppSchemeActivity`, `TotalTime: 16440ms`, `WaitTime: 16463ms`, focus `GraniteActivity`
+    - logcat 스캔에서 ANR/FATAL/obituary/"ANR likely to follow" 키워드 미검출
+  - Verdict: 재실행(2차)은 복구됐지만 1차 진입이 launcher fallback으로 실패해 시나리오 fail
+  - Evidence: `artifacts/20260219_184030_adb_home_forcestop_then_implicit_v3/am_start_1_implicit.txt`, `artifacts/20260219_184030_adb_home_forcestop_then_implicit_v3/focus_after_implicit_1.txt`, `artifacts/20260219_184030_adb_home_forcestop_then_implicit_v3/pid_after_forcestop.txt`, `artifacts/20260219_184030_adb_home_forcestop_then_implicit_v3/am_start_2_implicit.txt`, `artifacts/20260219_184030_adb_home_forcestop_then_implicit_v3/focus_after_implicit_2.txt`, `artifacts/20260219_184030_adb_home_forcestop_then_implicit_v3/after_implicit_2.png`, `artifacts/20260219_184030_adb_home_forcestop_then_implicit_v3/logcat_tail.txt`, `artifacts/20260219_184030_adb_home_forcestop_then_implicit_v3/log_hits.txt`
+
 - Notes:
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 18:39 KST
+- Last update: 2026-02-19 18:41 KST
