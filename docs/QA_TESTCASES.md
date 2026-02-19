@@ -156,6 +156,15 @@
   - Verdict: 랜딩 실패가 간헐이 아닌 재현 가능한 이슈로 확인됨 (알림창 자체 영향 검증 이전 단계에서 차단)
   - Evidence: `artifacts/20260219_093226_adb_notishade_retest_stable/am_start.txt`, `artifacts/20260219_093226_adb_notishade_retest_stable/focus_before_start.txt`, `artifacts/20260219_093226_adb_notishade_retest_stable/focus_after_start.txt`, `artifacts/20260219_093226_adb_notishade_retest_stable/focus_after_close.txt`, `artifacts/20260219_093226_adb_notishade_retest_stable/after_start.png`, `artifacts/20260219_093226_adb_notishade_retest_stable/shade_open.png`, `artifacts/20260219_093226_adb_notishade_retest_stable/after_close.png`, `artifacts/20260219_093226_adb_notishade_retest_stable/logcat_tail.txt`
 
+- [x] **TC-ADB-NOTISHADE-03** (AVD) 앱 활성 상태에서 알림창 열기/닫기 포커스 유지 — **passed**
+  - Steps: explicit deeplink 진입 후 notification shade open/close 수행
+  - Observed:
+    - `am start`: `Status: ok`, `LaunchState: UNKNOWN (0)`, `WaitTime: 1671ms`
+    - 알림창 열기 전/닫기 후 focus 모두 `GraniteActivity`
+    - logcat 스캔에서 ANR/FATAL/obituary 키워드 미검출
+  - Verdict: 앱이 foreground로 정상 진입한 경우 알림창 토글 후 복귀 안정성 양호
+  - Evidence: `artifacts/20260219_104357_adb_noti_open_close_focus/am_start.txt`, `artifacts/20260219_104357_adb_noti_open_close_focus/focus_before_noti.txt`, `artifacts/20260219_104357_adb_noti_open_close_focus/focus_after_noti.txt`, `artifacts/20260219_104357_adb_noti_open_close_focus/before_noti.png`, `artifacts/20260219_104357_adb_noti_open_close_focus/noti_open.png`, `artifacts/20260219_104357_adb_noti_open_close_focus/after_noti.png`, `artifacts/20260219_104357_adb_noti_open_close_focus/logcat_tail.txt`, `artifacts/20260219_104357_adb_noti_open_close_focus/log_hits.txt`
+
 - [x] **TC-ADB-DEEPLINK-RETRY3-01** (AVD) Home 상태에서 explicit deeplink 3회 재시도 랜딩 일관성 — **failed (all 3 fallback)**
   - Steps: Home 진입 후 explicit deeplink 실행(`am start -W`)을 3회 반복, 각 회차 5초 뒤 focus 확인
   - Observed:
@@ -214,4 +223,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 10:42 KST
+- Last update: 2026-02-19 10:45 KST
