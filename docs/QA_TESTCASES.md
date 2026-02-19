@@ -260,6 +260,16 @@
   - Verdict: recents-back launcher 상태에서도 implicit deeplink 진입 정상
   - Evidence: `artifacts/20260219_123753_adb_recents_back_implicit_deeplink/focus_after_recents_back.txt`, `artifacts/20260219_123753_adb_recents_back_implicit_deeplink/am_start_implicit.txt`, `artifacts/20260219_123753_adb_recents_back_implicit_deeplink/focus_after_start.txt`, `artifacts/20260219_123753_adb_recents_back_implicit_deeplink/after_start.png`, `artifacts/20260219_123753_adb_recents_back_implicit_deeplink/logcat_tail.txt`, `artifacts/20260219_123753_adb_recents_back_implicit_deeplink/log_hits.txt`
 
+- [x] **TC-ADB-RECENTS-BACK-IMPLICIT-02** (AVD) Recents+Back 후 implicit 재진입 재검증 — **failed (ANR detected)**
+  - Steps: explicit 진입 후 `APP_SWITCH`→`BACK` 수행 뒤 implicit deeplink 실행
+  - Observed:
+    - recents+back 직후 focus 캡처값이 비어 있음(`focus_after_recents_back.txt` empty)
+    - implicit `am start`: `Status: ok`, `LaunchState: WARM`, `TotalTime: 6814ms`, `WaitTime: 7113ms`
+    - 실행 후 focus: `Application Not Responding: viva.republica.toss.test`
+    - logcat에서 `ANR in viva.republica.toss.test` 검출
+  - Verdict: 동일 플로우 재검증에서 ANR 재현되어 fail
+  - Evidence: `artifacts/20260219_125247_adb_recents_back_implicit_reentry/am_start_1_explicit.txt`, `artifacts/20260219_125247_adb_recents_back_implicit_reentry/focus_after_recents_back.txt`, `artifacts/20260219_125247_adb_recents_back_implicit_reentry/am_start_2_implicit.txt`, `artifacts/20260219_125247_adb_recents_back_implicit_reentry/focus_after_reentry.txt`, `artifacts/20260219_125247_adb_recents_back_implicit_reentry/after_reentry.png`, `artifacts/20260219_125247_adb_recents_back_implicit_reentry/logcat_tail.txt`, `artifacts/20260219_125247_adb_recents_back_implicit_reentry/log_hits.txt`
+
 - [x] **TC-ADB-HOME-DEEPLINK-REPEAT3-01** (AVD) Home→explicit deeplink 3회 반복 진입 안정성 — **passed**
   - Steps: `Home → explicit deeplink` 시퀀스를 3회 연속 반복
   - Observed:
@@ -710,4 +720,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 12:51 KST
+- Last update: 2026-02-19 12:55 KST
