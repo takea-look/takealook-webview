@@ -81,6 +81,17 @@
   - Verdict: 다회 BG/FG 사이클에서도 foreground 복귀 안정성 양호
   - Evidence: `artifacts/20260219_103616_adb_bgfg_3cycles/am_start.txt`, `artifacts/20260219_103616_adb_bgfg_3cycles/focus_start.txt`, `artifacts/20260219_103616_adb_bgfg_3cycles/focus_home_1.txt`, `artifacts/20260219_103616_adb_bgfg_3cycles/focus_resume_1.txt`, `artifacts/20260219_103616_adb_bgfg_3cycles/focus_home_2.txt`, `artifacts/20260219_103616_adb_bgfg_3cycles/focus_resume_2.txt`, `artifacts/20260219_103616_adb_bgfg_3cycles/focus_home_3.txt`, `artifacts/20260219_103616_adb_bgfg_3cycles/focus_resume_3.txt`, `artifacts/20260219_103616_adb_bgfg_3cycles/resume_1.png`, `artifacts/20260219_103616_adb_bgfg_3cycles/resume_2.png`, `artifacts/20260219_103616_adb_bgfg_3cycles/resume_3.png`, `artifacts/20260219_103616_adb_bgfg_3cycles/logcat_tail.txt`, `artifacts/20260219_103616_adb_bgfg_3cycles/log_hits.txt`
 
+- [x] **TC-ADB-BGFG-03** (AVD) Deeplink 진입 후 Home 이탈/복귀 단일 사이클 확인 — **passed**
+  - Steps: explicit deeplink 진입 → Home 이동 → `monkey resume` 1회
+  - Observed:
+    - `am start`: `Status: ok`, `LaunchState: HOT`, `TotalTime: 1644ms`, `WaitTime: 1647ms`
+    - 시작 직후 focus: `GraniteActivity`
+    - Home 이동 시 focus: `NexusLauncherActivity`
+    - resume 후 focus: `GraniteActivity`
+    - logcat 스캔에서 ANR/FATAL/obituary 키워드 미검출
+  - Verdict: 단일 BG/FG 복귀 플로우 정상
+  - Evidence: `artifacts/20260219_112711_adb_deeplink_then_home_resume/am_start.txt`, `artifacts/20260219_112711_adb_deeplink_then_home_resume/focus_after_start.txt`, `artifacts/20260219_112711_adb_deeplink_then_home_resume/focus_after_home.txt`, `artifacts/20260219_112711_adb_deeplink_then_home_resume/focus_after_resume.txt`, `artifacts/20260219_112711_adb_deeplink_then_home_resume/monkey_resume.txt`, `artifacts/20260219_112711_adb_deeplink_then_home_resume/after_resume.png`, `artifacts/20260219_112711_adb_deeplink_then_home_resume/logcat_tail.txt`, `artifacts/20260219_112711_adb_deeplink_then_home_resume/log_hits.txt`
+
 - [x] **TC-ADB-HOME-DEEPLINK-REENTRY-01** (AVD) Home 이동 후 deeplink 재진입 안정성 — **passed**
   - Steps: explicit deeplink 1회 진입 → Home 이동 → explicit deeplink 재실행
   - Observed:
@@ -271,4 +282,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 11:26 KST
+- Last update: 2026-02-19 11:29 KST
