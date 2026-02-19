@@ -241,6 +241,16 @@
   - Verdict: 단일 App Switch 토글 시에는 앱 포커스가 안정적으로 유지됨
   - Evidence: `artifacts/20260219_112117_adb_appswitch_single_toggle/am_start.txt`, `artifacts/20260219_112117_adb_appswitch_single_toggle/focus_before_switch.txt`, `artifacts/20260219_112117_adb_appswitch_single_toggle/focus_after_switch_open.txt`, `artifacts/20260219_112117_adb_appswitch_single_toggle/focus_after_back.txt`, `artifacts/20260219_112117_adb_appswitch_single_toggle/switch_open.png`, `artifacts/20260219_112117_adb_appswitch_single_toggle/after_back.png`, `artifacts/20260219_112117_adb_appswitch_single_toggle/logcat_tail.txt`, `artifacts/20260219_112117_adb_appswitch_single_toggle/log_hits.txt`
 
+- [x] **TC-ADB-APPSWITCH-SINGLE-REPEAT3-01** (AVD) App Switch+Back 3회 반복 복귀 일관성 — **failed (inconsistent)**
+  - Steps: explicit deeplink 진입 후 `APP_SWITCH → BACK` 사이클 3회 반복
+  - Observed:
+    - `am start`: `Status: ok`, `LaunchState: HOT`, `WaitTime: 694ms`
+    - Cycle1: switch 후 `GraniteActivity`이나 back 후 `NexusLauncherActivity`로 이탈
+    - Cycle2~3: switch/back 후 `GraniteActivity` 유지
+    - logcat 스캔에서 ANR/FATAL/obituary/"ANR likely to follow" 키워드 미검출
+  - Verdict: 동일 조작 반복 시 복귀 결과가 일관적이지 않음(플래키)
+  - Evidence: `artifacts/20260219_115650_adb_appswitch_single_repeat3/am_start.txt`, `artifacts/20260219_115650_adb_appswitch_single_repeat3/focus_switch_1.txt`, `artifacts/20260219_115650_adb_appswitch_single_repeat3/focus_back_1.txt`, `artifacts/20260219_115650_adb_appswitch_single_repeat3/focus_switch_2.txt`, `artifacts/20260219_115650_adb_appswitch_single_repeat3/focus_back_2.txt`, `artifacts/20260219_115650_adb_appswitch_single_repeat3/focus_switch_3.txt`, `artifacts/20260219_115650_adb_appswitch_single_repeat3/focus_back_3.txt`, `artifacts/20260219_115650_adb_appswitch_single_repeat3/cycle_1.png`, `artifacts/20260219_115650_adb_appswitch_single_repeat3/cycle_2.png`, `artifacts/20260219_115650_adb_appswitch_single_repeat3/cycle_3.png`, `artifacts/20260219_115650_adb_appswitch_single_repeat3/logcat_tail.txt`, `artifacts/20260219_115650_adb_appswitch_single_repeat3/log_hits.txt`
+
 - [x] **TC-ADB-ROTATE-01** (AVD) Deeplink 진입 후 화면 회전(가로/세로) 안정성 — **passed**
   - Steps: deeplink 진입 → 강제 landscape(`user_rotation=1`) → portrait(`user_rotation=0`)
   - Observed: 회전 전/중/후 모두 `GraniteActivity` 포커스 유지, 앱 이탈/크래시 미관찰
@@ -421,4 +431,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 11:56 KST
+- Last update: 2026-02-19 11:58 KST
