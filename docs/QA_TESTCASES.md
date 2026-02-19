@@ -134,8 +134,17 @@
   - Verdict: 랜딩 실패 원인 후보로 ANR 증거가 명확히 확보됨
   - Evidence: `artifacts/20260219_101618_adb_logcat_anr_scan/am_start.txt`, `artifacts/20260219_101618_adb_logcat_anr_scan/focus_after_8s.txt`, `artifacts/20260219_101618_adb_logcat_anr_scan/after_8s.png`, `artifacts/20260219_101618_adb_logcat_anr_scan/logcat_full_tail.txt`, `artifacts/20260219_101618_adb_logcat_anr_scan/logcat_anr_fatal_hits.txt`
 
+- [x] **TC-ADB-ANR-BACK-01** (AVD) ANR 다이얼로그 노출 시 Back key dismiss 반응 — **failed**
+  - Steps: explicit deeplink 실행 후 8초 대기(ANR 유도) → `KEYCODE_BACK` 입력
+  - Observed:
+    - `am start`: `Status: ok`, `LaunchState: COLD`, `TotalTime: 21406ms`, `WaitTime: 21412ms`
+    - Back 입력 전/후 focus 모두 `Application Not Responding: viva.republica.toss.test`
+    - logcat에서 동일 시점 ANR 생성/완료 로그 재검출
+  - Verdict: Back key로 ANR 다이얼로그 해소/화면 복귀가 확인되지 않음
+  - Evidence: `artifacts/20260219_101848_adb_anr_back_dismiss/am_start.txt`, `artifacts/20260219_101848_adb_anr_back_dismiss/focus_before_back.txt`, `artifacts/20260219_101848_adb_anr_back_dismiss/focus_after_back.txt`, `artifacts/20260219_101848_adb_anr_back_dismiss/before_back.png`, `artifacts/20260219_101848_adb_anr_back_dismiss/after_back.png`, `artifacts/20260219_101848_adb_anr_back_dismiss/logcat_tail.txt`, `artifacts/20260219_101848_adb_anr_back_dismiss/anr_hits.txt`
+
 - Notes:
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 10:17 KST
+- Last update: 2026-02-19 10:20 KST
