@@ -101,6 +101,15 @@
   - Verdict: App Switch 더블탭 직후 포커스 안정성이 불충분(재현 추가 필요)
   - Evidence: `artifacts/20260219_111309_adb_appswitch_doubletap/am_start.txt`, `artifacts/20260219_111309_adb_appswitch_doubletap/focus_before_switch.txt`, `artifacts/20260219_111309_adb_appswitch_doubletap/focus_after_double_switch.txt`, `artifacts/20260219_111309_adb_appswitch_doubletap/after_double_switch.png`, `artifacts/20260219_111309_adb_appswitch_doubletap/logcat_tail.txt`, `artifacts/20260219_111309_adb_appswitch_doubletap/log_hits.txt`
 
+- [x] **TC-ADB-APPSWITCH-SINGLE-01** (AVD) App Switch 진입 후 Back 복귀 동작 — **passed**
+  - Steps: explicit deeplink 진입 → `KEYCODE_APP_SWITCH` 1회 → `KEYCODE_BACK` 1회
+  - Observed:
+    - `am start`: `Status: ok`, `LaunchState: UNKNOWN (0)`, `WaitTime: 41ms`
+    - App Switch 전/후, 그리고 Back 입력 후 모두 focus가 `GraniteActivity`
+    - logcat 스캔에서 ANR/FATAL/obituary 키워드 미검출
+  - Verdict: 단일 App Switch 토글 시에는 앱 포커스가 안정적으로 유지됨
+  - Evidence: `artifacts/20260219_112117_adb_appswitch_single_toggle/am_start.txt`, `artifacts/20260219_112117_adb_appswitch_single_toggle/focus_before_switch.txt`, `artifacts/20260219_112117_adb_appswitch_single_toggle/focus_after_switch_open.txt`, `artifacts/20260219_112117_adb_appswitch_single_toggle/focus_after_back.txt`, `artifacts/20260219_112117_adb_appswitch_single_toggle/switch_open.png`, `artifacts/20260219_112117_adb_appswitch_single_toggle/after_back.png`, `artifacts/20260219_112117_adb_appswitch_single_toggle/logcat_tail.txt`, `artifacts/20260219_112117_adb_appswitch_single_toggle/log_hits.txt`
+
 - [x] **TC-ADB-ROTATE-01** (AVD) Deeplink 진입 후 화면 회전(가로/세로) 안정성 — **passed**
   - Steps: deeplink 진입 → 강제 landscape(`user_rotation=1`) → portrait(`user_rotation=0`)
   - Observed: 회전 전/중/후 모두 `GraniteActivity` 포커스 유지, 앱 이탈/크래시 미관찰
@@ -251,4 +260,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 11:20 KST
+- Last update: 2026-02-19 11:23 KST
