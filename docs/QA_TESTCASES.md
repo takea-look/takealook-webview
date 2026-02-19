@@ -1789,8 +1789,18 @@
   - Verdict: implicit baseline 재진입이 launcher fallback이며 ANR 전조 키워드 동반으로 fail
   - Evidence: `artifacts/20260219_194036_adb_forcestop_then_implicit_baseline/pid_after_forcestop.txt`, `artifacts/20260219_194036_adb_forcestop_then_implicit_baseline/am_start_implicit.txt`, `artifacts/20260219_194036_adb_forcestop_then_implicit_baseline/focus_after_implicit.txt`, `artifacts/20260219_194036_adb_forcestop_then_implicit_baseline/after_implicit.png`, `artifacts/20260219_194036_adb_forcestop_then_implicit_baseline/logcat_tail.txt`, `artifacts/20260219_194036_adb_forcestop_then_implicit_baseline/log_hits.txt`
 
+- [x] **TC-ADB-FORCESTOP-EXPLICIT-BASELINE-02** (AVD) force-stop 후 explicit 딥링크 베이스라인 재검증 — **passed**
+  - Steps: `HOME` → `am force-stop viva.republica.toss.test` → explicit deeplink 실행
+  - Observed:
+    - force-stop 직후 pid 조회: 프로세스 미존재(정상 종료)
+    - explicit 재진입: `Status: ok`, `LaunchState: COLD`, `TotalTime: 5247ms`, `WaitTime: 5256ms`
+    - 실행 후 focus: `GraniteActivity`
+    - logcat 스캔에서 ANR/FATAL/obituary/"ANR likely to follow" 키워드 미검출
+  - Verdict: force-stop 이후 explicit baseline 재진입 정상
+  - Evidence: `artifacts/20260219_194232_adb_forcestop_then_explicit_retest/pid_after_forcestop.txt`, `artifacts/20260219_194232_adb_forcestop_then_explicit_retest/am_start_explicit.txt`, `artifacts/20260219_194232_adb_forcestop_then_explicit_retest/focus_after_explicit.txt`, `artifacts/20260219_194232_adb_forcestop_then_explicit_retest/after_explicit.png`, `artifacts/20260219_194232_adb_forcestop_then_explicit_retest/logcat_tail.txt`, `artifacts/20260219_194232_adb_forcestop_then_explicit_retest/log_hits.txt`
+
 - Notes:
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 19:41 KST
+- Last update: 2026-02-19 19:43 KST
