@@ -83,8 +83,17 @@
   - Verdict: 랜딩 실패가 간헐이 아닌 재현 가능한 이슈로 확인됨 (알림창 자체 영향 검증 이전 단계에서 차단)
   - Evidence: `artifacts/20260219_093226_adb_notishade_retest_stable/am_start.txt`, `artifacts/20260219_093226_adb_notishade_retest_stable/focus_before_start.txt`, `artifacts/20260219_093226_adb_notishade_retest_stable/focus_after_start.txt`, `artifacts/20260219_093226_adb_notishade_retest_stable/focus_after_close.txt`, `artifacts/20260219_093226_adb_notishade_retest_stable/after_start.png`, `artifacts/20260219_093226_adb_notishade_retest_stable/shade_open.png`, `artifacts/20260219_093226_adb_notishade_retest_stable/after_close.png`, `artifacts/20260219_093226_adb_notishade_retest_stable/logcat_tail.txt`
 
+- [x] **TC-ADB-DEEPLINK-RETRY3-01** (AVD) Home 상태에서 explicit deeplink 3회 재시도 랜딩 일관성 — **failed (all 3 fallback)**
+  - Steps: Home 진입 후 explicit deeplink 실행(`am start -W`)을 3회 반복, 각 회차 5초 뒤 focus 확인
+  - Observed:
+    - 1~3회 모두 `Status: ok` + `LaunchState: UNKNOWN (0)`
+    - `WaitTime`: 19286ms / 12029ms / 11253ms
+    - 1~3회 모두 focus가 `NexusLauncherActivity`로 유지(앱 랜딩 실패)
+  - Verdict: 현재 환경에서 explicit deeplink 랜딩 실패가 고빈도/지속적으로 재현됨
+  - Evidence: `artifacts/20260219_095829_adb_deeplink_retry3/am_start_1.txt`, `artifacts/20260219_095829_adb_deeplink_retry3/am_start_2.txt`, `artifacts/20260219_095829_adb_deeplink_retry3/am_start_3.txt`, `artifacts/20260219_095829_adb_deeplink_retry3/focus_1.txt`, `artifacts/20260219_095829_adb_deeplink_retry3/focus_2.txt`, `artifacts/20260219_095829_adb_deeplink_retry3/focus_3.txt`, `artifacts/20260219_095829_adb_deeplink_retry3/shot_1.png`, `artifacts/20260219_095829_adb_deeplink_retry3/shot_2.png`, `artifacts/20260219_095829_adb_deeplink_retry3/shot_3.png`, `artifacts/20260219_095829_adb_deeplink_retry3/logcat_tail.txt`
+
 - Notes:
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 09:34 KST
+- Last update: 2026-02-19 10:00 KST
