@@ -42,6 +42,17 @@
   - Verdict: 랜딩 성공 자체는 안정적이나, 실행 응답 시간 변동폭이 큼(성능 플래키 가능성)
   - Evidence: `artifacts/20260219_103145_adb_launch_time_5runs/am_start_1.txt`, `artifacts/20260219_103145_adb_launch_time_5runs/am_start_2.txt`, `artifacts/20260219_103145_adb_launch_time_5runs/am_start_3.txt`, `artifacts/20260219_103145_adb_launch_time_5runs/am_start_4.txt`, `artifacts/20260219_103145_adb_launch_time_5runs/am_start_5.txt`, `artifacts/20260219_103145_adb_launch_time_5runs/focus_1.txt`, `artifacts/20260219_103145_adb_launch_time_5runs/focus_2.txt`, `artifacts/20260219_103145_adb_launch_time_5runs/focus_3.txt`, `artifacts/20260219_103145_adb_launch_time_5runs/focus_4.txt`, `artifacts/20260219_103145_adb_launch_time_5runs/focus_5.txt`, `artifacts/20260219_103145_adb_launch_time_5runs/summary.txt`
 
+- [x] **TC-ADB-LAUNCH-WAITTIME-03** (AVD) Explicit deeplink 10회 연속 실행 응답 시간 분포 — **passed (very high variance observed)**
+  - Steps: Home 상태에서 explicit deeplink `am start -W` 10회 연속 실행, 각 회차 focus 확인
+  - Observed:
+    - WaitTime: `281 / 168 / 142 / 13742 / 134 / 161 / 209 / 674 / 82 / 233 ms`
+    - 통계: min `82ms`, max `13742ms`, avg `1582.6ms`, median `188.5ms`
+    - 1~10회 모두 focus `GraniteActivity` 유지 (`focus_ok=10`)
+    - LaunchState 혼재: `HOT` 및 `UNKNOWN (0)`
+    - logcat 스캔에서 ANR/FATAL/obituary 키워드 미검출
+  - Verdict: 기능 관점 랜딩 성공률은 높으나, 실행 지연 분산이 매우 큼(성능 플래키 위험)
+  - Evidence: `artifacts/20260219_112455_adb_launch_waittime_10runs/am_start_1.txt`, `artifacts/20260219_112455_adb_launch_waittime_10runs/am_start_2.txt`, `artifacts/20260219_112455_adb_launch_waittime_10runs/am_start_3.txt`, `artifacts/20260219_112455_adb_launch_waittime_10runs/am_start_4.txt`, `artifacts/20260219_112455_adb_launch_waittime_10runs/am_start_5.txt`, `artifacts/20260219_112455_adb_launch_waittime_10runs/am_start_6.txt`, `artifacts/20260219_112455_adb_launch_waittime_10runs/am_start_7.txt`, `artifacts/20260219_112455_adb_launch_waittime_10runs/am_start_8.txt`, `artifacts/20260219_112455_adb_launch_waittime_10runs/am_start_9.txt`, `artifacts/20260219_112455_adb_launch_waittime_10runs/am_start_10.txt`, `artifacts/20260219_112455_adb_launch_waittime_10runs/focus_1.txt`, `artifacts/20260219_112455_adb_launch_waittime_10runs/focus_2.txt`, `artifacts/20260219_112455_adb_launch_waittime_10runs/focus_3.txt`, `artifacts/20260219_112455_adb_launch_waittime_10runs/focus_4.txt`, `artifacts/20260219_112455_adb_launch_waittime_10runs/focus_5.txt`, `artifacts/20260219_112455_adb_launch_waittime_10runs/focus_6.txt`, `artifacts/20260219_112455_adb_launch_waittime_10runs/focus_7.txt`, `artifacts/20260219_112455_adb_launch_waittime_10runs/focus_8.txt`, `artifacts/20260219_112455_adb_launch_waittime_10runs/focus_9.txt`, `artifacts/20260219_112455_adb_launch_waittime_10runs/focus_10.txt`, `artifacts/20260219_112455_adb_launch_waittime_10runs/summary.txt`, `artifacts/20260219_112455_adb_launch_waittime_10runs/logcat_tail.txt`, `artifacts/20260219_112455_adb_launch_waittime_10runs/log_hits.txt`
+
 - [x] **TC-ADB-UI-TAP-01** (AVD) "건너뛰고 시작하기" tap responsiveness — **failed (confirmed)**
   - Setup: app focused on `viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity` after `intoss://takealook`.
   - Action: `adb shell input tap` on CTA 후보 좌표 3회 (`540 2100`, `540 2140`, `540 2050`)
@@ -260,4 +271,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 11:23 KST
+- Last update: 2026-02-19 11:26 KST
