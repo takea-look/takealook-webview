@@ -51,8 +51,13 @@
   - Observed: launch 시 `GraniteActivity` 포커스, Home에서 launcher 포커스, 복귀 후 다시 `GraniteActivity` 포커스 회복
   - Evidence: `artifacts/20260219_084638_adb_bgfg_resume/am_start.txt`, `artifacts/20260219_084638_adb_bgfg_resume/focus_after_launch.txt`, `artifacts/20260219_084638_adb_bgfg_resume/focus_after_home.txt`, `artifacts/20260219_084638_adb_bgfg_resume/focus_after_resume.txt`, `artifacts/20260219_084638_adb_bgfg_resume/launch.png`, `artifacts/20260219_084638_adb_bgfg_resume/home.png`, `artifacts/20260219_084638_adb_bgfg_resume/resume.png`, `artifacts/20260219_084638_adb_bgfg_resume/monkey_resume.txt`
 
+- [x] **TC-ADB-ROTATE-01** (AVD) Deeplink 진입 후 화면 회전(가로/세로) 안정성 — **passed**
+  - Steps: deeplink 진입 → 강제 landscape(`user_rotation=1`) → portrait(`user_rotation=0`)
+  - Observed: 회전 전/중/후 모두 `GraniteActivity` 포커스 유지, 앱 이탈/크래시 미관찰
+  - Evidence: `artifacts/20260219_090055_adb_rotate_stability/am_start.txt`, `artifacts/20260219_090055_adb_rotate_stability/focus_before_rotate.txt`, `artifacts/20260219_090055_adb_rotate_stability/focus_landscape.txt`, `artifacts/20260219_090055_adb_rotate_stability/focus_portrait.txt`, `artifacts/20260219_090055_adb_rotate_stability/before.png`, `artifacts/20260219_090055_adb_rotate_stability/landscape.png`, `artifacts/20260219_090055_adb_rotate_stability/portrait.png`
+
 - Notes:
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 08:47 KST
+- Last update: 2026-02-19 09:01 KST
