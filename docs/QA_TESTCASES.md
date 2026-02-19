@@ -125,8 +125,17 @@
   - Verdict: implicit 경로에서도 랜딩 실패가 지속 재현됨
   - Evidence: `artifacts/20260219_101311_adb_implicit_retry3/am_start_implicit_1.txt`, `artifacts/20260219_101311_adb_implicit_retry3/am_start_implicit_2.txt`, `artifacts/20260219_101311_adb_implicit_retry3/am_start_implicit_3.txt`, `artifacts/20260219_101311_adb_implicit_retry3/focus_1.txt`, `artifacts/20260219_101311_adb_implicit_retry3/focus_2.txt`, `artifacts/20260219_101311_adb_implicit_retry3/focus_3.txt`, `artifacts/20260219_101311_adb_implicit_retry3/shot_1.png`, `artifacts/20260219_101311_adb_implicit_retry3/shot_2.png`, `artifacts/20260219_101311_adb_implicit_retry3/shot_3.png`, `artifacts/20260219_101311_adb_implicit_retry3/logcat_tail.txt`
 
+- [x] **TC-ADB-ANR-SCAN-01** (AVD) Explicit deeplink 직후 ANR/FATAL 로그 스캔 — **failed (ANR confirmed)**
+  - Steps: Home 상태에서 explicit deeplink 실행 → 8초 대기 → focus 확인 + logcat 스캔
+  - Observed:
+    - `am start`: `Status: ok`, `LaunchState: COLD`, `TotalTime: 30720ms`, `WaitTime: 30738ms`
+    - 8초 후 focus가 `Application Not Responding: viva.republica.toss.test`
+    - logcat에서 `ANR in viva.republica.toss.test` 및 ANR 완료 로그 검출
+  - Verdict: 랜딩 실패 원인 후보로 ANR 증거가 명확히 확보됨
+  - Evidence: `artifacts/20260219_101618_adb_logcat_anr_scan/am_start.txt`, `artifacts/20260219_101618_adb_logcat_anr_scan/focus_after_8s.txt`, `artifacts/20260219_101618_adb_logcat_anr_scan/after_8s.png`, `artifacts/20260219_101618_adb_logcat_anr_scan/logcat_full_tail.txt`, `artifacts/20260219_101618_adb_logcat_anr_scan/logcat_anr_fatal_hits.txt`
+
 - Notes:
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 10:14 KST
+- Last update: 2026-02-19 10:17 KST
