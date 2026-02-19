@@ -210,6 +210,16 @@
   - Verdict: launcher 상태(Home+Back)에서도 deeplink 진입 정상
   - Evidence: `artifacts/20260219_123245_adb_home_back_deeplink/focus_after_home_back.txt`, `artifacts/20260219_123245_adb_home_back_deeplink/am_start.txt`, `artifacts/20260219_123245_adb_home_back_deeplink/focus_after_start.txt`, `artifacts/20260219_123245_adb_home_back_deeplink/after_start.png`, `artifacts/20260219_123245_adb_home_back_deeplink/logcat_tail.txt`, `artifacts/20260219_123245_adb_home_back_deeplink/log_hits.txt`
 
+- [x] **TC-ADB-HOME-BACK-IMPLICIT-01** (AVD) Home 후 Back 입력 상태에서 implicit deeplink 진입 — **passed**
+  - Steps: `HOME` 입력 후 `BACK` 1회 입력 → implicit deeplink 실행
+  - Observed:
+    - Home+Back 후 focus: `NexusLauncherActivity`
+    - implicit `am start`: `Status: ok`, `LaunchState: HOT`, `TotalTime: 198ms`, `WaitTime: 244ms`
+    - 실행 후 focus: `GraniteActivity`
+    - logcat 스캔에서 ANR/FATAL/obituary/"ANR likely to follow" 키워드 미검출
+  - Verdict: launcher 상태(Home+Back)에서도 implicit deeplink 진입 정상
+  - Evidence: `artifacts/20260219_123427_adb_home_back_implicit_deeplink/focus_after_home_back.txt`, `artifacts/20260219_123427_adb_home_back_implicit_deeplink/am_start_implicit.txt`, `artifacts/20260219_123427_adb_home_back_implicit_deeplink/focus_after_start.txt`, `artifacts/20260219_123427_adb_home_back_implicit_deeplink/after_start.png`, `artifacts/20260219_123427_adb_home_back_implicit_deeplink/logcat_tail.txt`, `artifacts/20260219_123427_adb_home_back_implicit_deeplink/log_hits.txt`
+
 - [x] **TC-ADB-HOME-DEEPLINK-REPEAT3-01** (AVD) Home→explicit deeplink 3회 반복 진입 안정성 — **passed**
   - Steps: `Home → explicit deeplink` 시퀀스를 3회 연속 반복
   - Observed:
@@ -619,4 +629,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 12:34 KST
+- Last update: 2026-02-19 12:35 KST
