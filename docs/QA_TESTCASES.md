@@ -81,6 +81,16 @@
   - Verdict: Home 이탈 후 deeplink 재진입 동작 정상
   - Evidence: `artifacts/20260219_104005_adb_home_then_deeplink_reentry/am_start_1.txt`, `artifacts/20260219_104005_adb_home_then_deeplink_reentry/focus_after_start_1.txt`, `artifacts/20260219_104005_adb_home_then_deeplink_reentry/focus_on_home.txt`, `artifacts/20260219_104005_adb_home_then_deeplink_reentry/am_start_2.txt`, `artifacts/20260219_104005_adb_home_then_deeplink_reentry/focus_after_start_2.txt`, `artifacts/20260219_104005_adb_home_then_deeplink_reentry/after_start_1.png`, `artifacts/20260219_104005_adb_home_then_deeplink_reentry/after_start_2.png`, `artifacts/20260219_104005_adb_home_then_deeplink_reentry/logcat_tail.txt`, `artifacts/20260219_104005_adb_home_then_deeplink_reentry/log_hits.txt`
 
+- [x] **TC-ADB-RECENTS-DEEPLINK-RECOVER-01** (AVD) Recent Apps 진입 후 deeplink 복구 진입 — **passed**
+  - Steps: Home에서 Recent Apps 호출(`KEYCODE_APP_SWITCH`) → explicit deeplink 실행
+  - Observed:
+    - Recent 호출 시 focus는 `NexusLauncherActivity`
+    - `am start`: `Status: ok`, `LaunchState: HOT`, `TotalTime: 133ms`, `WaitTime: 141ms`
+    - deeplink 실행 후 focus `GraniteActivity`로 정상 전환
+    - logcat 스캔에서 ANR/FATAL/obituary 키워드 미검출
+  - Verdict: 최근앱(overview) 상태에서도 deeplink 복구 진입 정상
+  - Evidence: `artifacts/20260219_104201_adb_recents_then_deeplink_recover/focus_on_recents.txt`, `artifacts/20260219_104201_adb_recents_then_deeplink_recover/recents.png`, `artifacts/20260219_104201_adb_recents_then_deeplink_recover/am_start.txt`, `artifacts/20260219_104201_adb_recents_then_deeplink_recover/focus_after_start.txt`, `artifacts/20260219_104201_adb_recents_then_deeplink_recover/after_start.png`, `artifacts/20260219_104201_adb_recents_then_deeplink_recover/logcat_tail.txt`, `artifacts/20260219_104201_adb_recents_then_deeplink_recover/log_hits.txt`
+
 - [x] **TC-ADB-ROTATE-01** (AVD) Deeplink 진입 후 화면 회전(가로/세로) 안정성 — **passed**
   - Steps: deeplink 진입 → 강제 landscape(`user_rotation=1`) → portrait(`user_rotation=0`)
   - Observed: 회전 전/중/후 모두 `GraniteActivity` 포커스 유지, 앱 이탈/크래시 미관찰
@@ -204,4 +214,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 10:41 KST
+- Last update: 2026-02-19 10:42 KST
