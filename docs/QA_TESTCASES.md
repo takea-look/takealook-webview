@@ -1809,8 +1809,18 @@
   - Verdict: implicit baseline 재진입이 launcher fallback으로 fail
   - Evidence: `artifacts/20260219_194439_adb_forcestop_then_implicit_retest/pid_after_forcestop.txt`, `artifacts/20260219_194439_adb_forcestop_then_implicit_retest/am_start_implicit.txt`, `artifacts/20260219_194439_adb_forcestop_then_implicit_retest/focus_after_implicit.txt`, `artifacts/20260219_194439_adb_forcestop_then_implicit_retest/after_implicit.png`, `artifacts/20260219_194439_adb_forcestop_then_implicit_retest/logcat_tail.txt`, `artifacts/20260219_194439_adb_forcestop_then_implicit_retest/log_hits.txt`
 
+- [x] **TC-ADB-FORCESTOP-EXPLICIT-IMPLICIT-CHAIN-01** (AVD) force-stop 후 explicit→implicit 연쇄 재진입 — **passed (high explicit latency)**
+  - Steps: `HOME` → `am force-stop viva.republica.toss.test` → explicit deeplink 실행 → implicit deeplink 연속 실행
+  - Observed:
+    - force-stop 직후 pid 조회: 프로세스 미존재(정상 종료)
+    - 1차 explicit: `Status: ok`, `LaunchState: COLD`, `TotalTime: 23293ms`, `WaitTime: 23299ms`, focus `GraniteActivity`
+    - 2차 implicit: `Status: ok`, `LaunchState: WARM`, `Activity: .MiniAppSchemeActivity`, `TotalTime: 418ms`, `WaitTime: 440ms`, focus `GraniteActivity`
+    - logcat 스캔에서 ANR/FATAL/obituary/"ANR likely to follow" 키워드 미검출
+  - Verdict: 기능적으로는 explicit→implicit 연쇄 재진입 성공. 단 explicit cold start 지연(23s) 관찰
+  - Evidence: `artifacts/20260219_194632_adb_forcestop_then_explicit_then_implicit/pid_after_forcestop.txt`, `artifacts/20260219_194632_adb_forcestop_then_explicit_then_implicit/am_start_1_explicit.txt`, `artifacts/20260219_194632_adb_forcestop_then_explicit_then_implicit/focus_after_explicit.txt`, `artifacts/20260219_194632_adb_forcestop_then_explicit_then_implicit/am_start_2_implicit.txt`, `artifacts/20260219_194632_adb_forcestop_then_explicit_then_implicit/focus_after_implicit.txt`, `artifacts/20260219_194632_adb_forcestop_then_explicit_then_implicit/after_implicit.png`, `artifacts/20260219_194632_adb_forcestop_then_explicit_then_implicit/logcat_tail.txt`, `artifacts/20260219_194632_adb_forcestop_then_explicit_then_implicit/log_hits.txt`
+
 - Notes:
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 19:45 KST
+- Last update: 2026-02-19 19:47 KST
