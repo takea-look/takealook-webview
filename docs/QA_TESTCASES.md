@@ -162,6 +162,15 @@
   - Verdict: 잠금/해제 사이클 후 앱 포그라운드 유지 정상
   - Evidence: `artifacts/20260219_113753_adb_screen_off_on_resume/am_start.txt`, `artifacts/20260219_113753_adb_screen_off_on_resume/focus_before_sleep.txt`, `artifacts/20260219_113753_adb_screen_off_on_resume/power_after_sleep.txt`, `artifacts/20260219_113753_adb_screen_off_on_resume/focus_after_wakeup.txt`, `artifacts/20260219_113753_adb_screen_off_on_resume/after_wakeup.png`, `artifacts/20260219_113753_adb_screen_off_on_resume/logcat_tail.txt`, `artifacts/20260219_113753_adb_screen_off_on_resume/log_hits.txt`
 
+- [x] **TC-ADB-HOME-SLEEP-WAKE-RESUME-01** (AVD) Home 이탈 후 Sleep/Wake 뒤 앱 복귀 — **passed**
+  - Steps: explicit deeplink 진입 → `HOME` → `SLEEP/WAKE + unlock(82)` → `monkey resume`
+  - Observed:
+    - `am start`: `Status: ok`, `LaunchState: HOT`, `WaitTime: 1016ms`
+    - 최종 resume 후 focus `GraniteActivity` 확인
+    - logcat 스캔에서 ANR/FATAL/obituary/"ANR likely to follow" 키워드 미검출
+  - Verdict: Home 이탈 + 화면 잠금/해제 조합에서도 복귀 안정성 양호
+  - Evidence: `artifacts/20260219_120505_adb_home_sleep_wake_resume/am_start.txt`, `artifacts/20260219_120505_adb_home_sleep_wake_resume/monkey_resume.txt`, `artifacts/20260219_120505_adb_home_sleep_wake_resume/focus_after_resume.txt`, `artifacts/20260219_120505_adb_home_sleep_wake_resume/after_resume.png`, `artifacts/20260219_120505_adb_home_sleep_wake_resume/logcat_tail.txt`, `artifacts/20260219_120505_adb_home_sleep_wake_resume/log_hits.txt`
+
 - [x] **TC-ADB-SCREENWAKE-IMPLICIT-01** (AVD) 화면 깨운 직후 implicit deeplink 진입 안정성 — **passed**
   - Steps: `KEYCODE_SLEEP` → `KEYCODE_WAKEUP` + unlock(82) 후 implicit deeplink 실행
   - Observed:
@@ -471,4 +480,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 12:04 KST
+- Last update: 2026-02-19 12:06 KST

@@ -1,0 +1,450 @@
+--------- beginning of main
+02-19 12:05:20.793   752  1029 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+02-19 12:05:20.794   752  1029 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+02-19 12:05:20.794   752  1029 D InetDiagMessage: Destroyed live tcp sockets for uids={20217} in 1ms
+02-19 12:05:22.197 20068 20068 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.common.telemetry.service.START dat=chimera-action:/... xflg=0x4 cmp=com.google.android.gms/.chimera.PersistentApiService }
+02-19 12:05:22.363 27803 27803 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+02-19 12:05:22.440 27803 27803 I AndroidRuntime: Using default boot image
+02-19 12:05:22.440 27803 27803 I AndroidRuntime: Leaving lock profiling enabled
+02-19 12:05:22.452 27803 27803 I app_process: Using CollectorTypeCMC GC.
+02-19 12:05:23.516 27803 27803 D nativeloader: InitDefaultPublicLibraries for_preload=1: libandroid.so:libaaudio.so:libamidi.so:libbinder_ndk.so:libc.so:libcamera2ndk.so:libdl.so:libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libicu.so:libicui18n.so:libicuuc.so:libjnigraphics.so:liblog.so:libmediandk.so:libm.so:libnativehelper.so:libnativewindow.so:libOpenMAXAL.so:libOpenSLES.so:libRS.so:libstdc++.so:libsync.so:libvulkan.so:libwebviewchromium_plat_support.so:libz.so
+02-19 12:05:23.623 27803 27803 D nativeloader: Load libicu_jni.so using APEX ns com_android_art for caller /apex/com.android.art/javalib/core-oj.jar: ok
+02-19 12:05:23.626 27803 27803 D app_process: u_setTimeZoneFilesDirectory("/apex/com.android.tzdata/etc/tz/versioned/9/icu") succeeded. 
+02-19 12:05:23.626 27803 27803 D app_process: I18n APEX ICU file found: /apex/com.android.i18n/etc/icu/icudt76l.dat
+02-19 12:05:23.790 27803 27803 D nativeloader: Load libjavacore.so using APEX ns com_android_art for caller /apex/com.android.art/javalib/core-oj.jar: ok
+02-19 12:05:23.809 27803 27803 D nativeloader: Load libopenjdk.so using APEX ns com_android_art for caller /apex/com.android.art/javalib/core-oj.jar: ok
+02-19 12:05:23.836 27803 27803 W app_process: Unexpected CPU variant for x86: x86_64.
+02-19 12:05:23.836 27803 27803 W app_process: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, goldmont-without-sha-xsaves, tremont, kabylake, alderlake, default
+02-19 12:05:24.170 27803 27803 D nativeloader: Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+02-19 12:05:24.171 27803 27803 D AndroidRuntime: Calling main entry com.android.commands.monkey.Monkey
+02-19 12:05:24.174 27803 27803 D nativeloader: Load /system/lib64/libmonkey_jni.so using ns default for caller /system/framework/monkey.jar in same partition (is_bridged=0): ok
+02-19 12:05:24.175 27803 27803 W Monkey  : args: [-p, viva.republica.toss.test, -c, android.intent.category.LAUNCHER, 1]
+02-19 12:05:24.194 27803 27803 I AconfigPackage: android.media.swcodec.flags is mapped to com.android.media.swcodec
+02-19 12:05:24.198 27803 27803 I AconfigPackage: com.google.android.settings.simplemode.flags is mapped to system_ext
+02-19 12:05:24.198 27803 27803 I AconfigPackage: com.google.android.systemui is mapped to system_ext
+02-19 12:05:24.198 27803 27803 I AconfigPackage: com.google.android.apps.nexuslauncher is mapped to system_ext
+02-19 12:05:24.198 27803 27803 I AconfigPackage: com.android.settings.accessibility is mapped to system_ext
+02-19 12:05:24.198 27803 27803 I AconfigPackage: com.android.settings.flags is mapped to system_ext
+02-19 12:05:24.198 27803 27803 I AconfigPackage: com.google.android.apps.miphone.aiai.matchmaker.overview.ui is mapped to system_ext
+02-19 12:05:24.198 27803 27803 I AconfigPackage: com.google.android.settings.flags is mapped to system_ext
+02-19 12:05:24.199 27803 27803 I AconfigPackage: com.android.launcher3 is mapped to system_ext
+02-19 12:05:24.199 27803 27803 I AconfigPackage: com.android.wallpaper is mapped to system_ext
+02-19 12:05:24.199 27803 27803 I AconfigPackage: com.android.settings.media_drm is mapped to system_ext
+02-19 12:05:24.199 27803 27803 I AconfigPackage: com.android.systemui.accessibility.accessibilitymenu is mapped to system_ext
+02-19 12:05:24.199 27803 27803 I AconfigPackage: com.android.settings.keyboard is mapped to system_ext
+02-19 12:05:24.199 27803 27803 I AconfigPackage: com.android.server.policy.feature.flags is mapped to system_ext
+02-19 12:05:24.199 27803 27803 I AconfigPackage: com.android.settings.factory_reset is mapped to system_ext
+02-19 12:05:24.199 27803 27803 I AconfigPackage: com.google.android.haptics.flags is mapped to system_ext
+02-19 12:05:24.202 27803 27803 I AconfigPackage: com.android.permission.flags is mapped to com.android.permission
+02-19 12:05:24.206 27803 27803 I AconfigPackage: com.android.icu is mapped to com.android.i18n
+02-19 12:05:24.210 27803 27803 I AconfigPackage: com.android.appsearch.flags is mapped to com.android.appsearch
+02-19 12:05:24.214 27803 27803 I AconfigPackage: android.uprobestats.mainline.flags is mapped to com.android.uprobestats
+02-19 12:05:24.218 27803 27803 I AconfigPackage: android.provider.flags is mapped to com.android.configinfrastructure
+02-19 12:05:24.219 27803 27803 I AconfigPackage: com.android.server.deviceconfig is mapped to com.android.configinfrastructure
+02-19 12:05:24.225 27803 27803 I AconfigPackage: com.android.nfc.flags is mapped to system
+02-19 12:05:24.225 27803 27803 I AconfigPackage: android.app.admin.flags is mapped to system
+02-19 12:05:24.225 27803 27803 I AconfigPackage: android.database.sqlite is mapped to system
+02-19 12:05:24.225 27803 27803 I AconfigPackage: com.android.providers.calendar is mapped to system
+02-19 12:05:24.225 27803 27803 I AconfigPackage: com.android.server.power.feature.flags is mapped to system
+02-19 12:05:24.225 27803 27803 I AconfigPackage: com.android.media.performance.flags is mapped to system
+02-19 12:05:24.225 27803 27803 I AconfigPackage: android.app.contextualsearch.flags is mapped to system
+02-19 12:05:24.225 27803 27803 I AconfigPackage: android.app.ondeviceintelligence.flags is mapped to system
+02-19 12:05:24.225 27803 27803 I AconfigPackage: com.android.media.projection.flags is mapped to system
+02-19 12:05:24.225 27803 27803 I AconfigPackage: android.companion is mapped to system
+02-19 12:05:24.226 27803 27803 I AconfigPackage: android.service.controls.flags is mapped to system
+02-19 12:05:24.226 27803 27803 I AconfigPackage: com.android.text.flags is mapped to system
+02-19 12:05:24.226 27803 27803 I AconfigPackage: com.android.providers.contactkeys.flags is mapped to system
+02-19 12:05:24.226 27803 27803 I AconfigPackage: com.android.intentresolver is mapped to system
+02-19 12:05:24.226 27803 27803 I AconfigPackage: android.companion.virtualdevice.flags is mapped to system
+02-19 12:05:24.226 27803 27803 I AconfigPackage: android.uprobestats.flags is mapped to system
+02-19 12:05:24.226 27803 27803 I AconfigPackage: com.android.net.thread.platform.flags is mapped to system
+02-19 12:05:24.226 27803 27803 I AconfigPackage: android.view.contentprotection.flags is mapped to system
+02-19 12:05:24.226 27803 27803 I AconfigPackage: com.android.server.dreams is mapped to system
+02-19 12:05:24.226 27803 27803 I AconfigPackage: com.android.graphics.surfaceflinger.flags is mapped to system
+02-19 12:05:24.226 27803 27803 I AconfigPackage: com.android.hardware.input is mapped to system
+02-19 12:05:24.226 27803 27803 I AconfigPackage: android.sdk is mapped to system
+02-19 12:05:24.226 27803 27803 I AconfigPackage: com.android.input.flags is mapped to system
+02-19 12:05:24.226 27803 27803 I AconfigPackage: android.tracing is mapped to system
+02-19 12:05:24.227 27803 27803 I AconfigPackage: com.android.server.biometrics is mapped to system
+02-19 12:05:24.227 27803 27803 I AconfigPackage: android.view.contentcapture.flags is mapped to system
+02-19 12:05:24.227 27803 27803 I AconfigPackage: android.app.job is mapped to system
+02-19 12:05:24.227 27803 27803 I AconfigPackage: android.content.res is mapped to system
+02-19 12:05:24.227 27803 27803 I AconfigPackage: android.net.platform.flags is mapped to system
+02-19 12:05:24.227 27803 27803 I AconfigPackage: com.android.aconfig.flags is mapped to system
+02-19 12:05:24.227 27803 27803 I AconfigPackage: com.android.graphics.flags is mapped to system
+02-19 12:05:24.227 27803 27803 I AconfigPackage: android.server.app is mapped to system
+02-19 12:05:24.227 27803 27803 I AconfigPackage: android.speech.flags is mapped to system
+02-19 12:05:24.227 27803 27803 I AconfigPackage: com.android.server.stats is mapped to system
+02-19 12:05:24.228 27803 27803 I AconfigPackage: android.hardware.biometrics is mapped to system
+02-19 12:05:24.228 27803 27803 I AconfigPackage: android.car.feature is mapped to system
+02-19 12:05:24.228 27803 27803 I AconfigPackage: android.adpf is mapped to system
+02-19 12:05:24.228 27803 27803 I AconfigPackage: android.location.flags is mapped to system
+02-19 12:05:24.228 27803 27803 I AconfigPackage: com.android.settingslib.flags is mapped to system
+02-19 12:05:24.228 27803 27803 I AconfigPackage: com.android.managedprovisioning.flags is mapped to system
+02-19 12:05:24.228 27803 27803 I AconfigPackage: android.app.assist.flags is mapped to system
+02-19 12:05:24.228 27803 27803 I AconfigPackage: com.android.server.net is mapped to system
+02-19 12:05:24.228 27803 27803 I AconfigPackage: com.android.settingslib.widget.flags is mapped to system
+02-19 12:05:24.228 27803 27803 I AconfigPackage: com.android.internal.camera.flags is mapped to system
+02-19 12:05:24.228 27803 27803 I AconfigPackage: com.android.hardware.libsensor.flags is mapped to system
+02-19 12:05:24.228 27803 27803 I AconfigPackage: com.android.internal.jank is mapped to system
+02-19 12:05:24.228 27803 27803 I AconfigPackage: com.android.providers.settings is mapped to system
+02-19 12:05:24.228 27803 27803 I AconfigPackage: android.multiuser is mapped to system
+02-19 12:05:24.229 27803 27803 I AconfigPackage: com.android.server.power.optimization is mapped to system
+02-19 12:05:24.229 27803 27803 I AconfigPackage: com.android.calllogbackup is mapped to system
+02-19 12:05:24.229 27803 27803 I AconfigPackage: com.android.media.flags is mapped to system
+02-19 12:05:24.229 27803 27803 I AconfigPackage: com.android.server.flags is mapped to system
+02-19 12:05:24.229 27803 27803 I AconfigPackage: com.android.graphics.libvulkan.flags is mapped to system
+02-19 12:05:24.229 27803 27803 I AconfigPackage: android.app.appfunctions.flags is mapped to system
+02-19 12:05:24.229 27803 27803 I AconfigPackage: android.app.smartspace.flags is mapped to system
+02-19 12:05:24.229 27803 27803 I AconfigPackage: com.android.providers.contacts.flags is mapped to system
+02-19 12:05:24.229 27803 27803 I AconfigPackage: com.android.shell.flags is mapped to system
+02-19 12:05:24.229 27803 27803 I AconfigPackage: com.android.media.aaudio is mapped to system
+02-19 12:05:24.229 27803 27803 I AconfigPackage: android.hardware.radio is mapped to system
+02-19 12:05:24.230 27803 27803 I AconfigPackage: com.google.wear.services.infra.flags is mapped to system
+02-19 12:05:24.230 27803 27803 I AconfigPackage: suspend_service.flags is mapped to system
+02-19 12:05:24.230 27803 27803 I AconfigPackage: android.media.midi is mapped to system
+02-19 12:05:24.230 27803 27803 I AconfigPackage: com.android.libcore.readonly is mapped to system
+02-19 12:05:24.230 27803 27803 I AconfigPackage: com.android.settingslib.widget.selectorwithwidgetpreference.flags is mapped to system
+02-19 12:05:24.230 27803 27803 I AconfigPackage: android.service.notification is mapped to system
+02-19 12:05:24.230 27803 27803 I AconfigPackage: com.android.systemui.shared is mapped to system
+02-19 12:05:24.230 27803 27803 I AconfigPackage: android.app.jank is mapped to system
+02-19 12:05:24.230 27803 27803 I AconfigPackage: android.app.wearable is mapped to system
+02-19 12:05:24.230 27803 27803 I AconfigPackage: com.android.media.audio is mapped to system
+02-19 12:05:24.230 27803 27803 I AconfigPackage: android.service.chooser is mapped to system
+02-19 12:05:24.230 27803 27803 I AconfigPackage: com.android.server.compat is mapped to system
+02-19 12:05:24.230 27803 27803 I AconfigPackage: com.android.server.alarm is mapped to system
+02-19 12:05:24.230 27803 27803 I AconfigPackage: com.android.apex.flags is mapped to system
+02-19 12:05:24.230 27803 27803 I AconfigPackage: android.service.quickaccesswallet is mapped to system
+02-19 12:05:24.230 27803 27803 I AconfigPackage: android.app.usage is mapped to system
+02-19 12:05:24.231 27803 27803 I AconfigPackage: com.android.server.accessibility is mapped to system
+02-19 12:05:24.231 27803 27803 I AconfigPackage: android.app.supervision.flags is mapped to system
+02-19 12:05:24.231 27803 27803 I AconfigPackage: com.android.server.utils is mapped to system
+02-19 12:05:24.231 27803 27803 I AconfigPackage: android.chre.flags is mapped to system
+02-19 12:05:24.231 27803 27803 I AconfigPackage: android.content.flags is mapped to system
+02-19 12:05:24.231 27803 27803 I AconfigPackage: android.media.codec is mapped to system
+02-19 12:05:24.231 27803 27803 I AconfigPackage: com.android.internal.os is mapped to system
+02-19 12:05:24.231 27803 27803 I AconfigPackage: com.android.nfc.nci.flags is mapped to system
+02-19 12:05:24.231 27803 27803 I AconfigPackage: android.app is mapped to system
+02-19 12:05:24.231 27803 27803 I AconfigPackage: android.security.keystore2 is mapped to system
+02-19 12:05:24.231 27803 27803 I AconfigPackage: android.crashrecovery.flags is mapped to system
+02-19 12:05:24.231 27803 27803 I AconfigPackage: com.android.tradeinmode.flags is mapped to system
+02-19 12:05:24.231 27803 27803 I AconfigPackage: android.hardware.flags is mapped to system
+02-19 12:05:24.231 27803 27803 I AconfigPackage: com.android.server.telecom.flags is mapped to system
+02-19 12:05:24.231 27803 27803 I AconfigPackage: com.android.settingslib.media.flags is mapped to system
+02-19 12:05:24.232 27803 27803 I AconfigPackage: com.android.server.policy is mapped to system
+02-19 12:05:24.232 27803 27803 I AconfigPackage: android.media.audiopolicy is mapped to system
+02-19 12:05:24.232 27803 27803 I AconfigPackage: com.android.egg.flags is mapped to system
+02-19 12:05:24.232 27803 27803 I AconfigPackage: com.android.internal.compat.flags is mapped to system
+02-19 12:05:24.232 27803 27803 I AconfigPackage: android.security is mapped to system
+02-19 12:05:24.232 27803 27803 I AconfigPackage: android.service.autofill is mapped to system
+02-19 12:05:24.232 27803 27803 I AconfigPackage: com.example.android.aconfig.demo.flags is mapped to system
+02-19 12:05:24.232 27803 27803 I AconfigPackage: android.view.flags is mapped to system
+02-19 12:05:24.232 27803 27803 I AconfigPackage: android.companion.virtual.flags is mapped to system
+02-19 12:05:24.232 27803 27803 I AconfigPackage: com.android.aconfig_new_storage is mapped to system
+02-19 12:05:24.232 27803 27803 I AconfigPackage: com.android.server.feature.flags is mapped to system
+02-19 12:05:24.233 27803 27803 I AconfigPackage: com.android.systemui is mapped to system
+02-19 12:05:24.233 27803 27803 I AconfigPackage: com.android.server.power.batterysaver is mapped to system
+02-19 12:05:24.233 27803 27803 I AconfigPackage: android.widget.flags is mapped to system
+02-19 12:05:24.233 27803 27803 I AconfigPackage: com.android.media.editing.flags is mapped to system
+02-19 12:05:24.233 27803 27803 I AconfigPackage: com.android.media.codec.flags is mapped to system
+02-19 12:05:24.233 27803 27803 I AconfigPackage: com.android.server.powerstats is mapped to system
+02-19 12:05:24.233 27803 27803 I AconfigPackage: com.android.graphics.egl.flags is mapped to system
+02-19 12:05:24.233 27803 27803 I AconfigPackage: com.android.media.audioserver is mapped to system
+02-19 12:05:24.233 27803 27803 I AconfigPackage: com.android.server.deviceidle is mapped to system
+02-19 12:05:24.233 27803 27803 I AconfigPackage: android.nfc is mapped to system
+02-19 12:05:24.233 27803 27803 I AconfigPackage: android.permission.flags is mapped to system
+02-19 12:05:24.233 27803 27803 I AconfigPackage: android.service.voice.flags is mapped to system
+02-19 12:05:24.233 27803 27803 I AconfigPackage: android.content.pm is mapped to system
+02-19 12:05:24.233 27803 27803 I AconfigPackage: com.android.server.power.hint is mapped to system
+02-19 12:05:24.233 27803 27803 I AconfigPackage: android.os is mapped to system
+02-19 12:05:24.233 27803 27803 I AconfigPackage: android.service.dreams is mapped to system
+02-19 12:05:24.233 27803 27803 I AconfigPackage: com.android.graphics.libgui.flags is mapped to system
+02-19 12:05:24.234 27803 27803 I AconfigPackage: android.hardware.usb.flags is mapped to system
+02-19 12:05:24.234 27803 27803 I AconfigPackage: android.provider is mapped to system
+02-19 12:05:24.234 27803 27803 I AconfigPackage: com.android.server.job is mapped to system
+02-19 12:05:24.234 27803 27803 I AconfigPackage: com.android.internal.foldables.flags is mapped to system
+02-19 12:05:24.234 27803 27803 I AconfigPackage: com.android.internal.telephony.flags is mapped to system
+02-19 12:05:24.234 27803 27803 I AconfigPackage: android.webkit is mapped to system
+02-19 12:05:24.234 27803 27803 I AconfigPackage: android.credentials.flags is mapped to system
+02-19 12:05:24.234 27803 27803 I AconfigPackage: com.android.server.display.feature.flags is mapped to system
+02-19 12:05:24.234 27803 27803 I AconfigPackage: com.android.server.notification is mapped to system
+02-19 12:05:24.234 27803 27803 I AconfigPackage: android.appwidget.flags is mapped to system
+02-19 12:05:24.234 27803 27803 I AconfigPackage: com.android.frameworks.sensorservice.flags is mapped to system
+02-19 12:05:24.234 27803 27803 I AconfigPackage: com.android.printspooler.flags is mapped to system
+02-19 12:05:24.234 27803 27803 I AconfigPackage: com.android.window.flags is mapped to system
+02-19 12:05:24.234 27803 27803 I AconfigPackage: android.adaptiveauth is mapped to system
+02-19 12:05:24.234 27803 27803 I AconfigPackage: android.net.wifi.flags is mapped to system
+02-19 12:05:24.234 27803 27803 I AconfigPackage: android.media.tv.flags is mapped to system
+02-19 12:05:24.234 27803 27803 I AconfigPackage: com.android.server.usb.flags is mapped to system
+02-19 12:05:24.234 27803 27803 I AconfigPackage: android.os.vibrator is mapped to system
+02-19 12:05:24.234 27803 27803 I AconfigPackage: android.hardware.devicestate.feature.flags is mapped to system
+02-19 12:05:24.234 27803 27803 I AconfigPackage: com.android.server.usage is mapped to system
+02-19 12:05:24.235 27803 27803 I AconfigPackage: android.server is mapped to system
+02-19 12:05:24.235 27803 27803 I AconfigPackage: com.android.wm.shell is mapped to system
+02-19 12:05:24.235 27803 27803 I AconfigPackage: android.view.inputmethod is mapped to system
+02-19 12:05:24.235 27803 27803 I AconfigPackage: com.android.graphics.hwui.flags is mapped to system
+02-19 12:05:24.235 27803 27803 I AconfigPackage: com.android.server.backup is mapped to system
+02-19 12:05:24.235 27803 27803 I AconfigPackage: com.android.internal.pm.pkg.component.flags is mapped to system
+02-19 12:05:24.235 27803 27803 I AconfigPackage: android.view.accessibility is mapped to system
+02-19 12:05:24.235 27803 27803 I AconfigPackage: com.google.wear.sdk is mapped to system
+02-19 12:05:24.235 27803 27803 I AconfigPackage: android.media.audio is mapped to system
+02-19 12:05:24.235 27803 27803 I AconfigPackage: com.android.server.am is mapped to system
+02-19 12:05:24.235 27803 27803 I AconfigPackage: com.android.media.playback.flags is mapped to system
+02-19 12:05:24.240 27803 27803 I AconfigPackage: com.android.art.flags is mapped to com.android.art
+02-19 12:05:24.240 27803 27803 I AconfigPackage: com.android.libcore is mapped to com.android.art
+02-19 12:05:24.246 27803 27803 I AconfigPackage: com.android.media.extractor.flags is mapped to com.android.media
+02-19 12:05:24.246 27803 27803 I AconfigPackage: com.android.media.mainline.flags is mapped to com.android.media
+02-19 12:05:24.250 27803 27803 I AconfigPackage: com.android.wifi.flags is mapped to com.android.wifi
+02-19 12:05:24.254 27803 27803 I AconfigPackage: com.android.org.conscrypt.flags is mapped to com.android.conscrypt
+02-19 12:05:24.259 27803 27803 I AconfigPackage: com.android.healthfitness.flags is mapped to com.android.healthfitness
+02-19 12:05:24.263 27803 27803 I AconfigPackage: com.google.android.input.twoshay.flags is mapped to vendor
+02-19 12:05:24.264 27803 27803 I AconfigPackage: libgooglecamerahal.flags is mapped to vendor
+02-19 12:05:24.269 27803 27803 I AconfigPackage: com.android.ipsec.flags is mapped to com.android.ipsec
+02-19 12:05:24.273 27803 27803 I AconfigPackage: com.android.nfc.module.flags is mapped to com.android.nfcservices
+02-19 12:05:24.277 27803 27803 I AconfigPackage: com.android.adservices.ondevicepersonalization.flags is mapped to com.android.ondevicepersonalization
+02-19 12:05:24.282 27803 27803 I AconfigPackage: com.android.bluetooth.flags is mapped to com.android.bt
+02-19 12:05:24.287 27803 27803 I AconfigPackage: com.android.devicelock.flags is mapped to com.android.devicelock
+02-19 12:05:24.290 27803 27803 I AconfigPackage: android.os.profiling is mapped to com.android.profiling
+02-19 12:05:24.293 27803 27803 I AconfigPackage: com.android.os.statsd.flags is mapped to com.android.os.statsd
+02-19 12:05:24.295 27803 27803 I AconfigPackage: com.android.cellbroadcastreceiver.flags is mapped to com.android.cellbroadcast
+02-19 12:05:24.297 27803 27803 I AconfigPackage: com.android.adservices.flags is mapped to com.android.adservices
+02-19 12:05:24.298 27803 27803 I AconfigPackage: com.android.sdksandbox.flags is mapped to com.android.adservices
+02-19 12:05:24.300 27803 27803 I AconfigPackage: com.android.uwb.flags is mapped to com.android.uwb
+02-19 12:05:24.300 27803 27803 I AconfigPackage: com.android.ranging.flags is mapped to com.android.uwb
+02-19 12:05:24.303 27803 27803 I AconfigPackage: android.graphics.pdf.flags is mapped to com.android.mediaprovider
+02-19 12:05:24.303 27803 27803 I AconfigPackage: com.android.providers.media.flags is mapped to com.android.mediaprovider
+02-19 12:05:24.303 27803 27803 I AconfigPackage: android.graphics.pdf.flags.readonly is mapped to com.android.mediaprovider
+02-19 12:05:24.305 27803 27803 I AconfigPackage: com.android.net.ct.flags is mapped to com.android.tethering
+02-19 12:05:24.305 27803 27803 I AconfigPackage: com.android.net.flags is mapped to com.android.tethering
+02-19 12:05:24.305 27803 27803 I AconfigPackage: android.net.vcn is mapped to com.android.tethering
+02-19 12:05:24.305 27803 27803 I AconfigPackage: com.android.nearby.flags is mapped to com.android.tethering
+02-19 12:05:24.305 27803 27803 I AconfigPackage: android.net.http is mapped to com.android.tethering
+02-19 12:05:24.305 27803 27803 I AconfigPackage: com.android.net.thread.flags is mapped to com.android.tethering
+02-19 12:05:24.308 27803 27803 I AconfigPackage: com.android.system.virtualmachine.flags is mapped to com.android.virt
+02-19 12:05:24.310 27803 27803 E FeatureFlagsImplExport: android.os.flagging.AconfigStorageReadException: ERROR_PACKAGE_NOT_FOUND: package android.xr cannot be found on the device
+02-19 12:05:24.324 27803 27803 W Monkey  :  arg: "-p"
+02-19 12:05:24.324 27803 27803 W Monkey  :  arg: "viva.republica.toss.test"
+02-19 12:05:24.324 27803 27803 W Monkey  :  arg: "-c"
+02-19 12:05:24.324 27803 27803 W Monkey  :  arg: "android.intent.category.LAUNCHER"
+02-19 12:05:24.324 27803 27803 W Monkey  :  arg: "1"
+02-19 12:05:24.324 27803 27803 W Monkey  : data="viva.republica.toss.test"
+02-19 12:05:24.325 27803 27803 W Monkey  : data="android.intent.category.LAUNCHER"
+02-19 12:05:24.337   752   984 D EventHub: No input device configuration file found for device 'Monkey touch'.
+02-19 12:05:24.339   752   984 I EventHub: usingClockIoctl=true
+02-19 12:05:24.339   752   984 I EventHub: New device: id=22, fd=543, path='/dev/input/event14', name='Monkey touch', classes=TOUCH | TOUCH_MT, configuration='', keyLayout='', keyCharacterMap='', builtinKeyboard=false, 
+02-19 12:05:24.346   752   984 I InputReader: Device reconfigured: id=22, name='Monkey touch', size 1080x2400, orientation Rotation0, mode DIRECT, display id 0
+02-19 12:05:24.346   752   984 I InputReader: Device added: id=22, eventHubId=22, name='Monkey touch', descriptor='e1fe28b90f915c7d1febbd52c1ef84b3c4cbed9f',sources=TOUCHSCREEN
+--------- beginning of system
+02-19 12:05:24.397   752   984 E WindowManager: Display reconfigured outside of a transition: Display{#0 state=ON size=1080x2400 ROTATION_0}
+02-19 12:05:24.711 27814 27814 W dumpsys : Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: package
+02-19 12:05:24.946   752  1454 W ActivityManager: registerReceiverWithFeature: no app for null
+02-19 12:05:24.985   752  1852 W ActivityTaskManager: callingPackage for (uid=2000, pid=27803) has no WPC
+02-19 12:05:24.986   752  1852 V GrammaticalInflectionUtils: AttributionSource: android.content.AttributionSource@56784557 does not have READ_SYSTEM_GRAMMATICAL_GENDER permission.
+02-19 12:05:24.987   752  1852 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_USER_ASPECT_RATIO_OVERRIDE
+02-19 12:05:24.987   752  1852 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_USER_ASPECT_RATIO_FULLSCREEN_OVERRIDE
+02-19 12:05:24.987   752  1852 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_RESIZEABLE_ACTIVITY_OVERRIDES
+02-19 12:05:24.987   752  1852 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_MIN_ASPECT_RATIO_OVERRIDE
+02-19 12:05:24.992   531   603 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+02-19 12:05:25.001   752  1852 I ActivityTaskManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=viva.republica.toss.test/.login.AppsInTossLoginActivity} with LAUNCH_MULTIPLE from uid 2000 (BAL_ALLOW_PERMISSION) result code=2
+02-19 12:05:25.003  4449  4467 V WindowManagerShell: Transition requested (#256): android.os.BinderProxy@cff0c65 TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=46 effectiveUid=10217 displayId=0 isRunning=true baseIntent=Intent { act=android.intent.action.VIEW dat=intoss://takealook/... flg=0x10000000 cmp=viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity } baseActivity=ComponentInfo{viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity} topActivity=ComponentInfo{viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity} origActivity=null realActivity=ComponentInfo{viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity} numActivities=5 lastActiveTime=81786290 supportsMultiWindow=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{android.window.IWindowContainerToken$Stub$Proxy@97d3d3a} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 0 - 0, 0) topActivityInfo=ActivityInfo{7d6edeb im.toss.rn.granite.core.GraniteActivity} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isVisible=false isVisibleRequested=false isTopActivityNoDisplay=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false isActivityStackTransparent=false lastNonFullscreenBounds=Rect(284, 660 - 796, 1740) capturedLink=null capturedLinkTimestamp=0 requestedVisibleTypes=-9 topActivityRequestOpenInBrowserEducationTimestamp=0 appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false eligibleForLetterboxEducation= false isLetterboxEducationEnabled= true isLetterboxDoubleTapEnabled= false eligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 topActivityAppBounds=Rect(0, 0 - 1080, 2400) isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false hasMinAspectRatioOverride=false topActivityLetterboxBounds=null cameraCompatTaskInfo=CameraCompatTaskInfo { freeformCameraCompatMode=inactive}} topActivityMainWindowFrame=null}, pipChange = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 256 }
+02-19 12:05:25.004  4449  4467 D ShellSplitScreen: logExit: no-op, mLoggerSessionId is null
+02-19 12:05:25.005 27803 27803 I Monkey  : Events injected: 1
+02-19 12:05:25.019  1341  1341 W SplitSelectStateCtor: Missing session instanceIds
+02-19 12:05:25.019  1341  1341 D StatsLog: LAUNCHER_SPLIT_SELECTION_EXIT_INTERRUPTED
+02-19 12:05:25.048   531   531 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+02-19 12:05:25.066  4449  4467 D WindowManagerShell: onActivityRestartAttempt: topActivity=ComponentInfo{viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity}, wasVisible=false
+02-19 12:05:25.072   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 12:05:25.080  4449  4467 D WindowManagerShell: setLauncherKeepClearAreaHeight: visible=false, height=527
+02-19 12:05:25.082   615   713 W IPCThreadState: Sending oneway calls to frozen process.
+02-19 12:05:25.087  4449  4449 W DSRotLockSettingsMngr: Setting is ignored, but no fallback was specified.
+02-19 12:05:25.093 27818 27818 I artd    : Starting artd
+02-19 12:05:25.099 24035 24035 D ViewRootImpl: Skipping stats log for color mode
+02-19 12:05:25.101   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 12:05:25.101   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 12:05:25.101   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 12:05:25.101   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 12:05:25.109 27818 27818 I AidlLazyServiceRegistrar: Registering service artd
+02-19 12:05:25.128 27818 27818 I AidlLazyServiceRegistrar: Process has 1 (of 1 available) client(s) in use after notification artd has clients: 1
+02-19 12:05:25.147  4449  4474 V SnapshotDrawerUtils: Drawing snapshot surface sizeMismatch=true
+02-19 12:05:25.170 27803 27803 I Monkey  : ## Network stats: elapsed time=168ms (0ms mobile, 0ms wifi, 168ms not connected)
+02-19 12:05:25.181 27803 27803 I app_process: System.exit called, status: 0
+02-19 12:05:25.181 27803 27803 I AndroidRuntime: VM exiting with result code 0.
+02-19 12:05:25.235   752   794 V WindowManager: Sent Transition (#256) createdAt=02-19 12:05:24.988 via request=TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=46 effectiveUid=10217 displayId=0 isRunning=true baseIntent=Intent { act=android.intent.action.VIEW dat=intoss://takealook/... flg=0x10000000 cmp=viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity } baseActivity=ComponentInfo{viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity} topActivity=ComponentInfo{viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity} origActivity=null realActivity=ComponentInfo{viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity} numActivities=5 lastActiveTime=81786290 supportsMultiWindow=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{RemoteToken{a585dcd Task{7745c88 #46 type=standard A=10217:viva.republica.toss.test}}} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 0 - 0, 0) topActivityInfo=ActivityInfo{5dd5128 im.toss.rn.granite.core.GraniteActivity} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isVisible=false isVisibleRequested=false isTopActivityNoDisplay=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false isActivityStackTransparent=false lastNonFullscreenBounds=Rect(284, 660 - 796, 1740) capturedLink=null capturedLinkTimestamp=0 requestedVisibleTypes=-9 topActivityRequestOpenInBrowserEducationTimestamp=0 appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false eligibleForLetterboxEducation= false isLetterboxEducationEnabled= true isLetterboxDoubleTapEnabled= false eligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 topActivityAppBounds=Rect(0, 0 - 1080, 2400) isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false hasMinAspectRatioOverride=false topActivityLetterboxBounds=null cameraCompatTaskInfo=CameraCompatTaskInfo { freeformCameraCompatMode=inactive}} topActivityMainWindowFrame=null}, pipChange = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 256 }
+02-19 12:05:25.235   752   794 V WindowManager:     startWCT=WindowContainerTransaction { changes= {} hops= [] errorCallbackToken=null taskFragmentOrganizer=null }
+02-19 12:05:25.236   752   794 V WindowManager:     info={id=256 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+02-19 12:05:25.236   752   794 V WindowManager:         {WCT{RemoteToken{a585dcd Task{7745c88 #46 type=standard A=10217:viva.republica.toss.test}}} m=TO_FRONT f=MOVE_TO_TOP leash=Surface(name=Task=46)/@0xe2d6cf7 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1},
+02-19 12:05:25.236   752   794 V WindowManager:         {WCT{RemoteToken{5218fe8 Task{dd43522 #1 type=home}}} m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0x8ddbd2e sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1},
+02-19 12:05:25.236   752   794 V WindowManager:         {m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{35e0c0f showWhenLocked=false})/@0x512f5be sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0}
+02-19 12:05:25.236   752   794 V WindowManager:     ]}
+02-19 12:05:25.236  4449  4461 V WindowManagerShell: onTransitionReady(transaction=3229815413632)
+02-19 12:05:25.238  4449  4467 V WindowManagerShell: onTransitionReady (#256) android.os.BinderProxy@cff0c65: {id=256 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+02-19 12:05:25.238  4449  4467 V WindowManagerShell:         {m=TO_FRONT f=MOVE_TO_TOP leash=Surface(name=Task=46)/@0x9347dc7 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1},
+02-19 12:05:25.238  4449  4467 V WindowManagerShell:         {m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0x8965ff4 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1},
+02-19 12:05:25.238  4449  4467 V WindowManagerShell:         {m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{35e0c0f showWhenLocked=false})/@0x3fb631d sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0}
+02-19 12:05:25.238  4449  4467 V WindowManagerShell:     ]}
+02-19 12:05:25.240   752   956 D ActivityManager: sync unfroze 3831 com.google.android.partnersetup for 6
+02-19 12:05:25.265  4449  4467 V WindowManagerShell: Playing animation for (#256) android.os.BinderProxy@cff0c65@0
+02-19 12:05:25.266   752   984 I EventHub: Removing device Monkey touch due to epoll hang-up event.
+02-19 12:05:25.266   752   984 I EventHub: Removed device: path=/dev/input/event14 name=Monkey touch id=22 fd=543 classes=TOUCH | TOUCH_MT
+02-19 12:05:25.266  4449  4467 V ShellRecents: RecentsTransitionHandler.startAnimation: no controller found
+02-19 12:05:25.266  4449  4467 V WindowManagerShell: Transition doesn't have explicit remote, search filters for match for {id=256 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{m=TO_FRONT f=MOVE_TO_TOP leash=Surface(name=Task=46)/@0x9347dc7 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1},{m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0x8965ff4 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1},{m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{35e0c0f showWhenLocked=false})/@0x3fb631d sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0}]}
+02-19 12:05:25.266  4449  4467 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x0 checks=[{atype=undefined independent=true modes=[CLOSE,TO_BACK] flags=IN_TASK_WITH_EMBEDDED_ACTIVITY mustBeTask=false order=ANY topActivity=null launchCookie=null taskFragmentToken=android.os.BinderProxy@188d51a windowingMode=undefined}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@44cd84b, appThread = android.app.IApplicationThread$Stub$Proxy@3a12228, debugName = overlayBackTransition }}
+02-19 12:05:25.267  4449  4467 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x0 checks=[{atype=dream independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined},{atype=home independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@6f3eb41, appThread = android.app.IApplicationThread$Stub$Proxy@ccf28e6, debugName = LauncherToDream }}
+02-19 12:05:25.267  4449  4467 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=TOP topActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity} launchCookie=null windowingMode=undefined},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined},{NOT atype=undefined independent=true modes=[] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null customAnim=true windowingMode=undefined}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@a8eae27, appThread = android.app.IApplicationThread$Stub$Proxy@fa38d4, debugName = QuickstepLaunchHome }}
+02-19 12:05:25.267  4449  4467 V WindowManagerShell:  Delegate animation for (#256) to null
+02-19 12:05:25.267  4449  4467 V WindowManagerShell: start default transition animation, info = {id=256 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{m=TO_FRONT f=MOVE_TO_TOP leash=Surface(name=Task=46)/@0x9347dc7 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1},{m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0x8965ff4 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1},{m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{35e0c0f showWhenLocked=false})/@0x3fb631d sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0}]}
+02-19 12:05:25.267  4449  4467 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@1f12f63 animAttr=0x13 type=OPEN isEntrance=false
+02-19 12:05:25.268  4449  4467 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@9b38760 animAttr=0x12 type=OPEN isEntrance=true
+02-19 12:05:25.276   238   238 W vold    : There is no valid blk device path for data partition
+02-19 12:05:25.278   752 27822 W StorageManagerService: Failed to get storage write record
+02-19 12:05:25.278   752 27822 I SmartStorageMaintIdler: Got smart storage maintenance service completion callback
+02-19 12:05:25.290   752   984 I InputReader: Device removed: id=22, eventHubId=22, name='Monkey touch', descriptor='e1fe28b90f915c7d1febbd52c1ef84b3c4cbed9f', sources=TOUCHSCREEN
+02-19 12:05:25.305  4449  4449 W DSRotLockSettingsMngr: Setting is ignored, but no fallback was specified.
+02-19 12:05:25.330 27818 27819 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~O-UZzK0jUU9NLgS3MODOZA==/com.google.android.gms-YQ2L6GsYyKuvu9MvIBK1EQ==/oat/x86_64/base.odex) is kOatUpToDate with filter 'speed-profile' executable 'false'
+02-19 12:05:25.338  4449  4467 V WindowManagerShell:  animated by com.android.wm.shell.transition.DefaultTransitionHandler@f74d823
+02-19 12:05:25.339   752   984 E WindowManager: Display reconfigured outside of a transition: Display{#0 state=ON size=1080x2400 ROTATION_0}
+02-19 12:05:25.342   752   984 I EventHub: Removing device '/dev/input/event14' due to inotify event
+02-19 12:05:25.351  4449  4449 D NavigationModeController: getCurrentUserContext: contextUser=0 currentUser=0
+02-19 12:05:25.355  1341  1341 D TouchInteractionService: disposeEventHandlers: Reason: Initializing input monitor due to: onTrackpadConnected() instance=252030532
+02-19 12:05:25.356  1341  1341 D InputMonitorCompat: Input event receiver for monitor (swipe-up-disp0) disposed
+02-19 12:05:25.357  1341  1341 D InputMonitorCompat: Input monitor (swipe-up-disp0) disposed
+02-19 12:05:25.486  1341  1341 D InputMonitorCompat: Input monitor (swipe-up-disp0) created
+02-19 12:05:25.486  1341  1341 D InputMonitorCompat: Input event receiver for monitor (swipe-up-disp0) created
+02-19 12:05:25.494 27818 27820 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~O-UZzK0jUU9NLgS3MODOZA==/com.google.android.gms-YQ2L6GsYyKuvu9MvIBK1EQ==/oat/x86_64/split_AdsDynamite_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+02-19 12:05:25.640 14715 14715 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.constellation.service.START xflg=0x4 pkg=com.google.android.gms }
+02-19 12:05:25.641 20068 20068 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.auth.aang.events.services.START dat=chimera-action:/... xflg=0x4 cmp=com.google.android.gms/.chimera.PersistentApiService }
+02-19 12:05:25.671  3831 27823 W JobInfo : Job 'com.google.android.partnersetup/.InstalledAppJobService#4096' has a deadline with no functional constraints. The deadline won't improve job execution latency. Consider removing the deadline.
+02-19 12:05:25.672   752  1233 W JobInfo : Job 'com.google.android.partnersetup/.InstalledAppJobService#4096' has a deadline with no functional constraints. The deadline won't improve job execution latency. Consider removing the deadline.
+02-19 12:05:25.689  3831  3831 W JobInfo : Job 'com.google.android.partnersetup/.InstalledAppJobService#4096' has a deadline with no functional constraints. The deadline won't improve job execution latency. Consider removing the deadline.
+02-19 12:05:25.694  4449  4467 V WindowManagerShell: Transition animation finished (aborted=false), notifying core (#256) android.os.BinderProxy@cff0c65@0
+02-19 12:05:25.695   752   797 W PermissionService: getPermissionFlags: Unknown user -1
+02-19 12:05:25.695 27818 27820 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~O-UZzK0jUU9NLgS3MODOZA==/com.google.android.gms-YQ2L6GsYyKuvu9MvIBK1EQ==/oat/x86_64/split_CronetDynamite_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+02-19 12:05:25.695   752   797 W PermissionService: getPermissionFlags: Unknown user -1
+02-19 12:05:25.696   752   794 V WindowManager: Finish Transition (#256): created at 02-19 12:05:24.988 collect-started=0.03ms request-sent=11.255ms started=49.626ms ready=143.119ms sent=243.546ms commit=60.755ms finished=707.749ms
+02-19 12:05:25.696   752  1454 W JobInfo : Job 'com.google.android.partnersetup/.InstalledAppJobService#4096' has a deadline with no functional constraints. The deadline won't improve job execution latency. Consider removing the deadline.
+02-19 12:05:25.705  4449  4467 V WindowManagerShell: Track 0 became idle
+02-19 12:05:25.706  4449  4467 V WindowManagerShell: All active transition animations finished
+02-19 12:05:25.710  1341  1341 D VRI[NexusLauncherActivity]: visibilityChanged oldVisibility=true newVisibility=false
+02-19 12:05:25.732  1341  1341 D NexusLauncherModelDelegate: notifySmartspaceEvent: SmartspaceTargetEvent{mSmartspaceTarget=null, mSmartspaceActionId='null', mEventType=7}
+02-19 12:05:25.735 27818 27820 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~O-UZzK0jUU9NLgS3MODOZA==/com.google.android.gms-YQ2L6GsYyKuvu9MvIBK1EQ==/oat/x86_64/split_DynamiteLoader_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+02-19 12:05:25.738   752  1233 W JobScheduler: Job didn't exist in JobStore: 6653e95 #u0a139/4096 com.google.android.partnersetup/.InstalledAppJobService
+02-19 12:05:25.812 14715 14715 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.auth.blockstore.service.START dat=chimera-action:/... xflg=0x4 cmp=com.google.android.gms/.chimera.GmsApiService }
+02-19 12:05:25.814 27818 27819 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~O-UZzK0jUU9NLgS3MODOZA==/com.google.android.gms-YQ2L6GsYyKuvu9MvIBK1EQ==/oat/x86_64/split_DynamiteModulesA_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+02-19 12:05:25.861 27818 27819 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~O-UZzK0jUU9NLgS3MODOZA==/com.google.android.gms-YQ2L6GsYyKuvu9MvIBK1EQ==/oat/x86_64/split_DynamiteModulesC_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+02-19 12:05:25.905 27818 27819 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~O-UZzK0jUU9NLgS3MODOZA==/com.google.android.gms-YQ2L6GsYyKuvu9MvIBK1EQ==/oat/x86_64/split_GoogleCertificates_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+02-19 12:05:25.943 27818 27819 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~O-UZzK0jUU9NLgS3MODOZA==/com.google.android.gms-YQ2L6GsYyKuvu9MvIBK1EQ==/oat/x86_64/split_MapsDynamite_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+02-19 12:05:25.977 27818 27820 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~O-UZzK0jUU9NLgS3MODOZA==/com.google.android.gms-YQ2L6GsYyKuvu9MvIBK1EQ==/oat/x86_64/split_MeasurementDynamite_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+02-19 12:05:25.986 27818 27819 I artd    : GetBestInfo: /data/app/~~O-UZzK0jUU9NLgS3MODOZA==/com.google.android.gms-YQ2L6GsYyKuvu9MvIBK1EQ==/split_maps_core_dynamite_ondemand.apk has no usable artifacts
+02-19 12:05:25.992 24035 27825 W unknown:ReconnectingWebSocket: Couldn't connect to "ws://10.0.2.2:8081/message?device=sdk_gphone64_x86_64%20-%2016%20-%20API%2036&app=viva.republica.toss.test&clientid=BridgeDevSupportManager", will silently retry
+02-19 12:05:26.015  1971  2386 W AiAiEcho: LyftNotificationParser Ridesharing ETA not enabled
+02-19 12:05:26.015  1971  2386 I AiAiEcho: SmartspaceNotificationPredictor no parser can handle this notification or notification is invalid
+02-19 12:05:26.026  1341  1341 I NotificationListener: received notification removed event - android#UserHandle{-1},category=-1
+02-19 12:05:26.034 24035 24035 I Choreographer: Skipped 56 frames!  The application may be doing too much work on its main thread.
+02-19 12:05:26.059 27818 27819 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/0000000c/dl-Appsearch.optional_250834100800.apk has no usable artifacts
+02-19 12:05:26.065 27818 27819 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000001/CronetDynamite.apk has no usable artifacts
+02-19 12:05:26.067 27818 27820 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000002/DynamiteLoader.apk has no usable artifacts
+02-19 12:05:26.069 27818 27820 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000005/GoogleCertificates.apk has no usable artifacts
+02-19 12:05:26.080 27818 27819 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000009/dl-TfliteDynamiteDynamite.integ_252130102100800.apk has no usable artifacts
+02-19 12:05:26.104 27818 27819 I artd    : GetBestInfo: vdex next to the dex file (/data/user/0/com.google.android.gms/app_dg_cache/BF7C023AB90CCF01D1F467FC1CEBAF866511FF29/oat/x86_64/the.vdex) is kOatUpToDate with filter 'verify' executable 'false'
+02-19 12:05:26.127 27818 27820 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000010/dl-PlayCloudSearch.optional_250834100000.apk has no usable artifacts
+02-19 12:05:26.228 27818 27820 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000017/dl-PlayCloudSearch.optional_260438100000.apk has no usable artifacts
+02-19 12:05:26.380 27818 27820 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000015/dl-MlkitOcrCommon.optional_260438100800.apk has no usable artifacts
+02-19 12:05:26.387 27818 27820 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000013/dl-MlkitBarcodeUi.optional_260438100800.apk has no usable artifacts
+02-19 12:05:26.547 27818 27820 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/0000000f/dl-MlkitOcrCommon.optional_250834100800.apk has no usable artifacts
+02-19 12:05:26.554 27818 27820 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/0000000d/dl-VisionOcr.optional_250834100000.apk has no usable artifacts
+02-19 12:05:26.554  4449 20936 W HWUI    : Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+02-19 12:05:26.555  4449 20936 W HWUI    : Failed to initialize 101010-2 format, error = EGL_SUCCESS
+02-19 12:05:26.568 27818 27820 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/0000000a/dl-MlkitBarcodeUi.optional_250834100800.apk has no usable artifacts
+02-19 12:05:26.578  4449  4512 W HWUI    : Image decoding logging dropped!
+02-19 12:05:26.600 27818 27820 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000011/dl-VisionOcr.optional_260438100000.apk has no usable artifacts
+02-19 12:05:26.619  1341  1341 D BaseDepthController: setSurface:
+02-19 12:05:26.619  1341  1341 D BaseDepthController: 	mWaitingOnSurfaceValidity: false
+02-19 12:05:26.619  1341  1341 D BaseDepthController: 	mBaseSurface: null
+02-19 12:05:26.619  1341  1341 D BaseDepthController: mSurface is null and mCurrentBlur is: 0
+02-19 12:05:26.620 24035 24046 I HWUI    : Davey! duration=1504ms; Flags=1, FrameTimelineVsyncId=1135182, IntendedVsync=81798939001566, Vsync=81799872334862, InputEventId=0, HandleInputStart=81799881812408, AnimationStart=81799881813289, PerformTraversalsStart=81799901334536, DrawStart=81799959087973, FrameDeadline=81798955668232, FrameStartTime=81799881130017, FrameInterval=16666666, WorkloadTarget=16666666, SyncQueued=81800232260405, SyncStart=81800232949368, IssueDrawCommandsStart=81800233428797, SwapBuffers=81800430420575, FrameCompleted=81800443746188, DequeueBufferDuration=7751, QueueBufferDuration=657834, GpuCompleted=81800443746188, SwapBuffersCompleted=81800433929101, DisplayPresentTime=0, CommandSubmissionCompleted=81800430420575, 
+02-19 12:05:26.625  1341  1341 D StateManager: goToState - fromState: Normal, toState: Normal, partial trace:
+02-19 12:05:26.625  1341  1341 D StateManager: 	at com.android.launcher3.statemanager.StateManager.moveToRestState(go/retraceme 72a59688580715d19f0e415c69e80376c2f062d1648c80db6730905005a27c20:4)
+02-19 12:05:26.625  1341  1341 D StateManager: 	at com.android.launcher3.statemanager.StateManager.moveToRestState(go/retraceme 72a59688580715d19f0e415c69e80376c2f062d1648c80db6730905005a27c20:1)
+02-19 12:05:26.625  1341  1341 D StateManager: 	at com.android.launcher3.statemanager.StatefulActivity.onStop(go/retraceme 72a59688580715d19f0e415c69e80376c2f062d1648c80db6730905005a27c20:34)
+02-19 12:05:26.626  1341  1341 D StatsLog: LAUNCHER_ONSTOP
+02-19 12:05:26.626  4449  4512 W HWUI    : Image decoding logging dropped!
+02-19 12:05:26.627 27818 27820 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000012/dl-Appsearch.optional_260438100800.apk has no usable artifacts
+02-19 12:05:26.630  1341  1341 D StatsLog: LAUNCHER_GOOGLE_SEARCH_RESTORE_LIST_SIZE_AFTER_ACTIVITY_RESTART
+02-19 12:05:26.644 27818 27820 I artd    : GetBestInfo: vdex next to the dex file (/data/user/0/com.google.android.gms/app_dg_cache/94DF452EEF4B8E717545DCDEA6CC3C50A319A195/oat/x86_64/the.vdex) is kOatUpToDate with filter 'verify' executable 'false'
+02-19 12:05:26.648   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 12:05:26.672 27818 27820 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000007/MeasurementDynamite.apk has no usable artifacts
+02-19 12:05:26.677 27818 27820 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000018/dl-AdsFdrDynamite.integ_254380203100000.apk has no usable artifacts
+02-19 12:05:26.714 24035 24035 I Choreographer: Skipped 39 frames!  The application may be doing too much work on its main thread.
+02-19 12:05:26.857   752   989 I ImeTracker: viva.republica.toss.test:1696e381: onRequestHide at ORIGIN_SERVER reason HIDE_UNSPECIFIED_WINDOW fromUser false
+02-19 12:05:26.868  1563  1563 I GoogleInputMethodService: GoogleInputMethodService.onFinishInput():2043 
+02-19 12:05:26.869  1563  1563 I Module  : DeviceLockedStatusModuleProvider$Module.updateDeviceLockedStatus():100 repeatCheckTimes = 0, locked = false
+02-19 12:05:26.872  1563  1563 I GoogleInputMethodService: GoogleInputMethodService.onStartInput():1293 onStartInput(EditorInfo{EditorInfo{packageName=viva.republica.toss.test, inputType=0, inputTypeString=NULL, enableLearning=false, autoCorrection=false, autoComplete=false, imeOptions=0, privateImeOptions=null, actionName=UNSPECIFIED, actionLabel=null, initialSelStart=-1, initialSelEnd=-1, initialCapsMode=0, label=null, fieldId=0, fieldName=null, extras=null, hintText=null, hintLocales=[]}}, false)
+02-19 12:05:26.876   752  1935 I ImeTracker: system_server:b94b94a: onRequestHide at ORIGIN_SERVER reason IME_REQUESTED_CHANGED_LISTENER fromUser false
+02-19 12:05:26.883  1563  1563 I Module  : DeviceLockedStatusModuleProvider$Module.updateDeviceLockedStatus():100 repeatCheckTimes = 1, locked = false
+02-19 12:05:26.884 24035 24035 D InsetsController: hide(ime(), fromIme=false)
+02-19 12:05:26.884 24035 24035 I ImeTracker: viva.republica.toss.test:1696e381: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+02-19 12:05:26.885  1563  1563 I EmojiCompatManager: EmojiCompatManager.getEmojiCompatIfLoaded():343 EmojiCompat.init() was never called.
+02-19 12:05:26.885  1563  1563 I EmojiCompatManager: java.lang.IllegalStateException: EmojiCompat is not initialized. Please call EmojiCompat.init() first
+02-19 12:05:26.885  1563  1563 I EmojiCompatManager: 	at asx.p(PG:6)
+02-19 12:05:26.885  1563  1563 I EmojiCompatManager: 	at axb.b(PG:13)
+02-19 12:05:26.885  1563  1563 I EmojiCompatManager: 	at jnr.b(PG:2)
+02-19 12:05:26.885  1563  1563 I EmojiCompatManager: 	at jnr.c(PG:4)
+02-19 12:05:26.885  1563  1563 I EmojiCompatManager: 	at jnr.f(PG:3)
+02-19 12:05:26.885  1563  1563 I EmojiCompatManager: 	at jnx.c(PG:3)
+02-19 12:05:26.885  1563  1563 I EmojiCompatManager: 	at kif.cz(PG:47)
+02-19 12:05:26.885  1563  1563 I EmojiCompatManager: 	at lhl.run(PG:1025)
+02-19 12:05:26.885  1563  1563 I EmojiCompatManager: 	at jaf.execute(PG:12)
+02-19 12:05:26.885  1563  1563 I EmojiCompatManager: 	at nco.v(PG:13)
+02-19 12:05:26.885  1563  1563 I EmojiCompatManager: 	at lhn.m(PG:96)
+02-19 12:05:26.885  1563  1563 I EmojiCompatManager: 	at lhn.k(PG:25)
+02-19 12:05:26.885  1563  1563 I EmojiCompatManager: 	at kgn.onStartInput(PG:250)
+02-19 12:05:26.885  1563  1563 I EmojiCompatManager: 	at android.inputmethodservice.InputMethodService.doStartInput(InputMethodService.java:3521)
+02-19 12:05:26.885  1563  1563 I EmojiCompatManager: 	at android.inputmethodservice.InputMethodService$InputMethodImpl.startInput(InputMethodService.java:879)
+02-19 12:05:26.885  1563  1563 I EmojiCompatManager: 	at android.inputmethodservice.InputMethodService$InputMethodImpl.dispatchStartInput(InputMethodService.java:908)
+02-19 12:05:26.885  1563  1563 I EmojiCompatManager: 	at android.inputmethodservice.IInputMethodWrapper.executeMessage(IInputMethodWrapper.java:201)
+02-19 12:05:26.885  1563  1563 I EmojiCompatManager: 	at com.android.internal.os.HandlerCaller$MyHandler.handleMessage(HandlerCaller.java:44)
+02-19 12:05:26.885  1563  1563 I EmojiCompatManager: 	at android.os.Handler.dispatchMessage(Handler.java:110)
+02-19 12:05:26.885  1563  1563 I EmojiCompatManager: 	at android.os.Looper.loopOnce(Looper.java:248)
+02-19 12:05:26.885  1563  1563 I EmojiCompatManager: 	at android.os.Looper.loop(Looper.java:338)
+02-19 12:05:26.885  1563  1563 I EmojiCompatManager: 	at android.app.ActivityThread.main(ActivityThread.java:9067)
+02-19 12:05:26.885  1563  1563 I EmojiCompatManager: 	at java.lang.reflect.Method.invoke(Native Method)
+02-19 12:05:26.885  1563  1563 I EmojiCompatManager: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593)
+02-19 12:05:26.885  1563  1563 I EmojiCompatManager: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:932)
+02-19 12:05:26.886   752   797 I ImeTracker: system_server:b94b94a: onCancelled at PHASE_SERVER_SHOULD_HIDE
+02-19 12:05:26.887   752  1233 W PackageConfigPersister: App-specific configuration not found for packageName: viva.republica.toss.test and userId: 0
+02-19 12:05:26.903 24035 24044 I HWUI    : Davey! duration=831ms; Flags=0, FrameTimelineVsyncId=1135616, IntendedVsync=81799905668194, Vsync=81800555668168, InputEventId=0, HandleInputStart=81800561163254, AnimationStart=81800561164196, PerformTraversalsStart=81800683483587, DrawStart=81800683626069, FrameDeadline=81800472334838, FrameStartTime=81800560796200, FrameInterval=16666666, WorkloadTarget=16666666, SyncQueued=81800685393454, SyncStart=81800685600821, IssueDrawCommandsStart=81800686001334, SwapBuffers=81800713567266, FrameCompleted=81800737631000, DequeueBufferDuration=9850, QueueBufferDuration=1493707, GpuCompleted=81800737631000, SwapBuffersCompleted=81800729864800, DisplayPresentTime=0, CommandSubmissionCompleted=81800713567266, 
+02-19 12:05:26.921 24035 26801 D ReactNativeJS: '[Analytics]', '{\n  "log_type": "screen",\n  "log_name": "/::screen",\n  "params": {\n    "referrer": null,\n    "deployment_id": "local",\n    "deployment_timestamp": null\n  }\n}'
+02-19 12:05:27.147   752   797 W ProcessStats: Tracking association SourceState{cf864d5 com.google.android.googlequicksearchbox:interactor/10149 BFgs #12891} whose proc state 4 is better than process ProcessState{4af89f7 com.google.android.googlequicksearchbox:search/10149 pkg=com.google.android.googlequicksearchbox} proc state 15 (46 skipped)
+02-19 12:05:28.805 20068 20103 I NearbyPresence: (REDACTED) %s verified [==] new request %s equals to the old request
+02-19 12:05:28.812 24035 24035 I Choreographer: Skipped 60 frames!  The application may be doing too much work on its main thread.
+02-19 12:05:28.900 24035 24044 I HWUI    : Davey! duration=1095ms; Flags=0, FrameTimelineVsyncId=1136111, IntendedVsync=81801622334792, Vsync=81801622334792, InputEventId=0, HandleInputStart=81801623848575, AnimationStart=81801623849581, PerformTraversalsStart=81801624293498, DrawStart=81801624440912, FrameDeadline=81801672334790, FrameStartTime=81801623844857, FrameInterval=16666666, WorkloadTarget=16666666, SyncQueued=81801625485881, SyncStart=81801646845881, IssueDrawCommandsStart=81801647015451, SwapBuffers=81801649350449, FrameCompleted=81802739223424, DequeueBufferDuration=1006089275, QueueBufferDuration=466782, GpuCompleted=81802739223424, SwapBuffersCompleted=81802656615834, DisplayPresentTime=0, CommandSubmissionCompleted=81801649350449, 
+02-19 12:05:28.906 20068 20103 I NearbyPresence: (REDACTED) %s verified [==] new request %s equals to the old request
+02-19 12:05:28.917   752  1856 E TaskPersister: File error accessing recents directory (directory doesn't exist?).
+02-19 12:05:28.967 27828 27828 W dumpsys : Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: window
+02-19 12:05:29.099 22516 22550 E fcqb    : (REDACTED) Trace %s timed out after %d ms. Complete trace: %s
+02-19 12:05:29.099 22516 22550 E fcqb    : fcrl: 
+02-19 12:05:29.099 22516 22550 E fcqb    : 	at tk_trace.Write DailyFacts(Started After:1)
+02-19 12:05:29.099 22516 22550 E fcqb    : 	at tk_trace.Update DailyFacts(Started After:1)
+02-19 12:05:29.099 22516 22550 E fcqb    : 	at tk_trace.Synclet: facts_daily_data_logging_sync 1(Started After:1)
+02-19 12:05:29.099 22516 22550 E fcqb    : 	at tk_trace.NoAccountWorkerFactory startWork()(Started After:0)
+02-19 12:05:29.099 22516 22550 E fcqb    : 	at tk_trace.com.google.apps.tiktok.sync.impl.workmanager.SyncPeriodicWorker startWork()(Started After:0)
+02-19 12:05:29.099 22516 22550 E fcqb    : 	at tk_trace.com.google.apps.tiktok.sync.impl.workmanager.SyncPeriodicWorker startWork()(Started After:0)
+02-19 12:05:29.099 22516 22550 E fcqb    : 	at tk_trace.WorkManager:TikTokListenableWorker startWork(Started After:0)
+02-19 12:05:29.525   752  1935 I system_server: AssetManager2(0x7d8fac4e68b8) locale list changing from [] to [en-US]
+02-19 12:05:29.567   752  1935 I system_server: AssetManager2(0x7d8fac44f5f8) locale list changing from [] to [en-US]
+02-19 12:05:29.579   752  1935 I system_server: AssetManager2(0x7d8fac4e2a38) locale list changing from [] to [en-US]
+02-19 12:05:29.607   752  1935 I system_server: AssetManager2(0x7d8fac50f2b8) locale list changing from [] to [en-US]
+02-19 12:05:29.664   752  1935 I system_server: AssetManager2(0x7d8fac4a67b8) locale list changing from [] to [en-US]
+02-19 12:05:29.745   752  1935 I system_server: AssetManager2(0x7d8fac4ea0f8) locale list changing from [] to [en-US]
+02-19 12:05:30.433 27834 27834 W screencap: Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: SurfaceFlingerAIDL
+02-19 12:05:30.436 27834 27834 W BpBinder: Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
+02-19 12:05:30.474 27834 27834 W ProcessState: Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
+02-19 12:05:30.538   531   603 E HwcComposer: getLuts failed Status(-8, EX_SERVICE_SPECIFIC): '8: '
+02-19 12:05:30.538   531   603 E HWComposer: getLuts: getLuts failed for display 4619827259835644672: UNSUPPORTED (8)
+02-19 12:05:30.802 14715 14715 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.checkin.START xflg=0x4 pkg=com.google.android.gms }
+02-19 12:05:30.802   752  1029 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+02-19 12:05:30.805   752  1029 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+02-19 12:05:30.805   752  1029 D InetDiagMessage: Destroyed live tcp sockets for uids={10139} in 5ms
+02-19 12:05:30.806   752  1029 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+02-19 12:05:30.807   752  1029 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+02-19 12:05:30.807   752  1029 D InetDiagMessage: Destroyed live tcp sockets for uids={20139} in 2ms
