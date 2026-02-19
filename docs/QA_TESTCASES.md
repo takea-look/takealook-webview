@@ -26,6 +26,16 @@
     - logcat tail에서 ANR/FATAL/obituary 미검출
   - Evidence: `artifacts/20260219_052223_deeplink_implicit_retest/implicit_after_4s.png`, `artifacts/20260219_052223_deeplink_implicit_retest/implicit_after_10s.png`, `artifacts/20260219_052223_deeplink_implicit_retest/focus_after_4s.txt`, `artifacts/20260219_052223_deeplink_implicit_retest/focus_after_10s.txt`, `artifacts/20260219_052223_deeplink_implicit_retest/logcat_tail.txt`, `artifacts/20260219_052223_deeplink_implicit_retest/am_start_implicit.txt`
 
+- [x] **TC-ADB-DEEPLINK-MODE-SWITCH-01** (AVD) explicit→implicit 백투백 진입 안정성 — **passed**
+  - Steps: explicit deeplink 진입 확인 후 Home 이동, 이어서 implicit deeplink 실행
+  - Observed:
+    - explicit: `Status: ok`, `LaunchState: HOT`, `WaitTime: 373ms`, focus `GraniteActivity`
+    - implicit: `Status: ok`, `LaunchState: WARM`, `Activity: .MiniAppSchemeActivity`, `WaitTime: 755ms`
+    - implicit 실행 후 최종 focus `GraniteActivity`
+    - logcat 스캔에서 ANR/FATAL/obituary 키워드 미검출
+  - Verdict: deeplink 모드 전환(explicit→implicit) 시 진입 안정성 양호
+  - Evidence: `artifacts/20260219_113356_adb_explicit_implicit_backtoback/am_start_explicit.txt`, `artifacts/20260219_113356_adb_explicit_implicit_backtoback/focus_after_explicit.txt`, `artifacts/20260219_113356_adb_explicit_implicit_backtoback/am_start_implicit.txt`, `artifacts/20260219_113356_adb_explicit_implicit_backtoback/focus_after_implicit.txt`, `artifacts/20260219_113356_adb_explicit_implicit_backtoback/after_implicit.png`, `artifacts/20260219_113356_adb_explicit_implicit_backtoback/logcat_tail.txt`, `artifacts/20260219_113356_adb_explicit_implicit_backtoback/log_hits.txt`
+
 - [x] **TC-ADB-LAUNCH-WAITTIME-01** (AVD) Explicit deeplink cold start 응답성(launch wait time) — **passed**
   - Command: `adb shell am start -W -n viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity -a android.intent.action.VIEW -d intoss://takealook`
   - Pass criteria: `Status: ok` 이고 포커스가 `GraniteActivity`로 진입
@@ -303,4 +313,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 11:33 KST
+- Last update: 2026-02-19 11:35 KST
