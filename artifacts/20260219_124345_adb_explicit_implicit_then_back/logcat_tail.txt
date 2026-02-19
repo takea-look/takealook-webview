@@ -1,0 +1,715 @@
+--------- beginning of main
+02-19 12:43:53.417   531   568 W EventThread: Faking VSYNC due to driver stall for thread app
+02-19 12:43:53.421 27008 27008 I wpa_supplicant: wlan0: CTRL-EVENT-BEACON-LOSS 
+02-19 12:43:53.835   752  2502 D WifiNl80211Manager: Scan result ready event
+02-19 12:43:53.836   752  2502 D WifiNative: Scan result ready event
+02-19 12:43:53.857 20068 20120 I WifiScanner: onFullResults
+02-19 12:43:53.859 20068 20558 I WifiScanner: onFullResults
+02-19 12:43:54.025   481  1119 E IPCThreadState: binder thread pool (1 threads) starved for 120 ms
+02-19 12:43:54.047   752  1023 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+02-19 12:43:54.099  4449  4449 I vol.VolumeDialogImpl: mDialog.dismiss() reason: volume_controller from: com.android.systemui.volume.VolumeDialogImpl$7.onDismissRequested:3
+--------- beginning of system
+02-19 12:43:54.130   752   795 W ActivityTaskManager: callingPackage for (uid=-1, pid=0) has no WPC
+02-19 12:43:54.138   752   795 W ActivityStartInterceptor: Starting home with component specified, uid=0
+02-19 12:43:54.169   752   795 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_USER_ASPECT_RATIO_OVERRIDE
+02-19 12:43:54.170   752   795 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_USER_ASPECT_RATIO_FULLSCREEN_OVERRIDE
+02-19 12:43:54.170   752   795 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_RESIZEABLE_ACTIVITY_OVERRIDES
+02-19 12:43:54.175   752   795 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_MIN_ASPECT_RATIO_OVERRIDE
+02-19 12:43:54.179   752   795 V GrammaticalInflectionUtils: AttributionSource: android.content.AttributionSource@1abea79a does not have READ_SYSTEM_GRAMMATICAL_GENDER permission.
+02-19 12:43:54.271  4449  4467 V WindowManagerShell: Transition requested (#325): android.os.BinderProxy@4de0040 TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=5 effectiveUid=10182 displayId=0 isRunning=true baseIntent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.HOME] flg=0x10000100 cmp=com.google.android.apps.nexuslauncher/.NexusLauncherActivity } baseActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity} topActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity} origActivity=null realActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity} numActivities=1 lastActiveTime=84108089 supportsMultiWindow=true resizeMode=2 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{android.window.IWindowContainerToken$Stub$Proxy@819cb79} topActivityType=2 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 0 - 0, 0) topActivityInfo=ActivityInfo{790b0be com.google.android.apps.nexuslauncher.NexusLauncherActivity} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=true isVisible=false isVisibleRequested=true isTopActivityNoDisplay=false isSleeping=false locusId=LocusId[17_chars] displayAreaFeatureId=1 isTopActivityTransparent=false isActivityStackTransparent=false lastNonFullscreenBounds=Rect(284, 660 - 796, 1740) capturedLink=null capturedLinkTimestamp=0 requestedVisibleTypes=-9 topActivityRequestOpenInBrowserEducationTimestamp=0 appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false eligibleForLetterboxEducation= false isLetterboxEducationEnabled= true isLetterboxDoubleTapEnabled= false eligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 topActivityAppBounds=Rect(0, 0 - 1080, 2400) isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false hasMinAspectRatioOverride=false topActivityLetterboxBounds=null cameraCompatTaskInfo=CameraCompatTaskInfo { freeformCameraCompatMode=inactive}} topActivityMainWindowFrame=null}, pipChange = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 325 }
+02-19 12:43:54.277  4449  4467 D ShellSplitScreen: logExit: no-op, mLoggerSessionId is null
+02-19 12:43:54.278   752   795 I ActivityTaskManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.HOME] flg=0x10000100 cmp=com.google.android.apps.nexuslauncher/.NexusLauncherActivity (has extras)} with LAUNCH_SINGLE_TASK from uid 0 (BAL_ALLOW_ALLOWLISTED_UID) result code=2
+02-19 12:43:54.279   752   795 W Looper  : Slow dispatch took 382ms android.ui app=system_server main=false group=TOP_APP h=com.android.server.policy.PhoneWindowManager$PolicyHandler c=com.android.server.policy.PhoneWindowManager$DisplayHomeButtonHandler$$ExternalSyntheticLambda0@879bc02 m=0
+02-19 12:43:54.289   752   795 W Looper  : Slow delivery took 228ms android.ui app=system_server main=false group=TOP_APP h=android.os.Handler c=android.app.LoadedApk$ReceiverDispatcher$Args$$ExternalSyntheticLambda0@6276750 m=0
+02-19 12:43:54.295   531   531 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+02-19 12:43:54.304  4449  4467 D WindowManagerShell: setLauncherKeepClearAreaHeight: visible=false, height=527
+02-19 12:43:54.311   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 12:43:54.337  1341  1341 D TFOManager: playPanelCloseAnimation() duration=200 traceTag=LauncherOverlay-hide isHomeButtonTap=true
+02-19 12:43:54.345  1341  1341 D TFOManager: Skipped creating panel close animation because -1 is invisible.
+02-19 12:43:54.345  1341  1341 D OverviewCommandHelper: clearing pending commands: []
+02-19 12:43:54.353  4449  4467 D WindowManagerShell: setLauncherKeepClearAreaHeight: visible=true, height=527
+02-19 12:43:54.359   752   795 W Looper  : Drained
+02-19 12:43:54.366  1341  1341 D NexusLauncherModelDelegate: notifySmartspaceEvent: SmartspaceTargetEvent{mSmartspaceTarget=null, mSmartspaceActionId='null', mEventType=6}
+02-19 12:43:54.427   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 12:43:54.427   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 12:43:54.427   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 12:43:54.433   752   797 W IPCThreadState: Sending oneway calls to frozen process.
+02-19 12:43:54.438   752   797 W IPCThreadState: Sending oneway calls to frozen process.
+02-19 12:43:54.438   752   797 W IPCThreadState: Sending oneway calls to frozen process.
+02-19 12:43:54.439   752   797 W IPCThreadState: Sending oneway calls to frozen process.
+02-19 12:43:54.439   752   797 W IPCThreadState: Sending oneway calls to frozen process.
+02-19 12:43:54.439  4449  4467 D WindowManagerShell: onActivityRestartAttempt: topActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity}, wasVisible=false
+02-19 12:43:54.439   752   797 W IPCThreadState: Sending oneway calls to frozen process.
+02-19 12:43:54.440   752   797 W IPCThreadState: Sending oneway calls to frozen process.
+02-19 12:43:54.442   752   797 W IPCThreadState: Sending oneway calls to frozen process.
+02-19 12:43:54.442   752   797 W IPCThreadState: Sending oneway calls to frozen process.
+02-19 12:43:54.443   752   797 W ProcessStats: Tracking association SourceState{1b917ca system/1000 BFgs #14090} whose proc state 4 is better than process ProcessState{42c4ef0 com.google.android.ext.services/10208 pkg=com.google.android.ext.services} proc state 14 (4 skipped)
+02-19 12:43:54.504   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 12:43:54.506   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 12:43:54.506   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 12:43:54.506   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 12:43:54.507   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 12:43:54.507   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 12:43:54.507   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 12:43:54.507   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 12:43:54.507   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 12:43:54.507   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 12:43:54.523   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 12:43:54.564  1341  1341 D BaseDepthController: setSurface:
+02-19 12:43:54.564  1341  1341 D BaseDepthController: 	mWaitingOnSurfaceValidity: false
+02-19 12:43:54.564  1341  1341 D BaseDepthController: 	mBaseSurface: Surface(name=com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity)/@0x94d8eb8
+02-19 12:43:55.038   531   590 W VsyncModulator: setTransactionSchedule: Unexpected EarlyEnd
+02-19 12:43:55.074  1341  1341 D ActivityAllAppsContainerView: rebindAdapters: force: false
+02-19 12:43:55.074  1341  1341 D ActivityAllAppsContainerView: rebindAdapters: Not needed.
+02-19 12:43:55.076  1341  1433 I HWUI    : Davey! duration=751ms; Flags=1, FrameTimelineVsyncId=1238632, IntendedVsync=84108138909198, Vsync=84108205575862, InputEventId=0, HandleInputStart=84108211113265, AnimationStart=84108211114199, PerformTraversalsStart=84108211645921, DrawStart=84108571802794, FrameDeadline=84108155575864, FrameStartTime=84108211108135, FrameInterval=16666666, WorkloadTarget=16666666, SyncQueued=84108848330170, SyncStart=84108849656758, IssueDrawCommandsStart=84108851014981, SwapBuffers=84108858792303, FrameCompleted=84108891444720, DequeueBufferDuration=4932, QueueBufferDuration=376087, GpuCompleted=84108891444720, SwapBuffersCompleted=84108883790113, DisplayPresentTime=0, CommandSubmissionCompleted=84108858792303, 
+02-19 12:43:55.080   531   602 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+02-19 12:43:55.118  1341  1341 D StatsLog: LAUNCHER_ONRESUME
+02-19 12:43:55.120  4449  4531 V WindowManagerShell: onTransitionReady(transaction=3229815416032)
+02-19 12:43:55.122  4449  4467 V WindowManagerShell: onTransitionReady (#325) android.os.BinderProxy@4de0040: {id=325 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+02-19 12:43:55.122  4449  4467 V WindowManagerShell:         {m=TO_FRONT f=SHOW_WALLPAPER|MOVE_TO_TOP leash=Surface(name=Task=1)/@0xf69551f sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1},
+02-19 12:43:55.122  4449  4467 V WindowManagerShell:         {m=TO_BACK f=NONE leash=Surface(name=Task=48)/@0xcc2e06c sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1},
+02-19 12:43:55.122  4449  4467 V WindowManagerShell:         {m=TO_FRONT f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{35e0c0f showWhenLocked=false})/@0xee2a635 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0}
+02-19 12:43:55.122  4449  4467 V WindowManagerShell:     ]}
+02-19 12:43:55.123  4449  4467 V WindowManagerShell: Playing animation for (#325) android.os.BinderProxy@4de0040@0
+02-19 12:43:55.123  1341  1341 I Choreographer: Skipped 44 frames!  The application may be doing too much work on its main thread.
+02-19 12:43:55.140  4449  4467 V ShellRecents: RecentsTransitionHandler.startAnimation: no controller found
+02-19 12:43:55.140  4449  4467 V WindowManagerShell: Transition doesn't have explicit remote, search filters for match for {id=325 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{m=TO_FRONT f=SHOW_WALLPAPER|MOVE_TO_TOP leash=Surface(name=Task=1)/@0xf69551f sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1},{m=TO_BACK f=NONE leash=Surface(name=Task=48)/@0xcc2e06c sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1},{m=TO_FRONT f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{35e0c0f showWhenLocked=false})/@0xee2a635 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0}]}
+02-19 12:43:55.141 29234 29234 I Choreographer: Skipped 50 frames!  The application may be doing too much work on its main thread.
+02-19 12:43:55.149   458   458 D Zygote  : Forked child process 30178
+02-19 12:43:55.149   752   806 W ActivityManager: Slow operation: 737ms so far, now at startProcess: returned from zygote!
+02-19 12:43:55.169   752   806 W ActivityManager: Slow operation: 756ms so far, now at startProcess: done updating battery stats
+02-19 12:43:55.172   752   806 W ActivityManager: Slow operation: 759ms so far, now at startProcess: building log message
+02-19 12:43:55.172   752   806 I ActivityManager: Start proc 30178:com.android.vending:instant_app_installer/u0a146 for service {com.android.vending/com.google.android.finsky.instantapps.metrics.LogFlushJob}
+02-19 12:43:55.172   752   806 W ActivityManager: Slow operation: 760ms so far, now at startProcess: starting to update pids map
+02-19 12:43:55.176  1341  1407 D QuickstepModelDelegate: notifyAppTargetEvent action=1 launchLocation=workspace/0/[-1,-1]/[1,1]
+02-19 12:43:55.291  4449  4467 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x0 checks=[{atype=undefined independent=true modes=[CLOSE,TO_BACK] flags=IN_TASK_WITH_EMBEDDED_ACTIVITY mustBeTask=false order=ANY topActivity=null launchCookie=null taskFragmentToken=android.os.BinderProxy@188d51a windowingMode=undefined}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@44cd84b, appThread = android.app.IApplicationThread$Stub$Proxy@3a12228, debugName = overlayBackTransition }}
+02-19 12:43:55.291  4449  4467 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x0 checks=[{atype=dream independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined},{atype=home independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@6f3eb41, appThread = android.app.IApplicationThread$Stub$Proxy@ccf28e6, debugName = LauncherToDream }}
+02-19 12:43:55.292  4449  4467 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=TOP topActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity} launchCookie=null windowingMode=undefined},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined},{NOT atype=undefined independent=true modes=[] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null customAnim=true windowingMode=undefined}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@a8eae27, appThread = android.app.IApplicationThread$Stub$Proxy@fa38d4, debugName = QuickstepLaunchHome }}
+02-19 12:43:55.292  4449  4467 D RemoteTransitionHandler: Found filterPair{{types=[] flags=0x0] notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=TOP topActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity} launchCookie=null windowingMode=undefined},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined},{NOT atype=undefined independent=true modes=[] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null customAnim=true windowingMode=undefined}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@a8eae27, appThread = android.app.IApplicationThread$Stub$Proxy@fa38d4, debugName = QuickstepLaunchHome }}
+02-19 12:43:55.292  4449  4467 V WindowManagerShell:  Delegate animation for (#325) to RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@a8eae27, appThread = android.app.IApplicationThread$Stub$Proxy@fa38d4, debugName = QuickstepLaunchHome }
+02-19 12:43:55.302   752   806 I ActivityManager: ProcessObserver broadcast disabled
+02-19 12:43:55.303   752   806 W ActivityManager: Slow operation: 890ms so far, now at startProcess: done updating pids map
+02-19 12:43:55.326  4449  4467 V WindowManagerShell:  animated by com.android.wm.shell.transition.RemoteTransitionHandler@ef09705
+02-19 12:43:55.370   752   794 W Looper  : Slow dispatch took 273ms android.fg app=system_server main=false group=FOREGROUND h=android.os.Handler c=com.android.server.wm.ActivityMetricsLogger$$ExternalSyntheticLambda0@a02126 m=0
+02-19 12:43:55.388   752   794 V WindowManager: Sent Transition (#325) createdAt=02-19 12:43:54.195 via request=TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=5 effectiveUid=10182 displayId=0 isRunning=true baseIntent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.HOME] flg=0x10000100 cmp=com.google.android.apps.nexuslauncher/.NexusLauncherActivity } baseActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity} topActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity} origActivity=null realActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity} numActivities=1 lastActiveTime=84108089 supportsMultiWindow=true resizeMode=2 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{RemoteToken{50a2c5f Task{b605570 #5 type=home I=com.google.android.apps.nexuslauncher/.NexusLauncherActivity}}} topActivityType=2 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 0 - 0, 0) topActivityInfo=ActivityInfo{f5406ac com.google.android.apps.nexuslauncher.NexusLauncherActivity} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=true isVisible=false isVisibleRequested=true isTopActivityNoDisplay=false isSleeping=false locusId=LocusId[17_chars] displayAreaFeatureId=1 isTopActivityTransparent=false isActivityStackTransparent=false lastNonFullscreenBounds=Rect(284, 660 - 796, 1740) capturedLink=null capturedLinkTimestamp=0 requestedVisibleTypes=-9 topActivityRequestOpenInBrowserEducationTimestamp=0 appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false eligibleForLetterboxEducation= false isLetterboxEducationEnabled= true isLetterboxDoubleTapEnabled= false eligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 topActivityAppBounds=Rect(0, 0 - 1080, 2400) isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false hasMinAspectRatioOverride=false topActivityLetterboxBounds=null cameraCompatTaskInfo=CameraCompatTaskInfo { freeformCameraCompatMode=inactive}} topActivityMainWindowFrame=null}, pipChange = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 325 }
+02-19 12:43:55.388   752   794 V WindowManager:     startWCT=WindowContainerTransaction { changes= {} hops= [] errorCallbackToken=null taskFragmentOrganizer=null }
+02-19 12:43:55.399 30178 30178 I t_app_installer: Using CollectorTypeCMC GC.
+02-19 12:43:55.400   752   794 V WindowManager:     info={id=325 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+02-19 12:43:55.400   752   794 V WindowManager:         {WCT{RemoteToken{5218fe8 Task{dd43522 #1 type=home}}} m=TO_FRONT f=SHOW_WALLPAPER|MOVE_TO_TOP leash=Surface(name=Task=1)/@0x8ddbd2e sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1},
+02-19 12:43:55.400   752   794 V WindowManager:         {WCT{RemoteToken{1dba69d Task{1507662 #48 type=standard A=10217:viva.republica.toss.test}}} m=TO_BACK f=NONE leash=Surface(name=Task=48)/@0x1541561 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1},
+02-19 12:43:55.400   752   794 V WindowManager:         {m=TO_FRONT f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{35e0c0f showWhenLocked=false})/@0x512f5be sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0}
+02-19 12:43:55.400   752   794 V WindowManager:     ]}
+02-19 12:43:55.412  1341  1341 D StateManager: createAtomicAnimation - fromState: Background, toState: Normal, partial trace:
+02-19 12:43:55.412  1341  1341 D StateManager: 	at com.android.quickstep.util.ScalingWorkspaceRevealAnim.<init>(go/retraceme 72a59688580715d19f0e415c69e80376c2f062d1648c80db6730905005a27c20:39)
+02-19 12:43:55.412  1341  1341 D StateManager: 	at com.android.launcher3.QuickstepTransitionManager.createWallpaperOpenAnimations(go/retraceme 72a59688580715d19f0e415c69e80376c2f062d1648c80db6730905005a27c20:168)
+02-19 12:43:55.412  1341  1341 D StateManager: 	at com.android.launcher3.QuickstepTransitionManager$WallpaperOpenLauncherAnimationRunner.onAnimationStart(go/retraceme 72a59688580715d19f0e415c69e80376c2f062d1648c80db6730905005a27c20:17)
+02-19 12:43:55.416  1341  1341 D b/311077782: LauncherAnimationRunner.setAnimation
+02-19 12:43:55.418  1971  2198 I AiAiEcho: Predicting[0]:  [CONTEXT sampling_count=5 ]
+02-19 12:43:55.418 30178 30178 W t_app_installer: Unexpected CPU variant for x86: x86_64.
+02-19 12:43:55.418 30178 30178 W t_app_installer: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, goldmont-without-sha-xsaves, tremont, kabylake, alderlake, default
+02-19 12:43:55.418  1971  2198 I AiAiEcho: EchoTargets: 
+02-19 12:43:55.418  1971  2198 I AiAiEcho: Filtered by AiAi flag check: 
+02-19 12:43:55.418  1971  2198 I AiAiEcho: [CONTEXT ratelimit_period="10 SECONDS" ]
+02-19 12:43:55.429  1971  2198 I AiAiEcho: #remoteViewsTwiddler: feature disabled.
+02-19 12:43:55.449  1971  2198 I AiAiEcho: #postPredictionTargets: Sending updates to UISurface home with targets# 0 (types=[])
+02-19 12:43:55.508  1341  1341 I NotificationListener: Handling notification state refresh for com.google.android.adservices.api#0
+02-19 12:43:55.508  1341  1341 I NotificationListener: Handling notification state refresh for android#0
+02-19 12:43:55.508  1341  1341 I NotificationListener: Handling notification state refresh for com.android.systemui#0
+02-19 12:43:55.564  1341  1407 I s.nexuslauncher: AssetManager2(0x7d8fac48f6f8) locale list changing from [] to [en-US]
+02-19 12:43:55.571 30178 30178 E t_app_installer: Not starting debugger since process cannot load the jdwp agent.
+02-19 12:43:55.588   752  2375 W ActivityTaskManager: callingPackage for (uid=2000, pid=30183) has no WPC
+02-19 12:43:55.590   752  2375 V GrammaticalInflectionUtils: AttributionSource: android.content.AttributionSource@56784557 does not have READ_SYSTEM_GRAMMATICAL_GENDER permission.
+02-19 12:43:55.682   752  2375 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_USER_ASPECT_RATIO_OVERRIDE
+02-19 12:43:55.682   752  2375 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_USER_ASPECT_RATIO_FULLSCREEN_OVERRIDE
+02-19 12:43:55.682   752  2375 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_RESIZEABLE_ACTIVITY_OVERRIDES
+02-19 12:43:55.683   752  2375 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_MIN_ASPECT_RATIO_OVERRIDE
+02-19 12:43:55.685   752  2375 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_ORIENTATION_OVERRIDE
+02-19 12:43:55.766   752  2375 I ActivityTaskManager: START u0 {act=android.intent.action.VIEW dat=intoss://takealook/... flg=0x10000000 xflg=0x4 cmp=viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity} with LAUNCH_MULTIPLE from uid 2000 (BAL_ALLOW_PERMISSION) result code=0
+02-19 12:43:55.767  4449  4467 V WindowManagerShell: Transition requested (#326): android.os.BinderProxy@35c3922 TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=48 effectiveUid=10217 displayId=0 isRunning=true baseIntent=Intent { act=android.intent.action.VIEW dat=intoss://takealook/... flg=0x10000000 pkg=viva.republica.toss.test cmp=viva.republica.toss.test/.MiniAppSchemeActivity } baseActivity=ComponentInfo{viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity} topActivity=ComponentInfo{viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity} origActivity=null realActivity=ComponentInfo{viva.republica.toss.test/viva.republica.toss.test.MiniAppSchemeActivity} numActivities=8 lastActiveTime=84108068 supportsMultiWindow=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{android.window.IWindowContainerToken$Stub$Proxy@9f8dfb3} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 0 - 0, 0) topActivityInfo=ActivityInfo{a91f970 im.toss.rn.granite.core.GraniteActivity} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isVisible=true isVisibleRequested=false isTopActivityNoDisplay=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false isActivityStackTransparent=false lastNonFullscreenBounds=Rect(284, 660 - 796, 1740) capturedLink=null capturedLinkTimestamp=0 requestedVisibleTypes=-9 topActivityRequestOpenInBrowserEducationTimestamp=0 appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false eligibleForLetterboxEducation= false isLetterboxEducationEnabled= true isLetterboxDoubleTapEnabled= false eligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 topActivityAppBounds=Rect(0, 0 - 1080, 2400) isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false hasMinAspectRatioOverride=false topActivityLetterboxBounds=null cameraCompatTaskInfo=CameraCompatTaskInfo { freeformCameraCompatMode=inactive}} topActivityMainWindowFrame=null}, pipChange = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 326 }
+02-19 12:43:55.870  4449  4467 D ShellSplitScreen: logExit: no-op, mLoggerSessionId is null
+02-19 12:43:55.876  1341  1407 W HWUI    : Image decoding logging dropped!
+02-19 12:43:55.923   531   531 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+02-19 12:43:55.980 30178 30178 D nativeloader: Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+02-19 12:43:56.022  4449  4456 I ndroid.systemui: NativeAlloc concurrent mark compact GC freed 3292KB AllocSpace bytes, 4(80KB) LOS objects, 48% free, 25MB/49MB, paused 3.169ms,18.207ms total 663.325ms
+02-19 12:43:56.037  1341  1341 W SplitSelectStateCtor: Missing session instanceIds
+02-19 12:43:56.037  1341  1341 D StatsLog: LAUNCHER_SPLIT_SELECTION_EXIT_INTERRUPTED
+02-19 12:43:56.049   752  2377 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ENABLE_FAKE_FOCUS
+02-19 12:43:56.054   752   989 I ImeTracker: com.google.android.apps.nexuslauncher:73aac0d8: onRequestHide at ORIGIN_SERVER reason HIDE_UNSPECIFIED_WINDOW fromUser false
+02-19 12:43:56.071   752  1987 D CoreBackPreview: Window{289965f u0 Splash Screen viva.republica.toss.test}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@9ece144, mPriority=0, mIsAnimationCallback=false, mOverrideBehavior=0}
+02-19 12:43:56.072  1341  1341 D SsBaseTemplateCard: No text view can be set up
+02-19 12:43:56.072  1341  1341 D SsBaseTemplateCard: Passed-in item info is null
+02-19 12:43:56.072  1341  1341 D SsBaseTemplateCard: Passed-in item info is null
+02-19 12:43:56.072  1341  1341 D SsBaseTemplateCard: Passed-in item info is null
+02-19 12:43:56.073  1341  1341 I SsBaseTemplateCard: Secondary card pane is null
+02-19 12:43:56.103  4449  4458 W System  : A resource failed to call release. 
+02-19 12:43:56.103  4449  4458 W System  : A resource failed to call release. 
+02-19 12:43:56.103  4449  4458 W System  : A resource failed to call release. 
+02-19 12:43:56.104  4449  4458 W System  : A resource failed to call release. 
+02-19 12:43:56.104  4449  4458 W System  : A resource failed to call release. 
+02-19 12:43:56.104  4449  4458 W System  : A resource failed to call release. 
+02-19 12:43:56.104  4449  4458 W System  : A resource failed to call release. 
+02-19 12:43:56.104  4449  4458 W System  : A resource failed to call release. 
+02-19 12:43:56.104  4449  4458 W System  : A resource failed to call release. 
+02-19 12:43:56.104  4449  4458 W System  : A resource failed to call release. 
+02-19 12:43:56.104  4449  4458 W System  : A resource failed to call release. 
+02-19 12:43:56.104  4449  4458 W System  : A resource failed to call release. 
+02-19 12:43:56.104  4449  4458 W System  : A resource failed to call release. 
+02-19 12:43:56.104  4449  4458 W System  : A resource failed to call release. 
+02-19 12:43:56.104  4449  4458 W System  : A resource failed to call release. 
+02-19 12:43:56.104  4449  4458 W System  : A resource failed to call release. 
+02-19 12:43:56.104  4449  4458 W System  : A resource failed to call release. 
+02-19 12:43:56.104  4449  4458 W System  : A resource failed to call release. 
+02-19 12:43:56.104  4449  4458 W System  : A resource failed to call release. 
+02-19 12:43:56.104  4449  4458 W System  : A resource failed to call release. 
+02-19 12:43:56.123   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 12:43:56.125   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 12:43:56.125   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 12:43:56.150  1341  1341 D InsetsController: hide(ime(), fromIme=false)
+02-19 12:43:56.150   531   590 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+02-19 12:43:56.151  1341  1341 I ImeTracker: com.google.android.apps.nexuslauncher:73aac0d8: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+02-19 12:43:56.155  4449  4467 D WindowManagerShell: setLauncherKeepClearAreaHeight: visible=false, height=527
+02-19 12:43:56.246   752  2305 W ActivityManager: Slow operation: 104ms so far, now at attachApplicationLocked: immediately before bindApplication
+02-19 12:43:56.248   752  2305 W ActivityManager: Slow operation: 106ms so far, now at attachApplicationLocked: immediately after bindApplication
+02-19 12:43:56.248   752  2305 W ActivityManager: Slow operation: 106ms so far, now at attachApplicationLocked: after updateLruProcessLocked
+02-19 12:43:56.249   752  2305 W ActivityManager: Slow operation: 107ms so far, now at attachApplicationLocked: after updateOomAdjLocked
+02-19 12:43:56.279   752   794 V WindowManager: Sent Transition (#326) createdAt=02-19 12:43:55.683 via request=TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=48 effectiveUid=10217 displayId=0 isRunning=true baseIntent=Intent { act=android.intent.action.VIEW dat=intoss://takealook/... flg=0x10000000 pkg=viva.republica.toss.test cmp=viva.republica.toss.test/.MiniAppSchemeActivity } baseActivity=ComponentInfo{viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity} topActivity=ComponentInfo{viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity} origActivity=null realActivity=ComponentInfo{viva.republica.toss.test/viva.republica.toss.test.MiniAppSchemeActivity} numActivities=8 lastActiveTime=84108068 supportsMultiWindow=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{RemoteToken{1dba69d Task{1507662 #48 type=standard A=10217:viva.republica.toss.test}}} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 0 - 0, 0) topActivityInfo=ActivityInfo{278cdb0 im.toss.rn.granite.core.GraniteActivity} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isVisible=true isVisibleRequested=false isTopActivityNoDisplay=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false isActivityStackTransparent=false lastNonFullscreenBounds=Rect(284, 660 - 796, 1740) capturedLink=null capturedLinkTimestamp=0 requestedVisibleTypes=-9 topActivityRequestOpenInBrowserEducationTimestamp=0 appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false eligibleForLetterboxEducation= false isLetterboxEducationEnabled= true isLetterboxDoubleTapEnabled= false eligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 topActivityAppBounds=Rect(0, 0 - 1080, 2400) isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false hasMinAspectRatioOverride=false topActivityLetterboxBounds=null cameraCompatTaskInfo=CameraCompatTaskInfo { freeformCameraCompatMode=inactive}} topActivityMainWindowFrame=null}, pipChange = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 326 }
+02-19 12:43:56.280   752   794 V WindowManager:     startWCT=WindowContainerTransaction { changes= {} hops= [] errorCallbackToken=null taskFragmentOrganizer=null }
+02-19 12:43:56.280   752   794 V WindowManager:     info={id=326 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+02-19 12:43:56.280   752   794 V WindowManager:         {WCT{RemoteToken{1dba69d Task{1507662 #48 type=standard A=10217:viva.republica.toss.test}}} m=TO_FRONT f=MOVE_TO_TOP leash=Surface(name=Task=48)/@0x1541561 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1},
+02-19 12:43:56.280   752   794 V WindowManager:         {WCT{RemoteToken{5218fe8 Task{dd43522 #1 type=home}}} m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0x8ddbd2e sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1},
+02-19 12:43:56.280   752   794 V WindowManager:         {m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{35e0c0f showWhenLocked=false})/@0x512f5be sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0}
+02-19 12:43:56.280   752   794 V WindowManager:     ]}
+02-19 12:43:56.283  4449 22136 V WindowManagerShell: onTransitionReady(transaction=3229815416054)
+02-19 12:43:56.285  4449  4467 V WindowManagerShell: onTransitionReady (#326) android.os.BinderProxy@35c3922: {id=326 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+02-19 12:43:56.285  4449  4467 V WindowManagerShell:         {m=TO_FRONT f=MOVE_TO_TOP leash=Surface(name=Task=48)/@0xad01446 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1},
+02-19 12:43:56.285  4449  4467 V WindowManagerShell:         {m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0x4ea2607 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1},
+02-19 12:43:56.285  4449  4467 V WindowManagerShell:         {m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{35e0c0f showWhenLocked=false})/@0xfb28334 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0}
+02-19 12:43:56.285  4449  4467 V WindowManagerShell:     ]}
+02-19 12:43:56.286  4449  4467 V WindowManagerShell: Transition (#326) android.os.BinderProxy@35c3922@0 ready while (#325) android.os.BinderProxy@4de0040@0 is still animating. Notify the animating transition in case they can be merged
+02-19 12:43:56.286  4449  4467 V WindowManagerShell:    Merge into remote: RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@a8eae27, appThread = android.app.IApplicationThread$Stub$Proxy@fa38d4, debugName = QuickstepLaunchHome }
+02-19 12:43:56.302  4449  4467 V WindowManagerShell: Transition animation finished (aborted=false), notifying core (#325) android.os.BinderProxy@4de0040@0
+02-19 12:43:56.307   752   794 V WindowManager: Finish Transition (#325): created at 02-19 12:43:54.195 collect-started=2.107ms request-sent=60.212ms started=89.19ms ready=171.404ms sent=900.438ms commit=227.857ms finished=2108.248ms
+02-19 12:43:56.308  4449  4467 V WindowManagerShell: Playing animation for (#326) android.os.BinderProxy@35c3922@0
+02-19 12:43:56.324  4449  4467 V ShellRecents: RecentsTransitionHandler.startAnimation: no controller found
+02-19 12:43:56.324  4449  4467 V WindowManagerShell: Transition doesn't have explicit remote, search filters for match for {id=326 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{m=TO_FRONT f=MOVE_TO_TOP leash=Surface(name=Task=48)/@0xad01446 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1},{m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0x4ea2607 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1},{m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{35e0c0f showWhenLocked=false})/@0xfb28334 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0}]}
+02-19 12:43:56.341  4449  4467 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x0 checks=[{atype=undefined independent=true modes=[CLOSE,TO_BACK] flags=IN_TASK_WITH_EMBEDDED_ACTIVITY mustBeTask=false order=ANY topActivity=null launchCookie=null taskFragmentToken=android.os.BinderProxy@188d51a windowingMode=undefined}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@44cd84b, appThread = android.app.IApplicationThread$Stub$Proxy@3a12228, debugName = overlayBackTransition }}
+02-19 12:43:56.347   752  1631 I ImeTracker: system_server:8069d156: onRequestHide at ORIGIN_SERVER reason IME_REQUESTED_CHANGED_LISTENER fromUser false
+02-19 12:43:56.348  4449  4467 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x0 checks=[{atype=dream independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined},{atype=home independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@6f3eb41, appThread = android.app.IApplicationThread$Stub$Proxy@ccf28e6, debugName = LauncherToDream }}
+02-19 12:43:56.354  4449  4467 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=TOP topActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity} launchCookie=null windowingMode=undefined},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined},{NOT atype=undefined independent=true modes=[] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null customAnim=true windowingMode=undefined}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@a8eae27, appThread = android.app.IApplicationThread$Stub$Proxy@fa38d4, debugName = QuickstepLaunchHome }}
+02-19 12:43:56.354 29234 29234 I blica.toss.test: AssetManager2(0x7d8fac5e59f8) locale list changing from [] to [en-US]
+02-19 12:43:56.356   752   797 I ImeTracker: system_server:8069d156: onCancelled at PHASE_SERVER_SHOULD_HIDE
+02-19 12:43:56.372  4449  4467 V WindowManagerShell:  Delegate animation for (#326) to null
+02-19 12:43:56.373  4449  4467 V WindowManagerShell: start default transition animation, info = {id=326 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{m=TO_FRONT f=MOVE_TO_TOP leash=Surface(name=Task=48)/@0xad01446 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1},{m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0x4ea2607 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1},{m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{35e0c0f showWhenLocked=false})/@0xfb28334 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0}]}
+02-19 12:43:56.375  4449  4467 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@8f91ba3 animAttr=0x13 type=OPEN isEntrance=false
+02-19 12:43:56.419  1563  1563 I GoogleInputMethodService: GoogleInputMethodService.onFinishInput():2043 
+02-19 12:43:56.434  4449  4467 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@b8e9ea0 animAttr=0x12 type=OPEN isEntrance=true
+02-19 12:43:56.435 30178 30178 D ApplicationLoaders: Returning zygote-cached class loader: /system/framework/org.apache.http.legacy.jar
+02-19 12:43:56.435 30178 30178 D ApplicationLoaders: Returning zygote-cached class loader: /system_ext/framework/androidx.window.extensions.jar
+02-19 12:43:56.435 30178 30178 D ApplicationLoaders: Returning zygote-cached class loader: /system_ext/framework/androidx.window.sidecar.jar
+02-19 12:43:56.461  4449  4467 V WindowManagerShell:  animated by com.android.wm.shell.transition.DefaultTransitionHandler@f74d823
+02-19 12:43:56.480  1341  1341 D ScalingWorkspaceRevealAnim: alpha of workspace at the end of animation: 1.0
+02-19 12:43:56.748  1563  1563 I Module  : DeviceLockedStatusModuleProvider$Module.updateDeviceLockedStatus():100 repeatCheckTimes = 0, locked = false
+02-19 12:43:56.763  1563  1563 W NotificationCenter: NotificationCenter$NotificationQueue.notifyPendingNotificationsOnExecutor():877 Heavy notify work detected on UI thread: [kig->khg, kig->khc, kig->ilu, kig->ilu, kig->ilu, kig->ilu, kig->ilu, kig->ilu, kig->gkl, kig->ilu, kig->ilu, kig->fef, kig->fro, kig->lux, kig->ilu, kig->imt, kig->ilu, kig->ilu, kig->ijm, kig->ilu, kig->ilu, kig->fcb, kig->jnx] takes 153ms
+02-19 12:43:56.765  4449  4467 V WindowManagerShell: Transition animation finished (aborted=false), notifying core (#326) android.os.BinderProxy@35c3922@0
+02-19 12:43:56.770   752   794 V WindowManager: Finish Transition (#326): created at 02-19 12:43:55.683 collect-started=0.144ms request-sent=82.57ms started=187.163ms ready=495.709ms sent=593.929ms commit=206.036ms finished=1084.474ms
+02-19 12:43:56.771  1341  1341 D VRI[NexusLauncherActivity]: visibilityChanged oldVisibility=true newVisibility=false
+02-19 12:43:56.780  4449  4467 V WindowManagerShell: Track 0 became idle
+02-19 12:43:56.780  4449  4467 V WindowManagerShell: All active transition animations finished
+02-19 12:43:56.780  1341  1341 D NexusLauncherModelDelegate: notifySmartspaceEvent: SmartspaceTargetEvent{mSmartspaceTarget=null, mSmartspaceActionId='null', mEventType=7}
+02-19 12:43:56.785  1563  1563 I GoogleInputMethodService: GoogleInputMethodService.onStartInput():1293 onStartInput(EditorInfo{EditorInfo{packageName=com.google.android.apps.nexuslauncher, inputType=0, inputTypeString=NULL, enableLearning=false, autoCorrection=false, autoComplete=false, imeOptions=0, privateImeOptions=null, actionName=UNSPECIFIED, actionLabel=null, initialSelStart=-1, initialSelEnd=-1, initialCapsMode=0, label=null, fieldId=0, fieldName=null, extras=null, hintText=null, hintLocales=[]}}, false)
+02-19 12:43:56.821  1563  1563 I Module  : DeviceLockedStatusModuleProvider$Module.updateDeviceLockedStatus():100 repeatCheckTimes = 1, locked = false
+02-19 12:43:57.213  1563  1563 I EmojiCompatManager: EmojiCompatManager.getEmojiCompatIfLoaded():343 EmojiCompat.init() was never called.
+02-19 12:43:57.213  1563  1563 I EmojiCompatManager: java.lang.IllegalStateException: EmojiCompat is not initialized. Please call EmojiCompat.init() first
+02-19 12:43:57.213  1563  1563 I EmojiCompatManager: 	at asx.p(PG:6)
+02-19 12:43:57.213  1563  1563 I EmojiCompatManager: 	at axb.b(PG:13)
+02-19 12:43:57.213  1563  1563 I EmojiCompatManager: 	at jnr.b(PG:2)
+02-19 12:43:57.213  1563  1563 I EmojiCompatManager: 	at jnr.c(PG:4)
+02-19 12:43:57.213  1563  1563 I EmojiCompatManager: 	at jnr.f(PG:3)
+02-19 12:43:57.213  1563  1563 I EmojiCompatManager: 	at jnx.c(PG:3)
+02-19 12:43:57.213  1563  1563 I EmojiCompatManager: 	at kif.cz(PG:47)
+02-19 12:43:57.213  1563  1563 I EmojiCompatManager: 	at lhl.run(PG:1025)
+02-19 12:43:57.213  1563  1563 I EmojiCompatManager: 	at jaf.execute(PG:12)
+02-19 12:43:57.213  1563  1563 I EmojiCompatManager: 	at nco.v(PG:13)
+02-19 12:43:57.213  1563  1563 I EmojiCompatManager: 	at lhn.m(PG:96)
+02-19 12:43:57.213  1563  1563 I EmojiCompatManager: 	at lhn.k(PG:25)
+02-19 12:43:57.213  1563  1563 I EmojiCompatManager: 	at kgn.onStartInput(PG:250)
+02-19 12:43:57.213  1563  1563 I EmojiCompatManager: 	at android.inputmethodservice.InputMethodService.doStartInput(InputMethodService.java:3521)
+02-19 12:43:57.213  1563  1563 I EmojiCompatManager: 	at android.inputmethodservice.InputMethodService$InputMethodImpl.startInput(InputMethodService.java:879)
+02-19 12:43:57.213  1563  1563 I EmojiCompatManager: 	at android.inputmethodservice.InputMethodService$InputMethodImpl.dispatchStartInput(InputMethodService.java:908)
+02-19 12:43:57.213  1563  1563 I EmojiCompatManager: 	at android.inputmethodservice.IInputMethodWrapper.executeMessage(IInputMethodWrapper.java:201)
+02-19 12:43:57.213  1563  1563 I EmojiCompatManager: 	at com.android.internal.os.HandlerCaller$MyHandler.handleMessage(HandlerCaller.java:44)
+02-19 12:43:57.213  1563  1563 I EmojiCompatManager: 	at android.os.Handler.dispatchMessage(Handler.java:110)
+02-19 12:43:57.213  1563  1563 I EmojiCompatManager: 	at android.os.Looper.loopOnce(Looper.java:248)
+02-19 12:43:57.213  1563  1563 I EmojiCompatManager: 	at android.os.Looper.loop(Looper.java:338)
+02-19 12:43:57.213  1563  1563 I EmojiCompatManager: 	at android.app.ActivityThread.main(ActivityThread.java:9067)
+02-19 12:43:57.213  1563  1563 I EmojiCompatManager: 	at java.lang.reflect.Method.invoke(Native Method)
+02-19 12:43:57.213  1563  1563 I EmojiCompatManager: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593)
+02-19 12:43:57.213  1563  1563 I EmojiCompatManager: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:932)
+02-19 12:43:57.213  1563  1563 W NotificationCenter: NotificationCenter$NotificationQueue.notifyPendingNotificationsOnExecutor():877 Heavy notify work detected on UI thread: [kig->khg, kig->khc, kig->ilu, kig->ilu, kig->ilu, kig->ilu, kig->ilu, kig->ilu, kig->gkl, kig->ilu, kig->ilu, kig->fef, kig->fro, kig->lux, kig->ilu, kig->imt, kig->ilu, kig->ilu, kig->ijm, kig->ilu, kig->ilu, kig->fcb, kig->jnx] takes 400ms
+02-19 12:43:57.233   752  1233 W PackageConfigPersister: App-specific configuration not found for packageName: com.google.android.apps.nexuslauncher and userId: 0
+02-19 12:43:57.247  1563  1563 W NotificationCenter: NotificationCenter$NotificationQueue.notifyPendingNotificationsOnExecutor():877 Heavy notify work detected on UI thread: [kig->jjs] takes 33ms
+02-19 12:43:57.293 30178 30178 W t_app_installer: Failed to find entry 'classes.dex': Entry not found
+02-19 12:43:57.303 30178 30178 W t_app_installer: Failed to find entry 'classes.dex': Entry not found
+02-19 12:43:57.310 30178 30178 W t_app_installer: Failed to find entry 'classes.dex': Entry not found
+02-19 12:43:57.317 30178 30178 W t_app_installer: Failed to find entry 'classes.dex': Entry not found
+02-19 12:43:57.317 29234 30157 W okhttp.OkHttpClient: A connection to http://localhost:8081/ was leaked. Did you forget to close a response body? To see where this was allocated, set the OkHttpClient logger level to FINE: Logger.getLogger(OkHttpClient.class.getName()).setLevel(Level.FINE);
+02-19 12:43:57.322 30178 30178 W t_app_installer: Failed to find entry 'classes.dex': Entry not found
+02-19 12:43:57.328 30178 30178 W t_app_installer: Failed to find entry 'classes.dex': Entry not found
+02-19 12:43:57.345 30178 30178 D nativeloader: Configuring clns-9 for other apk /data/app/~~vq8xNb581yRjEI-qRqNRag==/com.android.vending-npHf6ZDDvXYbO7equTDezA==/base.apk:/data/app/~~vq8xNb581yRjEI-qRqNRag==/com.android.vending-npHf6ZDDvXYbO7equTDezA==/split_config.en.apk:/data/app/~~vq8xNb581yRjEI-qRqNRag==/com.android.vending-npHf6ZDDvXYbO7equTDezA==/split_config.x86_64.apk:/data/app/~~vq8xNb581yRjEI-qRqNRag==/com.android.vending-npHf6ZDDvXYbO7equTDezA==/split_phonesky_data_loader.apk:/data/app/~~vq8xNb581yRjEI-qRqNRag==/com.android.vending-npHf6ZDDvXYbO7equTDezA==/split_phonesky_data_loader.config.x86_64.apk:/data/app/~~vq8xNb581yRjEI-qRqNRag==/com.android.vending-npHf6ZDDvXYbO7equTDezA==/split_phonesky_webrtc_native_lib.apk:/data/app/~~vq8xNb581yRjEI-qRqNRag==/com.android.vending-npHf6ZDDvXYbO7equTDezA==/split_phonesky_webrtc_native_lib.config.x86_64.apk. target_sdk_version=36, uses_libraries=, library_path=/data/app/~~vq8xNb581yRjEI-qRqNRag==/com.android.vending-npHf6ZDDvXYbO7equTDezA==/lib/x86_64:/data/app/~~vq8xNb581yRjEI-qRqNRag==/com.android.ven
+02-19 12:43:57.388 29234 29234 D VRI[GraniteActivity]: visibilityChanged oldVisibility=true newVisibility=false
+02-19 12:43:57.504 30178 30178 I t_app_installer: AssetManager2(0x7d8fac427b98) locale list changing from [] to [en-US]
+02-19 12:43:57.510 29234 30205 W unknown:ReconnectingWebSocket: Couldn't connect to "ws://10.0.2.2:8081/message?device=sdk_gphone64_x86_64%20-%2016%20-%20API%2036&app=viva.republica.toss.test&clientid=BridgeDevSupportManager", will silently retry
+02-19 12:43:57.526 29234 30206 W unknown:InspectorPackagerConnection: Couldn't connect to packager, will silently retry
+02-19 12:43:58.128 30178 30178 V GraphicsEnvironment: Currently set values for:
+02-19 12:43:58.128 30178 30178 V GraphicsEnvironment:   angle_gl_driver_selection_pkgs=[]
+02-19 12:43:58.128 30178 30178 V GraphicsEnvironment:   angle_gl_driver_selection_values=[]
+02-19 12:43:58.128 30178 30178 V GraphicsEnvironment: com.android.vending is not listed in per-application setting
+02-19 12:43:58.128 30178 30178 V GraphicsEnvironment: ANGLE allowlist from config: com.dreamgames.royalmatch com.dts.freefiremax com.dxx.firenow com.gramgames.mergedragons com.ludo.king com.mojang.minecraftpe com.my.defense com.nintendo.zaka com.os.airforce com.playrix.fishdomdd.gplay io.teslatech.callbreak jp.konami.prospia net.peakgames.toonblast
+02-19 12:43:58.128 30178 30178 V GraphicsEnvironment: com.android.vending is not listed in ANGLE allowlist or settings, returning default
+02-19 12:43:58.128 30178 30178 V GraphicsEnvironment: Neither updatable production driver nor prerelease driver is supported.
+02-19 12:43:58.333  1782  2441 I bbax    : (REDACTED) getHotwordActive::active query: %s, watch: %s, devices connected: %s
+02-19 12:43:58.353   752  1233 D CoreBackPreview: Window{898a999 u0 viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@abb115b, mPriority=0, mIsAnimationCallback=false, mOverrideBehavior=0}
+02-19 12:43:58.353 29234 29234 W unknown:ReactRootView: Unable to update root layout specs for uninitialized ReactInstanceManager
+02-19 12:43:58.415   752   794 I ActivityTaskManager: Displayed viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity for user 0: +2s827ms
+02-19 12:43:58.431 29234 29351 I HWUI    : Davey! duration=1020ms; Flags=1, FrameTimelineVsyncId=1239585, IntendedVsync=84111222242408, Vsync=84111538909062, InputEventId=0, HandleInputStart=84111541959064, AnimationStart=84111541959898, PerformTraversalsStart=84111541960143, DrawStart=84112228680709, FrameDeadline=84111238909074, FrameStartTime=84111541780360, FrameInterval=16666666, WorkloadTarget=16666666, SyncQueued=84112229327095, SyncStart=84112236567816, IssueDrawCommandsStart=84112236774173, SwapBuffers=84112237175457, FrameCompleted=84112250003447, DequeueBufferDuration=5734, QueueBufferDuration=1678115, GpuCompleted=84112249938658, SwapBuffersCompleted=84112250003447, DisplayPresentTime=0, CommandSubmissionCompleted=84112237175457, 
+02-19 12:43:58.503 29234 29234 I Choreographer: Skipped 47 frames!  The application may be doing too much work on its main thread.
+02-19 12:43:58.675   752   989 I ImeTracker: viva.republica.toss.test:d8447232: onRequestHide at ORIGIN_SERVER reason HIDE_UNSPECIFIED_WINDOW fromUser false
+02-19 12:43:58.678 29234 29234 D InsetsController: hide(ime(), fromIme=false)
+02-19 12:43:58.678 29234 29234 I ImeTracker: viva.republica.toss.test:d8447232: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+02-19 12:43:58.690  1341  1341 D BaseDepthController: setSurface:
+02-19 12:43:58.690  1341  1341 D BaseDepthController: 	mWaitingOnSurfaceValidity: false
+02-19 12:43:58.690  1341  1341 D BaseDepthController: 	mBaseSurface: null
+02-19 12:43:58.691  1341  1341 D BaseDepthController: mSurface is null and mCurrentBlur is: 0
+02-19 12:43:58.691  1563  1563 I GoogleInputMethodService: GoogleInputMethodService.onFinishInput():2043 
+02-19 12:43:58.694  1563  1563 I Module  : DeviceLockedStatusModuleProvider$Module.updateDeviceLockedStatus():100 repeatCheckTimes = 0, locked = false
+02-19 12:43:58.695  1563  1563 I GoogleInputMethodService: GoogleInputMethodService.onStartInput():1293 onStartInput(EditorInfo{EditorInfo{packageName=viva.republica.toss.test, inputType=0, inputTypeString=NULL, enableLearning=false, autoCorrection=false, autoComplete=false, imeOptions=0, privateImeOptions=null, actionName=UNSPECIFIED, actionLabel=null, initialSelStart=-1, initialSelEnd=-1, initialCapsMode=0, label=null, fieldId=0, fieldName=null, extras=null, hintText=null, hintLocales=[]}}, false)
+02-19 12:43:58.697  1563  1563 I Module  : DeviceLockedStatusModuleProvider$Module.updateDeviceLockedStatus():100 repeatCheckTimes = 1, locked = false
+02-19 12:43:58.699  1563  1563 I EmojiCompatManager: EmojiCompatManager.getEmojiCompatIfLoaded():343 EmojiCompat.init() was never called.
+02-19 12:43:58.699  1563  1563 I EmojiCompatManager: java.lang.IllegalStateException: EmojiCompat is not initialized. Please call EmojiCompat.init() first
+02-19 12:43:58.699  1563  1563 I EmojiCompatManager: 	at asx.p(PG:6)
+02-19 12:43:58.699  1563  1563 I EmojiCompatManager: 	at axb.b(PG:13)
+02-19 12:43:58.699  1563  1563 I EmojiCompatManager: 	at jnr.b(PG:2)
+02-19 12:43:58.699  1563  1563 I EmojiCompatManager: 	at jnr.c(PG:4)
+02-19 12:43:58.699  1563  1563 I EmojiCompatManager: 	at jnr.f(PG:3)
+02-19 12:43:58.699  1563  1563 I EmojiCompatManager: 	at jnx.c(PG:3)
+02-19 12:43:58.699  1563  1563 I EmojiCompatManager: 	at kif.cz(PG:47)
+02-19 12:43:58.699  1563  1563 I EmojiCompatManager: 	at lhl.run(PG:1025)
+02-19 12:43:58.699  1563  1563 I EmojiCompatManager: 	at jaf.execute(PG:12)
+02-19 12:43:58.699  1563  1563 I EmojiCompatManager: 	at nco.v(PG:13)
+02-19 12:43:58.699  1563  1563 I EmojiCompatManager: 	at lhn.m(PG:96)
+02-19 12:43:58.699  1563  1563 I EmojiCompatManager: 	at lhn.k(PG:25)
+02-19 12:43:58.699  1563  1563 I EmojiCompatManager: 	at kgn.onStartInput(PG:250)
+02-19 12:43:58.699  1563  1563 I EmojiCompatManager: 	at android.inputmethodservice.InputMethodService.doStartInput(InputMethodService.java:3521)
+02-19 12:43:58.699  1563  1563 I EmojiCompatManager: 	at android.inputmethodservice.InputMethodService$InputMethodImpl.startInput(InputMethodService.java:879)
+02-19 12:43:58.699  1563  1563 I EmojiCompatManager: 	at android.inputmethodservice.InputMethodService$InputMethodImpl.dispatchStartInput(InputMethodService.java:908)
+02-19 12:43:58.699  1563  1563 I EmojiCompatManager: 	at android.inputmethodservice.IInputMethodWrapper.executeMessage(IInputMethodWrapper.java:201)
+02-19 12:43:58.699  1563  1563 I EmojiCompatManager: 	at com.android.internal.os.HandlerCaller$MyHandler.handleMessage(HandlerCaller.java:44)
+02-19 12:43:58.699  1563  1563 I EmojiCompatManager: 	at android.os.Handler.dispatchMessage(Handler.java:110)
+02-19 12:43:58.699  1563  1563 I EmojiCompatManager: 	at android.os.Looper.loopOnce(Looper.java:248)
+02-19 12:43:58.699  1563  1563 I EmojiCompatManager: 	at android.os.Looper.loop(Looper.java:338)
+02-19 12:43:58.699  1563  1563 I EmojiCompatManager: 	at android.app.ActivityThread.main(ActivityThread.java:9067)
+02-19 12:43:58.699  1563  1563 I EmojiCompatManager: 	at java.lang.reflect.Method.invoke(Native Method)
+02-19 12:43:58.699  1563  1563 I EmojiCompatManager: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593)
+02-19 12:43:58.699  1563  1563 I EmojiCompatManager: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:932)
+02-19 12:43:58.700   752  2305 W PackageConfigPersister: App-specific configuration not found for packageName: viva.republica.toss.test and userId: 0
+02-19 12:43:58.843   752  1631 I ImeTracker: system_server:cd770710: onRequestHide at ORIGIN_SERVER reason IME_REQUESTED_CHANGED_LISTENER fromUser false
+02-19 12:43:58.844   752   797 I ImeTracker: system_server:cd770710: onCancelled at PHASE_SERVER_SHOULD_HIDE
+02-19 12:43:58.848   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 12:43:58.848  4449  4474 W WindowOnBackDispatcher: sendCancelIfRunning: isInProgress=false callback=android.view.ViewRootImpl$$ExternalSyntheticLambda13@f17c40f
+02-19 12:43:58.849   752  2375 D CoreBackPreview: Window{289965f u0 Splash Screen viva.republica.toss.test EXITING}: Setting back callback null
+02-19 12:43:58.941   752   794 W Looper  : Slow dispatch took 241ms android.fg app=system_server main=false group=FOREGROUND h=android.os.Handler c=com.android.server.location.injector.SystemAppForegroundHelper$$ExternalSyntheticLambda1@b6e63e6 m=0
+02-19 12:43:58.941   752   794 W Looper  : Slow delivery took 237ms android.fg app=system_server main=false group=FOREGROUND h=android.os.Handler c=com.android.server.power.hint.HintManagerService$MyUidObserver$$ExternalSyntheticLambda0@a54cd27 m=0
+02-19 12:43:58.965  1341  1341 D StateManager: goToState - fromState: Normal, toState: Normal, partial trace:
+02-19 12:43:58.965  1341  1341 D StateManager: 	at com.android.launcher3.statemanager.StateManager.moveToRestState(go/retraceme 72a59688580715d19f0e415c69e80376c2f062d1648c80db6730905005a27c20:4)
+02-19 12:43:58.965  1341  1341 D StateManager: 	at com.android.launcher3.statemanager.StateManager.moveToRestState(go/retraceme 72a59688580715d19f0e415c69e80376c2f062d1648c80db6730905005a27c20:1)
+02-19 12:43:58.965  1341  1341 D StateManager: 	at com.android.launcher3.statemanager.StatefulActivity.onStop(go/retraceme 72a59688580715d19f0e415c69e80376c2f062d1648c80db6730905005a27c20:34)
+02-19 12:43:58.966  1341  1341 D StatsLog: LAUNCHER_ONSTOP
+02-19 12:43:58.967 29234 29234 E unknown:ReactRootView: Unhandled SoftException
+02-19 12:43:58.967 29234 29234 E unknown:ReactRootView: com.facebook.react.uimanager.IllegalViewOperationException: Trying to attach a ReactRootView with an explicit id already set to [2131362676]. React Native uses the id field to track react tags and will overwrite this field. If that is fine, explicitly overwrite the id field to View.NO_ID.
+02-19 12:43:58.967 29234 29234 E unknown:ReactRootView: 	at com.facebook.react.ReactRootView.attachToReactInstanceManager(:799)
+02-19 12:43:58.967 29234 29234 E unknown:ReactRootView: 	at com.facebook.react.ReactRootView.startReactApplication(:509)
+02-19 12:43:58.967 29234 29234 E unknown:ReactRootView: 	at com.facebook.react.ReactRootView.startReactApplication(:469)
+02-19 12:43:58.967 29234 29234 E unknown:ReactRootView: 	at im.toss.rn.granite.core.GraniteActivity.write(:486)
+02-19 12:43:58.967 29234 29234 E unknown:ReactRootView: 	at im.toss.rn.granite.core.GraniteActivity.RemoteActionCompatParcelizer(:124)
+02-19 12:43:58.967 29234 29234 E unknown:ReactRootView: 	at im.toss.rn.granite.core.GraniteActivity$RemoteActionCompatParcelizer.IconCompatParcelizer(:65353)
+02-19 12:43:58.967 29234 29234 E unknown:ReactRootView: 	at o.sh.a_(:33)
+02-19 12:43:58.967 29234 29234 E unknown:ReactRootView: 	at o.xP.run(:100)
+02-19 12:43:58.967 29234 29234 E unknown:ReactRootView: 	at android.os.Handler.handleCallback(Handler.java:995)
+02-19 12:43:58.967 29234 29234 E unknown:ReactRootView: 	at android.os.Handler.dispatchMessage(Handler.java:103)
+02-19 12:43:58.967 29234 29234 E unknown:ReactRootView: 	at android.os.Looper.loopOnce(Looper.java:248)
+02-19 12:43:58.967 29234 29234 E unknown:ReactRootView: 	at android.os.Looper.loop(Looper.java:338)
+02-19 12:43:58.967 29234 29234 E unknown:ReactRootView: 	at android.app.ActivityThread.main(ActivityThread.java:9067)
+02-19 12:43:58.967 29234 29234 E unknown:ReactRootView: 	at java.lang.reflect.Method.invoke(Native Method)
+02-19 12:43:58.967 29234 29234 E unknown:ReactRootView: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593)
+02-19 12:43:58.967 29234 29234 E unknown:ReactRootView: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:932)
+02-19 12:43:58.971  1341  1341 D StatsLog: LAUNCHER_GOOGLE_SEARCH_RESTORE_LIST_SIZE_AFTER_ACTIVITY_RESTART
+02-19 12:43:58.987   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 12:43:59.094   752  2305 D CoreBackPreview: Window{197140 u0 PopupWindow:2f1217e}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@6ec09be, mPriority=0, mIsAnimationCallback=false, mOverrideBehavior=0}
+02-19 12:43:59.387   752   794 W Looper  : Drained
+02-19 12:43:59.463   752  1856 E TaskPersister: File error accessing recents directory (directory doesn't exist?).
+02-19 12:43:59.705 30178 30178 I Finsky:instant_app_inst: [2] Process created at version: 50.1.33-31 [0] [PR] 867780628
+02-19 12:43:59.946   752  1631 W ActivityTaskManager: callingPackage for (uid=2000, pid=30217) has no WPC
+02-19 12:43:59.948   752  1631 V GrammaticalInflectionUtils: AttributionSource: android.content.AttributionSource@56784557 does not have READ_SYSTEM_GRAMMATICAL_GENDER permission.
+02-19 12:43:59.949   752  1631 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_USER_ASPECT_RATIO_OVERRIDE
+02-19 12:43:59.949   752  1631 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_USER_ASPECT_RATIO_FULLSCREEN_OVERRIDE
+02-19 12:43:59.950   752  1631 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_RESIZEABLE_ACTIVITY_OVERRIDES
+02-19 12:43:59.950   752  1631 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_MIN_ASPECT_RATIO_OVERRIDE
+02-19 12:43:59.959  4449  4467 D WindowManagerShell: onActivityRestartAttempt: topActivity=ComponentInfo{viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity}, wasVisible=true
+02-19 12:43:59.960   531   590 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+02-19 12:43:59.960   752  1631 I ActivityTaskManager: START u0 {act=android.intent.action.VIEW dat=intoss://takealook/... flg=0x10000000 xflg=0x4 pkg=viva.republica.toss.test cmp=viva.republica.toss.test/.MiniAppSchemeActivity} with LAUNCH_MULTIPLE from uid 2000 (BAL_ALLOW_PERMISSION) result code=3
+02-19 12:44:00.015  4449 22136 D KeyguardService: setOccluded(false)
+02-19 12:44:00.015  4449 22136 D KeyguardViewMediator: setOccluded(false)
+02-19 12:44:00.016  4449  4449 D KeyguardViewMediator: handleSetOccluded(false)
+02-19 12:44:00.018  4449  4449 D KeyguardViewMediator: KeyguardViewMediator queue processing message: SET_OCCLUDED
+02-19 12:44:01.087 30178 30224 E ashmem  : Pinning is deprecated since Android Q. Please use trim or other methods.
+02-19 12:44:01.110 30178 30229 I PlayCommon: [69] Preparing logs for uploading
+02-19 12:44:01.176 30178 30229 I PlayCommon: [69] Connecting to server for timestamp: https://play.googleapis.com/play/log/timestamp
+02-19 12:44:01.185   752  2377 W JobScheduler: Job didn't exist in JobStore: b7deea2 #u0a146/165064389 com.android.vending/com.google.android.finsky.instantapps.metrics.LogFlushJob
+02-19 12:44:01.462 29234 29234 W WindowOnBackDispatcher: sendCancelIfRunning: isInProgress=false callback=android.view.ViewRootImpl$$ExternalSyntheticLambda13@a9f5df5
+02-19 12:44:01.465   752  1233 D CoreBackPreview: Window{197140 u0 PopupWindow:2f1217e}: Setting back callback null
+02-19 12:44:01.490 30178 30222 D CompatChangeReporter: Compat change id reported: 288912692; UID 10146; state: ENABLED
+02-19 12:44:01.618 29234 30235 W unknown:ReactContext: initializeMessageQueueThreads() is called.
+02-19 12:44:01.638 29234 29234 W unknown:ReactNative: Packager connection already open, nooping.
+02-19 12:44:01.695 29234 30238 W unknown:ReactContext: initializeMessageQueueThreads() is called.
+02-19 12:44:01.698 29234 30238 W unknown:ReactNative: Fresco has already been initialized with a different config. The new Fresco configuration will be ignored!
+02-19 12:44:02.437 29234 29234 I Choreographer: Skipped 42 frames!  The application may be doing too much work on its main thread.
+02-19 12:44:02.865 30242 30242 W dumpsys : Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: window
+02-19 12:44:02.908 30178 30229 W PlayCommon: [69] No account for auth token provided
+02-19 12:44:02.908 30178 30229 I PlayCommon: [69] Connecting to server: https://play.googleapis.com/play/log?format=raw&proto_v2=true
+02-19 12:44:03.182 29234 29234 W unknown:ReactContext: initializeMessageQueueThreads() is called.
+02-19 12:44:03.223 30178 30229 I PlayCommon: [69] Successfully uploaded logs.
+02-19 12:44:03.364   752  1233 W PackageConfigPersister: App-specific configuration not found for packageName: viva.republica.toss.test and userId: 0
+02-19 12:44:03.535  1563  1563 I StylusModule: StylusModule.onUpdateToolType():801 Update tool type = 0
+02-19 12:44:04.505   537   537 W adbd    : timeout expired while flushing socket, closing
+02-19 12:44:04.508 29234 29234 I Choreographer: Skipped 42 frames!  The application may be doing too much work on its main thread.
+02-19 12:44:04.561   752   775 I system_server: Background concurrent mark compact GC freed 23MB AllocSpace bytes, 42(876KB) LOS objects, 42% free, 32MB/56MB, paused 2.390ms,14.639ms total 1.323s
+02-19 12:44:04.562   752   776 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+02-19 12:44:04.804   537   537 W adbd    : timeout expired while flushing socket, closing
+02-19 12:44:05.210 29234 29240 I blica.toss.test: NativeAlloc concurrent mark compact GC freed 8534KB AllocSpace bytes, 7(204KB) LOS objects, 47% free, 26MB/50MB, paused 959us,3.680ms total 404.502ms
+02-19 12:44:05.420  1336  1556 D SatelliteController: iisInCarrierRoamingNbIotNtn: satellite is disabled
+02-19 12:44:06.007 29234 29234 I Choreographer: Skipped 30 frames!  The application may be doing too much work on its main thread.
+02-19 12:44:06.007   752   752 W Looper  : Slow delivery took 491ms main app=system_server main=true group=FOREGROUND h=com.android.server.pm.SnapshotStatistics$1 c=null m=0
+02-19 12:44:06.075 30254 30254 W dumpsys : Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: window
+02-19 12:44:06.258   752  1233 I system_server: AssetManager2(0x7d8fac4ca398) locale list changing from [] to [en-US]
+02-19 12:44:06.328   752  1233 I system_server: AssetManager2(0x7d8fac4da6f8) locale list changing from [] to [en-US]
+02-19 12:44:06.468 29234 30237 I ReactNativeJS: Running "shared" with {"initialProps":{"initialColorPreference":"light","loadingStartTs":1771472638784,"initialFontScale":"100"},"rootTag":301}
+02-19 12:44:06.509   752  1233 I system_server: AssetManager2(0x7d8fac4eef18) locale list changing from [] to [en-US]
+02-19 12:44:06.802   752  1233 I system_server: AssetManager2(0x7d8fac43d358) locale list changing from [] to [en-US]
+02-19 12:44:06.867   752  1233 I system_server: AssetManager2(0x7d8fac4d8498) locale list changing from [] to [en-US]
+02-19 12:44:07.227   752  1233 I system_server: AssetManager2(0x7d8fac4d4938) locale list changing from [] to [en-US]
+02-19 12:44:07.332  4449  4467 V WindowManagerShell: Transition requested (#328): android.os.BinderProxy@d4b48ad TransitionRequestInfo { type = CLOSE, triggerTask = null, pipChange = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 328 }
+02-19 12:44:07.334   752   752 W Looper  : Drained
+02-19 12:44:07.348 29234 29234 D ViewRootImpl: Skipping stats log for color mode
+02-19 12:44:07.368   531   549 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+02-19 12:44:07.468   752   752 W Looper  : Slow dispatch took 124ms main app=system_server main=true group=FOREGROUND h=android.os.Handler c=<recycled PooledLambda@c6afcf5> m=0
+02-19 12:44:07.468   752   794 W Looper  : Slow dispatch took 121ms android.fg app=system_server main=false group=FOREGROUND h=android.os.Handler c=<recycled PooledLambda@c6afcf5> m=0
+02-19 12:44:07.472   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 12:44:07.475   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 12:44:07.475   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 12:44:07.477   531   531 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+02-19 12:44:07.539 29234 30260 W unknown:ReconnectingWebSocket: Couldn't connect to "ws://10.0.2.2:8081/message?device=sdk_gphone64_x86_64%20-%2016%20-%20API%2036&app=viva.republica.toss.test&clientid=BridgeDevSupportManager", will silently retry
+02-19 12:44:07.672  4449  4531 V WindowManagerShell: onTransitionReady(transaction=3229815416115)
+02-19 12:44:07.677  4449  4467 V WindowManagerShell: onTransitionReady (#328) android.os.BinderProxy@d4b48ad: {id=328 t=CLOSE f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+02-19 12:44:07.677  4449  4467 V WindowManagerShell:         {m=CLOSE f=FILLS_TASK leash=Surface(name=ActivityRecord{134950147 u0 viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity)/@0xc00d7e2 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 bc=ffffffff component=viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity opt={t=FROM_STYLE mUserId=0}},
+02-19 12:44:07.677  4449  4467 V WindowManagerShell:         {m=TO_FRONT f=FILLS_TASK leash=Surface(name=ActivityRecord{25719333 u0 viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity)/@0x8eef773 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 bc=ffffffff component=viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity opt={t=FROM_STYLE mUserId=0}}
+02-19 12:44:07.677  4449  4467 V WindowManagerShell:     ]}
+02-19 12:44:07.677   752   794 V WindowManager: Sent Transition (#328) createdAt=02-19 12:44:07.330 via request=TransitionRequestInfo { type = CLOSE, triggerTask = null, pipChange = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 328 }
+02-19 12:44:07.677   752   794 V WindowManager:     startWCT=WindowContainerTransaction { changes= {} hops= [] errorCallbackToken=null taskFragmentOrganizer=null }
+02-19 12:44:07.677   752   794 V WindowManager:     info={id=328 t=CLOSE f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+02-19 12:44:07.677   752   794 V WindowManager:         {m=CLOSE f=FILLS_TASK leash=Surface(name=ActivityRecord{134950147 u0 viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity)/@0x762c556 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 bc=ffffffff component=viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity opt={t=FROM_STYLE mUserId=0}},
+02-19 12:44:07.677   752   794 V WindowManager:         {m=TO_FRONT f=FILLS_TASK leash=Surface(name=ActivityRecord{25719333 u0 viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity)/@0xbb7371 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 bc=ffffffff component=viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity opt={t=FROM_STYLE mUserId=0}}
+02-19 12:44:07.677   752   794 V WindowManager:     ]}
+02-19 12:44:07.678  4449  4467 V WindowManagerShell: Playing animation for (#328) android.os.BinderProxy@d4b48ad@0
+02-19 12:44:07.683  4449  4467 V ShellRecents: RecentsTransitionHandler.startAnimation: no controller found
+02-19 12:44:07.683  4449  4467 V WindowManagerShell: Transition doesn't have explicit remote, search filters for match for {id=328 t=CLOSE f=0x0 trk=0 r=[0@Point(0, 0)] c=[{m=CLOSE f=FILLS_TASK leash=Surface(name=ActivityRecord{134950147 u0 viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity)/@0xc00d7e2 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 bc=ffffffff component=viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity opt={t=FROM_STYLE mUserId=0}},{m=TO_FRONT f=FILLS_TASK leash=Surface(name=ActivityRecord{25719333 u0 viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity)/@0x8eef773 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 bc=ffffffff component=viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity opt={t=FROM_STYLE mUserId=0}}]}
+02-19 12:44:07.684  4449  4467 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x0 checks=[{atype=undefined independent=true modes=[CLOSE,TO_BACK] flags=IN_TASK_WITH_EMBEDDED_ACTIVITY mustBeTask=false order=ANY topActivity=null launchCookie=null taskFragmentToken=android.os.BinderProxy@188d51a windowingMode=undefined}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@44cd84b, appThread = android.app.IApplicationThread$Stub$Proxy@3a12228, debugName = overlayBackTransition }}
+02-19 12:44:07.684  4449  4467 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x0 checks=[{atype=dream independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined},{atype=home independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@6f3eb41, appThread = android.app.IApplicationThread$Stub$Proxy@ccf28e6, debugName = LauncherToDream }}
+02-19 12:44:07.684  4449  4467 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=TOP topActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity} launchCookie=null windowingMode=undefined},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined},{NOT atype=undefined independent=true modes=[] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null customAnim=true windowingMode=undefined}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@a8eae27, appThread = android.app.IApplicationThread$Stub$Proxy@fa38d4, debugName = QuickstepLaunchHome }}
+02-19 12:44:07.685  4449  4467 V WindowManagerShell:  Delegate animation for (#328) to null
+02-19 12:44:07.685  4449  4467 V WindowManagerShell: start default transition animation, info = {id=328 t=CLOSE f=0x0 trk=0 r=[0@Point(0, 0)] c=[{m=CLOSE f=FILLS_TASK leash=Surface(name=ActivityRecord{134950147 u0 viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity)/@0xc00d7e2 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 bc=ffffffff component=viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity opt={t=FROM_STYLE mUserId=0}},{m=TO_FRONT f=FILLS_TASK leash=Surface(name=ActivityRecord{25719333 u0 viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity)/@0x8eef773 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 bc=ffffffff component=viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity opt={t=FROM_STYLE mUserId=0}}]}
+02-19 12:44:07.707  4449  4467 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@1b797cf animAttr=0x6 type=CLOSE isEntrance=true
+02-19 12:44:07.713 29234 30237 D ReactNativeJS: '[Analytics]', '{\n  "log_type": "screen",\n  "log_name": "/::screen",\n  "params": {\n    "referrer": null,\n    "deployment_id": "local",\n    "deployment_timestamp": null\n  }\n}'
+02-19 12:44:07.716  4449  4467 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@161813a animAttr=0x7 type=CLOSE isEntrance=false
+02-19 12:44:07.719  4449  4467 V WindowManagerShell:  animated by com.android.wm.shell.transition.DefaultTransitionHandler@f74d823
+02-19 12:44:07.844   752   989 I ImeTracker: viva.republica.toss.test:f0c527fa: onRequestHide at ORIGIN_SERVER reason HIDE_UNSPECIFIED_WINDOW fromUser false
+02-19 12:44:07.859  1563  1563 I GoogleInputMethodService: GoogleInputMethodService.onFinishInput():2043 
+02-19 12:44:07.868  1563  1563 I Module  : DeviceLockedStatusModuleProvider$Module.updateDeviceLockedStatus():100 repeatCheckTimes = 0, locked = false
+02-19 12:44:07.869  1563  1563 I GoogleInputMethodService: GoogleInputMethodService.onStartInput():1293 onStartInput(EditorInfo{EditorInfo{packageName=viva.republica.toss.test, inputType=0, inputTypeString=NULL, enableLearning=false, autoCorrection=false, autoComplete=false, imeOptions=0, privateImeOptions=null, actionName=UNSPECIFIED, actionLabel=null, initialSelStart=-1, initialSelEnd=-1, initialCapsMode=0, label=null, fieldId=0, fieldName=null, extras=null, hintText=null, hintLocales=[]}}, false)
+02-19 12:44:07.876   752  1631 I ImeTracker: system_server:103d08cc: onRequestHide at ORIGIN_SERVER reason IME_REQUESTED_CHANGED_LISTENER fromUser false
+02-19 12:44:07.897  1563  1563 I Module  : DeviceLockedStatusModuleProvider$Module.updateDeviceLockedStatus():100 repeatCheckTimes = 1, locked = false
+02-19 12:44:07.899   752   797 I ImeTracker: system_server:103d08cc: onCancelled at PHASE_SERVER_SHOULD_HIDE
+02-19 12:44:07.903  1563  1563 I EmojiCompatManager: EmojiCompatManager.getEmojiCompatIfLoaded():343 EmojiCompat.init() was never called.
+02-19 12:44:07.903  1563  1563 I EmojiCompatManager: java.lang.IllegalStateException: EmojiCompat is not initialized. Please call EmojiCompat.init() first
+02-19 12:44:07.903  1563  1563 I EmojiCompatManager: 	at asx.p(PG:6)
+02-19 12:44:07.903  1563  1563 I EmojiCompatManager: 	at axb.b(PG:13)
+02-19 12:44:07.903  1563  1563 I EmojiCompatManager: 	at jnr.b(PG:2)
+02-19 12:44:07.903  1563  1563 I EmojiCompatManager: 	at jnr.c(PG:4)
+02-19 12:44:07.903  1563  1563 I EmojiCompatManager: 	at jnr.f(PG:3)
+02-19 12:44:07.903  1563  1563 I EmojiCompatManager: 	at jnx.c(PG:3)
+02-19 12:44:07.903  1563  1563 I EmojiCompatManager: 	at kif.cz(PG:47)
+02-19 12:44:07.903  1563  1563 I EmojiCompatManager: 	at lhl.run(PG:1025)
+02-19 12:44:07.903  1563  1563 I EmojiCompatManager: 	at jaf.execute(PG:12)
+02-19 12:44:07.903  1563  1563 I EmojiCompatManager: 	at nco.v(PG:13)
+02-19 12:44:07.903  1563  1563 I EmojiCompatManager: 	at lhn.m(PG:96)
+02-19 12:44:07.903  1563  1563 I EmojiCompatManager: 	at lhn.k(PG:25)
+02-19 12:44:07.903  1563  1563 I EmojiCompatManager: 	at kgn.onStartInput(PG:250)
+02-19 12:44:07.903  1563  1563 I EmojiCompatManager: 	at android.inputmethodservice.InputMethodService.doStartInput(InputMethodService.java:3521)
+02-19 12:44:07.903  1563  1563 I EmojiCompatManager: 	at android.inputmethodservice.InputMethodService$InputMethodImpl.startInput(InputMethodService.java:879)
+02-19 12:44:07.903  1563  1563 I EmojiCompatManager: 	at android.inputmethodservice.InputMethodService$InputMethodImpl.dispatchStartInput(InputMethodService.java:908)
+02-19 12:44:07.903  1563  1563 I EmojiCompatManager: 	at android.inputmethodservice.IInputMethodWrapper.executeMessage(IInputMethodWrapper.java:201)
+02-19 12:44:07.903  1563  1563 I EmojiCompatManager: 	at com.android.internal.os.HandlerCaller$MyHandler.handleMessage(HandlerCaller.java:44)
+02-19 12:44:07.903  1563  1563 I EmojiCompatManager: 	at android.os.Handler.dispatchMessage(Handler.java:110)
+02-19 12:44:07.903  1563  1563 I EmojiCompatManager: 	at android.os.Looper.loopOnce(Looper.java:248)
+02-19 12:44:07.903  1563  1563 I EmojiCompatManager: 	at android.os.Looper.loop(Looper.java:338)
+02-19 12:44:07.903  1563  1563 I EmojiCompatManager: 	at android.app.ActivityThread.main(ActivityThread.java:9067)
+02-19 12:44:07.903  1563  1563 I EmojiCompatManager: 	at java.lang.reflect.Method.invoke(Native Method)
+02-19 12:44:07.903  1563  1563 I EmojiCompatManager: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593)
+02-19 12:44:07.903  1563  1563 I EmojiCompatManager: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:932)
+02-19 12:44:07.921   752  1987 W PackageConfigPersister: App-specific configuration not found for packageName: viva.republica.toss.test and userId: 0
+02-19 12:44:07.929  1563  1563 W NotificationCenter: NotificationCenter$NotificationQueue.notifyPendingNotificationsOnExecutor():877 Heavy notify work detected on UI thread: [kig->jjs] takes 23ms
+02-19 12:44:07.942 29234 29234 D InsetsController: hide(ime(), fromIme=false)
+02-19 12:44:07.942 29234 29234 I ImeTracker: viva.republica.toss.test:f0c527fa: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+02-19 12:44:08.008   752   797 W IPCThreadState: Sending oneway calls to frozen process.
+02-19 12:44:08.008   752   797 W IPCThreadState: Sending oneway calls to frozen process.
+02-19 12:44:08.008   752   797 W IPCThreadState: Sending oneway calls to frozen process.
+02-19 12:44:08.009   752   797 W IPCThreadState: Sending oneway calls to frozen process.
+02-19 12:44:08.009   752   797 W IPCThreadState: Sending oneway calls to frozen process.
+02-19 12:44:08.009   752   797 W IPCThreadState: Sending oneway calls to frozen process.
+02-19 12:44:08.015   752   797 W IPCThreadState: Sending oneway calls to frozen process.
+02-19 12:44:08.015   752   797 W IPCThreadState: Sending oneway calls to frozen process.
+02-19 12:44:08.015   752   797 W IPCThreadState: Sending oneway calls to frozen process.
+02-19 12:44:08.016   752   797 W ProcessStats: Tracking association SourceState{1b917ca system/1000 BFgs #14113} whose proc state 4 is better than process ProcessState{42c4ef0 com.google.android.ext.services/10208 pkg=com.google.android.ext.services} proc state 14 (11 skipped)
+02-19 12:44:08.116 29234 30126 D ReactNativeJS: '[Analytics]', '{\n  "log_type": "screen",\n  "log_name": "/::screen",\n  "params": {\n    "referrer": null,\n    "deployment_id": "local",\n    "deployment_timestamp": null\n  }\n}'
+02-19 12:44:08.184  4449  4467 V WindowManagerShell: Transition animation finished (aborted=false), notifying core (#328) android.os.BinderProxy@d4b48ad@0
+02-19 12:44:08.188   752   794 V WindowManager: Finish Transition (#328): created at 02-19 12:44:07.330 collect-started=0.054ms request-sent=0.116ms started=6.331ms ready=15.363ms sent=334.06ms commit=65.379ms finished=855.83ms
+02-19 12:44:08.188 29234 29234 D VRI[GraniteActivity]: visibilityChanged oldVisibility=true newVisibility=false
+02-19 12:44:08.193  4449  4467 V WindowManagerShell: Track 0 became idle
+02-19 12:44:08.193  4449  4467 V WindowManagerShell: All active transition animations finished
+02-19 12:44:08.337 29234 29234 E unknown:ReactNative: Tried to remove non-existent frame callback
+02-19 12:44:08.548 28881 28884 I AidlLazyServiceRegistrar: Process has 0 (of 1 available) client(s) in use after notification artd has clients: 0
+02-19 12:44:08.548 28881 28884 I AidlLazyServiceRegistrar: Trying to shut down the service. No clients in use for any service in process.
+02-19 12:44:08.554 29234 29234 I Ads     : Destroyed all ad preloaders for ad format: REWARDED
+02-19 12:44:08.571 28881 28884 I AidlLazyServiceRegistrar: Unregistered all clients and exiting
+02-19 12:44:08.583 29234 29234 I Ads     : Destroyed all ad preloaders for ad format: INTERSTITIAL
+02-19 12:44:08.587 29234 29234 W WindowOnBackDispatcher: sendCancelIfRunning: isInProgress=false callback=android.view.ViewRootImpl$$ExternalSyntheticLambda13@d7304a0
+02-19 12:44:08.588   752  1987 D CoreBackPreview: Window{898a999 u0 viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity}: Setting back callback null
+02-19 12:44:08.604 29234 29234 D ViewRootImpl: Skipping stats log for color mode
+02-19 12:44:08.626   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 12:44:08.675 29234 30237 E ReactNativeJS: '권한 목록을 가져오는 데 실패했어요:', [Error: SERVICE_NAME is missing]
+02-19 12:44:08.732 29234 30237 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.image.ReactImageManager
+02-19 12:44:08.742 29234 29234 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.view.ReactViewManager
+02-19 12:44:08.842 29234 30237 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.uimanager.LayoutShadowNode
+02-19 12:44:08.860 29234 29234 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.text.ReactTextViewManager
+02-19 12:44:08.869 29234 30238 E unknown:ReactNative: Unhandled SoftException
+02-19 12:44:08.869 29234 30238 E unknown:ReactNative: java.lang.RuntimeException: Catalyst Instance has already disappeared: requested by Networking
+02-19 12:44:08.869 29234 30238 E unknown:ReactNative: 	at com.facebook.react.bridge.ReactContextBaseJavaModule.getReactApplicationContextIfActiveOrWarn(:66)
+02-19 12:44:08.869 29234 30238 E unknown:ReactNative: 	at com.facebook.react.modules.network.NetworkingModule.sendRequestInternal(:266)
+02-19 12:44:08.869 29234 30238 E unknown:ReactNative: 	at com.facebook.react.modules.network.NetworkingModule.sendRequest(:236)
+02-19 12:44:08.869 29234 30238 E unknown:ReactNative: 	at java.lang.reflect.Method.invoke(Native Method)
+02-19 12:44:08.869 29234 30238 E unknown:ReactNative: 	at com.facebook.react.bridge.JavaMethodWrapper.invoke(:372)
+02-19 12:44:08.869 29234 30238 E unknown:ReactNative: 	at com.facebook.react.bridge.JavaModuleWrapper.invoke(:188)
+02-19 12:44:08.869 29234 30238 E unknown:ReactNative: 	at com.facebook.jni.NativeRunnable.run(Native Method)
+02-19 12:44:08.869 29234 30238 E unknown:ReactNative: 	at android.os.Handler.handleCallback(Handler.java:995)
+02-19 12:44:08.869 29234 30238 E unknown:ReactNative: 	at android.os.Handler.dispatchMessage(Handler.java:103)
+02-19 12:44:08.869 29234 30238 E unknown:ReactNative: 	at com.facebook.react.bridge.queue.MessageQueueThreadHandler.dispatchMessage(:27)
+02-19 12:44:08.869 29234 30238 E unknown:ReactNative: 	at android.os.Looper.loopOnce(Looper.java:248)
+02-19 12:44:08.869 29234 30238 E unknown:ReactNative: 	at android.os.Looper.loop(Looper.java:338)
+02-19 12:44:08.869 29234 30238 E unknown:ReactNative: 	at com.facebook.react.bridge.queue.MessageQueueThreadImpl$4.run(:228)
+02-19 12:44:08.869 29234 30238 E unknown:ReactNative: 	at java.lang.Thread.run(Thread.java:1119)
+02-19 12:44:08.870 29234 30238 E unknown:ReactNative: Unhandled SoftException
+02-19 12:44:08.870 29234 30238 E unknown:ReactNative: java.lang.RuntimeException: Catalyst Instance has already disappeared: requested by Networking
+02-19 12:44:08.870 29234 30238 E unknown:ReactNative: 	at com.facebook.react.bridge.ReactContextBaseJavaModule.getReactApplicationContextIfActiveOrWarn(:66)
+02-19 12:44:08.870 29234 30238 E unknown:ReactNative: 	at com.facebook.react.modules.network.NetworkingModule.wrapRequestBodyWithProgressEmitter(:568)
+02-19 12:44:08.870 29234 30238 E unknown:ReactNative: 	at com.facebook.react.modules.network.NetworkingModule.sendRequestInternal(:452)
+02-19 12:44:08.870 29234 30238 E unknown:ReactNative: 	at com.facebook.react.modules.network.NetworkingModule.sendRequest(:236)
+02-19 12:44:08.870 29234 30238 E unknown:ReactNative: 	at java.lang.reflect.Method.invoke(Native Method)
+02-19 12:44:08.870 29234 30238 E unknown:ReactNative: 	at com.facebook.react.bridge.JavaMethodWrapper.invoke(:372)
+02-19 12:44:08.870 29234 30238 E unknown:ReactNative: 	at com.facebook.react.bridge.JavaModuleWrapper.invoke(:188)
+02-19 12:44:08.870 29234 30238 E unknown:ReactNative: 	at com.facebook.jni.NativeRunnable.run(Native Method)
+02-19 12:44:08.870 29234 30238 E unknown:ReactNative: 	at android.os.Handler.handleCallback(Handler.java:995)
+02-19 12:44:08.870 29234 30238 E unknown:ReactNative: 	at android.os.Handler.dispatchMessage(Handler.java:103)
+02-19 12:44:08.870 29234 30238 E unknown:ReactNative: 	at com.facebook.react.bridge.queue.MessageQueueThreadHandler.dispatchMessage(:27)
+02-19 12:44:08.870 29234 30238 E unknown:ReactNative: 	at android.os.Looper.loopOnce(Looper.java:248)
+02-19 12:44:08.870 29234 30238 E unknown:ReactNative: 	at android.os.Looper.loop(Looper.java:338)
+02-19 12:44:08.870 29234 30238 E unknown:ReactNative: 	at com.facebook.react.bridge.queue.MessageQueueThreadImpl$4.run(:228)
+02-19 12:44:08.870 29234 30238 E unknown:ReactNative: 	at java.lang.Thread.run(Thread.java:1119)
+02-19 12:44:09.301 29234 29234 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.reactnativecommunity.webview.RNCWebViewManager
+02-19 12:44:09.499   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 12:44:09.530   752  1987 D ActivityManager: sync unfroze 14715 com.google.android.gms for 6
+02-19 12:44:09.531   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 12:44:09.755 29234 29234 I Choreographer: Skipped 86 frames!  The application may be doing too much work on its main thread.
+02-19 12:44:09.797 29234 29234 E unknown:ReactInstanceManager: destroyRootView called
+02-19 12:44:09.798 29234 29234 E unknown:ReactInstanceManager: destroyRootView called, unmountReactApplication
+02-19 12:44:09.833 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: Unhandled SoftException
+02-19 12:44:09.833 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: com.facebook.react.bridge.ReactNoCrashSoftException: Cannot get UIManager because the context doesn't contain an active CatalystInstance.
+02-19 12:44:09.833 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.uimanager.UIManagerHelper.getUIManager(:77)
+02-19 12:44:09.833 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.uimanager.UIManagerHelper.getEventDispatcher(:128)
+02-19 12:44:09.833 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.uimanager.UIManagerHelper.getEventDispatcherForReactTag(:106)
+02-19 12:44:09.833 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at o.dotWithNormal.onProgressChanged(:138)
+02-19 12:44:09.833 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at WV.OZ.d(chromium-TrichromeWebViewGoogle6432.aab-stable-694313738:19)
+02-19 12:44:09.833 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at WV.m7.handleMessage(chromium-TrichromeWebViewGoogle6432.aab-stable-694313738:242)
+02-19 12:44:09.833 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.os.Handler.dispatchMessage(Handler.java:110)
+02-19 12:44:09.833 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.os.Looper.loopOnce(Looper.java:248)
+02-19 12:44:09.833 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.os.Looper.loop(Looper.java:338)
+02-19 12:44:09.833 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.app.ActivityThread.main(ActivityThread.java:9067)
+02-19 12:44:09.833 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at java.lang.reflect.Method.invoke(Native Method)
+02-19 12:44:09.833 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593)
+02-19 12:44:09.833 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:932)
+02-19 12:44:09.834 14715 14715 D BoundBrokerSvc: onBind: Intent { act=com.google.android.gms.safebrowsing.SafeBrowsingService.START dat=chimera-action:/... xflg=0x4 cmp=com.google.android.gms/.chimera.GmsBoundBrokerService }
+02-19 12:44:09.834 14715 14715 D BoundBrokerSvc: Loading bound service for intent: Intent { act=com.google.android.gms.safebrowsing.SafeBrowsingService.START dat=chimera-action:/... xflg=0x4 cmp=com.google.android.gms/.chimera.GmsBoundBrokerService }
+02-19 12:44:09.838 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: Unhandled SoftException
+02-19 12:44:09.838 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: com.facebook.react.bridge.ReactNoCrashSoftException: Cannot get UIManager because the context doesn't contain an active CatalystInstance.
+02-19 12:44:09.838 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.uimanager.UIManagerHelper.getUIManager(:77)
+02-19 12:44:09.838 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.uimanager.UIManagerHelper.getUIManager(:47)
+02-19 12:44:09.838 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.animated.NativeAnimatedNodesManager.handleEvent(:573)
+02-19 12:44:09.838 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.animated.NativeAnimatedNodesManager.onEventDispatch(:551)
+02-19 12:44:09.838 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.uimanager.events.EventDispatcherImpl.dispatchEvent(:116)
+02-19 12:44:09.838 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at o.dotWithNormal.onProgressChanged(:138)
+02-19 12:44:09.838 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at WV.OZ.d(chromium-TrichromeWebViewGoogle6432.aab-stable-694313738:19)
+02-19 12:44:09.838 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at WV.m7.handleMessage(chromium-TrichromeWebViewGoogle6432.aab-stable-694313738:242)
+02-19 12:44:09.838 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.os.Handler.dispatchMessage(Handler.java:110)
+02-19 12:44:09.838 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.os.Looper.loopOnce(Looper.java:248)
+02-19 12:44:09.838 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.os.Looper.loop(Looper.java:338)
+02-19 12:44:09.838 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.app.ActivityThread.main(ActivityThread.java:9067)
+02-19 12:44:09.838 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at java.lang.reflect.Method.invoke(Native Method)
+02-19 12:44:09.838 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593)
+02-19 12:44:09.838 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:932)
+02-19 12:44:09.840 29234 29234 W unknown:ReactNative: Tried to enqueue runnable on already finished thread: 'js... dropping Runnable.
+02-19 12:44:11.124 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: Unhandled SoftException
+02-19 12:44:11.124 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: com.facebook.react.bridge.ReactNoCrashSoftException: Cannot get UIManager because the context doesn't contain an active CatalystInstance.
+02-19 12:44:11.124 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.uimanager.UIManagerHelper.getUIManager(:77)
+02-19 12:44:11.124 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.uimanager.UIManagerHelper.getEventDispatcher(:128)
+02-19 12:44:11.124 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.uimanager.UIManagerHelper.getEventDispatcherForReactTag(:106)
+02-19 12:44:11.124 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.reactnativecommunity.webview.RNCWebView.buF_(:461)
+02-19 12:44:11.124 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at o.setLocation.doUpdateVisitedHistory(:77)
+02-19 12:44:11.124 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at WV.m7.handleMessage(chromium-TrichromeWebViewGoogle6432.aab-stable-694313738:204)
+02-19 12:44:11.124 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.os.Handler.dispatchMessage(Handler.java:110)
+02-19 12:44:11.124 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.os.Looper.loopOnce(Looper.java:248)
+02-19 12:44:11.124 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.os.Looper.loop(Looper.java:338)
+02-19 12:44:11.124 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.app.ActivityThread.main(ActivityThread.java:9067)
+02-19 12:44:11.124 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at java.lang.reflect.Method.invoke(Native Method)
+02-19 12:44:11.124 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593)
+02-19 12:44:11.124 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:932)
+02-19 12:44:11.125 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: Unhandled SoftException
+02-19 12:44:11.125 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: com.facebook.react.bridge.ReactNoCrashSoftException: Cannot get UIManager because the context doesn't contain an active CatalystInstance.
+02-19 12:44:11.125 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.uimanager.UIManagerHelper.getUIManager(:77)
+02-19 12:44:11.125 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.uimanager.UIManagerHelper.getUIManager(:47)
+02-19 12:44:11.125 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.animated.NativeAnimatedNodesManager.handleEvent(:573)
+02-19 12:44:11.125 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.animated.NativeAnimatedNodesManager.onEventDispatch(:551)
+02-19 12:44:11.125 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.uimanager.events.EventDispatcherImpl.dispatchEvent(:116)
+02-19 12:44:11.125 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.reactnativecommunity.webview.RNCWebView.buF_(:461)
+02-19 12:44:11.125 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at o.setLocation.doUpdateVisitedHistory(:77)
+02-19 12:44:11.125 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at WV.m7.handleMessage(chromium-TrichromeWebViewGoogle6432.aab-stable-694313738:204)
+02-19 12:44:11.125 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.os.Handler.dispatchMessage(Handler.java:110)
+02-19 12:44:11.125 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.os.Looper.loopOnce(Looper.java:248)
+02-19 12:44:11.125 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.os.Looper.loop(Looper.java:338)
+02-19 12:44:11.125 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.app.ActivityThread.main(ActivityThread.java:9067)
+02-19 12:44:11.125 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at java.lang.reflect.Method.invoke(Native Method)
+02-19 12:44:11.125 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593)
+02-19 12:44:11.125 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:932)
+02-19 12:44:11.131 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: Unhandled SoftException
+02-19 12:44:11.131 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: com.facebook.react.bridge.ReactNoCrashSoftException: Cannot get UIManager because the context doesn't contain an active CatalystInstance.
+02-19 12:44:11.131 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.uimanager.UIManagerHelper.getUIManager(:77)
+02-19 12:44:11.131 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.uimanager.UIManagerHelper.getEventDispatcher(:128)
+02-19 12:44:11.131 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.uimanager.UIManagerHelper.getEventDispatcherForReactTag(:106)
+02-19 12:44:11.131 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at o.dotWithNormal.onProgressChanged(:138)
+02-19 12:44:11.131 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at WV.OZ.d(chromium-TrichromeWebViewGoogle6432.aab-stable-694313738:19)
+02-19 12:44:11.131 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at WV.m7.handleMessage(chromium-TrichromeWebViewGoogle6432.aab-stable-694313738:242)
+02-19 12:44:11.131 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.os.Handler.dispatchMessage(Handler.java:110)
+02-19 12:44:11.131 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.os.Looper.loopOnce(Looper.java:248)
+02-19 12:44:11.131 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.os.Looper.loop(Looper.java:338)
+02-19 12:44:11.131 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.app.ActivityThread.main(ActivityThread.java:9067)
+02-19 12:44:11.131 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at java.lang.reflect.Method.invoke(Native Method)
+02-19 12:44:11.131 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593)
+02-19 12:44:11.131 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:932)
+02-19 12:44:11.134 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: Unhandled SoftException
+02-19 12:44:11.134 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: com.facebook.react.bridge.ReactNoCrashSoftException: Cannot get UIManager because the context doesn't contain an active CatalystInstance.
+02-19 12:44:11.134 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.uimanager.UIManagerHelper.getUIManager(:77)
+02-19 12:44:11.134 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.uimanager.UIManagerHelper.getUIManager(:47)
+02-19 12:44:11.134 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.animated.NativeAnimatedNodesManager.handleEvent(:573)
+02-19 12:44:11.134 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.animated.NativeAnimatedNodesManager.onEventDispatch(:551)
+02-19 12:44:11.134 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.uimanager.events.EventDispatcherImpl.dispatchEvent(:116)
+02-19 12:44:11.134 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at o.dotWithNormal.onProgressChanged(:138)
+02-19 12:44:11.134 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at WV.OZ.d(chromium-TrichromeWebViewGoogle6432.aab-stable-694313738:19)
+02-19 12:44:11.134 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at WV.m7.handleMessage(chromium-TrichromeWebViewGoogle6432.aab-stable-694313738:242)
+02-19 12:44:11.134 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.os.Handler.dispatchMessage(Handler.java:110)
+02-19 12:44:11.134 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.os.Looper.loopOnce(Looper.java:248)
+02-19 12:44:11.134 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.os.Looper.loop(Looper.java:338)
+02-19 12:44:11.134 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.app.ActivityThread.main(ActivityThread.java:9067)
+02-19 12:44:11.134 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at java.lang.reflect.Method.invoke(Native Method)
+02-19 12:44:11.134 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593)
+02-19 12:44:11.134 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:932)
+02-19 12:44:11.195   752   969 D ActivityManager: freezing 30178 com.android.vending:instant_app_installer
+02-19 12:44:11.356   752  1029 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+02-19 12:44:11.364   752  1029 D InetDiagMessage: Destroyed 1 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+02-19 12:44:11.364   752  1029 D InetDiagMessage: Destroyed live tcp sockets for uids={10146} in 14ms
+02-19 12:44:11.485 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: Unhandled SoftException
+02-19 12:44:11.485 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: com.facebook.react.bridge.ReactNoCrashSoftException: Cannot get UIManager because the context doesn't contain an active CatalystInstance.
+02-19 12:44:11.485 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.uimanager.UIManagerHelper.getUIManager(:77)
+02-19 12:44:11.485 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.uimanager.UIManagerHelper.getEventDispatcher(:128)
+02-19 12:44:11.485 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.uimanager.UIManagerHelper.getEventDispatcherForReactTag(:106)
+02-19 12:44:11.485 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at o.dotWithNormal.onProgressChanged(:138)
+02-19 12:44:11.485 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at WV.OZ.d(chromium-TrichromeWebViewGoogle6432.aab-stable-694313738:19)
+02-19 12:44:11.485 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at WV.m7.handleMessage(chromium-TrichromeWebViewGoogle6432.aab-stable-694313738:242)
+02-19 12:44:11.485 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.os.Handler.dispatchMessage(Handler.java:110)
+02-19 12:44:11.485 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.os.Looper.loopOnce(Looper.java:248)
+02-19 12:44:11.485 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.os.Looper.loop(Looper.java:338)
+02-19 12:44:11.485 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.app.ActivityThread.main(ActivityThread.java:9067)
+02-19 12:44:11.485 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at java.lang.reflect.Method.invoke(Native Method)
+02-19 12:44:11.485 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593)
+02-19 12:44:11.485 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:932)
+02-19 12:44:11.485 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: Unhandled SoftException
+02-19 12:44:11.485 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: com.facebook.react.bridge.ReactNoCrashSoftException: Cannot get UIManager because the context doesn't contain an active CatalystInstance.
+02-19 12:44:11.485 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.uimanager.UIManagerHelper.getUIManager(:77)
+02-19 12:44:11.485 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.uimanager.UIManagerHelper.getUIManager(:47)
+02-19 12:44:11.485 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.animated.NativeAnimatedNodesManager.handleEvent(:573)
+02-19 12:44:11.485 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.animated.NativeAnimatedNodesManager.onEventDispatch(:551)
+02-19 12:44:11.485 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.uimanager.events.EventDispatcherImpl.dispatchEvent(:116)
+02-19 12:44:11.485 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at o.dotWithNormal.onProgressChanged(:138)
+02-19 12:44:11.485 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at WV.OZ.d(chromium-TrichromeWebViewGoogle6432.aab-stable-694313738:19)
+02-19 12:44:11.485 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at WV.m7.handleMessage(chromium-TrichromeWebViewGoogle6432.aab-stable-694313738:242)
+02-19 12:44:11.485 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.os.Handler.dispatchMessage(Handler.java:110)
+02-19 12:44:11.485 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.os.Looper.loopOnce(Looper.java:248)
+02-19 12:44:11.485 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.os.Looper.loop(Looper.java:338)
+02-19 12:44:11.485 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.app.ActivityThread.main(ActivityThread.java:9067)
+02-19 12:44:11.485 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at java.lang.reflect.Method.invoke(Native Method)
+02-19 12:44:11.485 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593)
+02-19 12:44:11.485 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:932)
+02-19 12:44:11.663   752  1856 E TaskPersister: File error accessing recents directory (directory doesn't exist?).
+02-19 12:44:11.700 30262 30262 W screencap: Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: SurfaceFlingerAIDL
+02-19 12:44:11.704 30262 30262 W BpBinder: Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
+02-19 12:44:11.704 30262 30262 W ProcessState: Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
+02-19 12:44:11.729   531   590 E HwcComposer: getLuts failed Status(-8, EX_SERVICE_SPECIFIC): '8: '
+02-19 12:44:11.729   531   590 E HWComposer: getLuts: getLuts failed for display 4619827259835644672: UNSUPPORTED (8)
+02-19 12:44:12.782 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: Unhandled SoftException
+02-19 12:44:12.782 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: com.facebook.react.bridge.ReactNoCrashSoftException: Cannot get UIManager because the context doesn't contain an active CatalystInstance.
+02-19 12:44:12.782 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.uimanager.UIManagerHelper.getUIManager(:77)
+02-19 12:44:12.782 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.uimanager.UIManagerHelper.getEventDispatcher(:128)
+02-19 12:44:12.782 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.uimanager.UIManagerHelper.getEventDispatcherForReactTag(:106)
+02-19 12:44:12.782 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at o.dotWithNormal.onProgressChanged(:138)
+02-19 12:44:12.782 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at WV.OZ.d(chromium-TrichromeWebViewGoogle6432.aab-stable-694313738:19)
+02-19 12:44:12.782 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at WV.m7.handleMessage(chromium-TrichromeWebViewGoogle6432.aab-stable-694313738:242)
+02-19 12:44:12.782 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.os.Handler.dispatchMessage(Handler.java:110)
+02-19 12:44:12.782 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.os.Looper.loopOnce(Looper.java:248)
+02-19 12:44:12.782 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.os.Looper.loop(Looper.java:338)
+02-19 12:44:12.782 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.app.ActivityThread.main(ActivityThread.java:9067)
+02-19 12:44:12.782 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at java.lang.reflect.Method.invoke(Native Method)
+02-19 12:44:12.782 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593)
+02-19 12:44:12.782 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:932)
+02-19 12:44:12.783 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: Unhandled SoftException
+02-19 12:44:12.783 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: com.facebook.react.bridge.ReactNoCrashSoftException: Cannot get UIManager because the context doesn't contain an active CatalystInstance.
+02-19 12:44:12.783 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.uimanager.UIManagerHelper.getUIManager(:77)
+02-19 12:44:12.783 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.uimanager.UIManagerHelper.getUIManager(:47)
+02-19 12:44:12.783 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.animated.NativeAnimatedNodesManager.handleEvent(:573)
+02-19 12:44:12.783 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.animated.NativeAnimatedNodesManager.onEventDispatch(:551)
+02-19 12:44:12.783 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.facebook.react.uimanager.events.EventDispatcherImpl.dispatchEvent(:116)
+02-19 12:44:12.783 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at o.dotWithNormal.onProgressChanged(:138)
+02-19 12:44:12.783 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at WV.OZ.d(chromium-TrichromeWebViewGoogle6432.aab-stable-694313738:19)
+02-19 12:44:12.783 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at WV.m7.handleMessage(chromium-TrichromeWebViewGoogle6432.aab-stable-694313738:242)
+02-19 12:44:12.783 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.os.Handler.dispatchMessage(Handler.java:110)
+02-19 12:44:12.783 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.os.Looper.loopOnce(Looper.java:248)
+02-19 12:44:12.783 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.os.Looper.loop(Looper.java:338)
+02-19 12:44:12.783 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at android.app.ActivityThread.main(ActivityThread.java:9067)
+02-19 12:44:12.783 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at java.lang.reflect.Method.invoke(Native Method)
+02-19 12:44:12.783 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593)
+02-19 12:44:12.783 29234 29234 E unknown:com.facebook.react.uimanager.UIManagerHelper: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:932)
