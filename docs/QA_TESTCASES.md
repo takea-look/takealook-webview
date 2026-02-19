@@ -251,6 +251,16 @@
   - Verdict: 동일 조작 반복 시 복귀 결과가 일관적이지 않음(플래키)
   - Evidence: `artifacts/20260219_115650_adb_appswitch_single_repeat3/am_start.txt`, `artifacts/20260219_115650_adb_appswitch_single_repeat3/focus_switch_1.txt`, `artifacts/20260219_115650_adb_appswitch_single_repeat3/focus_back_1.txt`, `artifacts/20260219_115650_adb_appswitch_single_repeat3/focus_switch_2.txt`, `artifacts/20260219_115650_adb_appswitch_single_repeat3/focus_back_2.txt`, `artifacts/20260219_115650_adb_appswitch_single_repeat3/focus_switch_3.txt`, `artifacts/20260219_115650_adb_appswitch_single_repeat3/focus_back_3.txt`, `artifacts/20260219_115650_adb_appswitch_single_repeat3/cycle_1.png`, `artifacts/20260219_115650_adb_appswitch_single_repeat3/cycle_2.png`, `artifacts/20260219_115650_adb_appswitch_single_repeat3/cycle_3.png`, `artifacts/20260219_115650_adb_appswitch_single_repeat3/logcat_tail.txt`, `artifacts/20260219_115650_adb_appswitch_single_repeat3/log_hits.txt`
 
+- [x] **TC-ADB-APPSWITCH-DOUBLEPRESS-01** (AVD) App Switch 2회 연속 입력 시 포커스 귀환 동작 — **failed**
+  - Steps: explicit deeplink 진입 후 `KEYCODE_APP_SWITCH` 연속 2회 입력
+  - Observed:
+    - `am start`: `Status: ok`, `LaunchState: HOT`, `WaitTime: 407ms`
+    - 1회 입력 후 focus: `NexusLauncherActivity`
+    - 2회 입력 후 focus: `SettingsHomepageActivity` (의도 앱 미복귀)
+    - logcat 스캔에서 ANR/FATAL/obituary/"ANR likely to follow" 키워드 미검출
+  - Verdict: App Switch 연속 입력 시 대상 앱 복귀 동작이 비결정적/오동작
+  - Evidence: `artifacts/20260219_115823_adb_appswitch_single_doublepress_return/am_start.txt`, `artifacts/20260219_115823_adb_appswitch_single_doublepress_return/focus_before_switch.txt`, `artifacts/20260219_115823_adb_appswitch_single_doublepress_return/focus_after_switch_1.txt`, `artifacts/20260219_115823_adb_appswitch_single_doublepress_return/focus_after_switch_2.txt`, `artifacts/20260219_115823_adb_appswitch_single_doublepress_return/after_switch_2.png`, `artifacts/20260219_115823_adb_appswitch_single_doublepress_return/logcat_tail.txt`, `artifacts/20260219_115823_adb_appswitch_single_doublepress_return/log_hits.txt`
+
 - [x] **TC-ADB-ROTATE-01** (AVD) Deeplink 진입 후 화면 회전(가로/세로) 안정성 — **passed**
   - Steps: deeplink 진입 → 강제 landscape(`user_rotation=1`) → portrait(`user_rotation=0`)
   - Observed: 회전 전/중/후 모두 `GraniteActivity` 포커스 유지, 앱 이탈/크래시 미관찰
@@ -431,4 +441,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 11:58 KST
+- Last update: 2026-02-19 12:00 KST
