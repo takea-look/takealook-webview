@@ -97,7 +97,13 @@ export function StoryEditorScreen() {
     try {
       const categories = await getStickerCategories();
       setStickerCategories(categories);
-      setSelectedStickerCategoryId(prev => prev ?? categories[0]?.id ?? null);
+      setSelectedStickerCategoryId(prev => {
+        if (prev != null && categories.some(category => category.id === prev)) return prev;
+        return categories[0]?.id ?? null;
+      });
+      if (categories.length === 0) {
+        setStickerItems([]);
+      }
     } catch (err) {
       console.error('Failed to load sticker categories:', err);
       setStickerPickerError('스티커 카테고리를 불러오지 못했어요.');
@@ -123,9 +129,8 @@ export function StoryEditorScreen() {
 
   useEffect(() => {
     if (!stickerPickerOpen) return;
-    if (stickerCategories.length > 0) return;
     void loadStickerCategories();
-  }, [stickerPickerOpen, stickerCategories.length]);
+  }, [stickerPickerOpen]);
 
   useEffect(() => {
     if (!stickerPickerOpen || selectedStickerCategoryId == null) return;
