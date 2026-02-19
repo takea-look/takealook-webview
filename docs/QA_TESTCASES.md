@@ -121,6 +121,15 @@
   - Verdict: Back 이벤트에 대한 화면 전환/종료 반응 미확인(추가 앱 내부 로그 필요)
   - Evidence: `artifacts/20260219_090238_adb_backpress_behavior/am_start.txt`, `artifacts/20260219_090238_adb_backpress_behavior/focus_before_back.txt`, `artifacts/20260219_090238_adb_backpress_behavior/focus_after_back.txt`, `artifacts/20260219_090238_adb_backpress_behavior/before_back.png`, `artifacts/20260219_090238_adb_backpress_behavior/after_back.png`
 
+- [x] **TC-ADB-BACK-03** (AVD) 안정 랜딩 상태에서 Back key 1회 반응성 재검증 — **failed (no transition)**
+  - Steps: explicit deeplink로 앱 진입(안정 focus 확인) 후 `KEYCODE_BACK` 1회 입력
+  - Observed:
+    - `am start`: `Status: ok`, `LaunchState: HOT`, `TotalTime: 2709ms`, `WaitTime: 2775ms`
+    - back 전/후 focus 모두 `GraniteActivity`
+    - logcat 스캔에서 ANR/FATAL/obituary 키워드 미검출
+  - Verdict: 안정 진입 상태에서도 Back 1회로 화면 전환/종료 반응 미확인
+  - Evidence: `artifacts/20260219_111816_adb_back_single_from_stable/am_start.txt`, `artifacts/20260219_111816_adb_back_single_from_stable/focus_before_back.txt`, `artifacts/20260219_111816_adb_back_single_from_stable/focus_after_back.txt`, `artifacts/20260219_111816_adb_back_single_from_stable/before_back.png`, `artifacts/20260219_111816_adb_back_single_from_stable/after_back.png`, `artifacts/20260219_111816_adb_back_single_from_stable/logcat_tail.txt`, `artifacts/20260219_111816_adb_back_single_from_stable/log_hits.txt`
+
 - [x] **TC-ADB-BACK-02** (AVD) Back key 2회 입력 반응성 재검증 — **failed (blocked by launch fallback)**
   - Steps: Home 상태에서 explicit deeplink 실행 → `KEYCODE_BACK` 2회 입력
   - Observed:
@@ -242,4 +251,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 11:14 KST
+- Last update: 2026-02-19 11:20 KST
