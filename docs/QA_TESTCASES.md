@@ -1769,8 +1769,18 @@
   - Verdict: Home→Back→Recents 이후 explicit 재진입 정상
   - Evidence: `artifacts/20260219_193649_adb_home_back_recents_then_explicit/am_start_1_implicit.txt`, `artifacts/20260219_193649_adb_home_back_recents_then_explicit/focus_after_implicit_1.txt`, `artifacts/20260219_193649_adb_home_back_recents_then_explicit/focus_after_home_back_recents.txt`, `artifacts/20260219_193649_adb_home_back_recents_then_explicit/am_start_2_explicit.txt`, `artifacts/20260219_193649_adb_home_back_recents_then_explicit/focus_after_explicit_2.txt`, `artifacts/20260219_193649_adb_home_back_recents_then_explicit/after_explicit_2.png`, `artifacts/20260219_193649_adb_home_back_recents_then_explicit/logcat_tail.txt`, `artifacts/20260219_193649_adb_home_back_recents_then_explicit/log_hits.txt`
 
+- [x] **TC-ADB-FORCESTOP-EXPLICIT-BASELINE-01** (AVD) force-stop 후 explicit 딥링크 베이스라인 재진입 — **failed (am start timeout)**
+  - Steps: `HOME` → `am force-stop viva.republica.toss.test` → explicit deeplink 실행
+  - Observed:
+    - force-stop 직후 pid 조회: 프로세스 미존재(정상 종료)
+    - explicit 재진입: `Status: timeout`, `LaunchState: UNKNOWN (-1)`, `WaitTime: 17606ms`
+    - 실행 후 focus: `GraniteActivity`
+    - logcat: 대상 앱 obituary 1건(강제종료 맥락), 대상 앱 ANR/FATAL/`ANR likely to follow` 미검출
+  - Verdict: 포커스는 복구되지만 `am start -W` timeout 발생으로 fail
+  - Evidence: `artifacts/20260219_193842_adb_forcestop_then_explicit_baseline/pid_after_forcestop.txt`, `artifacts/20260219_193842_adb_forcestop_then_explicit_baseline/am_start_explicit.txt`, `artifacts/20260219_193842_adb_forcestop_then_explicit_baseline/focus_after_explicit.txt`, `artifacts/20260219_193842_adb_forcestop_then_explicit_baseline/after_explicit.png`, `artifacts/20260219_193842_adb_forcestop_then_explicit_baseline/logcat_tail.txt`, `artifacts/20260219_193842_adb_forcestop_then_explicit_baseline/log_hits.txt`
+
 - Notes:
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 19:38 KST
+- Last update: 2026-02-19 19:40 KST
