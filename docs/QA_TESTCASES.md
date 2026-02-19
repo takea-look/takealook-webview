@@ -835,8 +835,19 @@
   - Verdict: implicit 진입 후 Back 2회 입력 상황에서도 explicit 재진입 기능 동작 정상
   - Evidence: `artifacts/20260219_131855_adb_implicit_back_double_then_explicit/am_start_1_implicit.txt`, `artifacts/20260219_131855_adb_implicit_back_double_then_explicit/focus_after_implicit.txt`, `artifacts/20260219_131855_adb_implicit_back_double_then_explicit/focus_after_back2.txt`, `artifacts/20260219_131855_adb_implicit_back_double_then_explicit/am_start_2_explicit.txt`, `artifacts/20260219_131855_adb_implicit_back_double_then_explicit/focus_after_explicit.txt`, `artifacts/20260219_131855_adb_implicit_back_double_then_explicit/after_explicit.png`, `artifacts/20260219_131855_adb_implicit_back_double_then_explicit/logcat_tail.txt`, `artifacts/20260219_131855_adb_implicit_back_double_then_explicit/log_hits.txt`
 
+- [x] **TC-ADB-EXPLICIT-BACK2-IMPLICIT-REENTRY-01** (AVD) explicit 진입 후 Back 2회 뒤 implicit 재진입 — **passed**
+  - Steps: `HOME` → explicit deeplink 진입 → `BACK` 2회 → implicit deeplink 재실행
+  - Observed:
+    - 1차 explicit: `Status: ok`, `LaunchState: WARM`, `TotalTime: 14422ms`, `WaitTime: 14430ms`, focus `GraniteActivity`
+    - Back 2회 후 focus: `GraniteActivity` 유지
+    - 2차 implicit: `Status: ok`, `LaunchState: UNKNOWN (0)`, `WaitTime: 6ms`
+    - 2차 실행 후 focus: `GraniteActivity`
+    - logcat 스캔에서 ANR/FATAL/obituary/"ANR likely to follow" 키워드 미검출
+  - Verdict: explicit 진입 후 Back 2회 상황에서도 implicit 재진입 기능 동작 정상
+  - Evidence: `artifacts/20260219_132003_adb_explicit_back2_then_implicit_reentry/am_start_1_explicit.txt`, `artifacts/20260219_132003_adb_explicit_back2_then_implicit_reentry/focus_after_explicit.txt`, `artifacts/20260219_132003_adb_explicit_back2_then_implicit_reentry/focus_after_back2.txt`, `artifacts/20260219_132003_adb_explicit_back2_then_implicit_reentry/am_start_2_implicit.txt`, `artifacts/20260219_132003_adb_explicit_back2_then_implicit_reentry/focus_after_implicit.txt`, `artifacts/20260219_132003_adb_explicit_back2_then_implicit_reentry/after_implicit.png`, `artifacts/20260219_132003_adb_explicit_back2_then_implicit_reentry/logcat_tail.txt`, `artifacts/20260219_132003_adb_explicit_back2_then_implicit_reentry/log_hits.txt`
+
 - Notes:
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 13:20 KST
+- Last update: 2026-02-19 13:21 KST
