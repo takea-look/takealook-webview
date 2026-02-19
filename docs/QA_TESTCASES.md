@@ -804,8 +804,18 @@
   - Verdict: broadcast 권한 제한은 동일하지만, 토글 직후 implicit 진입 동작은 정상
   - Evidence: `artifacts/20260219_130201_adb_airplane_toggle_implicit/airplane_on_broadcast.txt`, `artifacts/20260219_130201_adb_airplane_toggle_implicit/airplane_off_broadcast.txt`, `artifacts/20260219_130201_adb_airplane_toggle_implicit/am_start_implicit.txt`, `artifacts/20260219_130201_adb_airplane_toggle_implicit/focus_after_start.txt`, `artifacts/20260219_130201_adb_airplane_toggle_implicit/after_start.png`, `artifacts/20260219_130201_adb_airplane_toggle_implicit/logcat_tail.txt`, `artifacts/20260219_130201_adb_airplane_toggle_implicit/log_hits.txt`
 
+- [x] **TC-ADB-IMPLICIT-BACK-EXPLICIT-REENTRY-01** (AVD) implicit 진입 후 Back 입력 뒤 explicit 재진입 — **failed (ANR warning detected)**
+  - Steps: `HOME` → implicit deeplink 진입 → `BACK` 1회 → explicit deeplink 재실행
+  - Observed:
+    - 1차 implicit: `Status: ok`, `LaunchState: HOT`, `TotalTime: 9728ms`, `WaitTime: 9748ms`, focus `GraniteActivity`
+    - Back 입력 후 focus: `GraniteActivity` (화면 이탈 없음)
+    - 2차 explicit: `Status: ok`, `LaunchState: WARM`, `TotalTime: 287ms`, `WaitTime: 300ms`, focus `GraniteActivity`
+    - logcat에서 `Application ANR likely to follow` 1건 검출
+  - Verdict: 기능 진입 자체는 성공했으나 ANR 전조 로그가 검출되어 fail
+  - Evidence: `artifacts/20260219_131511_adb_implicit_back_then_explicit_reentry/am_start_1_implicit.txt`, `artifacts/20260219_131511_adb_implicit_back_then_explicit_reentry/focus_after_implicit.txt`, `artifacts/20260219_131511_adb_implicit_back_then_explicit_reentry/focus_after_back.txt`, `artifacts/20260219_131511_adb_implicit_back_then_explicit_reentry/am_start_2_explicit.txt`, `artifacts/20260219_131511_adb_implicit_back_then_explicit_reentry/focus_after_explicit.txt`, `artifacts/20260219_131511_adb_implicit_back_then_explicit_reentry/after_explicit.png`, `artifacts/20260219_131511_adb_implicit_back_then_explicit_reentry/logcat_tail.txt`, `artifacts/20260219_131511_adb_implicit_back_then_explicit_reentry/log_hits.txt`
+
 - Notes:
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 13:13 KST
+- Last update: 2026-02-19 13:16 KST
