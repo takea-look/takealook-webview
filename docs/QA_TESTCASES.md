@@ -1644,8 +1644,20 @@
   - Verdict: 1·2차 `am start -W` 모두 timeout 발생으로 시나리오 fail
   - Evidence: `artifacts/20260219_191206_adb_home_recents_back_then_explicit/am_start_1_implicit.txt`, `artifacts/20260219_191206_adb_home_recents_back_then_explicit/focus_after_implicit_1.txt`, `artifacts/20260219_191206_adb_home_recents_back_then_explicit/focus_after_home_recents_back.txt`, `artifacts/20260219_191206_adb_home_recents_back_then_explicit/am_start_2_explicit.txt`, `artifacts/20260219_191206_adb_home_recents_back_then_explicit/focus_after_explicit_2.txt`, `artifacts/20260219_191206_adb_home_recents_back_then_explicit/after_explicit_2.png`, `artifacts/20260219_191206_adb_home_recents_back_then_explicit/logcat_tail.txt`, `artifacts/20260219_191206_adb_home_recents_back_then_explicit/log_hits.txt`
 
+- [x] **TC-ADB-BACK-HOME-IMPLICIT-01** (AVD) Back→Home 후 implicit 딥링크 재진입 — **failed (app ANR + timeout)**
+  - Steps: explicit deeplink 진입 → `BACK` → `HOME` → implicit deeplink 재실행
+  - Observed:
+    - 1차 explicit: `Status: ok`, `LaunchState: UNKNOWN (0)`, `WaitTime: 1020ms`, focus `GraniteActivity`
+    - Back→Home 후 focus: `null`
+    - 2차 implicit: `Status: timeout`, `LaunchState: UNKNOWN (-1)`, `Activity: .MiniAppSchemeActivity`, `WaitTime: 32207ms`
+    - 2차 실행 후 focus: `null`
+    - logcat: `ANR in Window{...viva.republica.toss.test...}`, `Completed ANR of viva.republica.toss.test` 검출
+    - 추가로 시스템 앱 ANR(`com.google.android.inputmethod.latin`, `com.android.chrome`) 동반
+  - Verdict: 대상 앱 ANR 및 재진입 timeout으로 fail
+  - Evidence: `artifacts/20260219_191511_adb_back_home_then_implicit/am_start_1_explicit.txt`, `artifacts/20260219_191511_adb_back_home_then_implicit/focus_after_explicit_1.txt`, `artifacts/20260219_191511_adb_back_home_then_implicit/focus_after_back_home.txt`, `artifacts/20260219_191511_adb_back_home_then_implicit/am_start_2_implicit.txt`, `artifacts/20260219_191511_adb_back_home_then_implicit/focus_after_implicit_2.txt`, `artifacts/20260219_191511_adb_back_home_then_implicit/after_implicit_2.png`, `artifacts/20260219_191511_adb_back_home_then_implicit/logcat_tail.txt`, `artifacts/20260219_191511_adb_back_home_then_implicit/log_hits.txt`
+
 - Notes:
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 19:14 KST
+- Last update: 2026-02-19 19:17 KST
