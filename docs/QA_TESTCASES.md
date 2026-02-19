@@ -240,6 +240,16 @@
   - Verdict: 복합 launcher 상태(Home→Recents→Back)에서도 explicit deeplink 진입 정상
   - Evidence: `artifacts/20260219_130431_adb_home_recents_back_then_explicit/focus_after_home_recents_back.txt`, `artifacts/20260219_130431_adb_home_recents_back_then_explicit/am_start.txt`, `artifacts/20260219_130431_adb_home_recents_back_then_explicit/focus_after_start.txt`, `artifacts/20260219_130431_adb_home_recents_back_then_explicit/after_start.png`, `artifacts/20260219_130431_adb_home_recents_back_then_explicit/logcat_tail.txt`, `artifacts/20260219_130431_adb_home_recents_back_then_explicit/log_hits.txt`
 
+- [x] **TC-ADB-HOME-RECENTS-BACK-DEEPLINK-02** (AVD) Home→Recents→Back 상태 explicit 재검증 — **passed**
+  - Steps: `HOME` → `APP_SWITCH` → `BACK` 입력 후 explicit deeplink 재실행
+  - Observed:
+    - Home/recents/back 이후 focus: `NexusLauncherActivity`
+    - `am start`: `Status: ok`, `LaunchState: WARM`, `TotalTime: 819ms`, `WaitTime: 824ms`
+    - 실행 후 focus: `GraniteActivity`
+    - logcat 스캔에서 ANR/FATAL/obituary/"ANR likely to follow" 키워드 미검출
+  - Verdict: 동일 복합 launcher 상태에서 explicit 재진입이 재검증에서도 안정적으로 성공
+  - Evidence: `artifacts/20260219_130837_adb_home_recents_back_then_explicit_repeat/focus_after_home_recents_back.txt`, `artifacts/20260219_130837_adb_home_recents_back_then_explicit_repeat/am_start_explicit.txt`, `artifacts/20260219_130837_adb_home_recents_back_then_explicit_repeat/focus_after_start.txt`, `artifacts/20260219_130837_adb_home_recents_back_then_explicit_repeat/after_start.png`, `artifacts/20260219_130837_adb_home_recents_back_then_explicit_repeat/logcat_tail.txt`, `artifacts/20260219_130837_adb_home_recents_back_then_explicit_repeat/log_hits.txt`
+
 - [x] **TC-ADB-HOME-RECENTS-BACK-IMPLICIT-01** (AVD) Home→Recents→Back 상태에서 implicit deeplink 진입 — **passed**
   - Steps: `HOME` → `APP_SWITCH` → `BACK` 입력 후 implicit deeplink 실행
   - Observed:
@@ -778,4 +788,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 13:07 KST
+- Last update: 2026-02-19 13:09 KST
