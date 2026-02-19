@@ -2154,8 +2154,19 @@
   - Verdict: 1차 explicit에서 ANR dialog 포커스, 2차 implicit launcher fallback으로 fail
   - Evidence: `artifacts/20260219_205523_adb_forcestop_explicit_recents_home_implicit/pid_after_forcestop.txt`, `artifacts/20260219_205523_adb_forcestop_explicit_recents_home_implicit/am_start_1_explicit.txt`, `artifacts/20260219_205523_adb_forcestop_explicit_recents_home_implicit/focus_after_explicit.txt`, `artifacts/20260219_205523_adb_forcestop_explicit_recents_home_implicit/focus_after_recents_home.txt`, `artifacts/20260219_205523_adb_forcestop_explicit_recents_home_implicit/am_start_2_implicit.txt`, `artifacts/20260219_205523_adb_forcestop_explicit_recents_home_implicit/focus_after_implicit.txt`, `artifacts/20260219_205523_adb_forcestop_explicit_recents_home_implicit/after_implicit.png`, `artifacts/20260219_205523_adb_forcestop_explicit_recents_home_implicit/logcat_tail.txt`, `artifacts/20260219_205523_adb_forcestop_explicit_recents_home_implicit/log_hits.txt`
 
+- [x] **TC-ADB-FORCESTOP-IMPLICIT-RECENTS-HOME-EXPLICIT-01** (AVD) force-stop 후 implicit 진입 뒤 Recents→Home→explicit 재진입 — **failed (initial launcher fallback + explicit ANR)**
+  - Steps: `HOME` → `am force-stop viva.republica.toss.test` → implicit deeplink 실행 → `APP_SWITCH` → `HOME` → explicit deeplink 실행
+  - Observed:
+    - force-stop 직후 pid 조회: 프로세스 미존재(정상 종료)
+    - 1차 implicit: `Status: ok`, `LaunchState: UNKNOWN (0)`, `Activity: .MiniAppSchemeActivity`, `WaitTime: 18545ms`, focus `NexusLauncherActivity` (초기 진입 실패)
+    - Recents→Home 후 focus: `NexusLauncherActivity`
+    - 2차 explicit: `Status: ok`, `LaunchState: COLD`, `TotalTime: 25151ms`, `WaitTime: 25166ms`, 직후 focus `Application Not Responding: viva.republica.toss.test`
+    - logcat: `Application ANR likely to follow`, `ANR in viva.republica.toss.test`, `Completed ANR` 검출
+  - Verdict: 1차 implicit launcher fallback + 2차 explicit ANR로 fail
+  - Evidence: `artifacts/20260219_205730_adb_forcestop_implicit_recents_home_explicit/pid_after_forcestop.txt`, `artifacts/20260219_205730_adb_forcestop_implicit_recents_home_explicit/am_start_1_implicit.txt`, `artifacts/20260219_205730_adb_forcestop_implicit_recents_home_explicit/focus_after_implicit.txt`, `artifacts/20260219_205730_adb_forcestop_implicit_recents_home_explicit/focus_after_recents_home.txt`, `artifacts/20260219_205730_adb_forcestop_implicit_recents_home_explicit/am_start_2_explicit.txt`, `artifacts/20260219_205730_adb_forcestop_implicit_recents_home_explicit/focus_after_explicit.txt`, `artifacts/20260219_205730_adb_forcestop_implicit_recents_home_explicit/after_explicit.png`, `artifacts/20260219_205730_adb_forcestop_implicit_recents_home_explicit/logcat_tail.txt`, `artifacts/20260219_205730_adb_forcestop_implicit_recents_home_explicit/log_hits.txt`
+
 - Notes:
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 20:57 KST
+- Last update: 2026-02-19 20:59 KST
