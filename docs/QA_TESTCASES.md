@@ -1528,8 +1528,18 @@
   - Verdict: focus는 복구됐지만 implicit 재진입의 `am start -W` timeout으로 fail
   - Evidence: `artifacts/20260219_185309_adb_back_then_implicit_reentry/am_start_1_explicit.txt`, `artifacts/20260219_185309_adb_back_then_implicit_reentry/focus_after_explicit_1.txt`, `artifacts/20260219_185309_adb_back_then_implicit_reentry/focus_after_back.txt`, `artifacts/20260219_185309_adb_back_then_implicit_reentry/am_start_2_implicit.txt`, `artifacts/20260219_185309_adb_back_then_implicit_reentry/focus_after_implicit_2.txt`, `artifacts/20260219_185309_adb_back_then_implicit_reentry/after_implicit_2.png`, `artifacts/20260219_185309_adb_back_then_implicit_reentry/logcat_tail.txt`, `artifacts/20260219_185309_adb_back_then_implicit_reentry/log_hits.txt`
 
+- [x] **TC-ADB-HOME-IMPLICIT-REENTRY-01** (AVD) Home 후 implicit 딥링크 재진입 — **passed**
+  - Steps: explicit deeplink 진입 → `HOME` → implicit deeplink 재실행
+  - Observed:
+    - 1차 explicit: `Status: ok`, `LaunchState: HOT`, `TotalTime: 337ms`, `WaitTime: 391ms`, focus `GraniteActivity`
+    - Home 이동 후 focus: `NexusLauncherActivity`
+    - 2차 implicit: `Status: ok`, `LaunchState: WARM`, `Activity: .MiniAppSchemeActivity`, `TotalTime: 317ms`, `WaitTime: 320ms`, focus `GraniteActivity`
+    - logcat 스캔에서 ANR/FATAL/obituary/"ANR likely to follow" 키워드 미검출
+  - Verdict: Home 이후 implicit 재진입 정상
+  - Evidence: `artifacts/20260219_185450_adb_home_then_implicit_reentry/am_start_1_explicit.txt`, `artifacts/20260219_185450_adb_home_then_implicit_reentry/focus_after_explicit_1.txt`, `artifacts/20260219_185450_adb_home_then_implicit_reentry/focus_on_home.txt`, `artifacts/20260219_185450_adb_home_then_implicit_reentry/am_start_2_implicit.txt`, `artifacts/20260219_185450_adb_home_then_implicit_reentry/focus_after_implicit_2.txt`, `artifacts/20260219_185450_adb_home_then_implicit_reentry/after_implicit_2.png`, `artifacts/20260219_185450_adb_home_then_implicit_reentry/logcat_tail.txt`, `artifacts/20260219_185450_adb_home_then_implicit_reentry/log_hits.txt`
+
 - Notes:
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 18:54 KST
+- Last update: 2026-02-19 18:56 KST
