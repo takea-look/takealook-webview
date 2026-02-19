@@ -261,6 +261,16 @@
   - Verdict: 타 앱(Settings) 진입 후 Home 경유 복귀 플로우 정상
   - Evidence: `artifacts/20260219_121532_adb_settings_home_resume/am_settings.txt`, `artifacts/20260219_121532_adb_settings_home_resume/focus_on_settings.txt`, `artifacts/20260219_121532_adb_settings_home_resume/monkey_resume.txt`, `artifacts/20260219_121532_adb_settings_home_resume/focus_after_resume.txt`, `artifacts/20260219_121532_adb_settings_home_resume/after_resume.png`, `artifacts/20260219_121532_adb_settings_home_resume/logcat_tail.txt`, `artifacts/20260219_121532_adb_settings_home_resume/log_hits.txt`
 
+- [x] **TC-ADB-SETTINGS-BACK-RESUME-01** (AVD) Settings에서 Back 후 앱 복귀 동작 — **passed**
+  - Steps: Settings 실행 → `KEYCODE_BACK`으로 이탈 → `monkey -p viva.republica.toss.test ... 1`로 앱 복귀
+  - Observed:
+    - Settings 실행: `Status: ok`, `LaunchState: HOT`, `WaitTime: 5681ms`, focus `SettingsHomepageActivity`
+    - Back 후 focus: `NexusLauncherActivity`
+    - resume 후 focus: `GraniteActivity`
+    - logcat 스캔에서 ANR/FATAL/obituary/"ANR likely to follow" 키워드 미검출
+  - Verdict: Settings에서 Back으로 빠져나온 뒤에도 앱 복귀 플로우 정상
+  - Evidence: `artifacts/20260219_121732_adb_settings_back_then_resume/am_settings.txt`, `artifacts/20260219_121732_adb_settings_back_then_resume/focus_on_settings.txt`, `artifacts/20260219_121732_adb_settings_back_then_resume/focus_after_back.txt`, `artifacts/20260219_121732_adb_settings_back_then_resume/monkey_resume.txt`, `artifacts/20260219_121732_adb_settings_back_then_resume/focus_after_resume.txt`, `artifacts/20260219_121732_adb_settings_back_then_resume/after_resume.png`, `artifacts/20260219_121732_adb_settings_back_then_resume/logcat_tail.txt`, `artifacts/20260219_121732_adb_settings_back_then_resume/log_hits.txt`
+
 - [x] **TC-ADB-APPSWITCH-DOUBLETAP-01** (AVD) 앱 활성 상태에서 App Switch 더블탭 복귀 — **failed (unstable focus)**
   - Steps: explicit deeplink 진입 후 `KEYCODE_APP_SWITCH` 2회 연속 입력
   - Observed:
@@ -537,4 +547,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 12:17 KST
+- Last update: 2026-02-19 12:19 KST
