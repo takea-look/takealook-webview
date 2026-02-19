@@ -1,0 +1,604 @@
+--------- beginning of main
+02-19 13:00:10.117   531   590 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+--------- beginning of system
+02-19 13:00:10.114  4449  4467 D ShellSplitScreen: logExit: no-op, mLoggerSessionId is null
+02-19 13:00:10.135   752  1509 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ENABLE_FAKE_FOCUS
+02-19 13:00:10.137   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 13:00:10.146   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 13:00:10.146   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 13:00:10.406  4449  4467 V WindowManagerShell: Transition animation finished (aborted=false), notifying core (#358) android.os.BinderProxy@e853e85@1
+02-19 13:00:10.409   752   794 V WindowManager: Finish Transition (#358): created at 02-19 13:00:09.027 collect-started=0.025ms request-sent=10.865ms started=17.283ms ready=637.518ms sent=1015.969ms commit=21.435ms finished=1381.896ms
+02-19 13:00:10.412  4449  4467 V WindowManagerShell: Track 1 became idle
+02-19 13:00:10.427   531   531 E BpTransactionCompletedListener: Failed to transact (-32)
+02-19 13:00:10.427   531   531 E BpTransactionCompletedListener: Failed to transact (-32)
+02-19 13:00:10.442   752  1509 D CoreBackPreview: Window{4cd2c48 u0 viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@7c156c7, mPriority=0, mIsAnimationCallback=false, mOverrideBehavior=0}
+02-19 13:00:10.448 32031 32031 W unknown:ReactRootView: Unable to update root layout specs for uninitialized ReactInstanceManager
+02-19 13:00:10.604 32031 32031 V SoLoader: Init System Loader delegate
+02-19 13:00:10.606   752   794 I ActivityTaskManager: Displayed viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity for user 0: +497ms
+02-19 13:00:10.606   752   794 V WindowManager: Sent Transition (#359) createdAt=02-19 13:00:10.105 via request=TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=55 effectiveUid=10217 displayId=0 isRunning=true baseIntent=Intent { act=android.intent.action.VIEW dat=intoss://takealook/... flg=0x10000000 pkg=viva.republica.toss.test cmp=viva.republica.toss.test/.MiniAppSchemeActivity } baseActivity=ComponentInfo{viva.republica.toss.test/viva.republica.toss.test.MiniAppSchemeActivity} topActivity=ComponentInfo{viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity} origActivity=null realActivity=ComponentInfo{viva.republica.toss.test/viva.republica.toss.test.MiniAppSchemeActivity} numActivities=2 lastActiveTime=85083954 supportsMultiWindow=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{RemoteToken{b1bba2c Task{917d257 #55 type=standard A=10217:viva.republica.toss.test}}} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 0 - 0, 0) topActivityInfo=ActivityInfo{a6c57bf im.toss.rn.granite.core.GraniteActivity} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=true isVisible=true isVisibleRequested=true isTopActivityNoDisplay=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false isActivityStackTransparent=false lastNonFullscreenBounds=Rect(284, 660 - 796, 1740) capturedLink=null capturedLinkTimestamp=0 requestedVisibleTypes=-9 topActivityRequestOpenInBrowserEducationTimestamp=0 appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false eligibleForLetterboxEducation= false isLetterboxEducationEnabled= true isLetterboxDoubleTapEnabled= false eligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 topActivityAppBounds=Rect(0, 0 - 1080, 2400) isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false hasMinAspectRatioOverride=false topActivityLetterboxBounds=null cameraCompatTaskInfo=CameraCompatTaskInfo { freeformCameraCompatMode=inactive}} topActivityMainWindowFrame=null}, pipChange = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 359 }
+02-19 13:00:10.606   752   794 V WindowManager:     startWCT=WindowContainerTransaction { changes= {} hops= [] errorCallbackToken=null taskFragmentOrganizer=null }
+02-19 13:00:10.607  4449 21898 V WindowManagerShell: onTransitionReady(transaction=3229815417194)
+02-19 13:00:10.607   752   794 V WindowManager:     info={id=359 t=OPEN f=0x0 trk=2 r=[0@Point(0, 0)] c=[
+02-19 13:00:10.607   752   794 V WindowManager:         {m=OPEN f=FILLS_TASK leash=Surface(name=ActivityRecord{31277282 u0 viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity)/@0x9ae2519 sb=Rect(0, 0 - 0, 0) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=-1->0 r=-1->0:-1 bc=ffffffff component=viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity},
+02-19 13:00:10.607   752   794 V WindowManager:         {m=CLOSE f=TRANSLUCENT|FILLS_TASK|IS_OCCLUDED leash=Surface(name=ActivityRecord{64126934 u0 viva.republica.toss.test/.MiniAppSchemeActivity)/@0x74b3c60 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 bc=ffffffff component=viva.republica.toss.test/.MiniAppSchemeActivity},
+02-19 13:00:10.607   752   794 V WindowManager:         {WCT{RemoteToken{5218fe8 Task{dd43522 #1 type=home}}} m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0x8ddbd2e sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1},
+02-19 13:00:10.607   752   794 V WindowManager:         {m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{35e0c0f showWhenLocked=false})/@0x512f5be sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0}
+02-19 13:00:10.607   752   794 V WindowManager:     ]}
+02-19 13:00:10.607  4449  4467 V WindowManagerShell: onTransitionReady (#359) android.os.BinderProxy@4a9c283: {id=359 t=OPEN f=0x0 trk=2 r=[0@Point(0, 0)] c=[
+02-19 13:00:10.607  4449  4467 V WindowManagerShell:         {m=OPEN f=FILLS_TASK leash=Surface(name=ActivityRecord{31277282 u0 viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity)/@0x7d9e27e sb=Rect(0, 0 - 0, 0) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=-1->0 r=-1->0:-1 bc=ffffffff component=viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity},
+02-19 13:00:10.607  4449  4467 V WindowManagerShell:         {m=CLOSE f=TRANSLUCENT|FILLS_TASK|IS_OCCLUDED leash=Surface(name=ActivityRecord{64126934 u0 viva.republica.toss.test/.MiniAppSchemeActivity)/@0x63c03df sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 bc=ffffffff component=viva.republica.toss.test/.MiniAppSchemeActivity},
+02-19 13:00:10.607  4449  4467 V WindowManagerShell:         {m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0xe35c82c sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1},
+02-19 13:00:10.607  4449  4467 V WindowManagerShell:         {m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{35e0c0f showWhenLocked=false})/@0xdebd2f5 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0}
+02-19 13:00:10.607  4449  4467 V WindowManagerShell:     ]}
+02-19 13:00:10.608  4449  4467 V WindowManagerShell: Playing animation for (#359) android.os.BinderProxy@4a9c283@2
+02-19 13:00:10.608  4449  4467 V ShellRecents: RecentsTransitionHandler.startAnimation: no controller found
+02-19 13:00:10.608  4449  4467 V WindowManagerShell: Transition doesn't have explicit remote, search filters for match for {id=359 t=OPEN f=0x0 trk=2 r=[0@Point(0, 0)] c=[{m=OPEN f=FILLS_TASK leash=Surface(name=ActivityRecord{31277282 u0 viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity)/@0x7d9e27e sb=Rect(0, 0 - 0, 0) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=-1->0 r=-1->0:-1 bc=ffffffff component=viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity},{m=CLOSE f=TRANSLUCENT|FILLS_TASK|IS_OCCLUDED leash=Surface(name=ActivityRecord{64126934 u0 viva.republica.toss.test/.MiniAppSchemeActivity)/@0x63c03df sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 bc=ffffffff component=viva.republica.toss.test/.MiniAppSchemeActivity},{m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0xe35c82c sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1},{m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{35e0c0f showWhenLocked=false})/@0xdebd2f5 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0}]}
+02-19 13:00:10.608  4449  4467 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x0 checks=[{atype=undefined independent=true modes=[CLOSE,TO_BACK] flags=IN_TASK_WITH_EMBEDDED_ACTIVITY mustBeTask=false order=ANY topActivity=null launchCookie=null taskFragmentToken=android.os.BinderProxy@188d51a windowingMode=undefined}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@44cd84b, appThread = android.app.IApplicationThread$Stub$Proxy@3a12228, debugName = overlayBackTransition }}
+02-19 13:00:10.608  4449  4467 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x0 checks=[{atype=dream independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined},{atype=home independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@6f3eb41, appThread = android.app.IApplicationThread$Stub$Proxy@ccf28e6, debugName = LauncherToDream }}
+02-19 13:00:10.609  4449  4467 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=TOP topActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity} launchCookie=null windowingMode=undefined},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined},{NOT atype=undefined independent=true modes=[] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null customAnim=true windowingMode=undefined}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@a8eae27, appThread = android.app.IApplicationThread$Stub$Proxy@fa38d4, debugName = QuickstepLaunchHome }}
+02-19 13:00:10.609  4449  4467 V WindowManagerShell:  Delegate animation for (#359) to null
+02-19 13:00:10.609  4449  4467 V WindowManagerShell: start default transition animation, info = {id=359 t=OPEN f=0x0 trk=2 r=[0@Point(0, 0)] c=[{m=OPEN f=FILLS_TASK leash=Surface(name=ActivityRecord{31277282 u0 viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity)/@0x7d9e27e sb=Rect(0, 0 - 0, 0) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=-1->0 r=-1->0:-1 bc=ffffffff component=viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity},{m=CLOSE f=TRANSLUCENT|FILLS_TASK|IS_OCCLUDED leash=Surface(name=ActivityRecord{64126934 u0 viva.republica.toss.test/.MiniAppSchemeActivity)/@0x63c03df sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 bc=ffffffff component=viva.republica.toss.test/.MiniAppSchemeActivity},{m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0xe35c82c sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1},{m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{35e0c0f showWhenLocked=false})/@0xdebd2f5 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0}]}
+02-19 13:00:10.609  4449  4467 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@f4d3b18 animAttr=0x13 type=OPEN isEntrance=false
+02-19 13:00:10.609  4449  4467 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@873a971 animAttr=0x13 type=OPEN isEntrance=false
+02-19 13:00:10.611  4449  4467 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@dc86bad animAttr=0x12 type=OPEN isEntrance=true
+02-19 13:00:10.613  4449  4467 V WindowManagerShell:  animated by com.android.wm.shell.transition.DefaultTransitionHandler@f74d823
+02-19 13:00:10.700 32031 32031 E unknown:ReactRootView: Unhandled SoftException
+02-19 13:00:10.700 32031 32031 E unknown:ReactRootView: com.facebook.react.uimanager.IllegalViewOperationException: Trying to attach a ReactRootView with an explicit id already set to [2131362676]. React Native uses the id field to track react tags and will overwrite this field. If that is fine, explicitly overwrite the id field to View.NO_ID.
+02-19 13:00:10.700 32031 32031 E unknown:ReactRootView: 	at com.facebook.react.ReactRootView.attachToReactInstanceManager(:799)
+02-19 13:00:10.700 32031 32031 E unknown:ReactRootView: 	at com.facebook.react.ReactRootView.startReactApplication(:509)
+02-19 13:00:10.700 32031 32031 E unknown:ReactRootView: 	at com.facebook.react.ReactRootView.startReactApplication(:469)
+02-19 13:00:10.700 32031 32031 E unknown:ReactRootView: 	at im.toss.rn.granite.core.GraniteActivity.write(:486)
+02-19 13:00:10.700 32031 32031 E unknown:ReactRootView: 	at im.toss.rn.granite.core.GraniteActivity.RemoteActionCompatParcelizer(:124)
+02-19 13:00:10.700 32031 32031 E unknown:ReactRootView: 	at im.toss.rn.granite.core.GraniteActivity$RemoteActionCompatParcelizer.IconCompatParcelizer(:65353)
+02-19 13:00:10.700 32031 32031 E unknown:ReactRootView: 	at o.sh.a_(:33)
+02-19 13:00:10.700 32031 32031 E unknown:ReactRootView: 	at o.xP.run(:100)
+02-19 13:00:10.700 32031 32031 E unknown:ReactRootView: 	at android.os.Handler.handleCallback(Handler.java:995)
+02-19 13:00:10.700 32031 32031 E unknown:ReactRootView: 	at android.os.Handler.dispatchMessage(Handler.java:103)
+02-19 13:00:10.700 32031 32031 E unknown:ReactRootView: 	at android.os.Looper.loopOnce(Looper.java:248)
+02-19 13:00:10.700 32031 32031 E unknown:ReactRootView: 	at android.os.Looper.loop(Looper.java:338)
+02-19 13:00:10.700 32031 32031 E unknown:ReactRootView: 	at android.app.ActivityThread.main(ActivityThread.java:9067)
+02-19 13:00:10.700 32031 32031 E unknown:ReactRootView: 	at java.lang.reflect.Method.invoke(Native Method)
+02-19 13:00:10.700 32031 32031 E unknown:ReactRootView: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593)
+02-19 13:00:10.700 32031 32031 E unknown:ReactRootView: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:932)
+02-19 13:00:10.716 32031 32138 W unknown:ReconnectingWebSocket: Couldn't connect to "ws://10.0.2.2:8081/message?device=sdk_gphone64_x86_64%20-%2016%20-%20API%2036&app=viva.republica.toss.test&clientid=BridgeDevSupportManager", will silently retry
+02-19 13:00:10.732 32031 32139 W unknown:InspectorPackagerConnection: Couldn't connect to packager, will silently retry
+02-19 13:00:10.734 20068 30652 I FontLog : (REDACTED) Received query %s, URI %s
+02-19 13:00:10.735 20068 30652 I FontLog : (REDACTED) Query [%s] resolved to %s
+02-19 13:00:10.741   752   989 I ImeTracker: viva.republica.toss.test:90ad76ce: onRequestHide at ORIGIN_SERVER reason HIDE_UNSPECIFIED_WINDOW fromUser false
+02-19 13:00:10.741 20068 30652 I FontLog : (REDACTED) Fetch %s end status %s
+02-19 13:00:10.743 32031 32031 D CompatChangeReporter: Compat change id reported: 270674727; UID 10217; state: ENABLED
+02-19 13:00:10.744  1563  1563 I GoogleInputMethodService: GoogleInputMethodService.onFinishInput():2043 
+02-19 13:00:10.745 32031 32031 D InsetsController: hide(ime(), fromIme=false)
+02-19 13:00:10.745 32031 32031 I ImeTracker: viva.republica.toss.test:90ad76ce: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+02-19 13:00:10.745  1563  1563 I Module  : DeviceLockedStatusModuleProvider$Module.updateDeviceLockedStatus():100 repeatCheckTimes = 0, locked = false
+02-19 13:00:10.747   752  1454 I ImeTracker: system_server:b368cbdc: onRequestHide at ORIGIN_SERVER reason IME_REQUESTED_CHANGED_LISTENER fromUser false
+02-19 13:00:10.753   752   797 I ImeTracker: system_server:b368cbdc: onCancelled at PHASE_SERVER_SHOULD_HIDE
+02-19 13:00:10.761 20068 30652 I FontLog : (REDACTED) Pulling font file for id = %d, cache size = %d
+02-19 13:00:10.762  1563  1563 I GoogleInputMethodService: GoogleInputMethodService.onStartInput():1293 onStartInput(EditorInfo{EditorInfo{packageName=viva.republica.toss.test, inputType=0, inputTypeString=NULL, enableLearning=false, autoCorrection=false, autoComplete=false, imeOptions=0, privateImeOptions=null, actionName=UNSPECIFIED, actionLabel=null, initialSelStart=-1, initialSelEnd=-1, initialCapsMode=0, label=null, fieldId=0, fieldName=null, extras=null, hintText=null, hintLocales=[]}}, false)
+02-19 13:00:10.783  1563  1563 I Module  : DeviceLockedStatusModuleProvider$Module.updateDeviceLockedStatus():100 repeatCheckTimes = 1, locked = false
+02-19 13:00:10.783 32031 32031 D CompatChangeReporter: Compat change id reported: 63938206; UID 10217; state: ENABLED
+02-19 13:00:10.785  1563  1563 I EmojiCompatManager: EmojiCompatManager.getEmojiCompatIfLoaded():343 EmojiCompat.init() was never called.
+02-19 13:00:10.785  1563  1563 I EmojiCompatManager: java.lang.IllegalStateException: EmojiCompat is not initialized. Please call EmojiCompat.init() first
+02-19 13:00:10.785  1563  1563 I EmojiCompatManager: 	at asx.p(PG:6)
+02-19 13:00:10.785  1563  1563 I EmojiCompatManager: 	at axb.b(PG:13)
+02-19 13:00:10.785  1563  1563 I EmojiCompatManager: 	at jnr.b(PG:2)
+02-19 13:00:10.785  1563  1563 I EmojiCompatManager: 	at jnr.c(PG:4)
+02-19 13:00:10.785  1563  1563 I EmojiCompatManager: 	at jnr.f(PG:3)
+02-19 13:00:10.785  1563  1563 I EmojiCompatManager: 	at jnx.c(PG:3)
+02-19 13:00:10.785  1563  1563 I EmojiCompatManager: 	at kif.cz(PG:47)
+02-19 13:00:10.785  1563  1563 I EmojiCompatManager: 	at lhl.run(PG:1025)
+02-19 13:00:10.785  1563  1563 I EmojiCompatManager: 	at jaf.execute(PG:12)
+02-19 13:00:10.785  1563  1563 I EmojiCompatManager: 	at nco.v(PG:13)
+02-19 13:00:10.785  1563  1563 I EmojiCompatManager: 	at lhn.m(PG:96)
+02-19 13:00:10.785  1563  1563 I EmojiCompatManager: 	at lhn.k(PG:25)
+02-19 13:00:10.785  1563  1563 I EmojiCompatManager: 	at kgn.onStartInput(PG:250)
+02-19 13:00:10.785  1563  1563 I EmojiCompatManager: 	at android.inputmethodservice.InputMethodService.doStartInput(InputMethodService.java:3521)
+02-19 13:00:10.785  1563  1563 I EmojiCompatManager: 	at android.inputmethodservice.InputMethodService$InputMethodImpl.startInput(InputMethodService.java:879)
+02-19 13:00:10.785  1563  1563 I EmojiCompatManager: 	at android.inputmethodservice.InputMethodService$InputMethodImpl.dispatchStartInput(InputMethodService.java:908)
+02-19 13:00:10.785  1563  1563 I EmojiCompatManager: 	at android.inputmethodservice.IInputMethodWrapper.executeMessage(IInputMethodWrapper.java:201)
+02-19 13:00:10.785  1563  1563 I EmojiCompatManager: 	at com.android.internal.os.HandlerCaller$MyHandler.handleMessage(HandlerCaller.java:44)
+02-19 13:00:10.785  1563  1563 I EmojiCompatManager: 	at android.os.Handler.dispatchMessage(Handler.java:110)
+02-19 13:00:10.785  1563  1563 I EmojiCompatManager: 	at android.os.Looper.loopOnce(Looper.java:248)
+02-19 13:00:10.785  1563  1563 I EmojiCompatManager: 	at android.os.Looper.loop(Looper.java:338)
+02-19 13:00:10.785  1563  1563 I EmojiCompatManager: 	at android.app.ActivityThread.main(ActivityThread.java:9067)
+02-19 13:00:10.785  1563  1563 I EmojiCompatManager: 	at java.lang.reflect.Method.invoke(Native Method)
+02-19 13:00:10.785  1563  1563 I EmojiCompatManager: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593)
+02-19 13:00:10.785  1563  1563 I EmojiCompatManager: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:932)
+02-19 13:00:10.785  1563  1563 W NotificationCenter: NotificationCenter$NotificationQueue.notifyPendingNotificationsOnExecutor():877 Heavy notify work detected on UI thread: [kig->khg, kig->khc, kig->ilu, kig->ilu, kig->ilu, kig->ilu, kig->ilu, kig->ilu, kig->gkl, kig->ilu, kig->ilu, kig->fef, kig->fro, kig->lux, kig->ilu, kig->imt, kig->ilu, kig->ilu, kig->ijm, kig->ilu, kig->ilu, kig->fcb, kig->jnx] takes 23ms
+02-19 13:00:10.787   752  1246 W PackageConfigPersister: App-specific configuration not found for packageName: viva.republica.toss.test and userId: 0
+02-19 13:00:10.790 31848 32013 D PowerUsageFeatureProviderGoogleImpl: mBatteryUsageReattributeEnabled: false
+02-19 13:00:10.791 31848 32013 D PowerUsageFeatureProviderGoogleImpl: mForceHideBatteryReattributeItem: true
+02-19 13:00:10.801 20068 30652 I FontLog : (REDACTED) Pulling font file for id = %d, cache size = %d
+02-19 13:00:10.818   752   935 D CoreBackPreview: Window{f567d90 u0 PopupWindow:9b822e2}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@afe368e, mPriority=0, mIsAnimationCallback=false, mOverrideBehavior=0}
+02-19 13:00:10.938  4449  4467 V WindowManagerShell: Transition animation finished (aborted=false), notifying core (#359) android.os.BinderProxy@4a9c283@2
+02-19 13:00:10.941 31848 32013 D BatteryUsageContentProvider: getQueryUserId from uri: content://com.android.settings.battery.usage.provider/appUsageLatestTimestamp?userid=0
+02-19 13:00:10.950 31848 32013 D BatteryUsageContentProvider: getAppUsageLatestTimestamp() for user 0 in 8/ms
+02-19 13:00:10.965  1341  1341 D VRI[NexusLauncherActivity]: visibilityChanged oldVisibility=true newVisibility=false
+02-19 13:00:10.975   752   794 V WindowManager: Finish Transition (#359): created at 02-19 13:00:10.105 collect-started=0.027ms request-sent=4.005ms started=15.592ms ready=37.562ms sent=499.727ms commit=28.518ms finished=834.205ms
+02-19 13:00:10.976  1341  1341 D NexusLauncherModelDelegate: notifySmartspaceEvent: SmartspaceTargetEvent{mSmartspaceTarget=null, mSmartspaceActionId='null', mEventType=7}
+02-19 13:00:10.993  4449  4467 V WindowManagerShell: Track 2 became idle
+02-19 13:00:10.995  4449  4467 V WindowManagerShell: All active transition animations finished
+02-19 13:00:11.160 32031 32031 D VRI[MiniAppSchemeActivity]: visibilityChanged oldVisibility=true newVisibility=false
+02-19 13:00:11.174 32031 32031 W WindowOnBackDispatcher: sendCancelIfRunning: isInProgress=false callback=android.view.ViewRootImpl$$ExternalSyntheticLambda13@59dbfee
+02-19 13:00:11.176   752  1116 D CoreBackPreview: Window{74ec6a6 u0 viva.republica.toss.test/viva.republica.toss.test.MiniAppSchemeActivity}: Setting back callback null
+02-19 13:00:11.183 32031 32031 D ViewRootImpl: Skipping stats log for color mode
+02-19 13:00:11.189  1341  1341 D BaseDepthController: setSurface:
+02-19 13:00:11.189  1341  1341 D BaseDepthController: 	mWaitingOnSurfaceValidity: false
+02-19 13:00:11.189  1341  1341 D BaseDepthController: 	mBaseSurface: null
+02-19 13:00:11.190  1341  1341 D BaseDepthController: mSurface is null and mCurrentBlur is: 0
+02-19 13:00:11.191  1341  1341 D StateManager: goToState - fromState: Normal, toState: Normal, partial trace:
+02-19 13:00:11.191  1341  1341 D StateManager: 	at com.android.launcher3.statemanager.StateManager.moveToRestState(go/retraceme 72a59688580715d19f0e415c69e80376c2f062d1648c80db6730905005a27c20:4)
+02-19 13:00:11.191  1341  1341 D StateManager: 	at com.android.launcher3.statemanager.StateManager.moveToRestState(go/retraceme 72a59688580715d19f0e415c69e80376c2f062d1648c80db6730905005a27c20:1)
+02-19 13:00:11.191  1341  1341 D StateManager: 	at com.android.launcher3.statemanager.StatefulActivity.onStop(go/retraceme 72a59688580715d19f0e415c69e80376c2f062d1648c80db6730905005a27c20:34)
+02-19 13:00:11.191  1341  1341 D StatsLog: LAUNCHER_ONSTOP
+02-19 13:00:11.194  1341  1341 D StatsLog: LAUNCHER_GOOGLE_SEARCH_RESTORE_LIST_SIZE_AFTER_ACTIVITY_RESTART
+02-19 13:00:11.198   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 13:00:11.205   752   935 W IPCThreadState: Sending oneway calls to frozen process.
+02-19 13:00:11.206   752   935 W ProcessStats: Tracking association SourceState{228dbce com.android.settings/1000 Service #14680} whose proc state 8 is better than process ProcessState{cf3716c com.google.android.settings.intelligence/10144 pkg=com.google.android.settings.intelligence} proc state 15 (40 skipped)
+02-19 13:00:11.210   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 13:00:11.317 31848 32013 D DatabaseUtils: getAppUsageStartTimestampOfUser() userId=0 latestTimestamp=Feb 19, 2026, 11:58:31 in 377/ms
+02-19 13:00:11.436 31848 32013 D DataProcessor: getAppUsageEventsForUser(): 0 from 1771469911761 to 1771473610940 in 118/ms
+02-19 13:00:11.437 31848 32013 D DataProcessor: getAppUsageEvents() for all unlocked users in 498/ms
+02-19 13:00:11.678 31887 31887 I MultiDex: VM with version 2.1.0 has multidex support
+02-19 13:00:11.678 31887 31887 I MultiDex: Installing application
+02-19 13:00:11.678 31887 31887 I MultiDex: VM has multidex support, MultiDex support library is disabled.
+02-19 13:00:11.762 31848 32013 W DataProcessor: Read 221 relevant events (394 total) from UsageStatsManager
+02-19 13:00:11.762 31848 32013 D BatteryUsageDataLoader: loadAppUsageData() size=221 in 823/ms
+02-19 13:00:12.356 31887 31887 D PrimesLoggerHolder: Primes instant initialization
+02-19 13:00:12.387 31848 32013 D DatabaseUtils: insert() app usage events data into database
+02-19 13:00:12.388 31848 32013 D DatabaseUtils: sendAppUsageEventData() size=221 in 626/ms
+02-19 13:00:12.389 31848 32013 D BatteryUsageContentProvider: getLastFullChargeTimestamp() in 1/ms
+02-19 13:00:12.391 31848 32013 D DatabaseUtils: getLastFullChargeTime() lastFullChargeTime=Jan 01, 1970, 09:00:00 in 3/ms
+02-19 13:00:12.392 31848 32013 D DatabaseUtils: getBatteryEvents for timestamp: 1770908400000
+02-19 13:00:12.395 31848 32013 D BatteryUsageContentProvider: getQueryBatteryEventTypes from uri: content://com.android.settings.battery.usage.provider/BatteryEvent?timestamp=1770908400000&batteryEventType=3%2C4
+02-19 13:00:12.395 31848 32013 D BatteryUsageContentProvider: getQueryTimestamp from uri: content://com.android.settings.battery.usage.provider/BatteryEvent?timestamp=1770908400000&batteryEventType=3%2C4
+02-19 13:00:12.396 31848 32013 W BatteryUsageContentProvider: getBatteryEvents() in 1/ms
+02-19 13:00:12.503 31848 32013 D DatabaseUtils: getBatteryEvents size=36 in 111/ms
+02-19 13:00:12.504 31848 32013 D DataProcessManager: getPeriodBatteryLevelData() startTimestamp=Feb 19, 2026, 12:00:00
+02-19 13:00:12.504 31848 32013 D DataProcessManager: execute getBatteryLevelData in 116/ms, batteryLevelRecordEvents.size=36
+02-19 13:00:12.504 31848 32013 D BatteryUsageDataLoader: preprocessBatteryUsageSlots() no new battery usage data.
+02-19 13:00:12.504 31848 32013 D BatteryUsageDataLoader: loadUsageDataSafely() in 6000/ms
+02-19 13:00:12.632 32154 32154 W dumpsys : Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: window
+02-19 13:00:12.689 31887 31887 I efqm    : SslGuard completed installation.
+02-19 13:00:12.782 31887 32157 D nativeloader: Load /product/priv-app/PrebuiltBugle/PrebuiltBugle.apk!/lib/x86_64/libnative_crash_handler_jni.so using class loader ns product-clns-10 (caller=/product/priv-app/PrebuiltBugle/PrebuiltBugle.apk!classes4.dex): ok
+02-19 13:00:13.010   752   775 I system_server: Background concurrent mark compact GC freed 24MB AllocSpace bytes, 49(1528KB) LOS objects, 42% free, 32MB/56MB, paused 1.236ms,2.753ms total 354.092ms
+02-19 13:00:13.040   752   777 W System  : A resource failed to call release. 
+02-19 13:00:13.045   752   777 W System  : A resource failed to call release. 
+02-19 13:00:13.051 31887 32165 I stetho  : Listening on @stetho_com.google.android.apps.messaging_devtools_remote
+02-19 13:00:13.060   752  1116 I ActivityManager: Force stopping viva.republica.toss.test appid=10217 user=0: from pid 32162
+02-19 13:00:13.062   752  1856 E TaskPersister: File error accessing recents directory (directory doesn't exist?).
+02-19 13:00:13.065 31887 31887 I Bugle   : BugleApplicationBase: Bugle version: messages.android_20250311_04_rc01.phone_dynamic , Bugle version code: 273168063
+02-19 13:00:13.067   752  1116 I ActivityManager: Killing 32031:viva.republica.toss.test/u0a217 (adj 0): stop viva.republica.toss.test due to from pid 32162
+02-19 13:00:13.073 31887 31887 I Bugle   : DarkModeManager: setDarkMode: -1
+02-19 13:00:13.077   752  1116 D CompatChangeReporter: Compat change id reported: 151861875; UID 10217; state: ENABLED
+02-19 13:00:13.082   752  1116 D CompatChangeReporter: Compat change id reported: 311208629; UID 10217; state: ENABLED
+02-19 13:00:13.086   752  1029 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+02-19 13:00:13.087   752  1116 W ActivityTaskManager: Force removing ActivityRecord{31277282 u0 viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity t55 f}}: app died, no saved state
+02-19 13:00:13.090 32052 32052 I cr_ChildProcessService: Destroying ChildProcessService pid=32052
+02-19 13:00:13.091  4449  4467 V WindowManagerShell: Transition requested (#360): android.os.BinderProxy@653a2cf TransitionRequestInfo { type = CLOSE, triggerTask = TaskInfo{userId=0 taskId=55 effectiveUid=10217 displayId=0 isRunning=false baseIntent=Intent { act=android.intent.action.VIEW dat=intoss://takealook/... flg=0x10000000 pkg=viva.republica.toss.test cmp=viva.republica.toss.test/.MiniAppSchemeActivity } baseActivity=null topActivity=null origActivity=null realActivity=ComponentInfo{viva.republica.toss.test/viva.republica.toss.test.MiniAppSchemeActivity} numActivities=0 lastActiveTime=85083982 supportsMultiWindow=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{android.window.IWindowContainerToken$Stub$Proxy@851945c} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 0 - 0, 0) topActivityInfo=null launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=true isVisible=true isVisibleRequested=true isTopActivityNoDisplay=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false isActivityStackTransparent=true lastNonFullscreenBounds=Rect(284, 660 - 796, 1740) capturedLink=null capturedLinkTimestamp=0 requestedVisibleTypes=-9 topActivityRequestOpenInBrowserEducationTimestamp=0 appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false eligibleForLetterboxEducation= false isLetterboxEducationEnabled= false isLetterboxDoubleTapEnabled= false eligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 topActivityAppBounds=Rect(0, 0 - 0, 0) isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false hasMinAspectRatioOverride=false topActivityLetterboxBounds=null cameraCompatTaskInfo=CameraCompatTaskInfo { freeformCameraCompatMode=undefined}} topActivityMainWindowFrame=null}, pipChange = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 360 }
+02-19 13:00:13.095   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 13:00:13.096 32052 32052 I ocessService0:0: System.exit called, status: 0
+02-19 13:00:13.096 32052 32052 I AndroidRuntime: VM exiting with result code 0, cleanup skipped.
+02-19 13:00:13.102   531   549 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+02-19 13:00:13.104   752  1029 D InetDiagMessage: Destroyed 3 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+02-19 13:00:13.104   752  1029 D InetDiagMessage: Destroyed live tcp sockets for uids={10217} in 28ms
+02-19 13:00:13.107   752  1029 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+02-19 13:00:13.109   752  1029 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+02-19 13:00:13.110  1341  1341 D ViewRootImpl: Skipping stats log for color mode
+02-19 13:00:13.113  1341  1341 D StatsLog: LAUNCHER_ONRESUME
+02-19 13:00:13.118   752  1116 I ActivityManager: Killing 32052:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0/u0a217i26 (adj 0): isolated not needed
+02-19 13:00:13.119   752  1029 D InetDiagMessage: Destroyed live tcp sockets for uids={20217} in 14ms
+02-19 13:00:13.120   752  1116 W IPCThreadState: Sending oneway calls to frozen process.
+02-19 13:00:13.120   752  1116 W IPCThreadState: Sending oneway calls to frozen process.
+02-19 13:00:13.120   752  1116 W IPCThreadState: Sending oneway calls to frozen process.
+02-19 13:00:13.123   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 13:00:13.123   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 13:00:13.123  4449  4467 D WindowManagerShell: setLauncherKeepClearAreaHeight: visible=true, height=527
+02-19 13:00:13.125   752  1116 I AppsFilter: interaction: PackageSetting{d389813 com.android.microdroid.empty_payload/10204} -> PackageSetting{61b12d9 viva.republica.toss.test/10217} BLOCKED
+02-19 13:00:13.126   752  1116 I AppsFilter: interaction: PackageSetting{120ba50 com.android.adbkeyboard/10219} -> PackageSetting{61b12d9 viva.republica.toss.test/10217} BLOCKED
+02-19 13:00:13.129  1263  1263 I Zygote  : Process 32052 exited cleanly (0)
+02-19 13:00:13.139   752  1246 W ActivityManager: Slow operation: 58ms so far, now at finishAttachApplicationInner: after mServices.attachApplicationLocked
+02-19 13:00:13.139   752  1246 W ActivityManager: Slow operation: 59ms so far, now at finishAttachApplicationInner: after dispatching broadcasts
+02-19 13:00:13.139   531   531 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+02-19 13:00:13.141   752   981 W InputDispatcher: channel 'f567d90 PopupWindow:9b822e2' ~ Consumer closed input channel or an error occurred.  events=0x9
+02-19 13:00:13.141   752   981 E InputDispatcher: channel 'f567d90 PopupWindow:9b822e2' ~ Channel is unrecoverably broken and will be disposed!
+02-19 13:00:13.141   752   981 I WindowManager: WINDOW DIED Window{f567d90 u0 PopupWindow:9b822e2}
+02-19 13:00:13.143   752   981 W InputDispatcher: channel '4cd2c48 viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity' ~ Consumer closed input channel or an error occurred.  events=0x9
+02-19 13:00:13.143   752   981 E InputDispatcher: channel '4cd2c48 viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity' ~ Channel is unrecoverably broken and will be disposed!
+02-19 13:00:13.143   752   981 I WindowManager: WINDOW DIED Window{4cd2c48 u0 viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity}
+02-19 13:00:13.140  1341  1341 D NexusLauncherModelDelegate: notifySmartspaceEvent: SmartspaceTargetEvent{mSmartspaceTarget=null, mSmartspaceActionId='null', mEventType=6}
+02-19 13:00:13.152   752  1984 I ImeTracker: viva.republica.toss.test:cf05e48f: onRequestHide at ORIGIN_SERVER reason HIDE_REMOVE_CLIENT fromUser false
+02-19 13:00:13.153   752  1984 I ImeTracker: viva.republica.toss.test:cf05e48f: onCancelled at PHASE_SERVER_SHOULD_HIDE
+02-19 13:00:13.154   752  1029 D ConnectivityService: releasing NetworkRequest [ REQUEST id=457, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10217 RequestorUid: 10217 RequestorPkg: viva.republica.toss.test UnderlyingNetworks: Null] ] (release request)
+02-19 13:00:13.155   752   807 I libprocessgroup: Removed cgroup /sys/fs/cgroup/apps/uid_10217/pid_32031
+02-19 13:00:13.156   752   807 I libprocessgroup: Removed cgroup /sys/fs/cgroup/apps/uid_99026/pid_32052
+02-19 13:00:13.156   458   458 I Zygote  : Process 32031 exited due to signal 9 (Killed)
+02-19 13:00:13.156   752  2377 I WindowManager: WIN DEATH: Window{f567d90 u0 PopupWindow:9b822e2 EXITING}
+02-19 13:00:13.158   752  2377 I WindowManager: WIN DEATH: Window{4cd2c48 u0 viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity EXITING}
+02-19 13:00:13.160  1341  1407 D QuickstepModelDelegate: notifyAppTargetEvent action=1 launchLocation=workspace/0/[-1,-1]/[1,1]
+02-19 13:00:13.161  1341  1341 D BaseDepthController: setSurface:
+02-19 13:00:13.161  1341  1341 D BaseDepthController: 	mWaitingOnSurfaceValidity: false
+02-19 13:00:13.161  1341  1341 D BaseDepthController: 	mBaseSurface: Surface(name=com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity)/@0x94d8eb8
+02-19 13:00:13.172   752   797 V WindowManager: Unknown focus tokens, dropping reportFocusChanged
+02-19 13:00:13.172   752   797 W ActivityManager: setHasOverlayUi called on unknown pid: 32031
+02-19 13:00:13.173   752  1456 V ActivityManager: Got obituary of 32031:viva.republica.toss.test
+02-19 13:00:13.186   752   990 I system_server: AssetManager2(0x7d8fac4d9438) locale list changing from [] to [en-US]
+02-19 13:00:13.194  1336  1336 D CarrierSvcBindHelper: onHandleForceStop: [viva.republica.toss.test]
+02-19 13:00:13.197  1971  2198 I AiAiEcho: Predicting[0]:  [CONTEXT sampling_count=5 ]
+02-19 13:00:13.198  1971  2198 I AiAiEcho: EchoTargets: 
+02-19 13:00:13.198  1971  2198 I AiAiEcho: Filtered by AiAi flag check: 
+02-19 13:00:13.198  1971  2198 I AiAiEcho: [CONTEXT ratelimit_period="10 SECONDS" ]
+02-19 13:00:13.199  1971  2198 I AiAiEcho: #remoteViewsTwiddler: feature disabled.
+02-19 13:00:13.208  1336  1336 D CarrierSvcBindHelper: No carrier app for: 0
+02-19 13:00:13.210  1341  1341 I NotificationListener: Handling notification state refresh for com.google.android.adservices.api#0
+02-19 13:00:13.211  1341  1341 I NotificationListener: Handling notification state refresh for android#0
+02-19 13:00:13.211  1341  1341 I NotificationListener: Handling notification state refresh for com.android.systemui#0
+02-19 13:00:13.217   752   990 I system_server: AssetManager2(0x7d8fac4d7e58) locale list changing from [] to [en-US]
+02-19 13:00:13.224  1971  2198 I AiAiEcho: #postPredictionTargets: Sending updates to UISurface home with targets# 0 (types=[])
+02-19 13:00:13.229   752   990 I system_server: AssetManager2(0x7d8fac4d3358) locale list changing from [] to [en-US]
+02-19 13:00:13.233   752   990 I system_server: AssetManager2(0x7d8fac4cacf8) locale list changing from [] to [en-US]
+02-19 13:00:13.233  1341  1341 D SsBaseTemplateCard: No text view can be set up
+02-19 13:00:13.233  1341  1341 D SsBaseTemplateCard: Passed-in item info is null
+02-19 13:00:13.233  1341  1341 D SsBaseTemplateCard: Passed-in item info is null
+02-19 13:00:13.234  1341  1341 D SsBaseTemplateCard: Passed-in item info is null
+02-19 13:00:13.234  1341  1341 I SsBaseTemplateCard: Secondary card pane is null
+02-19 13:00:13.234  4449  4532 V WindowManagerShell: onTransitionReady(transaction=3229815417220)
+02-19 13:00:13.237  4449  4467 V WindowManagerShell: onTransitionReady (#360) android.os.BinderProxy@653a2cf: {id=360 t=CLOSE f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+02-19 13:00:13.237  4449  4467 V WindowManagerShell:         {m=TO_FRONT f=SHOW_WALLPAPER|MOVE_TO_TOP leash=Surface(name=Task=1)/@0xac9483a sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1},
+02-19 13:00:13.237  4449  4467 V WindowManagerShell:         {m=CLOSE f=NONE leash=Surface(name=Task=55)/@0x2919ceb sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1},
+02-19 13:00:13.237  4449  4467 V WindowManagerShell:         {m=TO_FRONT f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{35e0c0f showWhenLocked=false})/@0xe919a48 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0}
+02-19 13:00:13.237  4449  4467 V WindowManagerShell:     ]}
+02-19 13:00:13.238  4449  4467 V WindowManagerShell: Playing animation for (#360) android.os.BinderProxy@653a2cf@0
+02-19 13:00:13.239  4449  4467 V ShellRecents: RecentsTransitionHandler.startAnimation: no controller found
+02-19 13:00:13.239  4449  4467 V WindowManagerShell: Transition doesn't have explicit remote, search filters for match for {id=360 t=CLOSE f=0x0 trk=0 r=[0@Point(0, 0)] c=[{m=TO_FRONT f=SHOW_WALLPAPER|MOVE_TO_TOP leash=Surface(name=Task=1)/@0xac9483a sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1},{m=CLOSE f=NONE leash=Surface(name=Task=55)/@0x2919ceb sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1},{m=TO_FRONT f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{35e0c0f showWhenLocked=false})/@0xe919a48 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0}]}
+02-19 13:00:13.239  4449  4467 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x0 checks=[{atype=undefined independent=true modes=[CLOSE,TO_BACK] flags=IN_TASK_WITH_EMBEDDED_ACTIVITY mustBeTask=false order=ANY topActivity=null launchCookie=null taskFragmentToken=android.os.BinderProxy@188d51a windowingMode=undefined}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@44cd84b, appThread = android.app.IApplicationThread$Stub$Proxy@3a12228, debugName = overlayBackTransition }}
+02-19 13:00:13.239  4449  4467 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x0 checks=[{atype=dream independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined},{atype=home independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@6f3eb41, appThread = android.app.IApplicationThread$Stub$Proxy@ccf28e6, debugName = LauncherToDream }}
+02-19 13:00:13.240  4449  4467 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=TOP topActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity} launchCookie=null windowingMode=undefined},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined},{NOT atype=undefined independent=true modes=[] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null customAnim=true windowingMode=undefined}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@a8eae27, appThread = android.app.IApplicationThread$Stub$Proxy@fa38d4, debugName = QuickstepLaunchHome }}
+02-19 13:00:13.240  4449  4467 D RemoteTransitionHandler: Found filterPair{{types=[] flags=0x0] notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=TOP topActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity} launchCookie=null windowingMode=undefined},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined},{NOT atype=undefined independent=true modes=[] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null customAnim=true windowingMode=undefined}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@a8eae27, appThread = android.app.IApplicationThread$Stub$Proxy@fa38d4, debugName = QuickstepLaunchHome }}
+02-19 13:00:13.240  4449  4467 V WindowManagerShell:  Delegate animation for (#360) to RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@a8eae27, appThread = android.app.IApplicationThread$Stub$Proxy@fa38d4, debugName = QuickstepLaunchHome }
+02-19 13:00:13.253  4449  4467 V WindowManagerShell:  animated by com.android.wm.shell.transition.RemoteTransitionHandler@ef09705
+02-19 13:00:13.259   752   794 V WindowManager: Sent Transition (#360) createdAt=02-19 13:00:13.087 via request=TransitionRequestInfo { type = CLOSE, triggerTask = TaskInfo{userId=0 taskId=55 effectiveUid=10217 displayId=0 isRunning=false baseIntent=Intent { act=android.intent.action.VIEW dat=intoss://takealook/... flg=0x10000000 pkg=viva.republica.toss.test cmp=viva.republica.toss.test/.MiniAppSchemeActivity } baseActivity=null topActivity=null origActivity=null realActivity=ComponentInfo{viva.republica.toss.test/viva.republica.toss.test.MiniAppSchemeActivity} numActivities=0 lastActiveTime=85083982 supportsMultiWindow=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{RemoteToken{b1bba2c Task{917d257 #55 type=standard A=10217:viva.republica.toss.test}}} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 0 - 0, 0) topActivityInfo=null launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=true isVisible=true isVisibleRequested=true isTopActivityNoDisplay=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false isActivityStackTransparent=true lastNonFullscreenBounds=Rect(284, 660 - 796, 1740) capturedLink=null capturedLinkTimestamp=0 requestedVisibleTypes=-9 topActivityRequestOpenInBrowserEducationTimestamp=0 appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false eligibleForLetterboxEducation= false isLetterboxEducationEnabled= false isLetterboxDoubleTapEnabled= false eligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 topActivityAppBounds=Rect(0, 0 - 0, 0) isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false hasMinAspectRatioOverride=false topActivityLetterboxBounds=null cameraCompatTaskInfo=CameraCompatTaskInfo { freeformCameraCompatMode=undefined}} topActivityMainWindowFrame=null}, pipChange = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 360 }
+02-19 13:00:13.259   752   794 V WindowManager:     startWCT=WindowContainerTransaction { changes= {} hops= [] errorCallbackToken=null taskFragmentOrganizer=null }
+02-19 13:00:13.260   752   794 V WindowManager:     info={id=360 t=CLOSE f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+02-19 13:00:13.260   752   794 V WindowManager:         {WCT{RemoteToken{5218fe8 Task{dd43522 #1 type=home}}} m=TO_FRONT f=SHOW_WALLPAPER|MOVE_TO_TOP leash=Surface(name=Task=1)/@0x8ddbd2e sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1},
+02-19 13:00:13.260   752   794 V WindowManager:         {WCT{RemoteToken{b1bba2c Task{917d257 #55 type=standard A=10217:viva.republica.toss.test}}} m=CLOSE f=NONE leash=Surface(name=Task=55)/@0xffd1639 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1},
+02-19 13:00:13.260   752   794 V WindowManager:         {m=TO_FRONT f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{35e0c0f showWhenLocked=false})/@0x512f5be sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0}
+02-19 13:00:13.260   752   794 V WindowManager:     ]}
+02-19 13:00:13.260  1341  1341 D StateManager: createAtomicAnimation - fromState: Background, toState: Normal, partial trace:
+02-19 13:00:13.260  1341  1341 D StateManager: 	at com.android.quickstep.util.ScalingWorkspaceRevealAnim.<init>(go/retraceme 72a59688580715d19f0e415c69e80376c2f062d1648c80db6730905005a27c20:39)
+02-19 13:00:13.260  1341  1341 D StateManager: 	at com.android.launcher3.QuickstepTransitionManager.createWallpaperOpenAnimations(go/retraceme 72a59688580715d19f0e415c69e80376c2f062d1648c80db6730905005a27c20:168)
+02-19 13:00:13.260  1341  1341 D StateManager: 	at com.android.launcher3.QuickstepTransitionManager$WallpaperOpenLauncherAnimationRunner.onAnimationStart(go/retraceme 72a59688580715d19f0e415c69e80376c2f062d1648c80db6730905005a27c20:17)
+02-19 13:00:13.262  1341  1341 D b/311077782: LauncherAnimationRunner.setAnimation
+02-19 13:00:13.283  1341  1407 W HWUI    : Image decoding logging dropped!
+02-19 13:00:13.330   531   531 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+02-19 13:00:13.338   752   989 I ImeTracker: com.google.android.apps.nexuslauncher:d874206e: onRequestHide at ORIGIN_SERVER reason HIDE_UNSPECIFIED_WINDOW fromUser false
+02-19 13:00:13.345  1563  1563 I GoogleInputMethodService: GoogleInputMethodService.onFinishInput():2043 
+02-19 13:00:13.346  1563  1563 I Module  : DeviceLockedStatusModuleProvider$Module.updateDeviceLockedStatus():100 repeatCheckTimes = 0, locked = false
+02-19 13:00:13.347  1563  1563 I GoogleInputMethodService: GoogleInputMethodService.onStartInput():1293 onStartInput(EditorInfo{EditorInfo{packageName=com.google.android.apps.nexuslauncher, inputType=0, inputTypeString=NULL, enableLearning=false, autoCorrection=false, autoComplete=false, imeOptions=0, privateImeOptions=null, actionName=UNSPECIFIED, actionLabel=null, initialSelStart=-1, initialSelEnd=-1, initialCapsMode=0, label=null, fieldId=0, fieldName=null, extras=null, hintText=null, hintLocales=[]}}, false)
+02-19 13:00:13.350  1563  1563 I Module  : DeviceLockedStatusModuleProvider$Module.updateDeviceLockedStatus():100 repeatCheckTimes = 1, locked = false
+02-19 13:00:13.350   752  1456 I ImeTracker: system_server:3b13bf7f: onRequestHide at ORIGIN_SERVER reason IME_REQUESTED_CHANGED_LISTENER fromUser false
+02-19 13:00:13.352  1563  1563 I EmojiCompatManager: EmojiCompatManager.getEmojiCompatIfLoaded():343 EmojiCompat.init() was never called.
+02-19 13:00:13.352  1563  1563 I EmojiCompatManager: java.lang.IllegalStateException: EmojiCompat is not initialized. Please call EmojiCompat.init() first
+02-19 13:00:13.352  1563  1563 I EmojiCompatManager: 	at asx.p(PG:6)
+02-19 13:00:13.352  1563  1563 I EmojiCompatManager: 	at axb.b(PG:13)
+02-19 13:00:13.352  1563  1563 I EmojiCompatManager: 	at jnr.b(PG:2)
+02-19 13:00:13.352  1563  1563 I EmojiCompatManager: 	at jnr.c(PG:4)
+02-19 13:00:13.352  1563  1563 I EmojiCompatManager: 	at jnr.f(PG:3)
+02-19 13:00:13.352  1563  1563 I EmojiCompatManager: 	at jnx.c(PG:3)
+02-19 13:00:13.352  1563  1563 I EmojiCompatManager: 	at kif.cz(PG:47)
+02-19 13:00:13.352  1563  1563 I EmojiCompatManager: 	at lhl.run(PG:1025)
+02-19 13:00:13.352  1563  1563 I EmojiCompatManager: 	at jaf.execute(PG:12)
+02-19 13:00:13.352  1563  1563 I EmojiCompatManager: 	at nco.v(PG:13)
+02-19 13:00:13.352  1563  1563 I EmojiCompatManager: 	at lhn.m(PG:96)
+02-19 13:00:13.352  1563  1563 I EmojiCompatManager: 	at lhn.k(PG:25)
+02-19 13:00:13.352  1563  1563 I EmojiCompatManager: 	at kgn.onStartInput(PG:250)
+02-19 13:00:13.352  1563  1563 I EmojiCompatManager: 	at android.inputmethodservice.InputMethodService.doStartInput(InputMethodService.java:3521)
+02-19 13:00:13.352  1563  1563 I EmojiCompatManager: 	at android.inputmethodservice.InputMethodService$InputMethodImpl.startInput(InputMethodService.java:879)
+02-19 13:00:13.352  1563  1563 I EmojiCompatManager: 	at android.inputmethodservice.InputMethodService$InputMethodImpl.dispatchStartInput(InputMethodService.java:908)
+02-19 13:00:13.352  1563  1563 I EmojiCompatManager: 	at android.inputmethodservice.IInputMethodWrapper.executeMessage(IInputMethodWrapper.java:201)
+02-19 13:00:13.352  1563  1563 I EmojiCompatManager: 	at com.android.internal.os.HandlerCaller$MyHandler.handleMessage(HandlerCaller.java:44)
+02-19 13:00:13.352  1563  1563 I EmojiCompatManager: 	at android.os.Handler.dispatchMessage(Handler.java:110)
+02-19 13:00:13.352  1563  1563 I EmojiCompatManager: 	at android.os.Looper.loopOnce(Looper.java:248)
+02-19 13:00:13.352  1563  1563 I EmojiCompatManager: 	at android.os.Looper.loop(Looper.java:338)
+02-19 13:00:13.352  1563  1563 I EmojiCompatManager: 	at android.app.ActivityThread.main(ActivityThread.java:9067)
+02-19 13:00:13.352  1563  1563 I EmojiCompatManager: 	at java.lang.reflect.Method.invoke(Native Method)
+02-19 13:00:13.352  1563  1563 I EmojiCompatManager: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593)
+02-19 13:00:13.352  1563  1563 I EmojiCompatManager: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:932)
+02-19 13:00:13.362   752   797 I ImeTracker: system_server:3b13bf7f: onCancelled at PHASE_SERVER_SHOULD_HIDE
+02-19 13:00:13.363   752  2505 W PackageConfigPersister: App-specific configuration not found for packageName: com.google.android.apps.nexuslauncher and userId: 0
+02-19 13:00:13.367 31887 31887 D WM-PackageManagerHelper: Skipping component enablement for androidx.work.impl.background.systemjob.SystemJobService
+02-19 13:00:13.368 31887 31887 D WM-Schedulers: Created SystemJobScheduler and enabled SystemJobService
+02-19 13:00:13.382 31887 32173 D WM-ForceStopRunnable: Is default app process = true
+02-19 13:00:13.398 31887 31887 D WM-SystemJobService: onStartJob for WorkGenerationalId(workSpecId=afbb7dd4-ee66-467a-ab06-8268ca186248, generation=0)
+02-19 13:00:13.402  1341  1341 D InsetsController: hide(ime(), fromIme=false)
+02-19 13:00:13.402  1341  1341 I ImeTracker: com.google.android.apps.nexuslauncher:d874206e: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+02-19 13:00:13.411 31887 32173 D WM-ForceStopRunnable: Performing cleanup operations.
+02-19 13:00:13.494   752  1509 D FileUtils: Rounded bytes from 2067259392 to 4000000000
+02-19 13:00:13.641 31887 32173 E ashmem  : Pinning is deprecated since Android Q. Please use trim or other methods.
+02-19 13:00:13.907  4449  4458 W System  : A resource failed to call release. 
+02-19 13:00:13.907  4449  4458 W System  : A resource failed to call release. 
+02-19 13:00:13.907  4449  4458 W System  : A resource failed to call release. 
+02-19 13:00:13.907  4449  4458 W System  : A resource failed to call release. 
+02-19 13:00:13.907  4449  4458 W System  : A resource failed to call release. 
+02-19 13:00:13.908  4449  4458 W System  : A resource failed to call release. 
+02-19 13:00:13.911  4449  4458 W System  : A resource failed to call release. 
+02-19 13:00:13.911  4449  4458 W System  : A resource failed to call release. 
+02-19 13:00:13.911  4449  4458 W System  : A resource failed to call release. 
+02-19 13:00:13.911  4449  4458 W System  : A resource failed to call release. 
+02-19 13:00:13.911  4449  4458 W System  : A resource failed to call release. 
+02-19 13:00:13.911  4449  4458 W System  : A resource failed to call release. 
+02-19 13:00:13.911  4449  4458 W System  : A resource failed to call release. 
+02-19 13:00:13.911  4449  4458 W System  : A resource failed to call release. 
+02-19 13:00:13.911  4449  4458 W System  : A resource failed to call release. 
+02-19 13:00:13.911  4449  4458 W System  : A resource failed to call release. 
+02-19 13:00:13.911  4449  4458 W System  : A resource failed to call release. 
+02-19 13:00:13.911  4449  4458 W System  : A resource failed to call release. 
+02-19 13:00:13.911  4449  4458 W System  : A resource failed to call release. 
+02-19 13:00:13.911  4449  4458 W System  : A resource failed to call release. 
+02-19 13:00:13.911  4449  4458 W System  : A resource failed to call release. 
+02-19 13:00:13.911  4449  4458 W System  : A resource failed to call release. 
+02-19 13:00:13.911  4449  4458 W System  : A resource failed to call release. 
+02-19 13:00:13.911  4449  4458 W System  : A resource failed to call release. 
+02-19 13:00:13.911  4449  4458 W System  : A resource failed to call release. 
+02-19 13:00:13.911  4449  4458 W System  : A resource failed to call release. 
+02-19 13:00:13.911  4449  4458 W System  : A resource failed to call release. 
+02-19 13:00:13.911  4449  4458 W System  : A resource failed to call release. 
+02-19 13:00:13.911  4449  4458 W System  : A resource failed to call release. 
+02-19 13:00:13.911  4449  4458 W System  : A resource failed to call release. 
+02-19 13:00:13.911  4449  4458 W System  : A resource failed to call release. 
+02-19 13:00:13.911  4449  4458 W System  : A resource failed to call release. 
+02-19 13:00:13.911  4449  4458 W System  : A resource failed to call release. 
+02-19 13:00:13.911  4449  4458 W System  : A resource failed to call release. 
+02-19 13:00:14.263 31887 32173 D WM-SystemJobScheduler: Reconciling jobs
+02-19 13:00:14.264  1341  1341 D ScalingWorkspaceRevealAnim: alpha of workspace at the end of animation: 1.0
+02-19 13:00:14.269  4449  4467 V WindowManagerShell: Transition animation finished (aborted=false), notifying core (#360) android.os.BinderProxy@653a2cf@0
+02-19 13:00:14.275   752   794 V WindowManager: Finish Transition (#360): created at 02-19 13:00:13.087 collect-started=0.054ms request-sent=0.27ms started=24.469ms ready=129.992ms sent=142.616ms commit=50.622ms finished=1185.876ms
+02-19 13:00:14.309   752  2505 E IPCThreadState: Binder transaction failure. id: 1655266, BR_*: 29189, error: -22 (Invalid argument)
+02-19 13:00:14.309   752  2505 W ActivityManager: pid 752 system sent binder code 7 with flags 1 to frozen apps and got error -32
+02-19 13:00:14.310   752  2505 D ActivityManager: Too many transaction errors, throttling freezer binder callback.
+02-19 13:00:14.312   752  2505 W WindowManager: Exception thrown during dispatchAppVisibility Window{f567d90 u0 PopupWindow:9b822e2 EXITING}
+02-19 13:00:14.312   752  2505 W WindowManager: android.os.DeadObjectException
+02-19 13:00:14.312   752  2505 W WindowManager: 	at android.os.BinderProxy.transactNative(Native Method)
+02-19 13:00:14.312   752  2505 W WindowManager: 	at android.os.BinderProxy.transact(BinderProxy.java:592)
+02-19 13:00:14.312   752  2505 W WindowManager: 	at android.view.IWindow$Stub$Proxy.dispatchAppVisibility(IWindow.java:557)
+02-19 13:00:14.312   752  2505 W WindowManager: 	at com.android.server.wm.WindowState.sendAppVisibilityToClients(WindowState.java:3151)
+02-19 13:00:14.312   752  2505 W WindowManager: 	at com.android.server.wm.WindowContainer.sendAppVisibilityToClients(WindowContainer.java:1311)
+02-19 13:00:14.312   752  2505 W WindowManager: 	at com.android.server.wm.WindowState.sendAppVisibilityToClients(WindowState.java:3138)
+02-19 13:00:14.312   752  2505 W WindowManager: 	at com.android.server.wm.WindowContainer.sendAppVisibilityToClients(WindowContainer.java:1311)
+02-19 13:00:14.312   752  2505 W WindowManager: 	at com.android.server.wm.WindowToken.setClientVisible(WindowToken.java:389)
+02-19 13:00:14.312   752  2505 W WindowManager: 	at com.android.server.wm.ActivityRecord.setClientVisible(ActivityRecord.java:6650)
+02-19 13:00:14.312   752  2505 W WindowManager: 	at com.android.server.wm.ActivityRecord.commitVisibility(ActivityRecord.java:5561)
+02-19 13:00:14.312   752  2505 W WindowManager: 	at com.android.server.wm.Transition.finishTransition(Transition.java:1391)
+02-19 13:00:14.312   752  2505 W WindowManager: 	at com.android.server.wm.TransitionController.finishTransition(TransitionController.java:1029)
+02-19 13:00:14.312   752  2505 W WindowManager: 	at com.android.server.wm.WindowOrganizerController.finishTransition(WindowOrganizerController.java:496)
+02-19 13:00:14.312   752  2505 W WindowManager: 	at android.window.IWindowOrganizerController$Stub.onTransact(IWindowOrganizerController.java:261)
+02-19 13:00:14.312   752  2505 W WindowManager: 	at com.android.server.wm.WindowOrganizerController.onTransact(WindowOrganizerController.java:223)
+02-19 13:00:14.312   752  2505 W WindowManager: 	at android.os.Binder.execTransactInternal(Binder.java:1426)
+02-19 13:00:14.312   752  2505 W WindowManager: 	at android.os.Binder.execTransact(Binder.java:1365)
+02-19 13:00:14.312   752  2505 W Process : Unable to open /proc/32031/status
+02-19 13:00:14.322   752  2505 E IPCThreadState: Binder transaction failure. id: 1655280, BR_*: 29189, error: -22 (Invalid argument)
+02-19 13:00:14.322   752  2505 W ActivityManager: pid 752 system sent binder code 7 with flags 1 to frozen apps and got error -32
+02-19 13:00:14.322   752  2505 D ActivityManager: Too many transaction errors, throttling freezer binder callback.
+02-19 13:00:14.324   752  2505 W WindowManager: Exception thrown during dispatchAppVisibility Window{4cd2c48 u0 viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity EXITING}
+02-19 13:00:14.324   752  2505 W WindowManager: android.os.DeadObjectException
+02-19 13:00:14.324   752  2505 W WindowManager: 	at android.os.BinderProxy.transactNative(Native Method)
+02-19 13:00:14.324   752  2505 W WindowManager: 	at android.os.BinderProxy.transact(BinderProxy.java:592)
+02-19 13:00:14.324   752  2505 W WindowManager: 	at android.view.IWindow$Stub$Proxy.dispatchAppVisibility(IWindow.java:557)
+02-19 13:00:14.324   752  2505 W WindowManager: 	at com.android.server.wm.WindowState.sendAppVisibilityToClients(WindowState.java:3151)
+02-19 13:00:14.324   752  2505 W WindowManager: 	at com.android.server.wm.WindowContainer.sendAppVisibilityToClients(WindowContainer.java:1311)
+02-19 13:00:14.324   752  2505 W WindowManager: 	at com.android.server.wm.WindowToken.setClientVisible(WindowToken.java:389)
+02-19 13:00:14.324   752  2505 W WindowManager: 	at com.android.server.wm.ActivityRecord.setClientVisible(ActivityRecord.java:6650)
+02-19 13:00:14.324   752  2505 W WindowManager: 	at com.android.server.wm.ActivityRecord.commitVisibility(ActivityRecord.java:5561)
+02-19 13:00:14.324   752  2505 W WindowManager: 	at com.android.server.wm.Transition.finishTransition(Transition.java:1391)
+02-19 13:00:14.324   752  2505 W WindowManager: 	at com.android.server.wm.TransitionController.finishTransition(TransitionController.java:1029)
+02-19 13:00:14.324   752  2505 W WindowManager: 	at com.android.server.wm.WindowOrganizerController.finishTransition(WindowOrganizerController.java:496)
+02-19 13:00:14.324   752  2505 W WindowManager: 	at android.window.IWindowOrganizerController$Stub.onTransact(IWindowOrganizerController.java:261)
+02-19 13:00:14.324   752  2505 W WindowManager: 	at com.android.server.wm.WindowOrganizerController.onTransact(WindowOrganizerController.java:223)
+02-19 13:00:14.324   752  2505 W WindowManager: 	at android.os.Binder.execTransactInternal(Binder.java:1426)
+02-19 13:00:14.324   752  2505 W WindowManager: 	at android.os.Binder.execTransact(Binder.java:1365)
+02-19 13:00:14.324   752  2505 W Process : Unable to open /proc/32031/status
+02-19 13:00:14.344 31887 32161 I Bugle   : Initializing EmojiCompat
+02-19 13:00:14.356  4449  4467 V WindowManagerShell: Track 0 became idle
+02-19 13:00:14.356  4449  4467 V WindowManagerShell: All active transition animations finished
+02-19 13:00:14.377   531   531 E BpTransactionCompletedListener: Failed to transact (-32)
+02-19 13:00:14.378   531   531 E BpTransactionCompletedListener: Failed to transact (-32)
+02-19 13:00:14.381  1341  1341 D RecentsView: onTaskRemoved: 55, not handling task stack changes
+02-19 13:00:14.386 20068 20558 I FontLog : (REDACTED) Received query %s, URI %s
+02-19 13:00:14.386 20068 20558 I FontLog : (REDACTED) Query [%s] resolved to %s
+02-19 13:00:14.374 31887 32174 I Bugle   : DatabaseHelperBasic: sqlite version is 3.44.3
+02-19 13:00:14.398 20068 30652 I FontLog : (REDACTED) Received query %s, URI %s
+02-19 13:00:14.399 20068 30652 I FontLog : (REDACTED) Query [%s] resolved to %s
+02-19 13:00:14.406  1341  1341 D RecentsView: onTaskRemoved: 55, not handling task stack changes
+02-19 13:00:14.406 20068 30652 I FontLog : (REDACTED) Fetch %s end status %s
+02-19 13:00:14.408 20068 20558 I FontLog : (REDACTED) Fetch %s end status %s
+02-19 13:00:14.410 31887 32161 I CarrierServices: Initializing Carrier Services Library. [CONTEXT thread_id=68 ]
+02-19 13:00:14.426 20068 30652 I FontLog : (REDACTED) Pulling font file for id = %d, cache size = %d
+02-19 13:00:14.435 20068 30652 I FontLog : (REDACTED) Pulling font file for id = %d, cache size = %d
+02-19 13:00:14.437 31887 32173 D WM-ForceStopRunnable: Found unfinished work, scheduling it.
+02-19 13:00:14.454 31887 32173 W JobInfo : Requested important-while-foreground flag for job1010 is ignored and takes no effect
+02-19 13:00:14.455 31887 32173 D WM-SystemJobScheduler: Scheduling work ID 8fe53383-2a56-4f16-a96a-0bbc0b567d27Job ID 1010
+02-19 13:00:14.460 31887 32173 W JobInfo : Requested important-while-foreground flag for job1011 is ignored and takes no effect
+02-19 13:00:14.461 31887 32173 D WM-SystemJobScheduler: Scheduling work ID b8e7a0c7-3316-4290-92d9-ceb0bd1e44adJob ID 1011
+02-19 13:00:14.469 31887 32173 W JobInfo : Requested important-while-foreground flag for job1027 is ignored and takes no effect
+02-19 13:00:14.471 31887 32173 D WM-SystemJobScheduler: Scheduling work ID 815d8b01-5104-4e24-9927-74c5c8e42e6cJob ID 1027
+02-19 13:00:14.475 31887 32173 W JobInfo : Requested important-while-foreground flag for job1124 is ignored and takes no effect
+02-19 13:00:14.475 31887 32173 D WM-SystemJobScheduler: Scheduling work ID ec8fce03-118b-4141-8ceb-3f6d5d15672eJob ID 1124
+02-19 13:00:14.478 31887 32173 W JobInfo : Requested important-while-foreground flag for job1126 is ignored and takes no effect
+02-19 13:00:14.479 31887 32173 D WM-SystemJobScheduler: Scheduling work ID bfa90bdb-d184-457a-950f-8a19593ba3ccJob ID 1126
+02-19 13:00:14.489 31887 32173 W JobInfo : Requested important-while-foreground flag for job1127 is ignored and takes no effect
+02-19 13:00:14.489 31887 32173 D WM-SystemJobScheduler: Scheduling work ID 26a58988-bcf6-40f1-b83a-880425d5db32Job ID 1127
+02-19 13:00:14.519 20068 30652 I FontLog : (REDACTED) Pulling font file for id = %d, cache size = %d
+02-19 13:00:14.530 31887 32173 D WM-SystemJobScheduler: Scheduling work ID 73107c81-1a5b-4afc-969b-05b40dd6eb09Job ID 1030
+02-19 13:00:14.532 20068 30652 I FontLog : (REDACTED) Pulling font file for id = %d, cache size = %d
+02-19 13:00:14.537 31887 32173 W JobInfo : Requested important-while-foreground flag for job1128 is ignored and takes no effect
+02-19 13:00:14.537 31887 32173 D WM-SystemJobScheduler: Scheduling work ID d913255b-5c35-4e63-bef8-94113f5ec47fJob ID 1128
+02-19 13:00:14.543 31887 32173 D WM-SystemJobScheduler: Scheduling work ID b54a3e0d-fec9-43a1-9ffb-6c6e9c9bcdc7Job ID 1005
+02-19 13:00:14.547 31887 32173 D WM-SystemJobScheduler: Scheduling work ID 38b25c5e-44f8-4d5e-99b2-1d0de1b94c5cJob ID 1031
+02-19 13:00:14.554 31887 32173 D WM-SystemJobScheduler: Scheduling work ID 2c144733-de3b-497a-a736-562aac3ca143Job ID 1213
+02-19 13:00:14.561 31887 32173 D WM-SystemJobScheduler: Scheduling work ID bc82afe4-a012-44e8-97e0-e4a4d399e288Job ID 1125
+02-19 13:00:14.565 31887 32173 D WM-SystemJobScheduler: Scheduling work ID d264775b-fd61-4ab3-bab7-d5835a07ad3dJob ID 1233
+02-19 13:00:14.569 31887 32173 D WM-SystemJobScheduler: Scheduling work ID 96d0c170-949b-49ca-8971-917a7b8ebcfbJob ID 1271
+02-19 13:00:14.572 31887 32173 D WM-SystemJobScheduler: Scheduling work ID d6ce5094-acd9-4155-86fe-0b6f38f0a5c2Job ID 1275
+02-19 13:00:14.599 31887 32173 W JobInfo : Requested important-while-foreground flag for job1276 is ignored and takes no effect
+02-19 13:00:14.600 31887 32173 D WM-SystemJobScheduler: Scheduling work ID afbb7dd4-ee66-467a-ab06-8268ca186248Job ID 1276
+02-19 13:00:14.604 31887 31887 D WM-SystemJobService: onStopJob for WorkGenerationalId(workSpecId=afbb7dd4-ee66-467a-ab06-8268ca186248, generation=0)
+02-19 13:00:14.607   752  2505 W JobScheduler: Job didn't exist in JobStore: e760f97 {androidx.work.systemjobscheduler} #u0a145/1276 @androidx.work.systemjobscheduler@com.google.android.apps.messaging/androidx.work.impl.background.systemjob.SystemJobService
+02-19 13:00:14.610 31887 31887 D WM-SystemJobService: onStartJob for WorkGenerationalId(workSpecId=afbb7dd4-ee66-467a-ab06-8268ca186248, generation=0)
+02-19 13:00:14.618 31887 32173 W JobInfo : Requested important-while-foreground flag for job1277 is ignored and takes no effect
+02-19 13:00:14.618 31887 32173 D WM-SystemJobScheduler: Scheduling work ID 960504bd-b75d-4054-824d-db7b4b6ef58dJob ID 1277
+02-19 13:00:14.621 31887 32173 D WM-SystemJobScheduler: Scheduling work ID d8cf203b-35a8-4aa3-94ef-6b1c679efac1Job ID 1278
+02-19 13:00:14.629 31887 32173 D WM-GreedyScheduler: Ignoring {WorkSpec: 8fe53383-2a56-4f16-a96a-0bbc0b567d27}. Requires device idle.
+02-19 13:00:14.629 31887 32173 D WM-GreedyScheduler: Ignoring {WorkSpec: b8e7a0c7-3316-4290-92d9-ceb0bd1e44ad}. Requires device idle.
+02-19 13:00:14.629 31887 32173 D WM-GreedyScheduler: Ignoring {WorkSpec: 815d8b01-5104-4e24-9927-74c5c8e42e6c}. Requires device idle.
+02-19 13:00:14.630 31887 32173 D WM-GreedyScheduler: Ignoring {WorkSpec: ec8fce03-118b-4141-8ceb-3f6d5d15672e}. Requires device idle.
+02-19 13:00:14.630 31887 32175 I Bugle   : DatabaseHelperBasic: sqlite version is 3.44.3
+02-19 13:00:14.630 31887 32173 D WM-GreedyScheduler: Starting work for afbb7dd4-ee66-467a-ab06-8268ca186248
+02-19 13:00:14.630 31887 32173 D WM-GreedyScheduler: Starting tracking for 26a58988-bcf6-40f1-b83a-880425d5db32,960504bd-b75d-4054-824d-db7b4b6ef58d,d913255b-5c35-4e63-bef8-94113f5ec47f,bfa90bdb-d184-457a-950f-8a19593ba3cc
+02-19 13:00:14.636 31887 32173 D WM-Processor: pst: processing WorkGenerationalId(workSpecId=afbb7dd4-ee66-467a-ab06-8268ca186248, generation=0)
+02-19 13:00:14.637 31887 32173 D WM-Processor: WorkerWrapper interrupted for afbb7dd4-ee66-467a-ab06-8268ca186248
+02-19 13:00:14.637 31887 32173 D WM-StopWorkRunnable: StopWorkRunnable for afbb7dd4-ee66-467a-ab06-8268ca186248; Processor.stopWork = true
+02-19 13:00:14.639 31887 32174 D WM-Processor: pst: processing WorkGenerationalId(workSpecId=afbb7dd4-ee66-467a-ab06-8268ca186248, generation=0)
+02-19 13:00:14.640 31887 32173 D WM-Processor: Work WorkGenerationalId(workSpecId=afbb7dd4-ee66-467a-ab06-8268ca186248, generation=0) is already enqueued for processing
+02-19 13:00:14.643 31887 32173 D WM-WorkerWrapper: Status for afbb7dd4-ee66-467a-ab06-8268ca186248 is ENQUEUED; not doing any work and rescheduling for later execution
+02-19 13:00:14.644 31887 31887 D WM-Processor: pst afbb7dd4-ee66-467a-ab06-8268ca186248 executed; reschedule = true
+02-19 13:00:14.644 31887 31887 D WM-SystemJobService: afbb7dd4-ee66-467a-ab06-8268ca186248 executed on JobScheduler
+02-19 13:00:14.646 31887 32173 D MddListenableWorkerFactory: createWorker for class: com.google.apps.tiktok.contrib.work.TikTokListenableWorker
+02-19 13:00:14.649 31887 31887 D WM-WorkerWrapper: Starting work for com.google.apps.tiktok.contrib.work.TikTokListenableWorker
+02-19 13:00:14.665 31887 32166 D WM-GreedyScheduler: Cancelling work ID afbb7dd4-ee66-467a-ab06-8268ca186248
+02-19 13:00:14.667 31887 32166 D WM-GreedyScheduler: Ignoring {WorkSpec: 8fe53383-2a56-4f16-a96a-0bbc0b567d27}. Requires device idle.
+02-19 13:00:14.667 31887 32166 D WM-GreedyScheduler: Ignoring {WorkSpec: b8e7a0c7-3316-4290-92d9-ceb0bd1e44ad}. Requires device idle.
+02-19 13:00:14.667 31887 32166 D WM-GreedyScheduler: Ignoring {WorkSpec: 815d8b01-5104-4e24-9927-74c5c8e42e6c}. Requires device idle.
+02-19 13:00:14.667 31887 32166 D WM-GreedyScheduler: Ignoring {WorkSpec: ec8fce03-118b-4141-8ceb-3f6d5d15672e}. Requires device idle.
+02-19 13:00:14.667 31887 32166 D WM-GreedyScheduler: Starting tracking for 26a58988-bcf6-40f1-b83a-880425d5db32,960504bd-b75d-4054-824d-db7b4b6ef58d,d913255b-5c35-4e63-bef8-94113f5ec47f,bfa90bdb-d184-457a-950f-8a19593ba3cc
+02-19 13:00:14.669 31887 32166 D WM-ConstraintTracker: pxc: initial state = false
+02-19 13:00:14.669 31887 32166 D WM-BrdcstRcvrCnstrntTrc: pxc: registering receiver
+02-19 13:00:14.670 31887 32166 D WM-ConstraintTracker: pxe: initial state = true
+02-19 13:00:14.670 31887 32166 D WM-BrdcstRcvrCnstrntTrc: pxe: registering receiver
+02-19 13:00:14.674 31887 32174 D WM-ConstraintTracker: pxn: initial state = NetworkState(isConnected=true, isValidated=true, isMetered=false, isNotRoaming=true)
+02-19 13:00:14.674 31887 32174 D WM-NetworkStateTracker: Registering network callback
+02-19 13:00:14.677   752  1456 D ConnectivityService: requestNetwork for uid/pid:10145/31887 activeRequest: null callbackRequest: 458 [NetworkRequest [ TRACK_DEFAULT id=459, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10145 RequestorUid: 10145 RequestorPkg: com.google.android.apps.messaging UnderlyingNetworks: Null] ], NetworkRequest [ REQUEST id=460, [ Transports: SATELLITE Capabilities: INTERNET&TRUSTED&NOT_VCN_MANAGED Uid: 10145 RequestorUid: 10145 RequestorPkg: com.google.android.apps.messaging UnderlyingNetworks: Null] ]] callback flags: 0 order: 2147483647 isUidTracked: false declaredMethods: AVAIL|LOST|NC
+02-19 13:00:14.682   752  1029 D ConnectivityService: NetReassign [459 : null → 107] [c 0] [a 3] [i 1]
+02-19 13:00:14.686 31887 32174 D WM-PackageManagerHelper: Skipping component enablement for androidx.work.impl.background.systemalarm.RescheduleReceiver
+02-19 13:00:14.687 31887 32166 D WM-GreedyScheduler: Constraints not met: Cancelling work ID WorkGenerationalId(workSpecId=960504bd-b75d-4054-824d-db7b4b6ef58d, generation=0)
+02-19 13:00:14.688 31887 32182 D WM-NetworkStateTracker: Network capabilities changed: [ Transports: WIFI Capabilities: NOT_METERED&INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN&VALIDATED&NOT_ROAMING&FOREGROUND&NOT_CONGESTED&NOT_SUSPENDED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED LinkUpBandwidth>=12000Kbps LinkDnBandwidth>=30000Kbps TransportInfo: <SSID: <unknown ssid>, BSSID: 02:00:00:00:00:00, MAC: 02:00:00:00:00:00, IP: /10.0.2.16, Security type: 0, Supplicant state: COMPLETED, Wi-Fi standard: legacy, RSSI: -50, Link speed: 1Mbps, Tx Link speed: 1Mbps, Max Supported Tx Link speed: 11Mbps, Rx Link speed: 2Mbps, Max Supported Rx Link speed: 11Mbps, Frequency: 2447MHz, Net ID: -1, Metered hint: false, score: 60, isUsable: true, CarrierMerged: false, SubscriptionId: -1, IsPrimary: -1, Trusted: true, Restricted: false, Ephemeral: false, OEM paid: false, OEM private: false, OSU AP: false, FQDN: <none>, Provider friendly name: <none>, Requesting package name: <none><none>MLO Information: , Is TID-To-Link negotiation supported by the AP: false, AP MLD Address: <none>, AP MLO Link Id: <none>, AP MLO Affiliated links: <none>, Vendor Data: <none>> SignalStrength: -50 UnderlyingNetworks: Null]
+02-19 13:00:14.689 31887 32166 D WM-GreedyScheduler: Constraints not met: Cancelling work ID WorkGenerationalId(workSpecId=26a58988-bcf6-40f1-b83a-880425d5db32, generation=3)
+02-19 13:00:14.697 31887 32166 D WM-GreedyScheduler: Constraints not met: Cancelling work ID WorkGenerationalId(workSpecId=bfa90bdb-d184-457a-950f-8a19593ba3cc, generation=3)
+02-19 13:00:14.698 31887 32173 D WM-GreedyScheduler: Constraints not met: Cancelling work ID WorkGenerationalId(workSpecId=d913255b-5c35-4e63-bef8-94113f5ec47f, generation=0)
+02-19 13:00:14.804 31887 31887 I BugleSearch: AppSearchIndexableRestoreSynclet is disabled.
+02-19 13:00:14.826 31887 32161 I CarrierServices: Initializing Carrier Services Logging. [CONTEXT thread_id=68 ]
+02-19 13:00:14.838 31887 32175 I BugleDataModel: HeavyWorkQueueEmptyObserver: Starting observation of WorkQueueWorkManagerTable
+02-19 13:00:14.840 31887 32161 I LogSaver: LogSaver new instance with filename: carrier_services
+02-19 13:00:14.862 31887 32161 I BugleBackup: Registering preference change listener for "bugle".
+02-19 13:00:14.862 31887 31887 I SyncManagerImpl: #sync(). Running Synclets and scheduling next sync.
+02-19 13:00:14.926 32181 32181 W screencap: Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: SurfaceFlingerAIDL
+02-19 13:00:14.926 32181 32181 W BpBinder: Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
+02-19 13:00:14.927 32181 32181 W ProcessState: Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
+02-19 13:00:14.931   531   549 E HwcComposer: getLuts failed Status(-8, EX_SERVICE_SPECIFIC): '8: '
+02-19 13:00:14.931   531   549 E HWComposer: getLuts: getLuts failed for display 4619827259835644672: UNSUPPORTED (8)
+02-19 13:00:14.939 31887 32151 I SyncManagerImpl: Running synclets: [TemplateFetcherSynclet]
+02-19 13:00:14.955 31887 32185 I SyncManagerImpl: Starting synclet: TemplateFetcherSynclet
+02-19 13:00:15.014   752  1029 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+02-19 13:00:15.014   752  1029 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+02-19 13:00:15.015   752  1029 D InetDiagMessage: Destroyed live tcp sockets for uids={10168} in 2ms
+02-19 13:00:15.016   752  1029 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+02-19 13:00:15.017   752  1029 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+02-19 13:00:15.017   752  1029 D InetDiagMessage: Destroyed live tcp sockets for uids={20168} in 2ms
+02-19 13:00:15.036 31887 31897 W .apps.messaging: Suspending all threads took: 68.106ms
+02-19 13:00:15.066 31887 32169 I SyncManagerImpl: #sync() complete
+02-19 13:00:15.071 31887 32150 I SyncManagerImpl: Completed sync. Scheduling next wakeup
+02-19 13:00:15.071 31887 32166 I BugleRcs: couldn't get package info for carrier services package with name com.google.android.ims
+02-19 13:00:15.071 31887 32166 I BugleRcs: android.content.pm.PackageManager$NameNotFoundException: com.google.android.ims
+02-19 13:00:15.071 31887 32166 I BugleRcs: 	at android.app.ApplicationPackageManager.getPackageInfoAsUser(ApplicationPackageManager.java:280)
+02-19 13:00:15.071 31887 32166 I BugleRcs: 	at android.app.ApplicationPackageManager.getPackageInfo(ApplicationPackageManager.java:240)
+02-19 13:00:15.071 31887 32166 I BugleRcs: 	at android.app.ApplicationPackageManager.getPackageInfo(ApplicationPackageManager.java:234)
+02-19 13:00:15.071 31887 32166 I BugleRcs: 	at cvpw.<init>(PG:50)
+02-19 13:00:15.071 31887 32166 I BugleRcs: 	at cvpw.a(PG:10)
+02-19 13:00:15.071 31887 32166 I BugleRcs: 	at cggb.d(PG:27)
+02-19 13:00:15.071 31887 32166 I BugleRcs: 	at akqe.run(PG:18)
+02-19 13:00:15.071 31887 32166 I BugleRcs: 	at elst.run(PG:21)
+02-19 13:00:15.071 31887 32166 I BugleRcs: 	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:524)
+02-19 13:00:15.071 31887 32166 I BugleRcs: 	at esfe.a(PG:3)
+02-19 13:00:15.071 31887 32166 I BugleRcs: 	at eseb.run(PG:19)
+02-19 13:00:15.071 31887 32166 I BugleRcs: 	at esff.run(PG:5)
+02-19 13:00:15.071 31887 32166 I BugleRcs: 	at dubu.run(PG:7)
+02-19 13:00:15.071 31887 32166 I BugleRcs: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1156)
+02-19 13:00:15.071 31887 32166 I BugleRcs: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:651)
+02-19 13:00:15.071 31887 32166 I BugleRcs: 	at dubb.run(PG:6)
+02-19 13:00:15.071 31887 32166 I BugleRcs: 	at java.lang.Thread.run(Thread.java:1119)
+02-19 13:00:15.071 31887 32166 I BugleRcs: 	at ducv.run(PG:61)
+02-19 13:00:15.072 31887 32150 I SyncWorkManagerOneTimeS: Scheduling next onetime WorkManager workers
+02-19 13:00:15.078 31887 32161 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=afbb7dd4-ee66-467a-ab06-8268ca186248, tags={ com.google.apps.tiktok.contrib.work.TikTokListenableWorker,com.google.apps.tiktok.sync.impl.workmanager.SyncWorker,TikTokWorker#com.google.apps.tiktok.sync.impl.workmanager.SyncWorker } ]
+02-19 13:00:15.102 31887 31887 D WM-Processor: pst afbb7dd4-ee66-467a-ab06-8268ca186248 executed; reschedule = false
+02-19 13:00:15.107 20068 20107 I .gms.persistent: AssetManager2(0x7d8fac42fbb8) locale list changing from [] to [en-US]
+02-19 13:00:15.121 31887 32161 D WM-SystemJobScheduler: Scheduling work ID fbc4d93f-1b99-454e-a5ed-7d8d2a239295Job ID 1280
+02-19 13:00:15.127 31887 32161 D WM-GreedyScheduler: Ignoring {WorkSpec: 8fe53383-2a56-4f16-a96a-0bbc0b567d27}. Requires device idle.
+02-19 13:00:15.127 31887 32161 D WM-GreedyScheduler: Ignoring {WorkSpec: b8e7a0c7-3316-4290-92d9-ceb0bd1e44ad}. Requires device idle.
+02-19 13:00:15.127 31887 32161 D WM-GreedyScheduler: Ignoring {WorkSpec: 815d8b01-5104-4e24-9927-74c5c8e42e6c}. Requires device idle.
+02-19 13:00:15.127 31887 32161 D WM-GreedyScheduler: Ignoring {WorkSpec: ec8fce03-118b-4141-8ceb-3f6d5d15672e}. Requires device idle.
+02-19 13:00:15.128 31887 32161 D WM-GreedyScheduler: Starting tracking for 26a58988-bcf6-40f1-b83a-880425d5db32,960504bd-b75d-4054-824d-db7b4b6ef58d,d913255b-5c35-4e63-bef8-94113f5ec47f,bfa90bdb-d184-457a-950f-8a19593ba3cc
+02-19 13:00:15.135 31887 32173 D WM-Processor: Processor cancelling d8cf203b-35a8-4aa3-94ef-6b1c679efac1
+02-19 13:00:15.139 31887 32173 D WM-Processor: WorkerWrapper could not be found for d8cf203b-35a8-4aa3-94ef-6b1c679efac1
+02-19 13:00:15.140 31887 32163 I ForwardSyncCache: reclaimMemory: Clearing caches
+02-19 13:00:15.146 31887 32173 D WM-GreedyScheduler: Cancelling work ID d8cf203b-35a8-4aa3-94ef-6b1c679efac1
+02-19 13:00:15.157 31887 32173 D WM-SystemJobScheduler: Scheduling work ID 6f202dfc-7fdc-400c-8261-850c75089ad6Job ID 1281
+02-19 13:00:15.161 31887 32173 D WM-GreedyScheduler: Ignoring {WorkSpec: 8fe53383-2a56-4f16-a96a-0bbc0b567d27}. Requires device idle.
+02-19 13:00:15.161 31887 32173 D WM-GreedyScheduler: Ignoring {WorkSpec: b8e7a0c7-3316-4290-92d9-ceb0bd1e44ad}. Requires device idle.
+02-19 13:00:15.161 31887 32173 D WM-GreedyScheduler: Ignoring {WorkSpec: 815d8b01-5104-4e24-9927-74c5c8e42e6c}. Requires device idle.
+02-19 13:00:15.161 31887 32173 D WM-GreedyScheduler: Ignoring {WorkSpec: ec8fce03-118b-4141-8ceb-3f6d5d15672e}. Requires device idle.
+02-19 13:00:15.161 31887 32173 D WM-GreedyScheduler: Starting tracking for 26a58988-bcf6-40f1-b83a-880425d5db32,960504bd-b75d-4054-824d-db7b4b6ef58d,d913255b-5c35-4e63-bef8-94113f5ec47f,bfa90bdb-d184-457a-950f-8a19593ba3cc
+02-19 13:00:15.163 31887 32161 D WM-Processor: Processor cancelling 960504bd-b75d-4054-824d-db7b4b6ef58d
+02-19 13:00:15.164 31887 32161 D WM-Processor: WorkerWrapper could not be found for 960504bd-b75d-4054-824d-db7b4b6ef58d
+02-19 13:00:15.169 31887 32161 D WM-GreedyScheduler: Cancelling work ID 960504bd-b75d-4054-824d-db7b4b6ef58d
+02-19 13:00:15.177 31887 32161 D WM-SystemJobScheduler: Scheduling work ID 3cd7b169-f649-44a7-9a27-7ae59e18e898Job ID 1282
+02-19 13:00:15.181 31887 32161 D WM-GreedyScheduler: Ignoring {WorkSpec: 8fe53383-2a56-4f16-a96a-0bbc0b567d27}. Requires device idle.
+02-19 13:00:15.181 31887 32161 D WM-GreedyScheduler: Ignoring {WorkSpec: b8e7a0c7-3316-4290-92d9-ceb0bd1e44ad}. Requires device idle.
+02-19 13:00:15.181 31887 32161 D WM-GreedyScheduler: Ignoring {WorkSpec: 815d8b01-5104-4e24-9927-74c5c8e42e6c}. Requires device idle.
+02-19 13:00:15.181 31887 32161 D WM-GreedyScheduler: Ignoring {WorkSpec: ec8fce03-118b-4141-8ceb-3f6d5d15672e}. Requires device idle.
+02-19 13:00:15.181 31887 32161 D WM-GreedyScheduler: Starting tracking for 26a58988-bcf6-40f1-b83a-880425d5db32,d913255b-5c35-4e63-bef8-94113f5ec47f,bfa90bdb-d184-457a-950f-8a19593ba3cc
+02-19 13:00:15.183 31887 32161 I SyncWorkManagerOneTimeS: Successfully scheduled next onetime workers
+02-19 13:00:15.184 31887 32173 D WM-GreedyScheduler: Cancelling work ID afbb7dd4-ee66-467a-ab06-8268ca186248
+02-19 13:00:15.195 31887 32163 W BugleSpam: trimming memory: closing msg model.
+02-19 13:00:15.200 20068 20107 W BpBinder: Large outgoing transaction of 442796 bytes, interface descriptor , code 4 was sent
+02-19 13:00:15.201 31887 32163 W Bugle   : TextClassifierLibManagerImpl: Reclaiming memory at level: 40
+02-19 13:00:15.208 31887 32166 I Bugle   : TelephonyManagerFactory: Returning per-subscription TelephonyManager (>= N) subscription{id:1}
+02-19 13:00:15.211 31887 32173 D WM-GreedyScheduler: Ignoring {WorkSpec: 8fe53383-2a56-4f16-a96a-0bbc0b567d27}. Requires device idle.
+02-19 13:00:15.211 31887 32173 D WM-GreedyScheduler: Ignoring {WorkSpec: b8e7a0c7-3316-4290-92d9-ceb0bd1e44ad}. Requires device idle.
+02-19 13:00:15.211 31887 32173 D WM-GreedyScheduler: Ignoring {WorkSpec: 815d8b01-5104-4e24-9927-74c5c8e42e6c}. Requires device idle.
+02-19 13:00:15.212 31887 32173 D WM-GreedyScheduler: Ignoring {WorkSpec: ec8fce03-118b-4141-8ceb-3f6d5d15672e}. Requires device idle.
+02-19 13:00:15.212 31887 32173 D WM-GreedyScheduler: Starting tracking for 26a58988-bcf6-40f1-b83a-880425d5db32,d913255b-5c35-4e63-bef8-94113f5ec47f,bfa90bdb-d184-457a-950f-8a19593ba3cc
+02-19 13:00:15.400 31887 32175 I BugleJobs: Starting sync data to wearable message observer.
+02-19 13:00:15.435 31887 32161 I BugleRcsProvisioning: BugleSystemBindingManager: onBuglePhenotypeFlagChanged
+02-19 13:00:15.438 31887 32161 I BugleTransport: Not kicking off update transport registration because RCS provisioning change has not been received.
+02-19 13:00:15.442 31887 32169 I BugleRcsEngine: SystemBinding enabled: true [CONTEXT log_prefix="SystemBindingManager" thread_id=73 ]
+02-19 13:00:15.444 31887 32169 I BugleRcsEngine: System Binding updated [CONTEXT thread_id=73 ]
+02-19 13:00:15.494 31887 32175 W BugleRcsEngine: Unable to send diagnostic log [CONTEXT thread_id=76 ]
+02-19 13:00:15.494 31887 32166 W BugleRcsEngine: Unable to send diagnostic log [CONTEXT thread_id=72 ]
+02-19 13:00:15.529 31887 32188 W JobInfo : Requested important-while-foreground flag for job1283 is ignored and takes no effect
+02-19 13:00:15.529 31887 32188 D WM-SystemJobScheduler: Scheduling work ID eb3fe227-839e-425f-b848-a028a40bf197Job ID 1283
+02-19 13:00:15.545 31887 32188 D WM-GreedyScheduler: Ignoring {WorkSpec: 8fe53383-2a56-4f16-a96a-0bbc0b567d27}. Requires device idle.
+02-19 13:00:15.545 31887 32188 D WM-GreedyScheduler: Ignoring {WorkSpec: b8e7a0c7-3316-4290-92d9-ceb0bd1e44ad}. Requires device idle.
+02-19 13:00:15.545 31887 32188 D WM-GreedyScheduler: Ignoring {WorkSpec: 815d8b01-5104-4e24-9927-74c5c8e42e6c}. Requires device idle.
+02-19 13:00:15.545 31887 32188 D WM-GreedyScheduler: Ignoring {WorkSpec: ec8fce03-118b-4141-8ceb-3f6d5d15672e}. Requires device idle.
+02-19 13:00:15.546 31887 31887 D WM-SystemJobService: onStartJob for WorkGenerationalId(workSpecId=eb3fe227-839e-425f-b848-a028a40bf197, generation=0)
+02-19 13:00:15.547 31887 32188 D WM-GreedyScheduler: Starting work for eb3fe227-839e-425f-b848-a028a40bf197
+02-19 13:00:15.548 31887 32188 D WM-GreedyScheduler: Starting tracking for 26a58988-bcf6-40f1-b83a-880425d5db32,d913255b-5c35-4e63-bef8-94113f5ec47f,bfa90bdb-d184-457a-950f-8a19593ba3cc
+02-19 13:00:15.551 31887 32173 D WM-Processor: pst: processing WorkGenerationalId(workSpecId=eb3fe227-839e-425f-b848-a028a40bf197, generation=0)
+02-19 13:00:15.557 31887 32175 D WM-Processor: Work WorkGenerationalId(workSpecId=eb3fe227-839e-425f-b848-a028a40bf197, generation=0) is already enqueued for processing
+02-19 13:00:15.560 31887 32173 D MddListenableWorkerFactory: createWorker for class: com.google.android.apps.messaging.shared.datamodel.workqueue.WorkQueueWorkerShim
+02-19 13:00:15.563 31887 31887 D WM-WorkerWrapper: Starting work for com.google.android.apps.messaging.shared.datamodel.workqueue.WorkQueueWorkerShim
+02-19 13:00:15.624 31887 32187 I BugleDataModel: 3 not running because already up to date, upgradeCommand: EXECUTE_UPGRADE, version: 2
+02-19 13:00:15.628 31887 32185 I BugleDataModel: 2 not running because already up to date, upgradeCommand: EXECUTE_UPGRADE, version: 2
+02-19 13:00:15.699 31887 32161 I BugleSatellite: Processing Phenotype flag changes.
+02-19 13:00:15.701 31887 32188 I BugleSatellite: Reporting to Telephony: SMS supported = true
+02-19 13:00:15.778 31887 32161 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=eb3fe227-839e-425f-b848-a028a40bf197, tags={ com.google.android.apps.messaging.shared.datamodel.workqueue.WorkQueueWorkerShim,data_upgrade- } ]
+02-19 13:00:15.786 31887 31887 D WM-Processor: pst eb3fe227-839e-425f-b848-a028a40bf197 executed; reschedule = false
+02-19 13:00:15.787 31887 31887 D WM-SystemJobService: eb3fe227-839e-425f-b848-a028a40bf197 executed on JobScheduler
+02-19 13:00:15.793 31887 32161 D WM-GreedyScheduler: Cancelling work ID eb3fe227-839e-425f-b848-a028a40bf197
+02-19 13:00:15.797 31887 32161 D WM-GreedyScheduler: Ignoring {WorkSpec: 8fe53383-2a56-4f16-a96a-0bbc0b567d27}. Requires device idle.
+02-19 13:00:15.798 31887 32161 D WM-GreedyScheduler: Ignoring {WorkSpec: b8e7a0c7-3316-4290-92d9-ceb0bd1e44ad}. Requires device idle.
+02-19 13:00:15.798 31887 32161 D WM-GreedyScheduler: Ignoring {WorkSpec: 815d8b01-5104-4e24-9927-74c5c8e42e6c}. Requires device idle.
+02-19 13:00:15.798 31887 32161 D WM-GreedyScheduler: Ignoring {WorkSpec: ec8fce03-118b-4141-8ceb-3f6d5d15672e}. Requires device idle.
+02-19 13:00:15.798 31887 32163 I ForwardSyncCache: reclaimMemory: Clearing caches
+02-19 13:00:15.800 31887 32163 W BugleSpam: trimming memory: closing msg model.
+02-19 13:00:15.802 31887 32161 D WM-GreedyScheduler: Starting tracking for 26a58988-bcf6-40f1-b83a-880425d5db32,d913255b-5c35-4e63-bef8-94113f5ec47f,bfa90bdb-d184-457a-950f-8a19593ba3cc
+02-19 13:00:15.803 31887 32163 W Bugle   : TextClassifierLibManagerImpl: Reclaiming memory at level: 40

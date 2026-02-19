@@ -628,6 +628,15 @@
   - Verdict: force-stop 이후 implicit 경로 cold 재진입도 정상 동작
   - Evidence: `artifacts/20260219_121344_adb_implicit_after_force_stop/am_start_implicit.txt`, `artifacts/20260219_121344_adb_implicit_after_force_stop/focus_after_start.txt`, `artifacts/20260219_121344_adb_implicit_after_force_stop/after_start.png`, `artifacts/20260219_121344_adb_implicit_after_force_stop/logcat_tail.txt`, `artifacts/20260219_121344_adb_implicit_after_force_stop/log_hits.txt`
 
+- [x] **TC-ADB-FORCESTOP-IMPLICIT-02** (AVD) force-stop 후 implicit deeplink 2회 반복 cold 재진입 — **passed**
+  - Steps: `force-stop → implicit deeplink` 시퀀스를 2회 반복
+  - Observed:
+    - 1회차: `Status: ok`, `LaunchState: COLD`, `Activity: .MiniAppSchemeActivity`, `TotalTime: 1767ms`, `WaitTime: 1774ms`, focus `GraniteActivity`
+    - 2회차: `Status: ok`, `LaunchState: COLD`, `Activity: .MiniAppSchemeActivity`, `TotalTime: 1015ms`, `WaitTime: 1023ms`, focus `GraniteActivity`
+    - logcat에 대상 앱 obituary 1건(강제종료 맥락), ANR/FATAL/obituary(크래시성) 미검출
+  - Verdict: force-stop 이후 implicit cold 재진입 반복 시 기능적 진입 성공
+  - Evidence: `artifacts/20260219_125958_adb_force_stop_then_implicit_2runs/am_start_1.txt`, `artifacts/20260219_125958_adb_force_stop_then_implicit_2runs/focus_1.txt`, `artifacts/20260219_125958_adb_force_stop_then_implicit_2runs/am_start_2.txt`, `artifacts/20260219_125958_adb_force_stop_then_implicit_2runs/focus_2.txt`, `artifacts/20260219_125958_adb_force_stop_then_implicit_2runs/after_run2.png`, `artifacts/20260219_125958_adb_force_stop_then_implicit_2runs/logcat_tail.txt`, `artifacts/20260219_125958_adb_force_stop_then_implicit_2runs/log_hits.txt`
+
 - [x] **TC-ADB-RECENTS-BACK-IMPLICIT-RECOVER-01** (AVD) Recents+Back implicit 시나리오 후 force-stop 복구 — **failed (recovery unstable)**
   - Steps: explicit 진입 → `APP_SWITCH`→`BACK` → implicit 실행 → `force-stop` 후 implicit 재실행
   - Observed:
@@ -739,4 +748,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 12:59 KST
+- Last update: 2026-02-19 13:01 KST
