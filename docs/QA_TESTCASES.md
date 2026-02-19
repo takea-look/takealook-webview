@@ -744,8 +744,18 @@
   - Verdict: 권한 제한으로 시스템 broadcast 완전 검증은 불가했지만, 실행된 토글 시나리오에서 앱 포그라운드 안정성은 유지
   - Evidence: `artifacts/20260219_115506_adb_airplane_toggle_focus/am_start.txt`, `artifacts/20260219_115506_adb_airplane_toggle_focus/focus_before_airplane.txt`, `artifacts/20260219_115506_adb_airplane_toggle_focus/focus_airplane_on.txt`, `artifacts/20260219_115506_adb_airplane_toggle_focus/focus_airplane_off.txt`, `artifacts/20260219_115506_adb_airplane_toggle_focus/airplane_on_broadcast.txt`, `artifacts/20260219_115506_adb_airplane_toggle_focus/airplane_off_broadcast.txt`, `artifacts/20260219_115506_adb_airplane_toggle_focus/after_airplane_off.png`, `artifacts/20260219_115506_adb_airplane_toggle_focus/logcat_tail.txt`, `artifacts/20260219_115506_adb_airplane_toggle_focus/log_hits.txt`
 
+- [x] **TC-ADB-AIRPLANE-TOGGLE-IMPLICIT-01** (AVD) 비행기모드 토글 이후 implicit deeplink 진입 — **passed (with permission limitation)**
+  - Steps: `airplane_mode_on` on/off 시도 + broadcast 시도 후 implicit deeplink 실행
+  - Observed:
+    - implicit `am start`: `Status: ok`, `LaunchState: COLD`, `Activity: .MiniAppSchemeActivity`, `WaitTime: 5772ms`
+    - 실행 후 focus `GraniteActivity`
+    - broadcast 시도는 SecurityException(권한 제한) 로그 발생
+    - logcat 스캔에서 ANR/FATAL/obituary/"ANR likely to follow" 키워드 미검출
+  - Verdict: broadcast 권한 제한은 동일하지만, 토글 직후 implicit 진입 동작은 정상
+  - Evidence: `artifacts/20260219_130201_adb_airplane_toggle_implicit/airplane_on_broadcast.txt`, `artifacts/20260219_130201_adb_airplane_toggle_implicit/airplane_off_broadcast.txt`, `artifacts/20260219_130201_adb_airplane_toggle_implicit/am_start_implicit.txt`, `artifacts/20260219_130201_adb_airplane_toggle_implicit/focus_after_start.txt`, `artifacts/20260219_130201_adb_airplane_toggle_implicit/after_start.png`, `artifacts/20260219_130201_adb_airplane_toggle_implicit/logcat_tail.txt`, `artifacts/20260219_130201_adb_airplane_toggle_implicit/log_hits.txt`
+
 - Notes:
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 13:01 KST
+- Last update: 2026-02-19 13:03 KST
