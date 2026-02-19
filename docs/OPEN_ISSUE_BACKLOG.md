@@ -54,6 +54,7 @@ Created to resolve issue #70.
 - Seed history:
   - #73 (`[P2] Docs: README 실행/환경변수 섹션 보강`)
   - #79 (`[P2] Investigate granite dev 404 on root path`)
+  - #84 (`[P1] Auth flows consolidation: ID/PW + Toss UX and API contract`)
   - #88 (`[P1] Nickname onboarding fallback UX when profile PATCH is unavailable`)
 
 ## Gap / Risk checklist (for #76)
