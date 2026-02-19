@@ -102,6 +102,15 @@
   - Verdict: 단일 BG/FG 복귀 플로우 정상
   - Evidence: `artifacts/20260219_112711_adb_deeplink_then_home_resume/am_start.txt`, `artifacts/20260219_112711_adb_deeplink_then_home_resume/focus_after_start.txt`, `artifacts/20260219_112711_adb_deeplink_then_home_resume/focus_after_home.txt`, `artifacts/20260219_112711_adb_deeplink_then_home_resume/focus_after_resume.txt`, `artifacts/20260219_112711_adb_deeplink_then_home_resume/monkey_resume.txt`, `artifacts/20260219_112711_adb_deeplink_then_home_resume/after_resume.png`, `artifacts/20260219_112711_adb_deeplink_then_home_resume/logcat_tail.txt`, `artifacts/20260219_112711_adb_deeplink_then_home_resume/log_hits.txt`
 
+- [x] **TC-ADB-SCREEN-SLEEP-WAKE-01** (AVD) 화면 OFF/ON 후 포그라운드 복귀 안정성 — **passed**
+  - Steps: explicit deeplink 진입 → `KEYCODE_SLEEP` → `KEYCODE_WAKEUP` + unlock(82)
+  - Observed:
+    - `am start`: `Status: ok`, `LaunchState: HOT`, `TotalTime: 182ms`, `WaitTime: 208ms`
+    - sleep 전/awake 후 focus 모두 `GraniteActivity`
+    - logcat 스캔에서 ANR/FATAL/obituary 키워드 미검출
+  - Verdict: 잠금/해제 사이클 후 앱 포그라운드 유지 정상
+  - Evidence: `artifacts/20260219_113753_adb_screen_off_on_resume/am_start.txt`, `artifacts/20260219_113753_adb_screen_off_on_resume/focus_before_sleep.txt`, `artifacts/20260219_113753_adb_screen_off_on_resume/power_after_sleep.txt`, `artifacts/20260219_113753_adb_screen_off_on_resume/focus_after_wakeup.txt`, `artifacts/20260219_113753_adb_screen_off_on_resume/after_wakeup.png`, `artifacts/20260219_113753_adb_screen_off_on_resume/logcat_tail.txt`, `artifacts/20260219_113753_adb_screen_off_on_resume/log_hits.txt`
+
 - [x] **TC-ADB-HOME-DEEPLINK-REENTRY-01** (AVD) Home 이동 후 deeplink 재진입 안정성 — **passed**
   - Steps: explicit deeplink 1회 진입 → Home 이동 → explicit deeplink 재실행
   - Observed:
@@ -324,4 +333,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 11:37 KST
+- Last update: 2026-02-19 11:39 KST
