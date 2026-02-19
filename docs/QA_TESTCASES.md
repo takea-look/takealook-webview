@@ -55,6 +55,16 @@
   - Verdict: explicit→implicit 연속 진입 후에도 Back 입력에 화면 전환 반응 미확인
   - Evidence: `artifacts/20260219_124345_adb_explicit_implicit_then_back/am_start_explicit.txt`, `artifacts/20260219_124345_adb_explicit_implicit_then_back/am_start_implicit.txt`, `artifacts/20260219_124345_adb_explicit_implicit_then_back/focus_before_back.txt`, `artifacts/20260219_124345_adb_explicit_implicit_then_back/focus_after_back.txt`, `artifacts/20260219_124345_adb_explicit_implicit_then_back/after_back.png`, `artifacts/20260219_124345_adb_explicit_implicit_then_back/logcat_tail.txt`, `artifacts/20260219_124345_adb_explicit_implicit_then_back/log_hits.txt`
 
+- [x] **TC-ADB-DEEPLINK-IMPLICIT-EXPLICIT-BACK-01** (AVD) implicit→explicit 직후 Back 반응성 — **failed (no transition)**
+  - Steps: implicit deeplink 실행 → explicit deeplink 실행 → `KEYCODE_BACK` 1회 입력
+  - Observed:
+    - implicit `am start`: `Status: ok`, `LaunchState: UNKNOWN (0)`, `WaitTime: 416ms`
+    - explicit `am start`: `Status: ok`, `LaunchState: WARM`, `WaitTime: 1067ms`
+    - back 전/후 focus 모두 `GraniteActivity`
+    - logcat 스캔에서 ANR/FATAL/obituary/"ANR likely to follow" 키워드 미검출
+  - Verdict: implicit→explicit 연속 진입 후에도 Back 입력에 화면 전환 반응 미확인
+  - Evidence: `artifacts/20260219_124542_adb_implicit_explicit_then_back/am_start_implicit.txt`, `artifacts/20260219_124542_adb_implicit_explicit_then_back/am_start_explicit.txt`, `artifacts/20260219_124542_adb_implicit_explicit_then_back/focus_before_back.txt`, `artifacts/20260219_124542_adb_implicit_explicit_then_back/focus_after_back.txt`, `artifacts/20260219_124542_adb_implicit_explicit_then_back/after_back.png`, `artifacts/20260219_124542_adb_implicit_explicit_then_back/logcat_tail.txt`, `artifacts/20260219_124542_adb_implicit_explicit_then_back/log_hits.txt`
+
 - [x] **TC-ADB-DEEPLINK-DOUBLE-NOHOME-01** (AVD) Home 이동 없이 explicit deeplink 연속 2회 처리 — **passed (with warning log)**
   - Steps: explicit deeplink 실행 직후 Home 이동 없이 동일 explicit deeplink 즉시 재실행
   - Observed:
@@ -681,4 +691,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 12:45 KST
+- Last update: 2026-02-19 12:47 KST
