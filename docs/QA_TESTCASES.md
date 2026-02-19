@@ -271,6 +271,16 @@
   - Verdict: Settings에서 Back으로 빠져나온 뒤에도 앱 복귀 플로우 정상
   - Evidence: `artifacts/20260219_121732_adb_settings_back_then_resume/am_settings.txt`, `artifacts/20260219_121732_adb_settings_back_then_resume/focus_on_settings.txt`, `artifacts/20260219_121732_adb_settings_back_then_resume/focus_after_back.txt`, `artifacts/20260219_121732_adb_settings_back_then_resume/monkey_resume.txt`, `artifacts/20260219_121732_adb_settings_back_then_resume/focus_after_resume.txt`, `artifacts/20260219_121732_adb_settings_back_then_resume/after_resume.png`, `artifacts/20260219_121732_adb_settings_back_then_resume/logcat_tail.txt`, `artifacts/20260219_121732_adb_settings_back_then_resume/log_hits.txt`
 
+- [x] **TC-ADB-SETTINGS-BACK-IMPLICIT-01** (AVD) Settings Back 후 implicit deeplink 재진입 — **failed (Settings timeout/ANR observed)**
+  - Steps: Settings 실행 → `KEYCODE_BACK` → implicit deeplink 실행
+  - Observed:
+    - Settings 실행: `Status: timeout`, `LaunchState: UNKNOWN (-1)`, `WaitTime: 17757ms`
+    - Back 후 focus: `NexusLauncherActivity`
+    - implicit deeplink: `Status: ok`, `LaunchState: HOT`, `WaitTime: 771ms`, focus `GraniteActivity`
+    - logcat에서 `com.android.settings... is not responding` ANR 로그 검출
+  - Verdict: 대상 앱 재진입은 성공했지만, 선행 Settings 단계에서 timeout/ANR이 발생해 케이스는 fail 처리
+  - Evidence: `artifacts/20260219_121935_adb_settings_back_then_implicit/am_settings.txt`, `artifacts/20260219_121935_adb_settings_back_then_implicit/focus_after_back.txt`, `artifacts/20260219_121935_adb_settings_back_then_implicit/am_start_implicit.txt`, `artifacts/20260219_121935_adb_settings_back_then_implicit/focus_after_implicit.txt`, `artifacts/20260219_121935_adb_settings_back_then_implicit/after_implicit.png`, `artifacts/20260219_121935_adb_settings_back_then_implicit/logcat_tail.txt`, `artifacts/20260219_121935_adb_settings_back_then_implicit/log_hits.txt`
+
 - [x] **TC-ADB-APPSWITCH-DOUBLETAP-01** (AVD) 앱 활성 상태에서 App Switch 더블탭 복귀 — **failed (unstable focus)**
   - Steps: explicit deeplink 진입 후 `KEYCODE_APP_SWITCH` 2회 연속 입력
   - Observed:
@@ -547,4 +557,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 12:19 KST
+- Last update: 2026-02-19 12:21 KST
