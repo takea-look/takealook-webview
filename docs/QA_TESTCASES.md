@@ -322,6 +322,17 @@
   - Verdict: 더블탭 포커스 깨짐은 재현되지만, deeplink 재실행으로 복구 가능
   - Evidence: `artifacts/20260219_113129_adb_appswitch_doubletap_recover_by_deeplink/am_start_1.txt`, `artifacts/20260219_113129_adb_appswitch_doubletap_recover_by_deeplink/focus_before_doubletap.txt`, `artifacts/20260219_113129_adb_appswitch_doubletap_recover_by_deeplink/focus_after_doubletap.txt`, `artifacts/20260219_113129_adb_appswitch_doubletap_recover_by_deeplink/am_start_2_recover.txt`, `artifacts/20260219_113129_adb_appswitch_doubletap_recover_by_deeplink/focus_after_recover.txt`, `artifacts/20260219_113129_adb_appswitch_doubletap_recover_by_deeplink/after_recover.png`, `artifacts/20260219_113129_adb_appswitch_doubletap_recover_by_deeplink/logcat_tail.txt`, `artifacts/20260219_113129_adb_appswitch_doubletap_recover_by_deeplink/log_hits.txt`
 
+- [x] **TC-ADB-APPSWITCH-DOUBLETAP-HOME-RECOVER-01** (AVD) 더블탭 후 Home 거쳐 deeplink 복구 — **passed**
+  - Steps: explicit deeplink 진입 → `APP_SWITCH` 2회로 포커스 깨짐 유도 → `HOME` → explicit deeplink 재실행
+  - Observed:
+    - 1차 `am start`: `Status: ok`, `LaunchState: WARM`, `WaitTime: 941ms`
+    - 더블탭 후 focus: `mCurrentFocus=null`
+    - `HOME` 후 2차 `am start`: `Status: ok`, `LaunchState: WARM`, `WaitTime: 859ms`
+    - 재진입 후 focus: `GraniteActivity`
+    - logcat 스캔에서 ANR/FATAL/obituary/"ANR likely to follow" 키워드 미검출
+  - Verdict: 더블탭 포커스 깨짐 상태에서도 Home 경유 deeplink 복구 정상
+  - Evidence: `artifacts/20260219_122422_adb_appswitch_doubletap_then_home_deeplink/am_start_1.txt`, `artifacts/20260219_122422_adb_appswitch_doubletap_then_home_deeplink/focus_after_doubletap.txt`, `artifacts/20260219_122422_adb_appswitch_doubletap_then_home_deeplink/am_start_2_recover.txt`, `artifacts/20260219_122422_adb_appswitch_doubletap_then_home_deeplink/focus_after_recover.txt`, `artifacts/20260219_122422_adb_appswitch_doubletap_then_home_deeplink/after_recover.png`, `artifacts/20260219_122422_adb_appswitch_doubletap_then_home_deeplink/logcat_tail.txt`, `artifacts/20260219_122422_adb_appswitch_doubletap_then_home_deeplink/log_hits.txt`
+
 - [x] **TC-ADB-APPSWITCH-SINGLE-01** (AVD) App Switch 진입 후 Back 복귀 동작 — **passed**
   - Steps: explicit deeplink 진입 → `KEYCODE_APP_SWITCH` 1회 → `KEYCODE_BACK` 1회
   - Observed:
@@ -567,4 +578,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 12:23 KST
+- Last update: 2026-02-19 12:25 KST
