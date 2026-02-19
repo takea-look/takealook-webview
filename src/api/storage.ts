@@ -15,7 +15,40 @@ export function getPublicImageUrl(key: string): string {
   return `${IMAGE_BASE_URL.replace(/\/$/, '')}/${key}`;
 }
 
-export async function uploadToR2(presignedUrl: string, file: File): Promise<void> {
+export type UploadProgressHandler = (progress: { loaded: number; total?: number }) => void;
+
+export async function uploadToR2(
+  presignedUrl: string,
+  file: File,
+  onProgress?: UploadProgressHandler,
+): Promise<void> {
+  if (onProgress) {
+    // Prefer XHR for upload progress.
+    await new Promise<void>((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open('PUT', presignedUrl);
+      xhr.setRequestHeader('Content-Type', file.type);
+
+      xhr.upload.onprogress = (event) => {
+        onProgress({ loaded: event.loaded, total: event.total || undefined });
+      };
+
+      xhr.onload = () => {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          resolve();
+        } else {
+          reject(new Error('Failed to upload file to R2'));
+        }
+      };
+
+      xhr.onerror = () => reject(new Error('Failed to upload file to R2'));
+
+      xhr.send(file);
+    });
+
+    return;
+  }
+
   const response = await fetch(presignedUrl, {
     method: 'PUT',
     body: file,

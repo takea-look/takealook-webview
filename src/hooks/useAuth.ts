@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { signin, tossSignin, logout as apiLogout, logoutByUserKey as apiLogoutByUserKey, refreshToken as apiRefreshToken } from '../api/auth';
+import { signin, tossSignin, logout as apiLogout, refreshToken as apiRefreshToken } from '../api/auth';
 import { getAccessToken, setAccessToken, clearAccessToken, setRefreshToken, getRefreshToken } from '../api/client';
 import type { LoginRequest } from '../types/api';
 
@@ -9,12 +9,24 @@ export function useAuth() {
   const [error, setError] = useState<string | null>(null);
 
   const login = async (credentials: LoginRequest) => {
-    const response = await signin(credentials);
-    setAccessToken(response.accessToken);
-    if (response.refreshToken) {
-      setRefreshToken(response.refreshToken);
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      const response = await signin(credentials);
+      setAccessToken(response.accessToken);
+
+      if (response.refreshToken) {
+        setRefreshToken(response.refreshToken);
+      }
+
+      setIsAuthenticated(true);
+    } catch (err) {
+      setError('아이디/비밀번호 로그인에 실패했습니다.');
+      throw err;
+    } finally {
+      setIsLoading(false);
     }
-    setIsAuthenticated(true);
   };
 
   const tossLogin = async () => {
@@ -60,21 +72,17 @@ export function useAuth() {
   const logout = async () => {
     try {
       await apiLogout();
-    } catch (e) {
-      console.error('Logout error:', e);
+    } catch {
+      // Ignore: logout failure shouldn't block local token clear.
     }
     clearAccessToken();
     setIsAuthenticated(false);
   };
 
   const logoutByUserKey = async (userKey: number) => {
-    try {
-      await apiLogoutByUserKey(userKey);
-    } catch (e) {
-      console.error('Logout by userKey error:', e);
-    }
-    clearAccessToken();
-    setIsAuthenticated(false);
+    // Placeholder for future server-side logout-by-userKey support.
+    void userKey;
+    await logout();
   };
 
   return {

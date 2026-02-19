@@ -4,6 +4,8 @@ import { getAccessToken } from '../api/client';
 import { getMyProfile } from '../api/user';
 import { LoadingView } from './LoadingView';
 
+const NICKNAME_UPDATE_ENABLED = import.meta.env.VITE_ENABLE_NICKNAME_UPDATE === 'true';
+
 export function ProtectedRoute() {
   const location = useLocation();
   const isAuthenticated = !!getAccessToken();
@@ -31,7 +33,9 @@ export function ProtectedRoute() {
   }, [isAuthenticated]);
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
+    const next = `${location.pathname}${location.search}`;
+    const params = new URLSearchParams({ next });
+    return <Navigate to={`/login?${params.toString()}`} replace />;
   }
 
   if (loading) {
@@ -39,7 +43,7 @@ export function ProtectedRoute() {
   }
 
   const isOnboardingPath = location.pathname.startsWith('/onboarding/nickname');
-  if (hasNickname === false && !isOnboardingPath) {
+  if (NICKNAME_UPDATE_ENABLED && hasNickname === false && !isOnboardingPath) {
     const next = `${location.pathname}${location.search}`;
     const params = new URLSearchParams({ next });
     return <Navigate to={`/onboarding/nickname?${params.toString()}`} replace />;

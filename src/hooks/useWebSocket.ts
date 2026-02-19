@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
-import { getWebSocketTicket } from '../api/chat';
+import { getChatMessages, getWebSocketTicket } from '../api/chat';
 import type { UserChatMessage } from '../types/api';
 import { getAccessToken } from '../api/client';
 
@@ -28,6 +28,22 @@ export function useWebSocket(): UseWebSocketResult {
 
   const reconnectAttemptRef = useRef(0);
   const lastDisconnectReasonRef = useRef<string | null>(null);
+
+
+  const mergeMessages = useCallback((messages: UserChatMessage[]) => {
+    const seen = new Set<string>();
+    return [...messages]
+      .sort((a, b) => {
+        if (a.createdAt === b.createdAt) return (a.id ?? 0) - (b.id ?? 0);
+        return a.createdAt - b.createdAt;
+      })
+      .filter((msg) => {
+        const key = msg.id != null ? `id:${msg.id}` : `ts:${msg.createdAt}:sender:${msg.sender?.id ?? 'unknown'}`;
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+  }, []);
 
   const disconnect = useCallback(() => {
     if (reconnectTimeoutRef.current) {
@@ -96,10 +112,24 @@ export function useWebSocket(): UseWebSocketResult {
 
       ws.onopen = () => {
         console.log('[WS] Connected | Session ID:', sessionId);
+        const wasReconnecting = reconnectAttemptRef.current > 0;
+
         setIsConnected(true);
         setConnectionStatus('connected');
         reconnectAttemptRef.current = 0;
         isConnectingRef.current = false;
+
+        if (wasReconnecting) {
+          // Backfill latest messages after reconnect to avoid missing events during downtime.
+          void (async () => {
+            try {
+              const latestMessages = await getChatMessages(roomId, { limit: 30 });
+              setMessages((prev) => mergeMessages([...prev, ...latestMessages]));
+            } catch (error) {
+              console.error('[WS] Backfill after reconnect failed:', error);
+            }
+          })();
+        }
       };
 
       ws.onmessage = (event) => {
@@ -137,7 +167,7 @@ export function useWebSocket(): UseWebSocketResult {
             return;
           }
 
-          setMessages(prev => [...prev, message]);
+          setMessages((prev) => mergeMessages([...prev, message]));
         } catch (err) {
           console.error('Failed to parse WebSocket message:', err);
         }

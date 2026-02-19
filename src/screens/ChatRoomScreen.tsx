@@ -1,16 +1,18 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getChatMessages, reportChatMessage } from '../api/chat';
-import { Button, Text } from '@toss/tds-mobile';
 import { getPublicImageUrl, getUploadUrl, uploadToR2 } from '../api/storage';
 import { downsampleImageFile } from '../utils/image';
 import { useWebSocket } from '../hooks/useWebSocket';
 import type { UserChatMessage } from '../types/api';
 import { MessageType } from '../types/api';
 import { getMyProfile } from '../api/user';
-import { CameraIcon, UserIcon, ArrowDownIcon } from '../components/icons';
+import { CameraIcon, ArrowDownIcon } from '../components/icons';
 import { LoadingView } from '../components/LoadingView';
 import { Layout } from '../components/Layout';
+import { Button, Text } from '@toss/tds-mobile';
+import { MessageBubble } from '../components/chat/MessageBubble';
+import { ReportConfirmDialog } from '../components/chat/ReportConfirmDialog';
 import Lightbox from "yet-another-react-lightbox";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import Download from "yet-another-react-lightbox/plugins/download";
@@ -24,11 +26,11 @@ export function ChatRoomScreen() {
     const [isLoadingHistory, setIsLoadingHistory] = useState(false);
     const [myUserId, setMyUserId] = useState<number | null>(null);
     const [isUploading, setIsUploading] = useState(false);
+    const [uploadProgress, setUploadProgress] = useState<{ loaded: number; total?: number } | null>(null);
     const [lastFailedUpload, setLastFailedUpload] = useState<{
         file: File;
         roomIdNum: number;
-        filename: string;
-        imageUrl: string;
+        replyToMessageId?: number;
     } | null>(null);
 
     const [previewOpen, setPreviewOpen] = useState(false);
@@ -75,7 +77,7 @@ export function ChatRoomScreen() {
     const [localReactionCounts, setLocalReactionCounts] = useState<Record<number, Record<string, number>>>({});
     const reactionTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-    // Simple connection indicator (can be refined with TDS component later)
+    // Connection status label + banner
     const connectionLabel = connectionStatus === 'connected'
         ? '연결됨'
         : connectionStatus === 'reconnecting'
@@ -83,6 +85,33 @@ export function ChatRoomScreen() {
             : connectionStatus === 'connecting'
                 ? '연결 중…'
                 : '연결 끊김';
+
+    const reconnectBannerText = connectionStatus === 'connected'
+        ? null
+        : connectionStatus === 'reconnecting'
+            ? '네트워크가 불안정해요. 재연결 중입니다…'
+            : connectionStatus === 'connecting'
+                ? '연결 중입니다…'
+                : '연결이 끊겼어요. 다시 연결해주세요.';
+
+
+    const normalizeMessages = useCallback((messages: UserChatMessage[]) => {
+        const seen = new Set<string>();
+
+        return [...messages]
+            .sort((a, b) => {
+                if (a.createdAt === b.createdAt) {
+                    return (a.id ?? 0) - (b.id ?? 0);
+                }
+                return a.createdAt - b.createdAt;
+            })
+            .filter((msg) => {
+                const key = msg.id != null ? `id:${msg.id}` : `ts:${msg.createdAt}:sender:${msg.sender?.id ?? 'unknown'}`;
+                if (seen.has(key)) return false;
+                seen.add(key);
+                return true;
+            });
+    }, []);
 
     const loadMoreHistory = useCallback(async () => {
         if (!roomId || isLoadingHistory || !hasMoreHistory) return;
@@ -93,16 +122,22 @@ export function ChatRoomScreen() {
 
         try {
             setIsLoadingHistory(true);
-            // NOTE: server spec says before can be messageId or createdAt. We send createdAt for now.
-            const older = await getChatMessages(roomIdNum, { limit: 30, before: oldest.createdAt });
-            setHistoryMessages(prev => [...older, ...prev]);
-            setHasMoreHistory(older.length >= 30);
+            // Prefer stable cursor by message id; fallback to createdAt for legacy payloads.
+            const beforeCursor = oldest.id ?? oldest.createdAt;
+            const older = await getChatMessages(roomIdNum, { limit: 30, before: beforeCursor });
+            setHistoryMessages(prev => normalizeMessages([...older, ...prev]));
+
+            // If all returned rows were duplicates, stop further pagination loop.
+            const uniqueOlderCount = older.filter((msg, idx, arr) =>
+                arr.findIndex((x) => (x.id != null && msg.id != null ? x.id === msg.id : x.createdAt === msg.createdAt && x.sender?.id === msg.sender?.id)) === idx
+            ).length;
+            setHasMoreHistory(uniqueOlderCount >= 30);
         } catch (err) {
             console.error('Failed to load more history:', err);
         } finally {
             setIsLoadingHistory(false);
         }
-    }, [roomId, isLoadingHistory, hasMoreHistory, historyMessages]);
+    }, [roomId, isLoadingHistory, hasMoreHistory, historyMessages, normalizeMessages]);
 
     const checkScrollPosition = useCallback(() => {
         if (!chatContainerRef.current) return;
@@ -139,7 +174,7 @@ export function ChatRoomScreen() {
                     getChatMessages(roomIdNum, { limit: 30 })
                 ]);
                 setMyUserId(profile.id!);
-                setHistoryMessages(messages);
+                setHistoryMessages(normalizeMessages(messages));
                 setHasMoreHistory(messages.length >= 30);
                 await connect(roomIdNum);
             } catch (err) {
@@ -154,7 +189,7 @@ export function ChatRoomScreen() {
         return () => {
             disconnect();
         };
-    }, [roomId, connect, disconnect]);
+    }, [roomId, connect, disconnect, normalizeMessages]);
 
     useEffect(() => {
         if (historyMessages.length > 0) {
@@ -294,7 +329,7 @@ export function ChatRoomScreen() {
     }, [openReactionMenu]);
 
     const handleMessagePointerMove = useCallback((msg: UserChatMessage, e: React.PointerEvent) => {
-        if (!msg.imageUrl) return;
+        if (!msg.imageUrl || msg.isBlinded) return;
         if (swipeTargetMessageIdRef.current !== msg.id) return;
         if (swipeStartXRef.current == null || swipeStartYRef.current == null) return;
         if (swipeTriggeredRef.current) return;
@@ -303,7 +338,7 @@ export function ChatRoomScreen() {
         const dy = e.clientY - swipeStartYRef.current;
 
         // Horizontal swipe detection (right swipe).
-        if (dx > 70 && Math.abs(dy) < 30) {
+        if (dx > 45 && Math.abs(dy) < 40) {
             swipeTriggeredRef.current = true;
 
             const roomIdNum = Number(roomId);
@@ -331,9 +366,9 @@ export function ChatRoomScreen() {
         swipeTriggeredRef.current = false;
     }, []);
 
-    const allMessages = [...historyMessages, ...wsMessages];
+    const allMessages = normalizeMessages([...historyMessages, ...wsMessages]);
     const slides = allMessages
-        .filter(msg => msg.imageUrl)
+.filter(msg => msg.imageUrl && !msg.isBlinded)
         .map(msg => ({ src: msg.imageUrl! }));
 
     const handleCameraClick = () => {
@@ -414,6 +449,44 @@ export function ChatRoomScreen() {
         return new File([blob], name, { type: 'image/webp' });
     };
 
+    const uploadSingleImageFile = async (roomIdNum: number, senderUserId: number, file: File, replyToMessageId?: number) => {
+        const { file: optimizedFile } = await downsampleImageFile(file, {
+            maxWidth: 1280,
+            maxHeight: 1280,
+            quality: 0.82,
+            mimeType: 'image/webp',
+        });
+
+        if (optimizedFile.size > MAX_UPLOAD_BYTES) {
+            throw new Error('압축 후에도 파일이 10MB를 초과합니다. 더 작은 이미지를 선택해주세요.');
+        }
+
+        const filename = `chat/${roomIdNum}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.webp`;
+        const { url: presignedUrl } = await getUploadUrl(filename, optimizedFile.size);
+
+        setUploadProgress({ loaded: 0, total: optimizedFile.size });
+        await uploadToR2(presignedUrl, optimizedFile, (progress) => {
+            setUploadProgress(progress);
+        });
+        setUploadProgress(null);
+
+        const imageUrl = getPublicImageUrl(filename);
+
+        sendMessage(roomIdNum, imageUrl, senderUserId, replyToMessageId);
+    };
+
+    const validateUploadFile = (file: File) => {
+        if (file.size > MAX_UPLOAD_BYTES) {
+            throw new Error('파일이 너무 커요. 10MB 이하 이미지만 업로드할 수 있어요.');
+        }
+
+        const extension = (file.name.split('.').pop() || '').toLowerCase();
+        const allowedExt = new Set(['png', 'jpg', 'jpeg', 'webp']);
+        if (!allowedExt.has(extension)) {
+            throw new Error('지원하지 않는 이미지 형식입니다. png/jpg/jpeg/webp만 업로드할 수 있어요.');
+        }
+    };
+
     const confirmAndUpload = async () => {
         if (!pendingFile || !roomId) return;
 
@@ -426,59 +499,75 @@ export function ChatRoomScreen() {
             }
 
             setIsUploading(true);
+            setUploadProgress(null);
+            const senderUserId = myUserId;
 
             const edited = await buildEditedImageFile(pendingFile);
-            const { file: optimizedFile } = await downsampleImageFile(edited, {
-                maxWidth: 1280,
-                maxHeight: 1280,
-                quality: 0.82,
-                mimeType: 'image/webp',
-            });
-
-            if (optimizedFile.size > MAX_UPLOAD_BYTES) {
-                throw new Error('압축 후에도 파일이 10MB를 초과합니다. 더 작은 이미지를 선택해주세요.');
-            }
-
-            const filename = `chat/${roomIdNum}/${Date.now()}.webp`;
-            const { url: presignedUrl } = await getUploadUrl(filename, optimizedFile.size);
-            await uploadToR2(presignedUrl, optimizedFile);
-            const imageUrl = getPublicImageUrl(filename);
+            validateUploadFile(edited);
+            await uploadSingleImageFile(roomIdNum, senderUserId, edited, replyTarget?.id);
 
             setLastFailedUpload(null);
-            sendMessage(roomIdNum, imageUrl, myUserId, replyTarget?.id);
             setReplyTarget(null);
             closePreview();
         } catch (error) {
             console.error('Upload failed:', error);
             const message = error instanceof Error ? error.message : '사진 업로드에 실패했습니다.';
+            setLastFailedUpload({
+                file: pendingFile,
+                roomIdNum: parseInt(roomId, 10),
+                replyToMessageId: replyTarget?.id,
+            });
             setEditError(message);
         } finally {
             setIsUploading(false);
+            setUploadProgress(null);
         }
     };
 
     const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
-        if (!file || !roomId) return;
+        const files = event.target.files;
+        if (!files || files.length === 0 || !roomId) return;
 
         try {
-            // Front-side validation
-            if (file.size > MAX_UPLOAD_BYTES) {
-                throw new Error('파일이 너무 커요. 10MB 이하 이미지만 업로드할 수 있어요.');
+            if (myUserId === null) {
+                throw new Error('사용자 정보를 불러오는 중입니다. 잠시 후 다시 시도해주세요.');
             }
 
-            const extension = (file.name.split('.').pop() || '').toLowerCase();
-            const allowedExt = new Set(['png', 'jpg', 'jpeg', 'webp']);
-            if (!allowedExt.has(extension)) {
-                throw new Error('지원하지 않는 이미지 형식입니다. png/jpg/jpeg/webp만 업로드할 수 있어요.');
+            const selectedFiles = Array.from(files);
+            selectedFiles.forEach(validateUploadFile);
+            const senderUserId = myUserId;
+
+            if (selectedFiles.length === 1) {
+                openPreview(selectedFiles[0]);
+                return;
             }
 
-            openPreview(file);
+            const roomIdNum = parseInt(roomId, 10);
+            setIsUploading(true);
+            setUploadProgress(null);
+
+            const replyToMessageId = replyTarget?.id;
+            for (const file of selectedFiles) {
+                await uploadSingleImageFile(roomIdNum, senderUserId, file, replyToMessageId);
+            }
+
+            setReplyTarget(null);
+            showToast(`사진 ${selectedFiles.length}장을 보냈어요.`, 'success');
         } catch (error) {
-            console.error('File selection failed:', error);
+            console.error('File selection/upload failed:', error);
             const message = error instanceof Error ? error.message : '사진을 불러오지 못했습니다.';
-            alert(message);
+            const firstFile = files?.[0] ?? null;
+            if (firstFile) {
+                setLastFailedUpload({
+                    file: firstFile,
+                    roomIdNum: parseInt(roomId, 10),
+                    replyToMessageId: replyTarget?.id,
+                });
+            }
+            showToast(message, 'error');
         } finally {
+            setIsUploading(false);
+            setUploadProgress(null);
             if (fileInputRef.current) fileInputRef.current.value = '';
         }
     };
@@ -508,12 +597,46 @@ export function ChatRoomScreen() {
         return <LoadingView />;
     }
 
+    const roomIdNum = roomId ? parseInt(roomId, 10) : NaN;
+
     return (
         <Layout 
             fullBleed={true} 
             style={{ height: '100vh', overflow: 'hidden' }}
             contentStyle={{ height: '100%', display: 'flex', flexDirection: 'column' }}
         >
+            {reconnectBannerText && (
+                <div
+                    role="status"
+                    aria-live="polite"
+                    style={{
+                        padding: '10px 14px',
+                        backgroundColor: connectionStatus === 'disconnected' ? '#FFF3F2' : '#F2F4F6',
+                        borderBottom: '1px solid rgba(0,0,0,0.06)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        gap: '12px',
+                    }}
+                >
+                    <Text style={{ fontSize: '13px', fontWeight: 600, color: '#333D4B', lineHeight: 1.2 }}>
+                        {reconnectBannerText}
+                    </Text>
+                    <Button
+                        type="button"
+                        size="small"
+                        variant="weak"
+                        disabled={!Number.isFinite(roomIdNum) || isUploading}
+                        onClick={() => {
+                            if (!Number.isFinite(roomIdNum)) return;
+                            connect(roomIdNum);
+                        }}
+                    >
+                        재시도
+                    </Button>
+                </div>
+            )}
+
             <div 
                 ref={chatContainerRef}
                 onScroll={checkScrollPosition}
@@ -529,6 +652,11 @@ export function ChatRoomScreen() {
                     msOverflowStyle: 'none'
                 }}
             >
+                {allMessages.length === 0 && !isLoadingHistory && (
+                    <div style={{ textAlign: 'center', color: '#8B95A1', fontSize: '13px', margin: '16px 0' }}>
+                        아직 메시지가 없어요. 첫 사진을 보내보세요.
+                    </div>
+                )}
                 {allMessages.map((msg, index) => {
                     const currentCreatedAt = new Date(msg.createdAt);
                     const previousMessage = allMessages[index - 1];
@@ -574,184 +702,36 @@ export function ChatRoomScreen() {
                         );
                     }
 
-                    const isMyMessage = msg.sender.id === myUserId;
                     const timestamp = new Date(msg.createdAt);
                     const timeString = timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
 
                     return (
                         <React.Fragment key={`${msg.createdAt}-${index}`}>
                             {isNewDay && <DateDivider />}
-                            <div style={{
-                                display: 'flex',
-                                flexDirection: isMyMessage ? 'row-reverse' : 'row',
-                                alignItems: 'flex-end',
-                                gap: '8px'
-                            }}>
-                                {!isMyMessage && (
-                                    <div style={{
-                                        width: '36px',
-                                        height: '36px',
-                                        borderRadius: '14px',
-                                        backgroundColor: '#F2F4F6',
-                                        backgroundImage: msg.sender.image ? `url(${msg.sender.image})` : 'none',
-                                        backgroundSize: 'cover',
-                                        backgroundPosition: 'center',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        flexShrink: 0,
-                                        overflow: 'hidden'
-                                    }}>
-                                        {!msg.sender.image && <UserIcon size={20} color="#B0B8C1" />}
-                                    </div>
-                                )}
-    
-                                <div style={{ display: 'flex', flexDirection: 'column', alignItems: isMyMessage ? 'flex-end' : 'flex-start', maxWidth: '70%' }}>
-                                    {!isMyMessage && (
-                                        <span style={{ fontSize: '12px', color: '#6B7684', marginBottom: '4px', marginLeft: '2px' }}>
-                                            {msg.sender.nickname || msg.sender.username}
-                                        </span>
-                                    )}
-                                    
-                                    <div
-                                        onContextMenu={(e) => {
-                                            e.preventDefault();
-                                            openReactionMenu(msg.id);
-                                        }}
-                                        onDoubleClick={() => setReplyTarget(msg)}
-                                        onPointerDown={(e) => handleMessagePointerDown(msg.id, e)}
-                                        onPointerMove={(e) => handleMessagePointerMove(msg, e)}
-                                        onPointerUp={handleMessagePointerUp}
-                                        onPointerLeave={handleMessagePointerUp}
-                                        style={{
-                                            borderRadius: isMyMessage ? '20px 4px 20px 20px' : '4px 20px 20px 20px',
-                                            overflow: 'hidden',
-                                            boxShadow: isMyMessage ? 'none' : 'inset 0 0 0 1px rgba(0,0,0,0.04)',
-                                            backgroundColor: isMyMessage ? '#3182F6' : '#F2F4F6',
-                                            color: isMyMessage ? '#fff' : '#333d4b'
-                                        }}
-                                    >
-                                        {msg.replyToId != null && (
-                                            <div style={{
-                                                padding: '8px 10px',
-                                                fontSize: '12px',
-                                                opacity: 0.9,
-                                                borderBottom: isMyMessage ? '1px solid rgba(255,255,255,0.2)' : '1px solid rgba(0,0,0,0.06)'
-                                            }}>
-                                                ↪ 답장 (replyToId: {msg.replyToId})
-                                            </div>
-                                        )}
-                                        {msg.type === MessageType.CHAT && !msg.imageUrl && (
-                                            <div style={{
-                                                padding: '12px 14px',
-                                                backgroundColor: isMyMessage ? 'rgba(0,0,0,0.15)' : 'rgba(0, 27, 55, 0.06)',
-                                            }}>
-                                                <Text
-                                                    display="block"
-                                                    color={isMyMessage ? 'grey50' : 'grey700'}
-                                                    typography="st13"
-                                                    fontWeight="medium"
-                                                >
-                                                    블라인드 처리된 메시지입니다
-                                                </Text>
-                                            </div>
-                                        )}
-                                        {msg.imageUrl && (
-                                            <img
-                                                src={msg.imageUrl}
-                                                alt="Chat"
-                                                style={{ display: 'block', maxWidth: '100%', maxHeight: '300px', objectFit: 'cover', cursor: 'pointer' }}
-                                                onClick={() => msg.imageUrl && handleImageClick(msg.imageUrl)}
-                                            />
-                                        )}
-                                        {getReactionCounts(msg).length > 0 && (
-                                            <div style={{
-                                                display: 'flex',
-                                                gap: '6px',
-                                                justifyContent: 'flex-end',
-                                                padding: '6px 8px',
-                                                fontSize: '11px',
-                                                color: isMyMessage ? 'rgba(255,255,255,0.9)' : '#8B95A1'
-                                            }}>
-                                                {getReactionCounts(msg).map(item => (
-                                                    <span
-                                                        key={`${msg.id}-${item.emoji}`}
-                                                        style={{
-                                                            display: 'inline-flex',
-                                                            alignItems: 'center',
-                                                            gap: '3px',
-                                                            background: isMyMessage ? 'rgba(0,0,0,0.2)' : '#EAF1FF',
-                                                            borderRadius: '12px',
-                                                            padding: '1px 7px'
-                                                        }}
-                                                    >
-                                                        <span>{item.emoji}</span>
-                                                        <span>{item.count}</span>
-                                                    </span>
-                                                ))}
-                                            </div>
-                                        )}
-                                    </div>
-                                    {reactionMenuMessageId === msg.id && (
-                                        <div
-                                            style={{
-                                                marginTop: '6px',
-                                                display: 'flex',
-                                                gap: '8px',
-                                                justifyContent: isMyMessage ? 'flex-end' : 'flex-start',
-                                                zIndex: 10,
-                                            }}
-                                            onPointerDown={(e) => e.stopPropagation()}
-                                        >
-                                            {REACTION_EMOJIS.map(emoji => (
-                                                <button
-                                                    key={emoji}
-                                                    type="button"
-                                                    onPointerDown={(e) => e.stopPropagation()}
-                                                    onClick={() => handleReactionSelect(msg.id, emoji)}
-                                                    style={{
-                                                        border: 'none',
-                                                        background: '#FFF',
-                                                        borderRadius: '16px',
-                                                        padding: '4px 8px',
-                                                        fontSize: '18px',
-                                                        cursor: 'pointer',
-                                                        boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
-                                                    }}
-                                                >
-                                                    {emoji}
-                                                </button>
-                                            ))}
-                                            <div style={{ width: '1px', background: 'rgba(0,0,0,0.08)', margin: '0 2px' }} />
-                                            <div onPointerDown={(e) => e.stopPropagation()}>
-                                                <Button
-                                                    size="small"
-                                                    color="danger"
-                                                    variant="weak"
-                                                    onClick={() => handleReportEntry(msg.id)}
-                                                >
-                                                    신고
-                                                </Button>
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
-    
-                                <span style={{
-                                    fontSize: '11px',
-                                    color: '#b0b8c1',
-                                    marginBottom: '2px',
-                                    whiteSpace: 'nowrap'
-                                }}>
-                                    {timeString}
-                                </span>
-                            </div>
+                            <MessageBubble
+                                message={msg}
+                                myUserId={myUserId}
+                                timeString={timeString}
+                                reactionEmojis={REACTION_EMOJIS}
+                                reactionMenuOpen={reactionMenuMessageId === msg.id}
+                                reactionCounts={getReactionCounts(msg)}
+                                onOpenReactionMenu={openReactionMenu}
+                                onSetReplyTarget={setReplyTarget}
+                                onPointerDown={handleMessagePointerDown}
+                                onPointerMove={handleMessagePointerMove}
+                                onPointerUp={handleMessagePointerUp}
+                                onSelectReaction={handleReactionSelect}
+                                onReportEntry={handleReportEntry}
+                                onImageClick={handleImageClick}
+                            />
                         </React.Fragment>
                     );
                 })}
                 {isUploading && (
                     <div style={{ textAlign: 'center', color: '#8B95A1', fontSize: '13px', margin: '10px 0' }}>
-                        사진 업로드 중...
+                        {uploadProgress && uploadProgress.total
+                            ? `사진 업로드 중... (${Math.floor((uploadProgress.loaded / uploadProgress.total) * 100)}%)`
+                            : '사진 업로드 중...'}
                     </div>
                 )}
                 {!isUploading && lastFailedUpload && (
@@ -762,18 +742,25 @@ export function ChatRoomScreen() {
                             onClick={async () => {
                                 try {
                                     setIsUploading(true);
-                                    const { url: presignedUrl } = await getUploadUrl(lastFailedUpload.filename, lastFailedUpload.file.size);
-                                    await uploadToR2(presignedUrl, lastFailedUpload.file);
-                                    // Re-send message (same imageUrl)
-                                    if (myUserId != null) {
-                                        sendMessage(lastFailedUpload.roomIdNum, lastFailedUpload.imageUrl, myUserId, replyTarget?.id);
+                                    setUploadProgress(null);
+                                    if (myUserId == null) {
+                                        throw new Error('사용자 정보를 불러오는 중입니다. 잠시 후 다시 시도해주세요.');
                                     }
+                                    await uploadSingleImageFile(
+                                        lastFailedUpload.roomIdNum,
+                                        myUserId,
+                                        lastFailedUpload.file,
+                                        lastFailedUpload.replyToMessageId,
+                                    );
                                     setLastFailedUpload(null);
+                                    showToast('업로드 재시도에 성공했어요.', 'success');
                                 } catch (e) {
                                     console.error('Retry upload failed:', e);
-                                    alert('재시도에 실패했습니다.');
+                                    const message = e instanceof Error ? e.message : '재시도에 실패했습니다.';
+                                    showToast(message, 'error');
                                 } finally {
                                     setIsUploading(false);
+                                    setUploadProgress(null);
                                 }
                             }}
                             style={{
@@ -873,6 +860,7 @@ export function ChatRoomScreen() {
                                         borderRadius: '12px',
                                         border: '1px solid #E5E8EB',
                                         background: '#fff',
+                                        color: '#191F28',
                                         fontWeight: 800,
                                         cursor: isUploading ? 'not-allowed' : 'pointer'
                                     }}
@@ -891,6 +879,7 @@ export function ChatRoomScreen() {
                                         borderRadius: '12px',
                                         border: '1px solid #E5E8EB',
                                         background: editCropSquare ? '#EAF1FF' : '#fff',
+                                        color: '#191F28',
                                         fontWeight: 800,
                                         cursor: isUploading ? 'not-allowed' : 'pointer'
                                     }}
@@ -914,6 +903,7 @@ export function ChatRoomScreen() {
                                         borderRadius: '14px',
                                         border: '1px solid #E5E8EB',
                                         background: '#fff',
+                                        color: '#191F28',
                                         fontWeight: 900,
                                         cursor: isUploading ? 'not-allowed' : 'pointer'
                                     }}
@@ -1053,7 +1043,7 @@ export function ChatRoomScreen() {
                     color: '#8B95A1',
                     fontSize: '15px'
                 }}>
-                    {replyTarget ? '답장할 사진을 보내세요' : '사진으로만 대화할 수 있어요'}
+                    {replyTarget ? '답장할 사진(여러 장 가능)을 보내세요' : '사진으로만 대화할 수 있어요 (여러 장 선택 가능)'}
                 </div>
 
                 <input
@@ -1061,6 +1051,7 @@ export function ChatRoomScreen() {
                     ref={fileInputRef}
                     style={{ display: 'none' }}
                     accept="image/*"
+                    multiple
                     onChange={handleFileChange}
                 />
                 
@@ -1113,69 +1104,12 @@ export function ChatRoomScreen() {
                 </div>
             )}
 
-            {reportConfirmMessageId != null && (
-                <div
-                    role="dialog"
-                    aria-modal="true"
-                    style={{
-                        position: 'fixed',
-                        inset: 0,
-                        background: 'rgba(0,0,0,0.55)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        padding: '16px',
-                        zIndex: 250,
-                    }}
-                    onClick={() => !isReporting && setReportConfirmMessageId(null)}
-                >
-                    <div
-                        style={{
-                            width: 'min(420px, 100%)',
-                            background: '#fff',
-                            borderRadius: '16px',
-                            padding: '18px 16px 16px 16px',
-                            boxShadow: '0 24px 80px rgba(0,0,0,0.35)',
-                        }}
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        <Text display="block" color="grey900" typography="st13" fontWeight="bold">
-                            이 메시지를 신고할까요?
-                        </Text>
-                        <Text
-                            display="block"
-                            color="grey600"
-                            typography="st13"
-                            style={{ marginTop: '8px' } as React.CSSProperties}
-                        >
-                            신고가 접수되면 운영팀에서 검토합니다.
-                        </Text>
-
-                        <div style={{ display: 'flex', gap: '8px', marginTop: '14px' }}>
-                            <Button
-                                display="full"
-                                color="light"
-                                variant="weak"
-                                size="large"
-                                disabled={isReporting}
-                                onClick={() => setReportConfirmMessageId(null)}
-                            >
-                                취소
-                            </Button>
-                            <Button
-                                display="full"
-                                color="danger"
-                                variant="fill"
-                                size="large"
-                                loading={isReporting}
-                                onClick={confirmReport}
-                            >
-                                신고
-                            </Button>
-                        </div>
-                    </div>
-                </div>
-            )}
+            <ReportConfirmDialog
+                open={reportConfirmMessageId != null}
+                isReporting={isReporting}
+                onClose={() => setReportConfirmMessageId(null)}
+                onConfirm={confirmReport}
+            />
 
             <style>{`
                 @keyframes fadeInUp {

@@ -1,0 +1,22 @@
+name: "Chore"
+description: "Maintenance / cleanup / internal work"
+labels: ["chore"]
+body:
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+    validations:
+      required: true
+  - type: textarea
+    id: ac
+    attributes:
+      label: Acceptance Criteria
+    validations:
+      required: true

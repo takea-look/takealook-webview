@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://s1.takealook.my';
 const TOKEN_KEY = 'takealook_access_token';
 const REFRESH_TOKEN_KEY = 'takealook_refresh_token';
 
@@ -9,15 +9,54 @@ type RefreshResponse = {
 
 let refreshInFlight: Promise<void> | null = null;
 
-interface ApiErrorType extends Error {
+export interface ApiErrorType extends Error {
   status: number;
+  code?: string;
+  details?: unknown;
 }
 
-function createApiError(status: number, message: string): ApiErrorType {
+function createApiError(status: number, message: string, code?: string, details?: unknown): ApiErrorType {
   const error = new Error(message) as ApiErrorType;
   error.status = status;
   error.name = 'ApiError';
+  error.code = code;
+  error.details = details;
   return error;
+}
+
+export function isApiError(error: unknown): error is ApiErrorType {
+  return error instanceof Error && (error as ApiErrorType).name === 'ApiError' && typeof (error as ApiErrorType).status === 'number';
+}
+
+type ParsedErrorBody = {
+  message?: string;
+  error?: string;
+  code?: string;
+  errorCode?: string;
+  status?: number;
+} & Record<string, unknown>;
+
+async function parseErrorResponse(response: Response): Promise<{ message: string; code?: string; details?: unknown }> {
+  const text = await response.text().catch(() => 'Unknown error');
+
+  if (!text) {
+    return { message: `Request failed (${response.status})` };
+  }
+
+  try {
+    const json = JSON.parse(text) as ParsedErrorBody;
+    const message =
+      (typeof json.message === 'string' && json.message) ||
+      (typeof json.error === 'string' && json.error) ||
+      text;
+    const code =
+      (typeof json.code === 'string' && json.code) ||
+      (typeof json.errorCode === 'string' && json.errorCode) ||
+      undefined;
+    return { message, code, details: json };
+  } catch {
+    return { message: text };
+  }
 }
 
 export function getAccessToken(): string | null {
@@ -34,6 +73,11 @@ export function getRefreshToken(): string | null {
 
 export function setRefreshToken(token: string): void {
   localStorage.setItem(REFRESH_TOKEN_KEY, token);
+}
+
+function emitUnauthorized(): void {
+  // Let the app react (e.g., redirect to /login) without coupling this module to react-router.
+  window.dispatchEvent(new CustomEvent('takealook:unauthorized'));
 }
 
 export function clearAccessToken(): void {
@@ -56,8 +100,8 @@ async function refreshAccessToken(): Promise<void> {
   });
 
   if (!response.ok) {
-    const errorText = await response.text().catch(() => 'Unknown error');
-    throw createApiError(response.status, errorText);
+    const parsedError = await parseErrorResponse(response);
+    throw createApiError(response.status, parsedError.message, parsedError.code, parsedError.details);
   }
 
   const data = (await response.json()) as RefreshResponse;
@@ -128,18 +172,20 @@ export async function apiRequest<T>(
       response = await request();
     } catch {
       clearAccessToken();
+      emitUnauthorized();
       throw createApiError(401, 'Unauthorized');
     }
   }
 
   if (response.status === 401) {
     clearAccessToken();
+    emitUnauthorized();
     throw createApiError(401, 'Unauthorized');
   }
 
   if (!response.ok) {
-    const errorText = await response.text().catch(() => 'Unknown error');
-    throw createApiError(response.status, errorText);
+    const parsedError = await parseErrorResponse(response);
+    throw createApiError(response.status, parsedError.message, parsedError.code, parsedError.details);
   }
 
   if (response.status === 204) {
