@@ -142,6 +142,17 @@
   - Verdict: Home 장시간(30초) 이탈 후에도 복귀 안정성 양호
   - Evidence: `artifacts/20260219_113954_adb_home_wait_resume_30s/am_start.txt`, `artifacts/20260219_113954_adb_home_wait_resume_30s/focus_after_start.txt`, `artifacts/20260219_113954_adb_home_wait_resume_30s/focus_after_home_30s.txt`, `artifacts/20260219_113954_adb_home_wait_resume_30s/focus_after_resume.txt`, `artifacts/20260219_113954_adb_home_wait_resume_30s/monkey_resume.txt`, `artifacts/20260219_113954_adb_home_wait_resume_30s/after_resume.png`, `artifacts/20260219_113954_adb_home_wait_resume_30s/logcat_tail.txt`, `artifacts/20260219_113954_adb_home_wait_resume_30s/log_hits.txt`
 
+- [x] **TC-ADB-BGFG-HOME-DOUBLE-01** (AVD) Home 2회 연속 입력 후 복귀 안정성 — **passed**
+  - Steps: explicit deeplink 진입 → `KEYCODE_HOME` 2회 연속 입력 → `monkey resume`
+  - Observed:
+    - `am start`: `Status: ok`, `LaunchState: HOT`, `TotalTime: 2314ms`, `WaitTime: 2329ms`
+    - 진입 직후 focus: `GraniteActivity`
+    - Home 2회 입력 후 focus: `NexusLauncherActivity`
+    - resume 후 focus: `GraniteActivity`
+    - logcat 스캔에서 ANR/FATAL/obituary/"ANR likely to follow" 키워드 미검출
+  - Verdict: Home 중복 입력 상황에서도 복귀 동작 정상
+  - Evidence: `artifacts/20260219_120001_adb_home_double_then_resume/am_start.txt`, `artifacts/20260219_120001_adb_home_double_then_resume/focus_after_start.txt`, `artifacts/20260219_120001_adb_home_double_then_resume/focus_after_home_double.txt`, `artifacts/20260219_120001_adb_home_double_then_resume/focus_after_resume.txt`, `artifacts/20260219_120001_adb_home_double_then_resume/monkey_resume.txt`, `artifacts/20260219_120001_adb_home_double_then_resume/after_resume.png`, `artifacts/20260219_120001_adb_home_double_then_resume/logcat_tail.txt`, `artifacts/20260219_120001_adb_home_double_then_resume/log_hits.txt`
+
 - [x] **TC-ADB-SCREEN-SLEEP-WAKE-01** (AVD) 화면 OFF/ON 후 포그라운드 복귀 안정성 — **passed**
   - Steps: explicit deeplink 진입 → `KEYCODE_SLEEP` → `KEYCODE_WAKEUP` + unlock(82)
   - Observed:
@@ -441,4 +452,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 12:00 KST
+- Last update: 2026-02-19 12:01 KST
