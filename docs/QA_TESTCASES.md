@@ -61,6 +61,15 @@
   - Observed: launch 시 `GraniteActivity` 포커스, Home에서 launcher 포커스, 복귀 후 다시 `GraniteActivity` 포커스 회복
   - Evidence: `artifacts/20260219_084638_adb_bgfg_resume/am_start.txt`, `artifacts/20260219_084638_adb_bgfg_resume/focus_after_launch.txt`, `artifacts/20260219_084638_adb_bgfg_resume/focus_after_home.txt`, `artifacts/20260219_084638_adb_bgfg_resume/focus_after_resume.txt`, `artifacts/20260219_084638_adb_bgfg_resume/launch.png`, `artifacts/20260219_084638_adb_bgfg_resume/home.png`, `artifacts/20260219_084638_adb_bgfg_resume/resume.png`, `artifacts/20260219_084638_adb_bgfg_resume/monkey_resume.txt`
 
+- [x] **TC-ADB-BGFG-02** (AVD) Background/Foreground 3회 반복 복귀 안정성 — **passed**
+  - Steps: explicit deeplink 진입 후 Home→`monkey resume`를 3회 반복
+  - Observed:
+    - `am start`: `Status: ok`, `LaunchState: HOT`, `WaitTime: 351ms`
+    - 1~3회 복귀 후 focus 모두 `GraniteActivity`
+    - logcat 스캔에서 ANR/FATAL/obituary 키워드 미검출
+  - Verdict: 다회 BG/FG 사이클에서도 foreground 복귀 안정성 양호
+  - Evidence: `artifacts/20260219_103616_adb_bgfg_3cycles/am_start.txt`, `artifacts/20260219_103616_adb_bgfg_3cycles/focus_start.txt`, `artifacts/20260219_103616_adb_bgfg_3cycles/focus_home_1.txt`, `artifacts/20260219_103616_adb_bgfg_3cycles/focus_resume_1.txt`, `artifacts/20260219_103616_adb_bgfg_3cycles/focus_home_2.txt`, `artifacts/20260219_103616_adb_bgfg_3cycles/focus_resume_2.txt`, `artifacts/20260219_103616_adb_bgfg_3cycles/focus_home_3.txt`, `artifacts/20260219_103616_adb_bgfg_3cycles/focus_resume_3.txt`, `artifacts/20260219_103616_adb_bgfg_3cycles/resume_1.png`, `artifacts/20260219_103616_adb_bgfg_3cycles/resume_2.png`, `artifacts/20260219_103616_adb_bgfg_3cycles/resume_3.png`, `artifacts/20260219_103616_adb_bgfg_3cycles/logcat_tail.txt`, `artifacts/20260219_103616_adb_bgfg_3cycles/log_hits.txt`
+
 - [x] **TC-ADB-ROTATE-01** (AVD) Deeplink 진입 후 화면 회전(가로/세로) 안정성 — **passed**
   - Steps: deeplink 진입 → 강제 landscape(`user_rotation=1`) → portrait(`user_rotation=0`)
   - Observed: 회전 전/중/후 모두 `GraniteActivity` 포커스 유지, 앱 이탈/크래시 미관찰
@@ -175,4 +184,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 10:35 KST
+- Last update: 2026-02-19 10:37 KST
