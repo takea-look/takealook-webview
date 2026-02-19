@@ -438,6 +438,17 @@
   - Verdict: Back 입력 이후 화면 전환 미확인 + 대상 앱 ANR 발생으로 fail
   - Evidence: `artifacts/20260219_122625_adb_implicit_then_back_behavior/am_start_implicit.txt`, `artifacts/20260219_122625_adb_implicit_then_back_behavior/focus_before_back.txt`, `artifacts/20260219_122625_adb_implicit_then_back_behavior/focus_after_back.txt`, `artifacts/20260219_122625_adb_implicit_then_back_behavior/after_back.png`, `artifacts/20260219_122625_adb_implicit_then_back_behavior/logcat_tail.txt`, `artifacts/20260219_122625_adb_implicit_then_back_behavior/log_hits.txt`
 
+- [x] **TC-ADB-BACK-IMPLICIT-RECOVER-01** (AVD) implicit+Back 이후 implicit 재진입 복구 — **passed (recoverable)**
+  - Steps: implicit deeplink 진입 → `KEYCODE_BACK` 1회 → implicit deeplink 재실행
+  - Observed:
+    - 1차 `am start`: `Status: ok`, `LaunchState: COLD`, `WaitTime: 20508ms`
+    - back 후 focus: `GraniteActivity`
+    - 2차 `am start`: `Status: ok`, `LaunchState: UNKNOWN (0)`, `TotalTime: 0`, `WaitTime: 15`
+    - 재실행 후 focus: `GraniteActivity`
+    - logcat 스캔에서 ANR/FATAL/obituary/"ANR likely to follow" 키워드 미검출
+  - Verdict: Back 반응은 여전히 no-op 성향이지만, implicit 재실행으로 즉시 복구/유지 가능
+  - Evidence: `artifacts/20260219_122838_adb_back_implicit_recover_by_relaunch/am_start_1_implicit.txt`, `artifacts/20260219_122838_adb_back_implicit_recover_by_relaunch/focus_after_back.txt`, `artifacts/20260219_122838_adb_back_implicit_recover_by_relaunch/am_start_2_recover.txt`, `artifacts/20260219_122838_adb_back_implicit_recover_by_relaunch/focus_after_recover.txt`, `artifacts/20260219_122838_adb_back_implicit_recover_by_relaunch/after_recover.png`, `artifacts/20260219_122838_adb_back_implicit_recover_by_relaunch/logcat_tail.txt`, `artifacts/20260219_122838_adb_back_implicit_recover_by_relaunch/log_hits.txt`
+
 - [x] **TC-ADB-TASKSWITCH-01** (AVD) Deeplink 진입 후 타 앱 전환/복귀 안정성 — **failed**
   - Steps: deeplink 진입 → Settings 앱 전환 → 최근앱(App Switch)에서 이전 앱 복귀 시도
   - Observed:
@@ -587,4 +598,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 12:28 KST
+- Last update: 2026-02-19 12:30 KST
