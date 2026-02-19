@@ -123,6 +123,16 @@
   - Verdict: App Switch 더블탭 직후 포커스 안정성이 불충분(재현 추가 필요)
   - Evidence: `artifacts/20260219_111309_adb_appswitch_doubletap/am_start.txt`, `artifacts/20260219_111309_adb_appswitch_doubletap/focus_before_switch.txt`, `artifacts/20260219_111309_adb_appswitch_doubletap/focus_after_double_switch.txt`, `artifacts/20260219_111309_adb_appswitch_doubletap/after_double_switch.png`, `artifacts/20260219_111309_adb_appswitch_doubletap/logcat_tail.txt`, `artifacts/20260219_111309_adb_appswitch_doubletap/log_hits.txt`
 
+- [x] **TC-ADB-APPSWITCH-DOUBLETAP-02** (AVD) App Switch 더블탭 재검증 — **failed (reproduced)**
+  - Steps: explicit deeplink 진입 후 `KEYCODE_APP_SWITCH` 2회 연속 입력(재실행)
+  - Observed:
+    - `am start`: `Status: ok`, `LaunchState: UNKNOWN (0)`, `WaitTime: 54ms`
+    - 더블탭 전 focus는 `GraniteActivity`
+    - 더블탭 후 다시 `mCurrentFocus=null` 재현
+    - logcat 스캔에서 ANR/FATAL/obituary 키워드 미검출
+  - Verdict: 더블탭 후 focus null 이슈가 반복 재현됨(간헐성보다 패턴성 높음)
+  - Evidence: `artifacts/20260219_112949_adb_appswitch_doubletap_retest/am_start.txt`, `artifacts/20260219_112949_adb_appswitch_doubletap_retest/focus_before.txt`, `artifacts/20260219_112949_adb_appswitch_doubletap_retest/focus_after_doubletap.txt`, `artifacts/20260219_112949_adb_appswitch_doubletap_retest/after_doubletap.png`, `artifacts/20260219_112949_adb_appswitch_doubletap_retest/logcat_tail.txt`, `artifacts/20260219_112949_adb_appswitch_doubletap_retest/log_hits.txt`
+
 - [x] **TC-ADB-APPSWITCH-SINGLE-01** (AVD) App Switch 진입 후 Back 복귀 동작 — **passed**
   - Steps: explicit deeplink 진입 → `KEYCODE_APP_SWITCH` 1회 → `KEYCODE_BACK` 1회
   - Observed:
@@ -282,4 +292,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 11:29 KST
+- Last update: 2026-02-19 11:31 KST
