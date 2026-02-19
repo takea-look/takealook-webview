@@ -143,8 +143,17 @@
   - Verdict: Back key로 ANR 다이얼로그 해소/화면 복귀가 확인되지 않음
   - Evidence: `artifacts/20260219_101848_adb_anr_back_dismiss/am_start.txt`, `artifacts/20260219_101848_adb_anr_back_dismiss/focus_before_back.txt`, `artifacts/20260219_101848_adb_anr_back_dismiss/focus_after_back.txt`, `artifacts/20260219_101848_adb_anr_back_dismiss/before_back.png`, `artifacts/20260219_101848_adb_anr_back_dismiss/after_back.png`, `artifacts/20260219_101848_adb_anr_back_dismiss/logcat_tail.txt`, `artifacts/20260219_101848_adb_anr_back_dismiss/anr_hits.txt`
 
+- [x] **TC-ADB-FOCUS-STABLE-30S-01** (AVD) Explicit deeplink 진입 후 30초 포커스 안정성 — **passed**
+  - Steps: Home 상태에서 explicit deeplink 실행 → 5초/30초 시점 focus 및 스크린샷 확인
+  - Observed:
+    - `am start`: `Status: ok`, `LaunchState: COLD`, `TotalTime: 7227ms`, `WaitTime: 7235ms`
+    - 5초/30초 모두 focus가 `GraniteActivity` 유지
+    - logcat 스캔에서 ANR/FATAL 키워드 미검출
+  - Verdict: 해당 실행에서는 최소 30초 구간 안정적으로 랜딩 상태 유지
+  - Evidence: `artifacts/20260219_102925_adb_wait30_focus_stability/am_start.txt`, `artifacts/20260219_102925_adb_wait30_focus_stability/focus_5s.txt`, `artifacts/20260219_102925_adb_wait30_focus_stability/focus_30s.txt`, `artifacts/20260219_102925_adb_wait30_focus_stability/shot_5s.png`, `artifacts/20260219_102925_adb_wait30_focus_stability/shot_30s.png`, `artifacts/20260219_102925_adb_wait30_focus_stability/logcat_tail.txt`, `artifacts/20260219_102925_adb_wait30_focus_stability/log_hits.txt`
+
 - Notes:
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 10:20 KST
+- Last update: 2026-02-19 10:31 KST
