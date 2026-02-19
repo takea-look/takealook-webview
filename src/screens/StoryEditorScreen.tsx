@@ -8,6 +8,9 @@ import type { Layer } from '../features/story-editor/core/types';
 import { useWebSocket } from '../hooks/useWebSocket';
 import { getMyProfile } from '../api/user';
 import { getPublicImageUrl, getUploadUrl, uploadToR2 } from '../api/storage';
+import { getStickerCategories, type StickerCategory } from '../api/stickerCategories';
+import { getStickers, type Sticker } from '../api/stickers';
+import { StickerPickerSheet } from '../features/story-editor/react/StickerPickerSheet';
 
 export function StoryEditorScreen() {
   const navigate = useNavigate();
@@ -45,6 +48,14 @@ export function StoryEditorScreen() {
   const [textEditorOpen, setTextEditorOpen] = useState(false);
   const [textDraft, setTextDraft] = useState('');
 
+  const [stickerPickerOpen, setStickerPickerOpen] = useState(false);
+  const [stickerCategories, setStickerCategories] = useState<StickerCategory[]>([]);
+  const [selectedStickerCategoryId, setSelectedStickerCategoryId] = useState<number | null>(null);
+  const [stickerItems, setStickerItems] = useState<Sticker[]>([]);
+  const [loadingStickerCategories, setLoadingStickerCategories] = useState(false);
+  const [loadingStickers, setLoadingStickers] = useState(false);
+  const [stickerPickerError, setStickerPickerError] = useState('');
+
   const selectedLayer: Layer | null = useMemo(() => {
     if (!state.selectedId) return null;
     return state.layers.find(l => l.id === state.selectedId) ?? null;
@@ -79,6 +90,47 @@ export function StoryEditorScreen() {
       disconnect();
     };
   }, [isReplyFlow, replyRoomId, connect, disconnect]);
+
+  const loadStickerCategories = async () => {
+    setLoadingStickerCategories(true);
+    setStickerPickerError('');
+    try {
+      const categories = await getStickerCategories();
+      setStickerCategories(categories);
+      setSelectedStickerCategoryId(prev => prev ?? categories[0]?.id ?? null);
+    } catch (err) {
+      console.error('Failed to load sticker categories:', err);
+      setStickerPickerError('스티커 카테고리를 불러오지 못했어요.');
+    } finally {
+      setLoadingStickerCategories(false);
+    }
+  };
+
+  const loadStickersByCategory = async (categoryId: number) => {
+    setLoadingStickers(true);
+    setStickerPickerError('');
+    try {
+      const stickers = await getStickers({ categoryId });
+      setStickerItems(stickers);
+    } catch (err) {
+      console.error('Failed to load stickers:', err);
+      setStickerPickerError('스티커를 불러오지 못했어요.');
+      setStickerItems([]);
+    } finally {
+      setLoadingStickers(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!stickerPickerOpen) return;
+    if (stickerCategories.length > 0) return;
+    void loadStickerCategories();
+  }, [stickerPickerOpen, stickerCategories.length]);
+
+  useEffect(() => {
+    if (!stickerPickerOpen || selectedStickerCategoryId == null) return;
+    void loadStickersByCategory(selectedStickerCategoryId);
+  }, [stickerPickerOpen, selectedStickerCategoryId]);
 
   const openTextEditor = () => {
     if (!selectedLayer || selectedLayer.kind !== 'text') return;
@@ -211,7 +263,7 @@ export function StoryEditorScreen() {
           <button onClick={() => controller.addText({ text: 'Text' })} style={pillStyle} type="button">
             Text
           </button>
-          <button onClick={() => controller.addSticker({ src: '/react.svg', at: { x: 540, y: 960 } })} style={pillStyle} type="button">
+          <button onClick={() => setStickerPickerOpen(true)} style={pillStyle} type="button">
             Sticker
           </button>
           <button onClick={() => controller.undo()} style={pillStyle} disabled={!controller.canUndo()} type="button">
@@ -255,6 +307,35 @@ export function StoryEditorScreen() {
           if (!file) return;
           loadFromFile(file);
           e.currentTarget.value = '';
+        }}
+      />
+
+      <StickerPickerSheet
+        open={stickerPickerOpen}
+        categories={stickerCategories}
+        stickers={stickerItems}
+        selectedCategoryId={selectedStickerCategoryId}
+        loadingCategories={loadingStickerCategories}
+        loadingStickers={loadingStickers}
+        errorMessage={stickerPickerError}
+        onClose={() => setStickerPickerOpen(false)}
+        onRetry={() => {
+          if (selectedStickerCategoryId != null) {
+            void loadStickersByCategory(selectedStickerCategoryId);
+            return;
+          }
+          void loadStickerCategories();
+        }}
+        onSelectCategory={categoryId => setSelectedStickerCategoryId(categoryId)}
+        onPickSticker={sticker => {
+          controller.addSticker({
+            src: sticker.imageUrl,
+            at: {
+              x: Math.max(60, width / 2),
+              y: Math.max(60, height / 2),
+            },
+          });
+          setStickerPickerOpen(false);
         }}
       />
 
