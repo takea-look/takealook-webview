@@ -45,6 +45,16 @@
   - Verdict: deeplink 모드 전환(implicit→explicit)도 안정적으로 동작
   - Evidence: `artifacts/20260219_114523_adb_implicit_explicit_backtoback/am_start_implicit.txt`, `artifacts/20260219_114523_adb_implicit_explicit_backtoback/focus_after_implicit.txt`, `artifacts/20260219_114523_adb_implicit_explicit_backtoback/am_start_explicit.txt`, `artifacts/20260219_114523_adb_implicit_explicit_backtoback/focus_after_explicit.txt`, `artifacts/20260219_114523_adb_implicit_explicit_backtoback/after_explicit.png`, `artifacts/20260219_114523_adb_implicit_explicit_backtoback/logcat_tail.txt`, `artifacts/20260219_114523_adb_implicit_explicit_backtoback/log_hits.txt`
 
+- [x] **TC-ADB-DEEPLINK-DOUBLE-NOHOME-01** (AVD) Home 이동 없이 explicit deeplink 연속 2회 처리 — **passed (with warning log)**
+  - Steps: explicit deeplink 실행 직후 Home 이동 없이 동일 explicit deeplink 즉시 재실행
+  - Observed:
+    - 1차 `am start`: `Status: ok`, `LaunchState: HOT`, `WaitTime: 370ms`
+    - 2차 `am start`: `Status: ok`, `LaunchState: UNKNOWN (0)`, `TotalTime: 0`, `WaitTime: 27ms` (`intent has been delivered to currently running top-most instance`)
+    - 2차 실행 후 focus는 `GraniteActivity` 유지
+    - logcat에서 `Application ANR likely to follow` 경고 1건 검출(실제 ANR 이벤트는 미검출)
+  - Verdict: 기능상 연속 deeplink 처리 성공, 단 전환 경고 로그가 있어 모니터링 필요
+  - Evidence: `artifacts/20260219_114707_adb_double_deeplink_nohome/am_start_1.txt`, `artifacts/20260219_114707_adb_double_deeplink_nohome/am_start_2.txt`, `artifacts/20260219_114707_adb_double_deeplink_nohome/focus_after_second.txt`, `artifacts/20260219_114707_adb_double_deeplink_nohome/after_second.png`, `artifacts/20260219_114707_adb_double_deeplink_nohome/logcat_tail.txt`, `artifacts/20260219_114707_adb_double_deeplink_nohome/log_hits.txt`
+
 - [x] **TC-ADB-LAUNCH-WAITTIME-01** (AVD) Explicit deeplink cold start 응답성(launch wait time) — **passed**
   - Command: `adb shell am start -W -n viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity -a android.intent.action.VIEW -d intoss://takealook`
   - Pass criteria: `Status: ok` 이고 포커스가 `GraniteActivity`로 진입
@@ -371,4 +381,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 11:46 KST
+- Last update: 2026-02-19 11:48 KST
