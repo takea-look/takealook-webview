@@ -930,8 +930,19 @@
   - Verdict: explicit 초기 진입 실패 + appswitch 이후 null focus로 기능 흐름 실패
   - Evidence: `artifacts/20260219_133416_adb_explicit_appswitch_double_then_implicit/am_start_1_explicit.txt`, `artifacts/20260219_133416_adb_explicit_appswitch_double_then_implicit/focus_after_explicit.txt`, `artifacts/20260219_133416_adb_explicit_appswitch_double_then_implicit/focus_after_appswitch2.txt`, `artifacts/20260219_133416_adb_explicit_appswitch_double_then_implicit/am_start_2_implicit.txt`, `artifacts/20260219_133416_adb_explicit_appswitch_double_then_implicit/focus_after_implicit.txt`, `artifacts/20260219_133416_adb_explicit_appswitch_double_then_implicit/after_implicit.png`, `artifacts/20260219_133416_adb_explicit_appswitch_double_then_implicit/logcat_tail.txt`, `artifacts/20260219_133416_adb_explicit_appswitch_double_then_implicit/log_hits.txt`
 
+- [x] **TC-ADB-IMPLICIT-APPSWITCH2-EXPLICIT-01** (AVD) implicit 진입 후 앱스위처 2회 뒤 explicit 재진입 — **failed (am start timeout)**
+  - Steps: `HOME` → implicit deeplink 진입 → `APP_SWITCH` 2회 → explicit deeplink 재실행
+  - Observed:
+    - 1차 implicit: `Status: ok`, `LaunchState: UNKNOWN (0)`, `WaitTime: 16480ms`, focus `GraniteActivity`
+    - 앱스위처 2회 후 focus: `GraniteActivity`
+    - 2차 explicit: `Status: timeout`, `LaunchState: UNKNOWN (-1)`, `WaitTime: 29267ms`
+    - 2차 실행 후 focus: `GraniteActivity`
+    - logcat 스캔에서 ANR/FATAL/obituary/"ANR likely to follow" 키워드 미검출
+  - Verdict: 최종 focus는 유지됐지만 explicit 재실행이 timeout으로 완료되어 기능 흐름 기준 fail
+  - Evidence: `artifacts/20260219_133956_adb_implicit_appswitch_double_then_explicit/am_start_1_implicit.txt`, `artifacts/20260219_133956_adb_implicit_appswitch_double_then_explicit/focus_after_implicit.txt`, `artifacts/20260219_133956_adb_implicit_appswitch_double_then_explicit/focus_after_appswitch2.txt`, `artifacts/20260219_133956_adb_implicit_appswitch_double_then_explicit/am_start_2_explicit.txt`, `artifacts/20260219_133956_adb_implicit_appswitch_double_then_explicit/focus_after_explicit.txt`, `artifacts/20260219_133956_adb_implicit_appswitch_double_then_explicit/after_explicit.png`, `artifacts/20260219_133956_adb_implicit_appswitch_double_then_explicit/logcat_tail.txt`, `artifacts/20260219_133956_adb_implicit_appswitch_double_then_explicit/log_hits.txt`
+
 - Notes:
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 13:35 KST
+- Last update: 2026-02-19 13:40 KST
