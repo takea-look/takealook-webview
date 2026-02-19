@@ -131,6 +131,15 @@
   - Verdict: 화면 wake 직후에도 implicit deeplink 진입 정상
   - Evidence: `artifacts/20260219_114205_adb_implicit_after_screen_wake/am_start_implicit.txt`, `artifacts/20260219_114205_adb_implicit_after_screen_wake/focus_after_implicit.txt`, `artifacts/20260219_114205_adb_implicit_after_screen_wake/after_implicit.png`, `artifacts/20260219_114205_adb_implicit_after_screen_wake/logcat_tail.txt`, `artifacts/20260219_114205_adb_implicit_after_screen_wake/log_hits.txt`
 
+- [x] **TC-ADB-SCREENWAKE-EXPLICIT-01** (AVD) 화면 깨운 직후 explicit deeplink 진입 안정성 — **passed**
+  - Steps: `KEYCODE_SLEEP` → `KEYCODE_WAKEUP` + unlock(82) 후 explicit deeplink 실행
+  - Observed:
+    - explicit `am start`: `Status: ok`, `LaunchState: HOT`, `TotalTime: 207ms`, `WaitTime: 224ms`
+    - 실행 후 focus는 `GraniteActivity`
+    - logcat 스캔에서 ANR/FATAL/obituary 키워드 미검출
+  - Verdict: 화면 wake 직후 explicit deeplink도 안정적으로 진입
+  - Evidence: `artifacts/20260219_114338_adb_explicit_after_screen_wake/am_start_explicit.txt`, `artifacts/20260219_114338_adb_explicit_after_screen_wake/focus_after_explicit.txt`, `artifacts/20260219_114338_adb_explicit_after_screen_wake/after_explicit.png`, `artifacts/20260219_114338_adb_explicit_after_screen_wake/logcat_tail.txt`, `artifacts/20260219_114338_adb_explicit_after_screen_wake/log_hits.txt`
+
 - [x] **TC-ADB-HOME-DEEPLINK-REENTRY-01** (AVD) Home 이동 후 deeplink 재진입 안정성 — **passed**
   - Steps: explicit deeplink 1회 진입 → Home 이동 → explicit deeplink 재실행
   - Observed:
@@ -353,4 +362,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 11:43 KST
+- Last update: 2026-02-19 11:44 KST
