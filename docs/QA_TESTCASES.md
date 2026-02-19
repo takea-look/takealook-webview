@@ -478,6 +478,15 @@
   - Verdict: 회전 고정 상태에서도 deeplink 진입 기능 정상
   - Evidence: `artifacts/20260219_120844_adb_deeplink_after_screen_rotation_lock/am_start_landscape_lock.txt`, `artifacts/20260219_120844_adb_deeplink_after_screen_rotation_lock/focus_after_start.txt`, `artifacts/20260219_120844_adb_deeplink_after_screen_rotation_lock/after_start_landscape.png`, `artifacts/20260219_120844_adb_deeplink_after_screen_rotation_lock/logcat_tail.txt`, `artifacts/20260219_120844_adb_deeplink_after_screen_rotation_lock/log_hits.txt`
 
+- [x] **TC-ADB-ROTATE-LOCK-DEEPLINK-02** (AVD) 세로 고정 상태에서 deeplink 진입 안정성 — **passed**
+  - Steps: 화면 회전을 portrait로 고정(`user_rotation=0`) 후 explicit deeplink 실행
+  - Observed:
+    - `am start`: `Status: ok`, `LaunchState: WARM`, `TotalTime: 1871ms`, `WaitTime: 1875ms`
+    - 진입 후 focus `GraniteActivity` 유지
+    - logcat 스캔에서 ANR/FATAL/obituary/"ANR likely to follow" 키워드 미검출
+  - Verdict: 세로 고정 상태에서도 deeplink 진입 기능 정상
+  - Evidence: `artifacts/20260219_124734_adb_deeplink_after_portrait_lock/am_start_portrait_lock.txt`, `artifacts/20260219_124734_adb_deeplink_after_portrait_lock/focus_after_start.txt`, `artifacts/20260219_124734_adb_deeplink_after_portrait_lock/after_start_portrait.png`, `artifacts/20260219_124734_adb_deeplink_after_portrait_lock/logcat_tail.txt`, `artifacts/20260219_124734_adb_deeplink_after_portrait_lock/log_hits.txt`
+
 - [x] **TC-ADB-BACK-01** (AVD) Deeplink 랜딩 후 Back key 반응성 — **failed (suspected)**
   - Steps: deeplink 진입 후 `KEYCODE_BACK` 1회 입력
   - Observed: back 전/후 focus 모두 `GraniteActivity`, 스크린샷 동일(변화 없음)
@@ -691,4 +700,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 12:47 KST
+- Last update: 2026-02-19 12:49 KST
