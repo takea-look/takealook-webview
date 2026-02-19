@@ -409,6 +409,15 @@
   - Verdict: force-stop 이후에도 deeplink 랜딩 실패 재현 (cold 재시작으로도 복구되지 않음)
   - Evidence: `artifacts/20260219_101121_adb_forcestop_relaunch/process_after_forcestop.txt`, `artifacts/20260219_101121_adb_forcestop_relaunch/am_start.txt`, `artifacts/20260219_101121_adb_forcestop_relaunch/focus_after_start.txt`, `artifacts/20260219_101121_adb_forcestop_relaunch/after_start.png`, `artifacts/20260219_101121_adb_forcestop_relaunch/logcat_tail.txt`
 
+- [x] **TC-ADB-FORCESTOP-RELAUNCH-02** (AVD) force-stop 후 explicit deeplink 재진입 재검증 — **passed**
+  - Steps: `am force-stop viva.republica.toss.test` 후 explicit deeplink 실행
+  - Observed:
+    - `am start`: `Status: ok`, `LaunchState: COLD`, `TotalTime: 5229ms`, `WaitTime: 5286ms`
+    - 실행 후 focus: `GraniteActivity`
+    - logcat에 `viva.republica.toss.test` obituary 1건 검출(강제종료에 따른 정상 로그), ANR/FATAL 미검출
+  - Verdict: force-stop 이후 cold 재진입이 이번 실행에서는 정상 동작
+  - Evidence: `artifacts/20260219_121214_adb_explicit_after_force_stop/am_start.txt`, `artifacts/20260219_121214_adb_explicit_after_force_stop/focus_after_start.txt`, `artifacts/20260219_121214_adb_explicit_after_force_stop/after_start.png`, `artifacts/20260219_121214_adb_explicit_after_force_stop/logcat_tail.txt`, `artifacts/20260219_121214_adb_explicit_after_force_stop/log_hits.txt`
+
 - [x] **TC-ADB-NOTISHADE-02** (AVD) 알림창 복귀 안정성 재검증(런처 fallback 재현 확인) — **failed (reproduced)**
   - Steps: Home 상태에서 explicit deeplink 실행 → 5초 대기 후 focus 확인 → notification shade open/close
   - Observed: `am start`가 `Status: ok`이나 `LaunchState: UNKNOWN (0)`, `WaitTime: 21041`; 시작 직후/알림창 닫은 후 모두 `NexusLauncherActivity` 유지
@@ -510,4 +519,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 12:12 KST
+- Last update: 2026-02-19 12:14 KST
