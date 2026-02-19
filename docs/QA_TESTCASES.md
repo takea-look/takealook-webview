@@ -133,6 +133,17 @@
   - Verdict: 더블탭 후 focus null 이슈가 반복 재현됨(간헐성보다 패턴성 높음)
   - Evidence: `artifacts/20260219_112949_adb_appswitch_doubletap_retest/am_start.txt`, `artifacts/20260219_112949_adb_appswitch_doubletap_retest/focus_before.txt`, `artifacts/20260219_112949_adb_appswitch_doubletap_retest/focus_after_doubletap.txt`, `artifacts/20260219_112949_adb_appswitch_doubletap_retest/after_doubletap.png`, `artifacts/20260219_112949_adb_appswitch_doubletap_retest/logcat_tail.txt`, `artifacts/20260219_112949_adb_appswitch_doubletap_retest/log_hits.txt`
 
+- [x] **TC-ADB-APPSWITCH-DOUBLETAP-RECOVER-01** (AVD) 더블탭 후 deeplink 재진입 복구 — **passed (recoverable)**
+  - Steps: explicit deeplink 진입 → `KEYCODE_APP_SWITCH` 2회(포커스 깨짐 유도) → explicit deeplink 재실행
+  - Observed:
+    - 1차 `am start`: `Status: ok`, `LaunchState: HOT`, `WaitTime: 17399ms`
+    - 더블탭 전 focus `GraniteActivity`, 더블탭 후 `mCurrentFocus=null`
+    - 2차 `am start`(recover): `Status: ok`, `LaunchState: HOT`, `WaitTime: 573ms`
+    - recover 후 focus가 다시 `GraniteActivity`로 복귀
+    - logcat 스캔에서 ANR/FATAL/obituary 키워드 미검출
+  - Verdict: 더블탭 포커스 깨짐은 재현되지만, deeplink 재실행으로 복구 가능
+  - Evidence: `artifacts/20260219_113129_adb_appswitch_doubletap_recover_by_deeplink/am_start_1.txt`, `artifacts/20260219_113129_adb_appswitch_doubletap_recover_by_deeplink/focus_before_doubletap.txt`, `artifacts/20260219_113129_adb_appswitch_doubletap_recover_by_deeplink/focus_after_doubletap.txt`, `artifacts/20260219_113129_adb_appswitch_doubletap_recover_by_deeplink/am_start_2_recover.txt`, `artifacts/20260219_113129_adb_appswitch_doubletap_recover_by_deeplink/focus_after_recover.txt`, `artifacts/20260219_113129_adb_appswitch_doubletap_recover_by_deeplink/after_recover.png`, `artifacts/20260219_113129_adb_appswitch_doubletap_recover_by_deeplink/logcat_tail.txt`, `artifacts/20260219_113129_adb_appswitch_doubletap_recover_by_deeplink/log_hits.txt`
+
 - [x] **TC-ADB-APPSWITCH-SINGLE-01** (AVD) App Switch 진입 후 Back 복귀 동작 — **passed**
   - Steps: explicit deeplink 진입 → `KEYCODE_APP_SWITCH` 1회 → `KEYCODE_BACK` 1회
   - Observed:
@@ -292,4 +303,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 11:31 KST
+- Last update: 2026-02-19 11:33 KST
