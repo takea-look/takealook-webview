@@ -80,6 +80,15 @@
   - Verdict: 태스크 전환 후 복귀 플로우 불안정/미동작
   - Evidence: `artifacts/20260219_091317_adb_task_switch_resume/am_start.txt`, `artifacts/20260219_091317_adb_task_switch_resume/am_settings.txt`, `artifacts/20260219_091317_adb_task_switch_resume/focus_target_before_switch.txt`, `artifacts/20260219_091317_adb_task_switch_resume/focus_on_settings.txt`, `artifacts/20260219_091317_adb_task_switch_resume/focus_after_return.txt`, `artifacts/20260219_091317_adb_task_switch_resume/before_switch.png`, `artifacts/20260219_091317_adb_task_switch_resume/on_settings.png`, `artifacts/20260219_091317_adb_task_switch_resume/after_return.png`
 
+- [x] **TC-ADB-TASKSWITCH-02** (AVD) Recent Apps 더블 토글 복귀 안정성 — **failed (ANR + launcher fallback)**
+  - Steps: explicit deeplink 진입 → Recent Apps(`KEYCODE_APP_SWITCH`) 2회 토글로 앱 복귀 시도
+  - Observed:
+    - `am start`: `Status: ok`, `LaunchState: COLD`, `WaitTime: 23157`
+    - 시작 5초 후 focus가 `Application Not Responding: viva.republica.toss.test` (ANR 다이얼로그)
+    - Recent Apps 더블 토글 후 focus가 `NexusLauncherActivity`로 이동(앱 복귀 실패)
+  - Verdict: 랜딩 직후 ANR 발생 가능성과 태스크 복귀 실패 동시 재현
+  - Evidence: `artifacts/20260219_100901_adb_recentapps_cycle/am_start.txt`, `artifacts/20260219_100901_adb_recentapps_cycle/focus_after_start.txt`, `artifacts/20260219_100901_adb_recentapps_cycle/focus_after_return.txt`, `artifacts/20260219_100901_adb_recentapps_cycle/after_start.png`, `artifacts/20260219_100901_adb_recentapps_cycle/recent_open.png`, `artifacts/20260219_100901_adb_recentapps_cycle/after_return.png`, `artifacts/20260219_100901_adb_recentapps_cycle/logcat_tail.txt`
+
 - [x] **TC-ADB-NOTISHADE-01** (AVD) Deeplink 랜딩 후 알림창 열기/닫기 복귀 안정성 — **failed (launch unstable)**
   - Steps: deeplink 진입 시도 → notification shade open/close
   - Observed: `am start`는 `Status: ok`이나 `LaunchState: UNKNOWN (0)`, `WaitTime: 25849`; focus가 시작 전/후 모두 launcher(`NexusLauncherActivity`)로 유지
@@ -105,4 +114,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 10:06 KST
+- Last update: 2026-02-19 10:10 KST
