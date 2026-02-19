@@ -55,6 +55,16 @@
   - Verdict: 기능상 연속 deeplink 처리 성공, 단 전환 경고 로그가 있어 모니터링 필요
   - Evidence: `artifacts/20260219_114707_adb_double_deeplink_nohome/am_start_1.txt`, `artifacts/20260219_114707_adb_double_deeplink_nohome/am_start_2.txt`, `artifacts/20260219_114707_adb_double_deeplink_nohome/focus_after_second.txt`, `artifacts/20260219_114707_adb_double_deeplink_nohome/after_second.png`, `artifacts/20260219_114707_adb_double_deeplink_nohome/logcat_tail.txt`, `artifacts/20260219_114707_adb_double_deeplink_nohome/log_hits.txt`
 
+- [x] **TC-ADB-DEEPLINK-DOUBLE-IMPLICIT-01** (AVD) Home 이동 없이 implicit deeplink 연속 2회 처리 — **passed**
+  - Steps: implicit deeplink 실행 직후 Home 이동 없이 동일 implicit deeplink 즉시 재실행
+  - Observed:
+    - 1차 `am start`: `Status: ok`, `LaunchState: WARM`, `Activity: .MiniAppSchemeActivity`, `WaitTime: 539ms`
+    - 2차 `am start`: `Status: ok`, `LaunchState: WARM`, `Activity: .MiniAppSchemeActivity`, `WaitTime: 227ms`
+    - 2차 실행 후 focus는 `GraniteActivity` 유지
+    - logcat 스캔에서 ANR/FATAL/obituary/"ANR likely to follow" 키워드 미검출
+  - Verdict: implicit 연속 deeplink 처리 안정적
+  - Evidence: `artifacts/20260219_114855_adb_double_implicit_nohome/am_start_1_implicit.txt`, `artifacts/20260219_114855_adb_double_implicit_nohome/am_start_2_implicit.txt`, `artifacts/20260219_114855_adb_double_implicit_nohome/focus_after_second.txt`, `artifacts/20260219_114855_adb_double_implicit_nohome/after_second.png`, `artifacts/20260219_114855_adb_double_implicit_nohome/logcat_tail.txt`, `artifacts/20260219_114855_adb_double_implicit_nohome/log_hits.txt`
+
 - [x] **TC-ADB-LAUNCH-WAITTIME-01** (AVD) Explicit deeplink cold start 응답성(launch wait time) — **passed**
   - Command: `adb shell am start -W -n viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity -a android.intent.action.VIEW -d intoss://takealook`
   - Pass criteria: `Status: ok` 이고 포커스가 `GraniteActivity`로 진입
@@ -381,4 +391,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 11:48 KST
+- Last update: 2026-02-19 11:50 KST
