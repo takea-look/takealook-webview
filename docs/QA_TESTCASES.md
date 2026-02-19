@@ -116,8 +116,17 @@
   - Verdict: 현재 환경에서 explicit deeplink 랜딩 실패가 고빈도/지속적으로 재현됨
   - Evidence: `artifacts/20260219_095829_adb_deeplink_retry3/am_start_1.txt`, `artifacts/20260219_095829_adb_deeplink_retry3/am_start_2.txt`, `artifacts/20260219_095829_adb_deeplink_retry3/am_start_3.txt`, `artifacts/20260219_095829_adb_deeplink_retry3/focus_1.txt`, `artifacts/20260219_095829_adb_deeplink_retry3/focus_2.txt`, `artifacts/20260219_095829_adb_deeplink_retry3/focus_3.txt`, `artifacts/20260219_095829_adb_deeplink_retry3/shot_1.png`, `artifacts/20260219_095829_adb_deeplink_retry3/shot_2.png`, `artifacts/20260219_095829_adb_deeplink_retry3/shot_3.png`, `artifacts/20260219_095829_adb_deeplink_retry3/logcat_tail.txt`
 
+- [x] **TC-ADB-IMPLICIT-RETRY3-01** (AVD) Home 상태에서 implicit deeplink 3회 재시도 랜딩 일관성 — **failed (all 3 fallback)**
+  - Steps: Home 진입 후 implicit deeplink 실행(`am start -W -a VIEW -d intoss://takealook viva.republica.toss.test`) 3회 반복
+  - Observed:
+    - 1~3회 모두 `Status: ok`, `Activity: .MiniAppSchemeActivity`, `LaunchState: UNKNOWN (0)`
+    - `WaitTime`: 20170ms / 12198ms / 11712ms
+    - 1~3회 모두 focus가 `NexusLauncherActivity`로 유지
+  - Verdict: implicit 경로에서도 랜딩 실패가 지속 재현됨
+  - Evidence: `artifacts/20260219_101311_adb_implicit_retry3/am_start_implicit_1.txt`, `artifacts/20260219_101311_adb_implicit_retry3/am_start_implicit_2.txt`, `artifacts/20260219_101311_adb_implicit_retry3/am_start_implicit_3.txt`, `artifacts/20260219_101311_adb_implicit_retry3/focus_1.txt`, `artifacts/20260219_101311_adb_implicit_retry3/focus_2.txt`, `artifacts/20260219_101311_adb_implicit_retry3/focus_3.txt`, `artifacts/20260219_101311_adb_implicit_retry3/shot_1.png`, `artifacts/20260219_101311_adb_implicit_retry3/shot_2.png`, `artifacts/20260219_101311_adb_implicit_retry3/shot_3.png`, `artifacts/20260219_101311_adb_implicit_retry3/logcat_tail.txt`
+
 - Notes:
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 10:12 KST
+- Last update: 2026-02-19 10:14 KST
