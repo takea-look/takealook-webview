@@ -1053,8 +1053,19 @@
   - Verdict: explicit 진입 이후 복합 launcher 상태(Back→Recents→Home)에서도 implicit 재진입 정상
   - Evidence: `artifacts/20260219_140114_adb_explicit_back_recents_home_then_implicit/am_start_1_explicit.txt`, `artifacts/20260219_140114_adb_explicit_back_recents_home_then_implicit/focus_after_explicit.txt`, `artifacts/20260219_140114_adb_explicit_back_recents_home_then_implicit/focus_after_back_recents_home.txt`, `artifacts/20260219_140114_adb_explicit_back_recents_home_then_implicit/am_start_2_implicit.txt`, `artifacts/20260219_140114_adb_explicit_back_recents_home_then_implicit/focus_after_implicit.txt`, `artifacts/20260219_140114_adb_explicit_back_recents_home_then_implicit/after_implicit.png`, `artifacts/20260219_140114_adb_explicit_back_recents_home_then_implicit/logcat_tail.txt`, `artifacts/20260219_140114_adb_explicit_back_recents_home_then_implicit/log_hits.txt`
 
+- [x] **TC-ADB-IMPLICIT-BACK-RECENTS-HOME-EXPLICIT-01** (AVD) implicit 진입 후 Back→Recents→Home 상태에서 explicit 재진입 — **failed (ANR confirmed)**
+  - Steps: `HOME` → implicit deeplink 진입 → `BACK` → `APP_SWITCH` → `HOME` → explicit deeplink 재실행
+  - Observed:
+    - 1차 implicit: `Status: ok`, `LaunchState: UNKNOWN (0)`, `WaitTime: 165ms`, focus `GraniteActivity`
+    - Back→Recents→Home 후 focus: `NexusLauncherActivity`
+    - 2차 explicit: `Status: ok`, `LaunchState: WARM`, `TotalTime: 1970ms`, `WaitTime: 1982ms`
+    - 2차 실행 후 focus: `Application Not Responding: viva.republica.toss.test`
+    - logcat에서 `ANR in viva.republica.toss.test` 및 `Completed ANR` 검출
+  - Verdict: explicit 재진입 단계에서 ANR 재현으로 fail
+  - Evidence: `artifacts/20260219_140306_adb_implicit_back_recents_home_then_explicit/am_start_1_implicit.txt`, `artifacts/20260219_140306_adb_implicit_back_recents_home_then_explicit/focus_after_implicit.txt`, `artifacts/20260219_140306_adb_implicit_back_recents_home_then_explicit/focus_after_back_recents_home.txt`, `artifacts/20260219_140306_adb_implicit_back_recents_home_then_explicit/am_start_2_explicit.txt`, `artifacts/20260219_140306_adb_implicit_back_recents_home_then_explicit/focus_after_explicit.txt`, `artifacts/20260219_140306_adb_implicit_back_recents_home_then_explicit/after_explicit.png`, `artifacts/20260219_140306_adb_implicit_back_recents_home_then_explicit/logcat_tail.txt`, `artifacts/20260219_140306_adb_implicit_back_recents_home_then_explicit/log_hits.txt`
+
 - Notes:
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 14:02 KST
+- Last update: 2026-02-19 14:04 KST
