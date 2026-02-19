@@ -1299,8 +1299,18 @@
   - Verdict: force-stop 이후 implicit 재진입에서 ANR 및 launcher fallback 동반으로 fail
   - Evidence: `artifacts/20260219_175200_adb_home_forcestop_then_implicit/am_start_1_explicit.txt`, `artifacts/20260219_175200_adb_home_forcestop_then_implicit/focus_after_explicit.txt`, `artifacts/20260219_175200_adb_home_forcestop_then_implicit/pid_after_forcestop.txt`, `artifacts/20260219_175200_adb_home_forcestop_then_implicit/am_start_2_implicit.txt`, `artifacts/20260219_175200_adb_home_forcestop_then_implicit/focus_after_implicit.txt`, `artifacts/20260219_175200_adb_home_forcestop_then_implicit/after_implicit.png`, `artifacts/20260219_175200_adb_home_forcestop_then_implicit/logcat_tail.txt`, `artifacts/20260219_175200_adb_home_forcestop_then_implicit/log_hits.txt`
 
+- [x] **TC-ADB-HOME-FORCESTOP-EXPLICIT-01** (AVD) Home 후 force-stop 뒤 explicit 재진입 — **passed (with expected obituary)**
+  - Steps: `HOME` → implicit deeplink 진입 → `HOME` → `am force-stop` → explicit deeplink 재실행
+  - Observed:
+    - 1차 implicit: `Status: ok`, `LaunchState: COLD`, `Activity: .MiniAppSchemeActivity`, `WaitTime: 6558ms`, focus `GraniteActivity`
+    - force-stop 직후 pid 조회: 프로세스 미존재(정상 종료)
+    - 2차 explicit: `Status: ok`, `LaunchState: COLD`, `WaitTime: 3313ms`, focus `GraniteActivity`
+    - logcat에서 대상 앱 obituary 1건(강제종료 맥락), ANR/FATAL/"ANR likely to follow" 미검출
+  - Verdict: force-stop 이후 explicit 재진입 동작 정상(pass)
+  - Evidence: `artifacts/20260219_175458_adb_home_forcestop_then_explicit/am_start_1_implicit.txt`, `artifacts/20260219_175458_adb_home_forcestop_then_explicit/focus_after_implicit.txt`, `artifacts/20260219_175458_adb_home_forcestop_then_explicit/pid_after_forcestop.txt`, `artifacts/20260219_175458_adb_home_forcestop_then_explicit/am_start_2_explicit.txt`, `artifacts/20260219_175458_adb_home_forcestop_then_explicit/focus_after_explicit.txt`, `artifacts/20260219_175458_adb_home_forcestop_then_explicit/after_explicit.png`, `artifacts/20260219_175458_adb_home_forcestop_then_explicit/logcat_tail.txt`, `artifacts/20260219_175458_adb_home_forcestop_then_explicit/log_hits.txt`
+
 - Notes:
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 17:53 KST
+- Last update: 2026-02-19 17:56 KST
