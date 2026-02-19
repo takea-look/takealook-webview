@@ -1656,8 +1656,19 @@
   - Verdict: 대상 앱 ANR 및 재진입 timeout으로 fail
   - Evidence: `artifacts/20260219_191511_adb_back_home_then_implicit/am_start_1_explicit.txt`, `artifacts/20260219_191511_adb_back_home_then_implicit/focus_after_explicit_1.txt`, `artifacts/20260219_191511_adb_back_home_then_implicit/focus_after_back_home.txt`, `artifacts/20260219_191511_adb_back_home_then_implicit/am_start_2_implicit.txt`, `artifacts/20260219_191511_adb_back_home_then_implicit/focus_after_implicit_2.txt`, `artifacts/20260219_191511_adb_back_home_then_implicit/after_implicit_2.png`, `artifacts/20260219_191511_adb_back_home_then_implicit/logcat_tail.txt`, `artifacts/20260219_191511_adb_back_home_then_implicit/log_hits.txt`
 
+- [x] **TC-ADB-BACK-HOME-EXPLICIT-01** (AVD) Back→Home 후 explicit 딥링크 재진입 — **failed (focus null + timeout)**
+  - Steps: implicit deeplink 진입 → `BACK` → `HOME` → explicit deeplink 재실행
+  - Observed:
+    - 1차 implicit: `Status: timeout`, `LaunchState: UNKNOWN (-1)`, `Activity: .MiniAppSchemeActivity`, `WaitTime: 21851ms`, focus `null`
+    - Back→Home 후 focus: `null`
+    - 2차 explicit: `Status: ok`, `LaunchState: UNKNOWN (0)`, `Warning: current task brought to front`, `WaitTime: 29275ms`
+    - 2차 실행 후 focus: `null`
+    - logcat 스캔에서 ANR/FATAL/obituary/"ANR likely to follow" 키워드 미검출
+  - Verdict: 양 단계 모두 비정상 지연/포커스 null 상태로 fail
+  - Evidence: `artifacts/20260219_191811_adb_back_home_then_explicit/am_start_1_implicit.txt`, `artifacts/20260219_191811_adb_back_home_then_explicit/focus_after_implicit_1.txt`, `artifacts/20260219_191811_adb_back_home_then_explicit/focus_after_back_home.txt`, `artifacts/20260219_191811_adb_back_home_then_explicit/am_start_2_explicit.txt`, `artifacts/20260219_191811_adb_back_home_then_explicit/focus_after_explicit_2.txt`, `artifacts/20260219_191811_adb_back_home_then_explicit/after_explicit_2.png`, `artifacts/20260219_191811_adb_back_home_then_explicit/logcat_tail.txt`, `artifacts/20260219_191811_adb_back_home_then_explicit/log_hits.txt`
+
 - Notes:
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 19:17 KST
+- Last update: 2026-02-19 19:20 KST

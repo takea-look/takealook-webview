@@ -1,0 +1,463 @@
+--------- beginning of main
+02-19 19:20:08.200   752  2375 D FileUtils: Rounded bytes from 2067259392 to 4000000000
+02-19 19:20:08.286 19494 19494 D nativeloader: Load /data/app/~~zfNTtjjfT5QjKD_7Ux4KKQ==/com.google.android.trichromelibrary_694313738-AgzLRnDhHPFXke_9IsnuqA==/TrichromeLibrary.apk!/lib/x86_64/libmonochrome_64.so using class loader ns clns-10 (caller=/data/app/~~86wu-kVgQoavtKNPNhKNpg==/com.google.android.webview-1KjOBROVBHjUvpUZHW2m2g==/WebViewGoogle.apk): ok
+02-19 19:20:08.311 19494 19494 I cr_LibraryLoader: Successfully loaded native library
+02-19 19:20:08.314 19522 19522 I crash_dump64: obtaining output fd from tombstoned, type: kDebuggerdNativeBacktrace
+02-19 19:20:08.318   283   283 I tombstoned: received crash request for pid 457
+02-19 19:20:08.318   283   283 I tombstoned: found intercept fd 512 for pid 457 and type kDebuggerdNativeBacktrace
+02-19 19:20:08.318 19522 19522 I crash_dump64: performing dump of process 457 (target tid = 457)
+02-19 19:20:08.409  1336  1556 D SatelliteController: iisInCarrierRoamingNbIotNtn: satellite is disabled
+02-19 19:20:08.440 19166 19166 D KeyboardInsetsHandler: setState, toState:Normal StateManager(mLastStableState:Normal, mCurrentStableState:Normal, mState:Normal, mRestState:null, isInTransition:false)
+02-19 19:20:08.441 19166 19166 W LoaderTask: stopLocked: Loader stopping
+02-19 19:20:08.447 19166 19166 D OverviewActionsView: updateActionButtonsVisibility() called: showSingleTaskActions = [true], showGroupActions = [false]
+02-19 19:20:08.486   752   794 I ServiceWatcher: [network] connected to {com.google.android.gms/com.google.android.location.network.NetworkLocationService}
+02-19 19:20:08.511   752  2375 I LocationManagerService: network provider loaded extra attribution tags: [activity_recognition_provider, awareness_provider, current_semantic_location, fused_location_provider, geofencer_provider, gnss_location_provider, network_location_calibration, network_location_provider, wearable_flp_shim]
+02-19 19:20:08.565  1336  1336 D SatelliteAccessController: mLocationModeChangedBroadcastReceiver: android.location.PROVIDERS_CHANGED, mIsLocationManagerEnabled= true
+02-19 19:20:08.571  4656 15177 E adservices.measurement: AttributionFallbackJobService is disabled, skip scheduling
+02-19 19:20:08.589 19166 19166 D b/380940677: [mStateHandlerRequest=0, mCurrentStateRequest=0, mLastActivityFlags=5, mIgnoreAutoRotateSettings=false, mHomeRotationEnabled=false, mForceAllowRotationForTesting=false, mDestroyed=false, mIsFixedLandscape=false]
+02-19 19:20:08.605 19166 19189 D InputMonitorCompat: Input monitor (minus-one-disp0) created
+02-19 19:20:08.619 19166 19166 D ActivityAllAppsContainerView: rebindAdapters: force: false
+02-19 19:20:08.619 19166 19166 D ActivityAllAppsContainerView: rebindAdapters: Not needed.
+02-19 19:20:08.620 19284 19284 I efqm    : SslGuard completed installation.
+--------- beginning of system
+02-19 19:20:08.622  4449  4467 V WindowManagerShell: Transition requested (#755): android.os.BinderProxy@43903b3 TransitionRequestInfo { type = CHANGE, triggerTask = null, pipChange = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@ad94d70, appThread = null, debugName = TaskFragmentComponent }, displayChange = null, flags = 0, debugId = 755 }
+02-19 19:20:08.623  4449  4467 V WindowManagerShell: RemoteTransition directly requested for (#755) android.os.BinderProxy@43903b3: RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@ad94d70, appThread = null, debugName = TaskFragmentComponent }
+02-19 19:20:08.624 19166 19166 D TFOManager: playPanelCloseAnimation() duration=200 traceTag=LauncherOverlay-hide isHomeButtonTap=true
+02-19 19:20:08.625 19166 19166 D TFOManager: Skipped creating panel close animation because -1 is invisible.
+02-19 19:20:08.627   752  2419 V WindowManager: Queueing transition: TransitionRecord{e04a342 id=-1 type=CLOSE flags=0x0}
+02-19 19:20:08.629   283   283 W tombstoned: skipping tombstone file creation due to intercept
+02-19 19:20:08.632   752   800 I system_server: libdebuggerd_client: done dumping process 457
+02-19 19:20:08.645   752   800 I ActivityManager: Collecting stacks for native pid 1229
+02-19 19:20:08.646   752   800 E system_server: Could not open /dev/binderfs/binder_logs/transactions. Likely a permissions issue. errno: 2
+02-19 19:20:08.646   752   800 E android.os.Debug: Failed to get binder state info for pid: 1229 status: -2: No such file or directory
+02-19 19:20:08.646   752   800 I system_server: libdebuggerd_client: started dumping process 1229
+02-19 19:20:08.647   283   283 I tombstoned: registered intercept for pid 1229 and type kDebuggerdNativeBacktrace
+02-19 19:20:08.640   752   752 W watchdog: type=1400 audit(0.0:459): avc:  denied  { read } for  name="transactions" dev="binder" ino=1048587 scontext=u:r:system_server:s0 tcontext=u:object_r:binderfs_logs_transactions:s0 tclass=file permissive=0
+02-19 19:20:08.652 19166 19189 D InputMonitorCompat: Input event receiver for monitor (minus-one-disp0) created
+02-19 19:20:08.659  1229  1229 I libc    : Requested dump for pid 1229 (binder:1229_2)
+02-19 19:20:08.659 19166 19166 D TouchInteractionService: onDestroy: user=0 instance=85166629
+02-19 19:20:08.664 19166 19166 D TouchInteractionService: disposeEventHandlers: Reason: TouchInteractionService onDestroy() instance=85166629
+02-19 19:20:08.664 19166 19166 D InputMonitorCompat: Input event receiver for monitor (swipe-up-disp0) disposed
+02-19 19:20:08.665 19166 19166 D InputMonitorCompat: Input monitor (swipe-up-disp0) disposed
+02-19 19:20:08.668 19166 19166 D TaskbarManager: TaskbarManager#destroy() displayId=0 isDefaultDisplay=true
+02-19 19:20:08.668 19166 19166 D TaskbarManager: destroy: removing activity callbacks displayId=0 isDefaultDisplay=true
+02-19 19:20:08.668 19166 19166 D TaskbarManager: destroy: unregistering component callbacks displayId=0 isDefaultDisplay=true
+02-19 19:20:08.668 19166 19166 D TaskbarManager: destroy: destroying all taskbars! displayId=0 isDefaultDisplay=true
+02-19 19:20:08.668 19166 19166 D TaskbarManager: destroyAllTaskbars displayId=0 isDefaultDisplay=true
+02-19 19:20:08.669 19166 19166 D TaskbarManager: destroyAllTaskbars: call destroyTaskbarForDisplay displayId=0 isDefaultDisplay=true
+02-19 19:20:08.669 19166 19166 D TaskbarManager: destroyTaskbarForDisplay displayId=0 isDefaultDisplay=true
+02-19 19:20:08.676  4449  4467 V WindowManagerShell: Transition (#755): request handled by RemoteTransitionHandler
+02-19 19:20:08.686 19166 19166 W LoaderTask: stopLocked: Loader stopping
+02-19 19:20:08.697 19166 19166 D TaskbarManager: destroyAllTaskbars: call removeTaskbarRootViewFromWindow displayId=0 isDefaultDisplay=true
+02-19 19:20:08.697 19166 19166 D TaskbarManager: removeTaskbarRootViewFromWindow displayId=0 isDefaultDisplay=true
+02-19 19:20:08.697 19166 19166 D TaskbarManager: getTaskbarRootLayoutForDisplay: displayId=0 isDefaultDisplay=true
+02-19 19:20:08.698 19166 19166 D TaskbarManager: cannot get mPrimaryWindowManager displayId=0 isDefaultDisplay=true
+02-19 19:20:08.705  4449  4467 E SingleInstanceRemoteListener: Failed remote call on null listener
+02-19 19:20:08.715   531   531 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+02-19 19:20:08.718  4449  4467 E SingleInstanceRemoteListener: Failed remote call on null listener
+02-19 19:20:08.725 19166 19166 D TaskbarManager: removeTaskbarRootLayoutFromMap: displayId=0 isDefaultDisplay=true
+02-19 19:20:08.725 19166 19166 D TaskbarManager: removeTaskbarRootLayoutFromMap: finished! mRootLayouts.size=0 displayId=0 isDefaultDisplay=true
+02-19 19:20:08.726 19166 19166 D TaskbarManager: destroy: finished! displayId=0 isDefaultDisplay=true
+02-19 19:20:08.738 19535 19535 I crash_dump64: obtaining output fd from tombstoned, type: kDebuggerdNativeBacktrace
+02-19 19:20:08.739   283   283 I tombstoned: received crash request for pid 1229
+02-19 19:20:08.740   283   283 I tombstoned: found intercept fd 512 for pid 1229 and type kDebuggerdNativeBacktrace
+02-19 19:20:08.740 19535 19535 I crash_dump64: performing dump of process 1229 (target tid = 1229)
+02-19 19:20:08.741 19166 19166 W SplitSelectStateCtor: Missing session instanceIds
+02-19 19:20:08.742 19166 19166 D StatsLog: LAUNCHER_SPLIT_SELECTION_EXIT_INTERRUPTED
+02-19 19:20:08.751  4449  4474 D VRI[test]: visibilityChanged oldVisibility=false newVisibility=true
+02-19 19:20:08.764   283   283 W tombstoned: skipping tombstone file creation due to intercept
+02-19 19:20:08.769 19166 19166 D TouchInteractionService: onCreate: user=0 instance=77705072
+02-19 19:20:08.770 19166 19166 D TaskbarManager: TaskbarManager constructor displayId=0 isDefaultDisplay=true
+02-19 19:20:08.770 19166 19166 D TaskbarManager: createWindowContext:  displayId=0 isDefaultDisplay=true
+02-19 19:20:08.770 19166 19166 D TaskbarManager: createWindowContext: windowType=TYPE_NAVIGATION_BAR displayId=0 isDefaultDisplay=true
+02-19 19:20:08.771 19166 19166 I s.nexuslauncher: AssetManager2(0x7d8fac43b0f8) locale list changing from [] to [en-US]
+02-19 19:20:08.773   752   800 I system_server: libdebuggerd_client: done dumping process 1229
+02-19 19:20:08.780   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 19:20:08.785   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 19:20:08.799 19166 19166 D TaskbarManager: createTaskbarRootLayout:  displayId=0 isDefaultDisplay=true
+02-19 19:20:08.800 19166 19166 D TaskbarManager: createTaskbarRootLayout: adding to map displayId=0 isDefaultDisplay=true
+02-19 19:20:08.800 19166 19166 D TaskbarManager: addTaskbarRootLayoutToMap:  displayId=0 isDefaultDisplay=true
+02-19 19:20:08.800 19166 19166 D TaskbarManager: addTaskbarRootLayoutToMap: finished! mRootLayouts.size()=1 displayId=0 isDefaultDisplay=true
+02-19 19:20:08.801   752   800 I ActivityManager: Collecting stacks for native pid 525
+02-19 19:20:08.802   752   800 E system_server: Could not open /dev/binderfs/binder_logs/transactions. Likely a permissions issue. errno: 2
+02-19 19:20:08.802   752   800 E android.os.Debug: Failed to get binder state info for pid: 525 status: -2: No such file or directory
+02-19 19:20:08.803   752   800 I system_server: libdebuggerd_client: started dumping process 525
+02-19 19:20:08.804   283   283 I tombstoned: registered intercept for pid 525 and type kDebuggerdNativeBacktrace
+02-19 19:20:08.813   525   525 I libc    : Requested dump for pid 525 (android.hardwar)
+02-19 19:20:08.796   752   752 W watchdog: type=1400 audit(0.0:460): avc:  denied  { read } for  name="transactions" dev="binder" ino=1048587 scontext=u:r:system_server:s0 tcontext=u:object_r:binderfs_logs_transactions:s0 tclass=file permissive=0
+02-19 19:20:08.861 19166 19166 D TaskbarManager: createAndRegisterComponentCallbacks displayId=0 isDefaultDisplay=true
+02-19 19:20:08.861 19166 19166 D TaskbarManager: recreateTaskbars displayId=0 isDefaultDisplay=true
+02-19 19:20:08.861 19166 19166 D TaskbarManager: recreateTaskbars: create primary taskbar displayId=0 isDefaultDisplay=true
+02-19 19:20:08.861 19166 19166 D TaskbarManager: recreateTaskbarForDisplay:  displayId=0 isDefaultDisplay=true
+02-19 19:20:08.862 19166 19166 D TaskbarManager: recreateTaskbarForDisplay: getting device profile displayId=0 isDefaultDisplay=true
+02-19 19:20:08.862 19166 19166 D TaskbarManager: recreateTaskbarForDisplay: destroying taskbar displayId=0 isDefaultDisplay=true
+02-19 19:20:08.862 19166 19166 D TaskbarManager: destroyTaskbarForDisplay displayId=0 isDefaultDisplay=true
+02-19 19:20:08.862 19166 19166 D TaskbarManager: destroyTaskbarForDisplay: taskbar is NULL! displayId=0 isDefaultDisplay=true
+02-19 19:20:08.862 19166 19166 D TaskbarManager: removeTaskbarRootViewFromWindow displayId=0 isDefaultDisplay=true
+02-19 19:20:08.862 19166 19166 D TaskbarManager: getTaskbarRootLayoutForDisplay: displayId=0 isDefaultDisplay=true
+02-19 19:20:08.862 19166 19166 D TaskbarManager: cannot get mPrimaryWindowManager displayId=0 isDefaultDisplay=true
+02-19 19:20:08.862 19166 19166 D TaskbarManager: removeTaskbarRootViewFromWindow: WindowManager is null displayId=0 isDefaultDisplay=true
+02-19 19:20:08.862 19166 19166 D TaskbarManager: recreateTaskbarForDisplay: isTaskbarEnabled=false [dp != null (i.e. mUserUnlocked)]=false FLAG_HIDE_NAVBAR_WINDOW=true dp.isTaskbarPresent=null displayExists=true displayId=0 isDefaultDisplay=true
+02-19 19:20:08.862 19166 19166 D TaskbarManager: recreateTaskbarForDisplay: exiting bc (!isTaskbarEnabled || !displayExists) displayId=0 isDefaultDisplay=true
+02-19 19:20:08.862 19166 19166 D TaskbarManager: TaskbarManager created displayId=0 isDefaultDisplay=true
+02-19 19:20:08.862 19166 19166 D TouchInteractionService: onUserUnlocked: userId=0 instance=77705072
+02-19 19:20:08.864 19301 19301 D BoundBrokerSvc: onBind: Intent { act=com.android.trust.provider.SignificantPlaceProvider.BIND xflg=0x4 cmp=com.google.android.gms/.chimera.PersistentInternalBoundBrokerService }
+02-19 19:20:08.864 19301 19301 D BoundBrokerSvc: Loading bound service for intent: Intent { act=com.android.trust.provider.SignificantPlaceProvider.BIND xflg=0x4 cmp=com.google.android.gms/.chimera.PersistentInternalBoundBrokerService }
+02-19 19:20:08.871 19166 19166 D TaskbarManager: setActivity: mActivity=null displayId=0 isDefaultDisplay=true
+02-19 19:20:08.872 19166 19166 D TaskbarManager: setActivity: registering activity lifecycle callbacks. displayId=0 isDefaultDisplay=true
+02-19 19:20:08.872 19166 19166 D TaskbarManager: getUnfoldTransitionProgressProviderForActivity displayId=0 isDefaultDisplay=true
+02-19 19:20:08.872 19166 19166 D TaskbarManager: setRecentsViewContainer displayId=0 isDefaultDisplay=true
+02-19 19:20:08.872 19166 19166 D TaskbarManager: onUserUnlocked displayId=0 isDefaultDisplay=true
+02-19 19:20:08.872 19166 19166 D TaskbarManager: onUserUnlocked: recreating all taskbars! displayId=0 isDefaultDisplay=true
+02-19 19:20:08.872 19166 19166 D TaskbarManager: recreateTaskbars displayId=0 isDefaultDisplay=true
+02-19 19:20:08.872 19166 19166 D TaskbarManager: recreateTaskbars: create primary taskbar displayId=0 isDefaultDisplay=true
+02-19 19:20:08.873 19166 19166 D TaskbarManager: recreateTaskbarForDisplay:  displayId=0 isDefaultDisplay=true
+02-19 19:20:08.873 19166 19166 D TaskbarManager: recreateTaskbarForDisplay: getting device profile displayId=0 isDefaultDisplay=true
+02-19 19:20:08.873 19166 19166 D TaskbarManager: recreateTaskbarForDisplay: destroying taskbar displayId=0 isDefaultDisplay=true
+02-19 19:20:08.878 19166 19166 D TaskbarManager: destroyTaskbarForDisplay displayId=0 isDefaultDisplay=true
+02-19 19:20:08.880 19166 19166 D TaskbarManager: destroyTaskbarForDisplay: taskbar is NULL! displayId=0 isDefaultDisplay=true
+02-19 19:20:08.897 19166 19166 D TaskbarManager: recreateTaskbarForDisplay: isTaskbarEnabled=true [dp != null (i.e. mUserUnlocked)]=true FLAG_HIDE_NAVBAR_WINDOW=true dp.isTaskbarPresent=false displayExists=true displayId=0 isDefaultDisplay=true
+02-19 19:20:08.897 19166 19166 D TaskbarManager: recreateTaskbarForDisplay: creating taskbar displayId=0 isDefaultDisplay=true
+02-19 19:20:08.903 19166 19166 I s.nexuslauncher: AssetManager2(0x7d8fac43a798) locale list changing from [] to [en-US]
+02-19 19:20:08.916 19541 19541 I crash_dump64: obtaining output fd from tombstoned, type: kDebuggerdNativeBacktrace
+02-19 19:20:08.917   283   283 I tombstoned: received crash request for pid 525
+02-19 19:20:08.917   283   283 I tombstoned: found intercept fd 512 for pid 525 and type kDebuggerdNativeBacktrace
+02-19 19:20:08.918 19541 19541 I crash_dump64: performing dump of process 525 (target tid = 525)
+02-19 19:20:08.919  4656 19545 W adservices: Skip logging because Cobalt logger is null
+02-19 19:20:08.919  4656 19546 W adservices: Skip logging because Cobalt is disabled.
+02-19 19:20:08.972 19166 19166 I ContextualSearchInvoker: Contextual Search invocation failed: no ContextualSearchManager
+02-19 19:20:08.972 19166 19166 D StatsLog: LAUNCHER_LAUNCH_ASSISTANT_FAILED_SERVICE_ERROR
+02-19 19:20:08.976 19166 19166 W LoaderTask: stopLocked: Loader stopping
+02-19 19:20:08.977 19166 19166 D TaskbarManager: createTaskbarUIControllerForRecentsViewContainer displayId=0 isDefaultDisplay=true
+02-19 19:20:08.980 19166 19166 D TaskbarManager: recreateTaskbarForDisplay: adding rootView displayId=0 isDefaultDisplay=true
+02-19 19:20:08.980 19166 19166 D TaskbarManager: addTaskbarRootViewToWindow: displayId=0 isDefaultDisplay=true
+02-19 19:20:08.980 19166 19166 D TaskbarManager: getTaskbarRootLayoutForDisplay: displayId=0 isDefaultDisplay=true
+02-19 19:20:08.981 19166 19166 D TaskbarManager: cannot get mPrimaryWindowManager displayId=0 isDefaultDisplay=true
+02-19 19:20:08.997 19316 19488 D nativeloader: Load /data/app/~~NUQj-rdXzuicW-16SIRtKA==/viva.republica.toss.test-Si406wFvb_sqEA2GTBV6RQ==/lib/x86_64/libbugsnag-ndk.so using class loader ns clns-9 (caller=<unknown>): ok
+02-19 19:20:08.999   283   283 W tombstoned: skipping tombstone file creation due to intercept
+02-19 19:20:08.999 19284 19525 D nativeloader: Load /product/priv-app/PrebuiltBugle/PrebuiltBugle.apk!/lib/x86_64/libnative_crash_handler_jni.so using class loader ns product-clns-10 (caller=/product/priv-app/PrebuiltBugle/PrebuiltBugle.apk!classes4.dex): ok
+02-19 19:20:08.999   752   800 I system_server: libdebuggerd_client: done dumping process 525
+02-19 19:20:09.029 19166 19166 D TaskbarManager: getTaskbarRootLayoutForDisplay: displayId=0 isDefaultDisplay=true
+02-19 19:20:09.034   752   800 I ActivityManager: Collecting stacks for native pid 526
+02-19 19:20:09.036 19166 19166 D TaskbarManager: recreateTaskbarForDisplay: adding root layout displayId=0 isDefaultDisplay=true
+02-19 19:20:09.036 19166 19166 D TaskbarManager: onUserUnlocked: addTaskbarRootViewToWindow() displayId=0 isDefaultDisplay=true
+02-19 19:20:09.036 19166 19166 D TaskbarManager: addTaskbarRootViewToWindow: displayId=0 isDefaultDisplay=true
+02-19 19:20:09.037 19166 19166 D TaskbarManager: addTaskbarRootViewToWindow: rootLayout already added! displayId=0 isDefaultDisplay=true
+02-19 19:20:09.037 19166 19166 D TouchInteractionService: disposeEventHandlers: Reason: Initializing input monitor due to: onNavigationModeChanged() instance=77705072
+02-19 19:20:09.049   752   800 E system_server: Could not open /dev/binderfs/binder_logs/transactions. Likely a permissions issue. errno: 2
+02-19 19:20:09.049   752   800 E android.os.Debug: Failed to get binder state info for pid: 526 status: -2: No such file or directory
+02-19 19:20:09.050   752   800 I system_server: libdebuggerd_client: started dumping process 526
+02-19 19:20:09.050  4656 15177 E adservices: Encryption key fetch job is disabled, skip scheduling.
+02-19 19:20:09.063 19166 19166 D InputMonitorCompat: Input monitor (swipe-up-disp0) created
+02-19 19:20:09.063 19166 19166 D InputMonitorCompat: Input event receiver for monitor (swipe-up-disp0) created
+02-19 19:20:09.064 19166 19166 D TouchInteractionService: onBind: user=0 instance=77705072
+02-19 19:20:09.069   283   283 I tombstoned: registered intercept for pid 526 and type kDebuggerdNativeBacktrace
+02-19 19:20:09.071  4449  4449 D LauncherProxyService: Launcher proxy service connected
+02-19 19:20:09.072   526   526 I libc    : Requested dump for pid 526 (android.hardwar)
+02-19 19:20:09.032   752   752 W watchdog: type=1400 audit(0.0:461): avc:  denied  { read } for  name="transactions" dev="binder" ino=1048587 scontext=u:r:system_server:s0 tcontext=u:object_r:binderfs_logs_transactions:s0 tclass=file permissive=0
+02-19 19:20:09.101 19166 19166 D StateManager: goToState - fromState: Normal, toState: Normal, partial trace:
+02-19 19:20:09.101 19166 19166 D StateManager: 	at com.android.launcher3.statemanager.StateManager.moveToRestState(go/retraceme 72a59688580715d19f0e415c69e80376c2f062d1648c80db6730905005a27c20:4)
+02-19 19:20:09.101 19166 19166 D StateManager: 	at com.android.launcher3.statemanager.StateManager.moveToRestState(go/retraceme 72a59688580715d19f0e415c69e80376c2f062d1648c80db6730905005a27c20:1)
+02-19 19:20:09.101 19166 19166 D StateManager: 	at com.android.launcher3.statemanager.StatefulActivity.onStop(go/retraceme 72a59688580715d19f0e415c69e80376c2f062d1648c80db6730905005a27c20:34)
+02-19 19:20:09.102 19166 19166 D StatsLog: LAUNCHER_ONSTOP
+02-19 19:20:09.108 19166 19166 D StatsLog: LAUNCHER_GOOGLE_SEARCH_RESTORE_LIST_SIZE_AFTER_ACTIVITY_RESTART
+02-19 19:20:09.114 19166 19166 I Choreographer: Skipped 545 frames!  The application may be doing too much work on its main thread.
+02-19 19:20:09.127   752   935 D CoreBackPreview: Window{1bcc090 u0 com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@5e80f8f, mPriority=-1, mIsAnimationCallback=false, mOverrideBehavior=0}
+02-19 19:20:09.127   752  2375 D FileUtils: Rounded bytes from 2067259392 to 4000000000
+02-19 19:20:09.128   752   935 D CoreBackPreview: Window{1bcc090 u0 com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@26621c, mPriority=0, mIsAnimationCallback=true, mOverrideBehavior=0}
+02-19 19:20:09.130 19316 19316 W BugsnagNDK: Initialization complete!
+02-19 19:20:09.138 19554 19554 I crash_dump64: obtaining output fd from tombstoned, type: kDebuggerdNativeBacktrace
+02-19 19:20:09.139   283   283 I tombstoned: received crash request for pid 526
+02-19 19:20:09.139   283   283 I tombstoned: found intercept fd 512 for pid 526 and type kDebuggerdNativeBacktrace
+02-19 19:20:09.145 19554 19554 I crash_dump64: performing dump of process 526 (target tid = 526)
+02-19 19:20:09.151 19166 19166 I s.nexuslauncher: AssetManager2(0x7d8fac42ec18) locale list changing from [] to [en-US]
+02-19 19:20:09.207 19316 19488 D nativeloader: Load /data/app/~~NUQj-rdXzuicW-16SIRtKA==/viva.republica.toss.test-Si406wFvb_sqEA2GTBV6RQ==/lib/x86_64/libbugsnag-plugin-android-anr.so using class loader ns clns-9 (caller=<unknown>): ok
+02-19 19:20:09.209  4449  4449 D LauncherProxyService: LauncherProxyService connected, initializing launcher proxy
+02-19 19:20:09.266   283   283 W tombstoned: skipping tombstone file creation due to intercept
+02-19 19:20:09.279   752   800 I system_server: libdebuggerd_client: done dumping process 526
+02-19 19:20:09.281 19166 19166 D OverviewActionsView: updateActionButtonsVisibility() called: showSingleTaskActions = [true], showGroupActions = [false]
+02-19 19:20:09.285 19166 19166 D KeyboardInsetsHandler: setState, toState:Normal StateManager(mLastStableState:Normal, mCurrentStableState:Normal, mState:Normal, mRestState:null, isInTransition:false)
+02-19 19:20:09.290  4449  4467 E SingleInstanceRemoteListener: Failed remote call on null listener
+02-19 19:20:09.292  1336  1336 D SatelliteAccessController: mLocationModeChangedBroadcastReceiver: android.location.PROVIDERS_CHANGED, mIsLocationManagerEnabled= true
+02-19 19:20:09.313   752   800 I ActivityManager: Collecting stacks for native pid 527
+02-19 19:20:09.317   752   800 E system_server: Could not open /dev/binderfs/binder_logs/transactions. Likely a permissions issue. errno: 2
+02-19 19:20:09.318   752   800 E android.os.Debug: Failed to get binder state info for pid: 527 status: -2: No such file or directory
+02-19 19:20:09.323   752   800 I system_server: libdebuggerd_client: started dumping process 527
+02-19 19:20:09.325   283   283 I tombstoned: registered intercept for pid 527 and type kDebuggerdNativeBacktrace
+02-19 19:20:09.327   527   527 I libc    : Requested dump for pid 527 (audioserver)
+02-19 19:20:09.312   752   752 W watchdog: type=1400 audit(0.0:462): avc:  denied  { read } for  name="transactions" dev="binder" ino=1048587 scontext=u:r:system_server:s0 tcontext=u:object_r:binderfs_logs_transactions:s0 tclass=file permissive=0
+02-19 19:20:09.340   752  2419 D ConnectivityService: requestNetwork for uid/pid:10217/19316 activeRequest: null callbackRequest: 671 [NetworkRequest [ REQUEST id=672, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10217 RequestorUid: 10217 RequestorPkg: viva.republica.toss.test UnderlyingNetworks: Null] ]] callback flags: 0 order: 2147483647 isUidTracked: false declaredMethods: AVAIL|UNAVAIL
+02-19 19:20:09.343 19316 19316 W System.err: SLF4J: No SLF4J providers were found.
+02-19 19:20:09.343 19316 19316 W System.err: SLF4J: Defaulting to no-operation (NOP) logger implementation
+02-19 19:20:09.343 19316 19316 W System.err: SLF4J: See https://www.slf4j.org/codes.html#noProviders for further details.
+02-19 19:20:09.419 19301 19463 D nativeloader: Load /data/app/~~O-UZzK0jUU9NLgS3MODOZA==/com.google.android.gms-YQ2L6GsYyKuvu9MvIBK1EQ==/base.apk!/lib/x86_64/libleveldbjni.so using class loader ns clns-9 (caller=/data/app/~~O-UZzK0jUU9NLgS3MODOZA==/com.google.android.gms-YQ2L6GsYyKuvu9MvIBK1EQ==/base.apk): ok
+02-19 19:20:09.505   752  1029 D ConnectivityService: NetReassign [672 : null → 108] [c 80] [a 43] [i 42]
+02-19 19:20:09.511   752  1023 D OemPaidWifiNetworkFactory: got request NetworkRequest [ REQUEST id=672, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10217 RequestorUid: 10217 RequestorPkg: viva.republica.toss.test UnderlyingNetworks: Null] ]
+02-19 19:20:09.535 19568 19568 I crash_dump64: obtaining output fd from tombstoned, type: kDebuggerdNativeBacktrace
+02-19 19:20:09.537 19316 19316 I Choreographer: Skipped 581 frames!  The application may be doing too much work on its main thread.
+02-19 19:20:09.544   752  1023 D MultiInternetWifiNetworkFactory: got request NetworkRequest [ REQUEST id=672, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10217 RequestorUid: 10217 RequestorPkg: viva.republica.toss.test UnderlyingNetworks: Null] ]
+02-19 19:20:09.545 19316 19571 I CameraManagerGlobal: Connecting to camera service
+02-19 19:20:09.545   752  1023 D WifiNetworkFactory: got request NetworkRequest [ REQUEST id=672, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10217 RequestorUid: 10217 RequestorPkg: viva.republica.toss.test UnderlyingNetworks: Null] ]
+02-19 19:20:09.546   752  1023 D UntrustedWifiNetworkFactory: got request NetworkRequest [ REQUEST id=672, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10217 RequestorUid: 10217 RequestorPkg: viva.republica.toss.test UnderlyingNetworks: Null] ]
+02-19 19:20:09.554   752   794 I ServiceWatcher: [TrustManagerService] connected to {com.google.android.gms/com.google.android.gms.chimera.PersistentInternalBoundBrokerService}
+02-19 19:20:09.567   283   283 I tombstoned: received crash request for pid 527
+02-19 19:20:09.567   283   283 I tombstoned: found intercept fd 512 for pid 527 and type kDebuggerdNativeBacktrace
+02-19 19:20:09.571 19301 19301 E NetworkScheduler: Compat called without init
+02-19 19:20:09.572 19568 19568 I crash_dump64: performing dump of process 527 (target tid = 527)
+02-19 19:20:09.699 19166 19166 D BubbleBarView: BubbleBar RTL properties changed, new layoutDirection=0 previous layoutDirection=-1
+02-19 19:20:09.705 19316 19316 I blica.toss.test: AssetManager2(0x7d8fac42fed8) locale list changing from [] to [en-US]
+02-19 19:20:09.730 19301 19301 D BoundBrokerSvc: onBind: Intent { act=com.google.android.gms.usagereporting.service.START dat=chimera-action:/... xflg=0x4 cmp=com.google.android.gms/.chimera.PersistentDirectBootAwareApiService }
+02-19 19:20:09.730 19301 19301 D BoundBrokerSvc: Loading bound service for intent: Intent { act=com.google.android.gms.usagereporting.service.START dat=chimera-action:/... xflg=0x4 cmp=com.google.android.gms/.chimera.PersistentDirectBootAwareApiService }
+02-19 19:20:09.735   615  2506 I AttributionAndPermissionUtils: checkPermission (forDataDelivery 0 startDataDelivery 0): Permission hard denied for client attribution [uid 10217, pid 19316, packageName "<unknown>"]
+02-19 19:20:09.744  4449  4467 E SingleInstanceRemoteListener: Failed remote call on null listener
+02-19 19:20:09.786 19316 19320 W blica.toss.test: Suspending all threads took: 9.738ms
+02-19 19:20:09.806 19166 19166 D TouchInteractionService: onBind: user=0 instance=77705072
+02-19 19:20:09.808 19166 19166 D TaskFragmentComponent: Setting valid task fragment surface control in TYPE_TASK_FRAGMENT_APPEARED
+02-19 19:20:09.822 19166 19166 D ActivityAllAppsContainerView: rebindAdapters: force: false
+02-19 19:20:09.822 19166 19166 D ActivityAllAppsContainerView: rebindAdapters: Not needed.
+02-19 19:20:09.822 19166 19190 D LoaderTask: sanitizeData finished
+02-19 19:20:09.823 19166 19190 W LoaderTask: LoaderTask cancelled
+02-19 19:20:09.833 19166 19166 D ActivityAllAppsContainerView: rebindAdapters: force: false
+02-19 19:20:09.833 19166 19166 D ActivityAllAppsContainerView: rebindAdapters: Not needed.
+02-19 19:20:09.838 19316 19320 I blica.toss.test: Background concurrent mark compact GC freed 3999KB AllocSpace bytes, 30(900KB) LOS objects, 49% free, 3711KB/7423KB, paused 17.887ms,14.244ms total 156.709ms
+02-19 19:20:09.848 19166 19175 I HWUI    : Davey! duration=9805ms; Flags=1, FrameTimelineVsyncId=1981222, IntendedVsync=107873871291902, Vsync=107882954624872, InputEventId=0, HandleInputStart=107882961742917, AnimationStart=107882963929917, PerformTraversalsStart=107882964814917, DrawStart=107883637540917, FrameDeadline=107873887958568, FrameStartTime=107882960575917, FrameInterval=16666666, WorkloadTarget=16666666, SyncQueued=107883638088917, SyncStart=107883638996917, IssueDrawCommandsStart=107883639409917, SwapBuffers=107883641757917, FrameCompleted=107883677479917, DequeueBufferDuration=141000, QueueBufferDuration=961000, GpuCompleted=107883677479917, SwapBuffersCompleted=107883645423917, DisplayPresentTime=0, CommandSubmissionCompleted=107883641757917, 
+02-19 19:20:09.849   752  1852 V WindowManager: Queueing transition: TransitionRecord{ab1fa7f id=-1 type=CLOSE flags=0x0}
+02-19 19:20:09.853 19166 19166 I Choreographer: Skipped 43 frames!  The application may be doing too much work on its main thread.
+02-19 19:20:09.853 19166 19190 I GridSizeMigrationDBController: Migration is not needed. destDeviceState: DeviceGridState{mGridSizeString='4,5', mNumHotseat=4, mDeviceType=0, mDbFile=launcher_4_by_5.db}, srcDeviceState: DeviceGridState{mGridSizeString='4,5', mNumHotseat=4, mDeviceType=0, mDbFile=launcher_4_by_5.db}
+02-19 19:20:09.853 19166 19190 D ModelDbController: isGridMigrationNecessary: no grid migration needed
+02-19 19:20:09.853 19316 19316 I blica.toss.test: AssetManager2(0x7d8fac432138) locale list changing from [] to [en-US]
+02-19 19:20:09.858   752   794 V WindowManager: Sent Transition (#755) createdAt=02-19 19:20:08.597 via request=TransitionRequestInfo { type = CHANGE, triggerTask = null, pipChange = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@ad287aa, appThread = null, debugName = TaskFragmentComponent }, displayChange = null, flags = 0, debugId = 755 }
+02-19 19:20:09.858   752   794 V WindowManager:     startWCT=WindowContainerTransaction { changes= {} hops= [] errorCallbackToken=null taskFragmentOrganizer=null }
+02-19 19:20:09.858   752   794 V WindowManager:     info={id=755 t=CHANGE f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+02-19 19:20:09.858   752   794 V WindowManager:         {WCT{RemoteToken{58f5d87 Task{11d79c0 #78 type=standard A=10217:viva.republica.toss.test}}} m=TO_FRONT f=NONE p=WCT{RemoteToken{799cd49 DefaultTaskDisplayArea@173501700}} leash=Surface(name=Task=78)/@0x6af51ab sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1},
+02-19 19:20:09.858   752   794 V WindowManager:         {WCT{RemoteToken{799cd49 DefaultTaskDisplayArea@173501700}} m=TO_FRONT f=FLAG_IS_TASK_DISPLAY_AREA leash=Surface(name=DefaultTaskDisplayArea)/@0x61cedd7 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0}
+02-19 19:20:09.858   752   794 V WindowManager:     ]}
+02-19 19:20:09.858   752  1852 I ActivityTaskManager: Activity reported stop, but no longer stopping: ActivityRecord{32265495 u0 com.google.android.apps.nexuslauncher/.NexusLauncherActivity t5} STOPPED
+02-19 19:20:09.858  4449  4532 V WindowManagerShell: onTransitionReady(transaction=3229815428937)
+02-19 19:20:09.859  4449  4467 V WindowManagerShell: onTransitionReady (#755) android.os.BinderProxy@43903b3: {id=755 t=CHANGE f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+02-19 19:20:09.859  4449  4467 V WindowManagerShell:         {m=TO_FRONT f=NONE p=WCT{android.window.IWindowContainerToken$Stub$Proxy@1d40846} leash=Surface(name=Task=78)/@0x137362b sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1},
+02-19 19:20:09.859  4449  4467 V WindowManagerShell:         {m=TO_FRONT f=FLAG_IS_TASK_DISPLAY_AREA leash=Surface(name=DefaultTaskDisplayArea)/@0x7455a88 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0}
+02-19 19:20:09.859  4449  4467 V WindowManagerShell:     ]}
+02-19 19:20:09.859 19166 19190 I GridSizeMigrationDBController: Migration is not needed. destDeviceState: DeviceGridState{mGridSizeString='4,5', mNumHotseat=4, mDeviceType=0, mDbFile=launcher_4_by_5.db}, srcDeviceState: DeviceGridState{mGridSizeString='4,5', mNumHotseat=4, mDeviceType=0, mDbFile=launcher_4_by_5.db}
+02-19 19:20:09.859  4449  4467 V WindowManagerShell: Playing animation for (#755) android.os.BinderProxy@43903b3@0
+02-19 19:20:09.859  4449  4467 V WindowManagerShell:  try firstHandler com.android.wm.shell.transition.RemoteTransitionHandler@ef09705
+02-19 19:20:09.859 19166 19190 D LoaderTask: loadWorkspace: loading default favorites if necessary
+02-19 19:20:09.860 19166 19190 D LoaderTask: loadWorkspace: Packages with active install/update sessions: []
+02-19 19:20:09.863 19166 19190 D LoaderTask: No pinned shortcuts found for user UserHandle{0}
+02-19 19:20:09.864   752  1852 W ProcessStats: Tracking association SourceState{1b917ca system/1000 BFgs #22206} whose proc state 4 is better than process ProcessState{42c4ef0 com.google.android.ext.services/10208 pkg=com.google.android.ext.services} proc state 14 (5 skipped)
+02-19 19:20:09.866 19166 19166 D TouchInteractionService: disposeEventHandlers: Reason: Initializing input monitor due to: TISBinder#onInitialize() instance=77705072
+02-19 19:20:09.866   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 19:20:09.866   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 19:20:09.866   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 19:20:09.866   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 19:20:09.867   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 19:20:09.867 19166 19166 D InputMonitorCompat: Input event receiver for monitor (swipe-up-disp0) disposed
+02-19 19:20:09.867   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 19:20:09.867   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 19:20:09.867 19166 19166 D InputMonitorCompat: Input monitor (swipe-up-disp0) disposed
+02-19 19:20:09.867   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 19:20:09.869 19166 19166 D InputMonitorCompat: Input monitor (swipe-up-disp0) created
+02-19 19:20:09.869 19166 19166 D InputMonitorCompat: Input event receiver for monitor (swipe-up-disp0) created
+02-19 19:20:09.870 19166 19190 D WorkspaceItemProcessor: valid target true, marking restored: com.google.android.dialer, itemType=0, restoreFlag=0
+02-19 19:20:09.871 19166 19166 D TISBindHelper: TIS service connected
+02-19 19:20:09.871 19166 19166 D TaskbarManager: setActivity: mActivity=com.google.android.apps.nexuslauncher.NexusLauncherActivity@3a67c0d displayId=0 isDefaultDisplay=true
+02-19 19:20:09.871 19166 19166 D TaskbarManager: setActivity: No need to set activity! displayId=0 isDefaultDisplay=true
+02-19 19:20:09.873 19166 19190 D WorkspaceItemProcessor: valid target true, marking restored: com.google.android.apps.messaging, itemType=0, restoreFlag=0
+02-19 19:20:09.873 19166 19166 I NotificationListener: Handling notification state refresh for com.google.android.adservices.api#0
+02-19 19:20:09.873 19166 19166 I NotificationListener: Handling notification state refresh for android#0
+02-19 19:20:09.873 19166 19166 I NotificationListener: Handling notification state refresh for com.android.systemui#0
+02-19 19:20:09.873 19166 19166 I NotificationListener: Handling notification state refresh for com.google.android.adservices.api#0
+02-19 19:20:09.874 19166 19166 I NotificationListener: Handling notification state refresh for android#0
+02-19 19:20:09.874 19166 19166 I NotificationListener: Handling notification state refresh for com.android.systemui#0
+02-19 19:20:09.885 19166 19190 D WorkspaceItemProcessor: valid target true, marking restored: com.android.chrome, itemType=0, restoreFlag=0
+02-19 19:20:09.890 19166 19190 D WorkspaceItemProcessor: valid target true, marking restored: com.android.vending, itemType=0, restoreFlag=0
+02-19 19:20:09.897 19166 19190 D WorkspaceItemProcessor: valid target true, marking restored: com.google.android.gm, itemType=0, restoreFlag=0
+02-19 19:20:09.902 19166 19190 D WorkspaceItemProcessor: valid target true, marking restored: com.google.android.apps.photos, itemType=0, restoreFlag=0
+02-19 19:20:09.905 19166 19190 D WorkspaceItemProcessor: valid target true, marking restored: com.google.android.youtube, itemType=0, restoreFlag=0
+02-19 19:20:10.078  4449  4467 V WindowManagerShell:  Delegate animation for (#755) to RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@ad94d70, appThread = null, debugName = TaskFragmentComponent }
+02-19 19:20:10.079  4449  4467 V WindowManagerShell:  animated by firstHandler
+02-19 19:20:10.088 19336 19588 D nativeloader: Load /product/priv-app/Velvet/Velvet.apk!/lib/x86_64/libnative_crash_handler_jni.so using class loader ns product-clns-10 (caller=/product/priv-app/Velvet/Velvet.apk!classes2.dex): ok
+02-19 19:20:10.091  4449  4467 V WindowManagerShell: Transition requested (#756): android.os.BinderProxy@652f2a0 TransitionRequestInfo { type = CLOSE, triggerTask = null, pipChange = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@efe3e59, appThread = null, debugName = TaskFragmentComponent }, displayChange = null, flags = 0, debugId = 756 }
+02-19 19:20:10.091  4449  4467 V WindowManagerShell: RemoteTransition directly requested for (#756) android.os.BinderProxy@652f2a0: RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@efe3e59, appThread = null, debugName = TaskFragmentComponent }
+02-19 19:20:10.091  4449  4467 V WindowManagerShell: Transition (#756): request handled by RemoteTransitionHandler
+02-19 19:20:10.109  4449  4488 V WindowManagerShell: onTransitionReady(transaction=3229815428947)
+02-19 19:20:10.110  4449  4467 V WindowManagerShell: Transition animation finished (aborted=false), notifying core (#755) android.os.BinderProxy@43903b3@0
+02-19 19:20:10.111   752   794 V WindowManager: Sent Transition (#756) createdAt=02-19 19:20:08.627 via request=TransitionRequestInfo { type = CLOSE, triggerTask = null, pipChange = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@a306202, appThread = null, debugName = TaskFragmentComponent }, displayChange = null, flags = 0, debugId = 756 }
+02-19 19:20:10.112   752   794 V WindowManager:     startWCT=WindowContainerTransaction { changes= {} hops= [] errorCallbackToken=null taskFragmentOrganizer=null }
+02-19 19:20:10.112   752   794 V WindowManager:     info={id=756 t=CLOSE f=0x0 trk=0 r=[] c=[]}
+02-19 19:20:10.113   283   283 W tombstoned: skipping tombstone file creation due to intercept
+02-19 19:20:10.136   752   794 V WindowManager: Finish Transition (#755): created at 02-19 19:20:08.597 collect-started=0.243ms request-sent=19.708ms started=106.053ms ready=1255.596ms sent=1259.655ms commit=249.282ms finished=1533.828ms
+02-19 19:20:10.137   752   800 I system_server: libdebuggerd_client: done dumping process 527
+02-19 19:20:10.149  4449  4467 V WindowManagerShell: Track 0 became idle
+02-19 19:20:10.151  4449  4467 V WindowManagerShell: onTransitionReady (#756) android.os.BinderProxy@652f2a0: {id=756 t=CLOSE f=0x0 trk=0 r=[] c=[]}
+02-19 19:20:10.151  4449  4467 V WindowManagerShell: No transition roots in (#756) android.os.BinderProxy@652f2a0@0 so abort
+02-19 19:20:10.152  4449  4467 V WindowManagerShell: Transition animation finished (aborted=true), notifying core (#756) android.os.BinderProxy@652f2a0@0
+02-19 19:20:10.159   752   794 V WindowManager: Finish Transition (#756): created at 02-19 19:20:08.627 collect-started=1230.397ms request-sent=1232.582ms started=1469.453ms ready=1469.426ms sent=1478.924ms finished=1530.254ms
+02-19 19:20:10.175  4449  4467 V WindowManagerShell: Track 0 became idle
+02-19 19:20:10.175  4449  4467 V WindowManagerShell: All active transition animations finished
+02-19 19:20:10.176  4449  4467 V WindowManagerShell: Transition requested (#757): android.os.BinderProxy@ac17a2a TransitionRequestInfo { type = CLOSE, triggerTask = null, pipChange = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@e16001b, appThread = null, debugName = TaskFragmentComponent }, displayChange = null, flags = 0, debugId = 757 }
+02-19 19:20:10.176  4449  4467 V WindowManagerShell: RemoteTransition directly requested for (#757) android.os.BinderProxy@ac17a2a: RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@e16001b, appThread = null, debugName = TaskFragmentComponent }
+02-19 19:20:10.176  4449  4467 V WindowManagerShell: Transition (#757): request handled by RemoteTransitionHandler
+02-19 19:20:10.197   531   531 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+02-19 19:20:10.199  4449  4511 V WindowManagerShell: onTransitionReady(transaction=3229815428959)
+02-19 19:20:10.199   752   794 V WindowManager: Sent Transition (#757) createdAt=02-19 19:20:09.848 via request=TransitionRequestInfo { type = CLOSE, triggerTask = null, pipChange = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@ef3a668, appThread = null, debugName = TaskFragmentComponent }, displayChange = null, flags = 0, debugId = 757 }
+02-19 19:20:10.199  4449  4467 V WindowManagerShell: onTransitionReady (#757) android.os.BinderProxy@ac17a2a: {id=757 t=CLOSE f=0x0 trk=1 r=[] c=[]}
+02-19 19:20:10.199  4449  4467 V WindowManagerShell: No transition roots in (#757) android.os.BinderProxy@ac17a2a@1 so abort
+02-19 19:20:10.200  4449  4467 V WindowManagerShell: Transition animation finished (aborted=true), notifying core (#757) android.os.BinderProxy@ac17a2a@1
+02-19 19:20:10.203   752   794 V WindowManager:     startWCT=WindowContainerTransaction { changes= {} hops= [] errorCallbackToken=null taskFragmentOrganizer=null }
+02-19 19:20:10.203   752   794 V WindowManager:     info={id=757 t=CLOSE f=0x0 trk=1 r=[] c=[]}
+02-19 19:20:10.204   752   794 V WindowManager: Finish Transition (#757): created at 02-19 19:20:09.848 collect-started=257.83ms request-sent=278.602ms started=339.528ms ready=339.496ms sent=349.53ms finished=355.497ms
+02-19 19:20:10.206  4449  4467 V WindowManagerShell: Track 1 became idle
+02-19 19:20:10.206  4449  4467 V WindowManagerShell: All active transition animations finished
+02-19 19:20:10.529   752   800 E ActivityManager: Aborting stack trace dump (current native pid=527); deadline exceeded.
+02-19 19:20:10.616 19316 19316 I blica.toss.test: AssetManager2(0x7d8fac432778) locale list changing from [] to [en-US]
+02-19 19:20:10.619 19316 19316 D CompatChangeReporter: Compat change id reported: 309578419; UID 10217; state: ENABLED
+02-19 19:20:10.855   531   549 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+02-19 19:20:10.856   752   805 I ActivityManager: Test idle passed
+02-19 19:20:10.976 19301 19301 D BoundBrokerSvc: onBind: Intent { act=com.google.android.gms.usagereporting.service.START xflg=0x4 pkg=com.google.android.gms }
+02-19 19:20:10.976 19301 19301 D BoundBrokerSvc: Loading bound service for intent: Intent { act=com.google.android.gms.usagereporting.service.START xflg=0x4 pkg=com.google.android.gms }
+02-19 19:20:10.977 19284 19284 I Bugle   : BugleApplicationBase: Bugle version: messages.android_20250311_04_rc01.phone_dynamic , Bugle version code: 273168063
+02-19 19:20:10.985 19284 19284 I Bugle   : DarkModeManager: setDarkMode: -1
+02-19 19:20:10.999 19301 19358 I fzke    : (REDACTED) Shared storage file not found for %s
+02-19 19:20:11.006 19301 19457 I DynamiteModule: Considering local module com.google.android.gms.googlecertificates:7 and remote module com.google.android.gms.googlecertificates:0
+02-19 19:20:11.006 19301 19457 I DynamiteModule: Selected local version of com.google.android.gms.googlecertificates
+02-19 19:20:11.061   752  2375 W ActivityManager: Slow operation: 63ms so far, now at finishAttachApplicationInner: after mServices.attachApplicationLocked
+02-19 19:20:11.061   752  2375 W ActivityManager: Slow operation: 63ms so far, now at finishAttachApplicationInner: after dispatching broadcasts
+02-19 19:20:11.075 19301 19301 I Fido    : [AuthenticatorChimeraService] Unregistered the broadcast receiver [CONTEXT service_id=287 ]
+02-19 19:20:11.114   752   795 W Looper  : Slow dispatch took 103ms android.ui app=system_server main=false group=TOP_APP h=com.android.server.am.ActivityManagerService$UiHandler c=com.android.server.am.UidObserverController$$ExternalSyntheticLambda0@6a2cd6d m=0
+02-19 19:20:11.146 19301 19444 I Dtdi    : [LifecycleService] Initializing lifecycle service [CONTEXT service_id=312 ]
+02-19 19:20:11.173 19494 19494 E chromium: [0219/192011.173259:ERROR:aw_component_update_service.cc(285)] No directory found for component llkgjffcdpffmhiakmfcdcblohccpfmo
+02-19 19:20:11.197 19166 19190 D LoaderTask: loadWorkspace finished
+02-19 19:20:11.216 19316 19316 D CompatChangeReporter: Compat change id reported: 352594277; UID 10217; state: ENABLED
+02-19 19:20:11.229 19166 19190 D LoaderTask: sanitizeData finished
+02-19 19:20:11.258 19284 19612 I stetho  : Listening on @stetho_com.google.android.apps.messaging_devtools_remote
+02-19 19:20:11.261 19166 19166 D CellLayout: Adding view to ShortcutsAndWidgetsContainer: com.google.android.apps.nexuslauncher.qsb.SmartspaceViewContainer{6c755f3 V.E...... ......I. 0,0-0,0 #7f0a032d app:id/search_container_workspace}
+02-19 19:20:11.264 19301 19444 I Dtdi    : [CallTransferLifecycleDelegate] Starting the call transfer state monitor in the background [CONTEXT service_id=312 ]
+02-19 19:20:11.264 19166 19166 D ModelCallbacks: startBinding: hotseat layout was vertical: false and is setting to false
+02-19 19:20:11.267 19301 19529 I Dtdi    : [TidepoolSettingsSubDelegate] registering tidepool listeners [CONTEXT service_id=312 ]
+02-19 19:20:11.271 19301 19444 I Dtdi    : [NearbyShareSettingsSubDelegate] Registering NS state observer [CONTEXT service_id=312 ]
+02-19 19:20:11.281 19301 19457 W GoogleCertificates: GoogleCertificates has been initialized already
+02-19 19:20:11.325 19316 19320 I blica.toss.test: Background concurrent mark compact GC freed 2364KB AllocSpace bytes, 6(120KB) LOS objects, 49% free, 11MB/23MB, paused 8.442ms,10.798ms total 406.126ms
+02-19 19:20:11.350 19316 19580 I EGL_emulation: Opening libGLESv1_CM_emulation.so
+02-19 19:20:11.352 19316 19580 I EGL_emulation: Opening libGLESv2_emulation.so
+02-19 19:20:11.527 19316 19316 D CompatChangeReporter: Compat change id reported: 349153669; UID 10217; state: ENABLED
+02-19 19:20:11.547 19393 19393 W screencap: Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: SurfaceFlingerAIDL
+02-19 19:20:11.547 19393 19393 W BpBinder: Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
+02-19 19:20:11.548 19393 19393 W ProcessState: Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
+02-19 19:20:11.549   752   935 D FileUtils: Rounded bytes from 2067259392 to 4000000000
+02-19 19:20:11.554 19166 19190 D LauncherBinder: Starting async inflation
+02-19 19:20:11.558   531   603 E HwcComposer: getLuts failed Status(-8, EX_SERVICE_SPECIFIC): '8: '
+02-19 19:20:11.558   531   603 E HWComposer: getLuts: getLuts failed for display 4619827259835644672: UNSUPPORTED (8)
+02-19 19:20:11.581 19316 19316 W HWUI    : Unknown dataspace 0
+02-19 19:20:11.584 19166 19166 D Launcher.Workspace: addInScreenFromBind: hotseat inflation with x = 0 and y = 0
+02-19 19:20:11.584 19166 19166 D CellLayout: Adding view to ShortcutsAndWidgetsContainer: com.android.launcher3.views.DoubleShadowBubbleTextView{cce3923 VFED..C.. ......ID 0,0-0,0 #1}
+02-19 19:20:11.585 19166 19166 D Launcher.Workspace: addInScreenFromBind: hotseat inflation with x = 1 and y = 0
+02-19 19:20:11.585 19166 19166 D CellLayout: Adding view to ShortcutsAndWidgetsContainer: com.android.launcher3.views.DoubleShadowBubbleTextView{d492e20 VFED..C.. ......ID 0,0-0,0 #2}
+02-19 19:20:11.586 19166 19166 D Launcher.Workspace: addInScreenFromBind: hotseat inflation with x = 2 and y = 0
+02-19 19:20:11.586 19166 19166 D CellLayout: Adding view to ShortcutsAndWidgetsContainer: com.android.launcher3.views.DoubleShadowBubbleTextView{f693d9 VFED..C.. ......ID 0,0-0,0 #3}
+02-19 19:20:11.586 19166 19166 D CellLayout: Adding view to ShortcutsAndWidgetsContainer: com.android.launcher3.views.DoubleShadowBubbleTextView{cdf419e VFED..C.. ......ID 0,0-0,0 #4}
+02-19 19:20:11.589 19166 19166 D CellLayout: Adding view to ShortcutsAndWidgetsContainer: com.android.launcher3.views.DoubleShadowBubbleTextView{f41447f VFED..C.. ......ID 0,0-0,0 #5}
+02-19 19:20:11.593 19166 19166 D CellLayout: Adding view to ShortcutsAndWidgetsContainer: com.android.launcher3.views.DoubleShadowBubbleTextView{f339495 VFED..C.. ......ID 0,0-0,0 #6}
+02-19 19:20:11.610 19166 19190 D LauncherBinder: Starting sync inflation
+02-19 19:20:11.612 19166 19190 D LauncherBinder: Calling onCompleteSignal
+02-19 19:20:11.613 19166 19190 D LoaderTask: bindWorkspace finished
+02-19 19:20:11.623 19166 19166 D CellLayout: Adding view to ShortcutsAndWidgetsContainer: com.android.launcher3.views.DoubleShadowBubbleTextView{79d9aa VFED..C.. ......ID 0,0-0,0 #7}
+02-19 19:20:11.645 19316 19580 W HWUI    : Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+02-19 19:20:11.647 19316 19580 W HWUI    : Failed to initialize 101010-2 format, error = EGL_SUCCESS
+02-19 19:20:11.700 19166 19166 D b/387844520: getOutlineOffsetX: measured width = 0, mNormalizedIconSize = 159, last updated width = 0
+02-19 19:20:11.701 19166 19166 D Launcher.Workspace: addInScreenFromBind: hotseat inflation with x = 3 and y = 0
+02-19 19:20:11.701 19166 19166 D CellLayout: Adding view to ShortcutsAndWidgetsContainer: com.android.launcher3.uioverrides.PredictedAppIcon{db498e4 VFED..C.. ......ID 0,0-0,0}
+02-19 19:20:11.716 19284 19291 W .apps.messaging: Suspending all threads took: 91.414ms
+02-19 19:20:11.723 19166 19166 D LauncherBinder: Calling onCompleteSignal
+02-19 19:20:11.741 19166 19166 D ViewOnDrawExecutor: markCompleted: executing tasks
+02-19 19:20:11.757 19301 19470 I NetworkScheduler: Using standalone scheduling engine [CONTEXT service_id=218 ]
+02-19 19:20:11.885  1971  2198 I AiAiEcho: AppPredictionInputConnectorImpl#createPredictionSession
+02-19 19:20:11.925 19316 19316 V SoLoader: Init System Loader delegate
+02-19 19:20:11.925 19301 19444 I Dtdi    : [AdvertisingSettings] DTDI Persistent service started! [CONTEXT service_id=312 ]
+02-19 19:20:11.925 19301 19444 I Dtdi    : [LifecycleService] Finished delegate init [CONTEXT service_id=312 ]
+02-19 19:20:11.971   752   794 I ServiceWatcher: [RealLocationTimeZoneProviderProxy] connected to {com.google.android.gms/com.google.android.gms.geotimezone.GeoTimeZoneService}
+02-19 19:20:12.024 19284 19284 D WM-PackageManagerHelper: Skipping component enablement for androidx.work.impl.background.systemjob.SystemJobService
+02-19 19:20:12.025 19284 19284 D WM-Schedulers: Created SystemJobScheduler and enabled SystemJobService
+02-19 19:20:12.033 19336 19336 I dmna    : Initializing GMS Compliance Client Library...
+02-19 19:20:12.046 19284 19622 D WM-ForceStopRunnable: Is default app process = true
+02-19 19:20:12.082   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 19:20:12.098   752  2505 V GrammaticalInflectionUtils: AttributionSource: android.content.AttributionSource@21920a16 does not have READ_SYSTEM_GRAMMATICAL_GENDER permission.
+02-19 19:20:12.151   458   458 D Zygote  : Forked child process 19646
+02-19 19:20:12.160   752  1454 V GrammaticalInflectionUtils: AttributionSource: android.content.AttributionSource@e26ebb1b does not have READ_SYSTEM_GRAMMATICAL_GENDER permission.
+02-19 19:20:12.165   752   806 W ActivityManager: Slow operation: 66ms so far, now at startProcess: returned from zygote!
+02-19 19:20:12.173   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 19:20:12.363 19284 19622 D WM-ForceStopRunnable: Performing cleanup operations.
+02-19 19:20:12.379   752   752 W Looper  : Slow delivery took 230ms main app=system_server main=true group=FOREGROUND h=android.app.ActivityThread$H c=android.app.LoadedApk$ServiceDispatcher$RunConnection@9263fe9 m=0
+02-19 19:20:12.379 19284 19284 D WM-SystemJobService: onStartJob for WorkGenerationalId(workSpecId=814a517b-3347-4809-9a03-74f73edc4932, generation=0)
+02-19 19:20:12.380 19336 19336 I dmna    : Checking for device compliance...
+02-19 19:20:12.381 19336 19336 I dmna    : Feature is disabled!
+02-19 19:20:12.384   752   806 W ActivityManager: Slow operation: 286ms so far, now at startProcess: done updating battery stats
+02-19 19:20:12.385   752   806 W ActivityManager: Slow operation: 286ms so far, now at startProcess: building log message
+02-19 19:20:12.385   752   806 I ActivityManager: Start proc 19646:com.google.android.apps.wallpaper/u0a186 for content provider {com.google.android.apps.wallpaper/com.google.android.apps.wallpaper.provider.RecentWallpapersProvider}
+02-19 19:20:12.385   752   806 W ActivityManager: Slow operation: 287ms so far, now at startProcess: starting to update pids map
+02-19 19:20:12.385   752   806 I ActivityManager: ProcessObserver broadcast disabled
+02-19 19:20:12.386   752   806 W ActivityManager: Slow operation: 287ms so far, now at startProcess: done updating pids map
+02-19 19:20:12.386   752   806 W ActivityManager: Slow operation: 224ms so far, now at startProcess: asking zygote to start proc
+02-19 19:20:12.412 19646 19646 I .apps.wallpaper: Using CollectorTypeCMC GC.
+02-19 19:20:12.414 19646 19646 W .apps.wallpaper: Unexpected CPU variant for x86: x86_64.
+02-19 19:20:12.414 19646 19646 W .apps.wallpaper: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, goldmont-without-sha-xsaves, tremont, kabylake, alderlake, default
+02-19 19:20:12.428   458   458 D Zygote  : Forked child process 19652
+02-19 19:20:12.437 19166 19190 D LoaderTask: Sending first screen broadcast
+02-19 19:20:12.437 19336 19336 I dmna    : Completed library init.
+02-19 19:20:12.445   752   806 W ActivityManager: Slow operation: 283ms so far, now at startProcess: returned from zygote!
+02-19 19:20:12.446   752   806 W ActivityManager: Slow operation: 284ms so far, now at startProcess: done updating battery stats
+02-19 19:20:12.446   752   806 W ActivityManager: Slow operation: 284ms so far, now at startProcess: building log message
+02-19 19:20:12.446   752   806 I ActivityManager: Start proc 19652:com.google.android.googlequicksearchbox:search/u0a149 for content provider {com.google.android.googlequicksearchbox/com.google.android.apps.gsa.staticplugins.publiccontent.GsaPublicContentProvider}
+02-19 19:20:12.446   752   806 W ActivityManager: Slow operation: 285ms so far, now at startProcess: starting to update pids map
+02-19 19:20:12.447   752   806 I ActivityManager: ProcessObserver broadcast disabled
+02-19 19:20:12.447   752   806 W ActivityManager: Slow operation: 285ms so far, now at startProcess: done updating pids map
+02-19 19:20:12.462 19284 19622 E ashmem  : Pinning is deprecated since Android Q. Please use trim or other methods.
+02-19 19:20:12.468 19646 19646 E .apps.wallpaper: Not starting debugger since process cannot load the jdwp agent.
+02-19 19:20:12.505 19652 19652 I earchbox:search: Using CollectorTypeCMC GC.
+02-19 19:20:12.507 19652 19652 W earchbox:search: Unexpected CPU variant for x86: x86_64.
+02-19 19:20:12.507 19652 19652 W earchbox:search: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, goldmont-without-sha-xsaves, tremont, kabylake, alderlake, default
+02-19 19:20:12.513 19652 19652 E earchbox:search: Not starting debugger since process cannot load the jdwp agent.
+02-19 19:20:12.516 19652 19652 D nativeloader: Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+02-19 19:20:12.520 19316 19656 W unknown:InspectorPackagerConnection: Couldn't connect to packager, will silently retry
+02-19 19:20:12.592 19301 19307 W .gms.persistent: Suspending all threads took: 21.800ms
+02-19 19:20:12.602   752  2368 W ActivityManager: Slow operation: 115ms so far, now at finishAttachApplicationInner: after mServices.attachApplicationLocked
+02-19 19:20:12.602   752  2368 W ActivityManager: Slow operation: 115ms so far, now at finishAttachApplicationInner: after dispatching broadcasts
+02-19 19:20:12.607 19646 19646 D nativeloader: Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+02-19 19:20:12.612   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 19:20:12.658 19166 19172 W System  : A resource failed to call release. 
+02-19 19:20:12.658 19166 19172 W System  : A resource failed to call release. 
+02-19 19:20:12.659 19166 19172 W System  : A resource failed to call release. 
+02-19 19:20:12.688 19316 19655 W unknown:ReconnectingWebSocket: Couldn't connect to "ws://10.0.2.2:8081/message?device=sdk_gphone64_x86_64%20-%2016%20-%20API%2036&app=viva.republica.toss.test&clientid=BridgeDevSupportManager", will silently retry
+02-19 19:20:12.690 19166 19166 I Choreographer: Skipped 32 frames!  The application may be doing too much work on its main thread.
+02-19 19:20:12.715 19301 19358 I fzke    : (REDACTED) Shared storage file not found for %s
+02-19 19:20:12.722 19166 19190 D LoaderTask: step 1 loading workspace complete
+02-19 19:20:12.723 19646 19646 D ApplicationLoaders: Returning zygote-cached class loader: /system_ext/framework/androidx.window.extensions.jar
+02-19 19:20:12.723 19646 19646 D ApplicationLoaders: Returning zygote-cached class loader: /system_ext/framework/androidx.window.sidecar.jar
+02-19 19:20:12.723 19646 19646 D ApplicationLoaders: Returning zygote-cached class loader: /system/framework/org.apache.http.legacy.jar
+02-19 19:20:12.729 19336 19336 I GsaVoiceInteractionSrv: onCreate
+02-19 19:20:12.730 19652 19652 D ApplicationLoaders: Returning zygote-cached class loader: /system/framework/org.apache.http.legacy.jar
+02-19 19:20:12.733 19652 19652 D nativeloader: Configuring clns-9 for other apk /system_ext/framework/com.android.extensions.appfunctions.jar. target_sdk_version=35, uses_libraries=ALL, library_path=/product/priv-app/Velvet/lib/x86_64:/product/priv-app/Velvet/Velvet.apk!/lib/x86_64, permitted_path=/data:/mnt/expand:/data/user/0/com.google.android.googlequicksearchbox
+02-19 19:20:12.734 19652 19652 D ApplicationLoaders: Returning zygote-cached class loader: /system_ext/framework/androidx.window.extensions.jar
+02-19 19:20:12.735 19652 19652 D ApplicationLoaders: Returning zygote-cached class loader: /system_ext/framework/androidx.window.sidecar.jar
+02-19 19:20:12.742 19652 19652 D nativeloader: InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libavf.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+02-19 19:20:12.742 19652 19652 D nativeloader: Configuring product-clns-10 for unbundled product apk /product/priv-app/Velvet/Velvet.apk. target_sdk_version=35, uses_libraries=, library_path=/product/priv-app/Velvet/lib/x86_64:/product/priv-app/Velvet/Velvet.apk!/lib/x86_64:/product/lib64:/system/product/lib64, permitted_path=/data:/mnt/expand:/data/user/0/com.google.android.googlequicksearchbox:/product/lib64:/system/product/lib64
+02-19 19:20:12.743 19652 19652 D nativeloader: InitVndkspLibrariesProduct: VNDK is deprecated with product
+02-19 19:20:12.744 19652 19652 D CompatChangeReporter: Compat change id reported: 202956589; UID 10149; state: ENABLED
+02-19 19:20:12.752 19652 19652 I earchbox:search: AssetManager2(0x7d8fac428e58) locale list changing from [] to [en-US]
+02-19 19:20:12.757 19652 19652 V GraphicsEnvironment: Currently set values for:
+02-19 19:20:12.757 19652 19652 V GraphicsEnvironment:   angle_gl_driver_selection_pkgs=[]
+02-19 19:20:12.757 19652 19652 V GraphicsEnvironment:   angle_gl_driver_selection_values=[]
+02-19 19:20:12.757 19652 19652 V GraphicsEnvironment: com.google.android.googlequicksearchbox is not listed in per-application setting
+02-19 19:20:12.757 19652 19652 V GraphicsEnvironment: ANGLE allowlist from config: com.dreamgames.royalmatch com.dts.freefiremax com.dxx.firenow com.gramgames.mergedragons com.ludo.king com.mojang.minecraftpe com.my.defense com.nintendo.zaka com.os.airforce com.playrix.fishdomdd.gplay io.teslatech.callbreak jp.konami.prospia net.peakgames.toonblast
+02-19 19:20:12.758 19652 19652 V GraphicsEnvironment: com.google.android.googlequicksearchbox is not listed in ANGLE allowlist or settings, returning default
+02-19 19:20:12.758 19652 19652 V GraphicsEnvironment: Neither updatable production driver nor prerelease driver is supported.
+02-19 19:20:12.768 19652 19652 I MultiDex: VM with version 2.1.0 has multidex support
+02-19 19:20:12.768 19652 19652 I MultiDex: Installing application
+02-19 19:20:12.768 19652 19652 I MultiDex: VM has multidex support, MultiDex support library is disabled.
+02-19 19:20:12.771  1971  2198 I AiAiEcho: AppPredictionInputConnectorImpl#createPredictionSession
+02-19 19:20:12.946   752  1454 D ConnectivityService: requestNetwork for uid/pid:10148/19301 activeRequest: null callbackRequest: 673 [NetworkRequest [ REQUEST id=674, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10148 RequestorUid: 10148 RequestorPkg: com.google.android.gms UnderlyingNetworks: Null] ]] callback flags: 0 order: 2147483647 isUidTracked: false declaredMethods: AVAIL|LOST|NC
+02-19 19:20:12.951   752  1023 D OemPaidWifiNetworkFactory: got request NetworkRequest [ REQUEST id=674, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10148 RequestorUid: 10148 RequestorPkg: com.google.android.gms UnderlyingNetworks: Null] ]
+02-19 19:20:12.951   752  1023 D MultiInternetWifiNetworkFactory: got request NetworkRequest [ REQUEST id=674, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10148 RequestorUid: 10148 RequestorPkg: com.google.android.gms UnderlyingNetworks: Null] ]
+02-19 19:20:12.951   752  1023 D WifiNetworkFactory: got request NetworkRequest [ REQUEST id=674, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10148 RequestorUid: 10148 RequestorPkg: com.google.android.gms UnderlyingNetworks: Null] ]
+02-19 19:20:12.952   752  1023 D UntrustedWifiNetworkFactory: got request NetworkRequest [ REQUEST id=674, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10148 RequestorUid: 10148 RequestorPkg: com.google.android.gms UnderlyingNetworks: Null] ]
+02-19 19:20:12.952   752  1029 D ConnectivityService: NetReassign [674 : null → 108] [c 1] [a 1] [i 2]
