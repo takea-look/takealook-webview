@@ -1,0 +1,401 @@
+--------- beginning of system
+02-19 13:04:59.374  4449  4467 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x0 checks=[{atype=dream independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined},{atype=home independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@6f3eb41, appThread = android.app.IApplicationThread$Stub$Proxy@ccf28e6, debugName = LauncherToDream }}
+02-19 13:04:59.374  4449  4467 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=TOP topActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity} launchCookie=null windowingMode=undefined},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined},{NOT atype=undefined independent=true modes=[] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null customAnim=true windowingMode=undefined}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@a8eae27, appThread = android.app.IApplicationThread$Stub$Proxy@fa38d4, debugName = QuickstepLaunchHome }}
+02-19 13:04:59.374  4449  4467 V WindowManagerShell:  Delegate animation for (#365) to null
+02-19 13:04:59.374  4449  4467 V WindowManagerShell: start default transition animation, info = {id=365 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{m=TO_FRONT f=MOVE_TO_TOP leash=Surface(name=Task=56)/@0x308d4e4 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1},{m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0x7f84d4d sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1},{m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{35e0c0f showWhenLocked=false})/@0x2d49002 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0}]}
+02-19 13:04:59.375  4449  4467 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@f05b50 animAttr=0x13 type=OPEN isEntrance=false
+02-19 13:04:59.375  4449  4467 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@2097149 animAttr=0x12 type=OPEN isEntrance=true
+02-19 13:04:59.377  4449  4467 V WindowManagerShell:  animated by com.android.wm.shell.transition.DefaultTransitionHandler@f74d823
+--------- beginning of main
+02-19 13:04:59.545 32388 32540 W okhttp.OkHttpClient: A connection to http://localhost:8081/ was leaked. Did you forget to close a response body? To see where this was allocated, set the OkHttpClient logger level to FINE: Logger.getLogger(OkHttpClient.class.getName()).setLevel(Level.FINE);
+02-19 13:04:59.655 32388   305 W unknown:ReconnectingWebSocket: Couldn't connect to "ws://10.0.2.2:8081/message?device=sdk_gphone64_x86_64%20-%2016%20-%20API%2036&app=viva.republica.toss.test&clientid=BridgeDevSupportManager", will silently retry
+02-19 13:04:59.671 32388   304 W unknown:InspectorPackagerConnection: Couldn't connect to packager, will silently retry
+02-19 13:04:59.699  4449  4467 V WindowManagerShell: Transition animation finished (aborted=false), notifying core (#365) android.os.BinderProxy@597ee52@0
+02-19 13:04:59.701   752   794 V WindowManager: Finish Transition (#365): created at 02-19 13:04:59.031 collect-started=0.391ms request-sent=27.935ms started=32.965ms ready=178.478ms sent=329.943ms commit=33.926ms finished=669.142ms
+02-19 13:04:59.704  4449  4467 V WindowManagerShell: Track 0 became idle
+02-19 13:04:59.704  4449  4467 V WindowManagerShell: All active transition animations finished
+02-19 13:04:59.709  1341  1341 D VRI[NexusLauncherActivity]: visibilityChanged oldVisibility=true newVisibility=false
+02-19 13:04:59.734  1341  1341 D NexusLauncherModelDelegate: notifySmartspaceEvent: SmartspaceTargetEvent{mSmartspaceTarget=null, mSmartspaceActionId='null', mEventType=7}
+02-19 13:04:59.746 32388 32388 W unknown:ReactRootView: Unable to update root layout specs for uninitialized ReactInstanceManager
+02-19 13:04:59.791   752  1456 D CoreBackPreview: Window{5c3c6da u0 viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@9d68c83, mPriority=0, mIsAnimationCallback=false, mOverrideBehavior=0}
+02-19 13:04:59.859   752   794 I ActivityTaskManager: Displayed viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity for user 0: +828ms
+02-19 13:04:59.910   752   989 I ImeTracker: viva.republica.toss.test:261e7bcc: onRequestHide at ORIGIN_SERVER reason HIDE_UNSPECIFIED_WINDOW fromUser false
+02-19 13:04:59.914  1563  1563 I GoogleInputMethodService: GoogleInputMethodService.onFinishInput():2043 
+02-19 13:04:59.917  1563  1563 I Module  : DeviceLockedStatusModuleProvider$Module.updateDeviceLockedStatus():100 repeatCheckTimes = 0, locked = false
+02-19 13:04:59.918  1563  1563 I GoogleInputMethodService: GoogleInputMethodService.onStartInput():1293 onStartInput(EditorInfo{EditorInfo{packageName=viva.republica.toss.test, inputType=0, inputTypeString=NULL, enableLearning=false, autoCorrection=false, autoComplete=false, imeOptions=0, privateImeOptions=null, actionName=UNSPECIFIED, actionLabel=null, initialSelStart=-1, initialSelEnd=-1, initialCapsMode=0, label=null, fieldId=0, fieldName=null, extras=null, hintText=null, hintLocales=[]}}, false)
+02-19 13:04:59.939   752  1456 I ImeTracker: system_server:5668d3e2: onRequestHide at ORIGIN_SERVER reason IME_REQUESTED_CHANGED_LISTENER fromUser false
+02-19 13:04:59.942   752   797 I ImeTracker: system_server:5668d3e2: onCancelled at PHASE_SERVER_SHOULD_HIDE
+02-19 13:04:59.950  1341  1341 D BaseDepthController: setSurface:
+02-19 13:04:59.950  1341  1341 D BaseDepthController: 	mWaitingOnSurfaceValidity: false
+02-19 13:04:59.950  1341  1341 D BaseDepthController: 	mBaseSurface: null
+02-19 13:04:59.954  1341  1341 D BaseDepthController: mSurface is null and mCurrentBlur is: 0
+02-19 13:04:59.958 32388 32388 E unknown:ReactRootView: Unhandled SoftException
+02-19 13:04:59.958 32388 32388 E unknown:ReactRootView: com.facebook.react.uimanager.IllegalViewOperationException: Trying to attach a ReactRootView with an explicit id already set to [2131362676]. React Native uses the id field to track react tags and will overwrite this field. If that is fine, explicitly overwrite the id field to View.NO_ID.
+02-19 13:04:59.958 32388 32388 E unknown:ReactRootView: 	at com.facebook.react.ReactRootView.attachToReactInstanceManager(:799)
+02-19 13:04:59.958 32388 32388 E unknown:ReactRootView: 	at com.facebook.react.ReactRootView.startReactApplication(:509)
+02-19 13:04:59.958 32388 32388 E unknown:ReactRootView: 	at com.facebook.react.ReactRootView.startReactApplication(:469)
+02-19 13:04:59.958 32388 32388 E unknown:ReactRootView: 	at im.toss.rn.granite.core.GraniteActivity.write(:486)
+02-19 13:04:59.958 32388 32388 E unknown:ReactRootView: 	at im.toss.rn.granite.core.GraniteActivity.RemoteActionCompatParcelizer(:124)
+02-19 13:04:59.958 32388 32388 E unknown:ReactRootView: 	at im.toss.rn.granite.core.GraniteActivity$RemoteActionCompatParcelizer.IconCompatParcelizer(:65353)
+02-19 13:04:59.958 32388 32388 E unknown:ReactRootView: 	at o.sh.a_(:33)
+02-19 13:04:59.958 32388 32388 E unknown:ReactRootView: 	at o.xP.run(:100)
+02-19 13:04:59.958 32388 32388 E unknown:ReactRootView: 	at android.os.Handler.handleCallback(Handler.java:995)
+02-19 13:04:59.958 32388 32388 E unknown:ReactRootView: 	at android.os.Handler.dispatchMessage(Handler.java:103)
+02-19 13:04:59.958 32388 32388 E unknown:ReactRootView: 	at android.os.Looper.loopOnce(Looper.java:248)
+02-19 13:04:59.958 32388 32388 E unknown:ReactRootView: 	at android.os.Looper.loop(Looper.java:338)
+02-19 13:04:59.958 32388 32388 E unknown:ReactRootView: 	at android.app.ActivityThread.main(ActivityThread.java:9067)
+02-19 13:04:59.958 32388 32388 E unknown:ReactRootView: 	at java.lang.reflect.Method.invoke(Native Method)
+02-19 13:04:59.958 32388 32388 E unknown:ReactRootView: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593)
+02-19 13:04:59.958 32388 32388 E unknown:ReactRootView: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:932)
+02-19 13:04:59.966 32388 32388 D InsetsController: hide(ime(), fromIme=false)
+02-19 13:04:59.966 32388 32388 I ImeTracker: viva.republica.toss.test:261e7bcc: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+02-19 13:05:00.098  1341  1341 D StateManager: goToState - fromState: Normal, toState: Normal, partial trace:
+02-19 13:05:00.098  1341  1341 D StateManager: 	at com.android.launcher3.statemanager.StateManager.moveToRestState(go/retraceme 72a59688580715d19f0e415c69e80376c2f062d1648c80db6730905005a27c20:4)
+02-19 13:05:00.098  1341  1341 D StateManager: 	at com.android.launcher3.statemanager.StateManager.moveToRestState(go/retraceme 72a59688580715d19f0e415c69e80376c2f062d1648c80db6730905005a27c20:1)
+02-19 13:05:00.098  1341  1341 D StateManager: 	at com.android.launcher3.statemanager.StatefulActivity.onStop(go/retraceme 72a59688580715d19f0e415c69e80376c2f062d1648c80db6730905005a27c20:34)
+02-19 13:05:00.099  1341  1341 D StatsLog: LAUNCHER_ONSTOP
+02-19 13:05:00.101  1341  1341 D StatsLog: LAUNCHER_GOOGLE_SEARCH_RESTORE_LIST_SIZE_AFTER_ACTIVITY_RESTART
+02-19 13:05:00.105  1563  1563 I Module  : DeviceLockedStatusModuleProvider$Module.updateDeviceLockedStatus():100 repeatCheckTimes = 1, locked = false
+02-19 13:05:00.106  1563  1563 I EmojiCompatManager: EmojiCompatManager.getEmojiCompatIfLoaded():343 EmojiCompat.init() was never called.
+02-19 13:05:00.106  1563  1563 I EmojiCompatManager: java.lang.IllegalStateException: EmojiCompat is not initialized. Please call EmojiCompat.init() first
+02-19 13:05:00.106  1563  1563 I EmojiCompatManager: 	at asx.p(PG:6)
+02-19 13:05:00.106  1563  1563 I EmojiCompatManager: 	at axb.b(PG:13)
+02-19 13:05:00.106  1563  1563 I EmojiCompatManager: 	at jnr.b(PG:2)
+02-19 13:05:00.106  1563  1563 I EmojiCompatManager: 	at jnr.c(PG:4)
+02-19 13:05:00.106  1563  1563 I EmojiCompatManager: 	at jnr.f(PG:3)
+02-19 13:05:00.106  1563  1563 I EmojiCompatManager: 	at jnx.c(PG:3)
+02-19 13:05:00.106  1563  1563 I EmojiCompatManager: 	at kif.cz(PG:47)
+02-19 13:05:00.106  1563  1563 I EmojiCompatManager: 	at lhl.run(PG:1025)
+02-19 13:05:00.106  1563  1563 I EmojiCompatManager: 	at jaf.execute(PG:12)
+02-19 13:05:00.106  1563  1563 I EmojiCompatManager: 	at nco.v(PG:13)
+02-19 13:05:00.106  1563  1563 I EmojiCompatManager: 	at lhn.m(PG:96)
+02-19 13:05:00.106  1563  1563 I EmojiCompatManager: 	at lhn.k(PG:25)
+02-19 13:05:00.106  1563  1563 I EmojiCompatManager: 	at kgn.onStartInput(PG:250)
+02-19 13:05:00.106  1563  1563 I EmojiCompatManager: 	at android.inputmethodservice.InputMethodService.doStartInput(InputMethodService.java:3521)
+02-19 13:05:00.106  1563  1563 I EmojiCompatManager: 	at android.inputmethodservice.InputMethodService$InputMethodImpl.startInput(InputMethodService.java:879)
+02-19 13:05:00.106  1563  1563 I EmojiCompatManager: 	at android.inputmethodservice.InputMethodService$InputMethodImpl.dispatchStartInput(InputMethodService.java:908)
+02-19 13:05:00.106  1563  1563 I EmojiCompatManager: 	at android.inputmethodservice.IInputMethodWrapper.executeMessage(IInputMethodWrapper.java:201)
+02-19 13:05:00.106  1563  1563 I EmojiCompatManager: 	at com.android.internal.os.HandlerCaller$MyHandler.handleMessage(HandlerCaller.java:44)
+02-19 13:05:00.106  1563  1563 I EmojiCompatManager: 	at android.os.Handler.dispatchMessage(Handler.java:110)
+02-19 13:05:00.106  1563  1563 I EmojiCompatManager: 	at android.os.Looper.loopOnce(Looper.java:248)
+02-19 13:05:00.106  1563  1563 I EmojiCompatManager: 	at android.os.Looper.loop(Looper.java:338)
+02-19 13:05:00.106  1563  1563 I EmojiCompatManager: 	at android.app.ActivityThread.main(ActivityThread.java:9067)
+02-19 13:05:00.106  1563  1563 I EmojiCompatManager: 	at java.lang.reflect.Method.invoke(Native Method)
+02-19 13:05:00.106  1563  1563 I EmojiCompatManager: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593)
+02-19 13:05:00.106  1563  1563 I EmojiCompatManager: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:932)
+02-19 13:05:00.107   752  2502 W PackageConfigPersister: App-specific configuration not found for packageName: viva.republica.toss.test and userId: 0
+02-19 13:05:00.154   752  1095 D BackgroundInstallControlService: Package event received: 0
+02-19 13:05:00.161   752  2500 D CoreBackPreview: Window{6697d18 u0 PopupWindow:c29667c}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@390d556, mPriority=0, mIsAnimationCallback=false, mOverrideBehavior=0}
+02-19 13:05:00.252  4449  4474 W WindowOnBackDispatcher: sendCancelIfRunning: isInProgress=false callback=android.view.ViewRootImpl$$ExternalSyntheticLambda13@9e3a095
+02-19 13:05:00.270   752  1509 D CoreBackPreview: Window{1b2b0d0 u0 Splash Screen viva.republica.toss.test EXITING}: Setting back callback null
+02-19 13:05:00.438   283   283 I tombstoned: received crash request for pid 752
+02-19 13:05:00.438   283   283 I tombstoned: found intercept fd 512 for pid 752 and type kDebuggerdJavaBacktrace
+02-19 13:05:00.440   752   771 I system_server: Wrote stack traces to tombstoned
+02-19 13:05:00.441   283   283 W tombstoned: skipping tombstone file creation due to intercept
+02-19 13:05:00.448   752 32754 I system_server: libdebuggerd_client: done dumping process 752
+02-19 13:05:00.470   752 32754 I ActivityManager: Collecting stacks for pid 1858
+02-19 13:05:00.472   752 32754 E system_server: Could not open /dev/binderfs/binder_logs/transactions. Likely a permissions issue. errno: 2
+02-19 13:05:00.473   752 32754 E android.os.Debug: Failed to get binder state info for pid: 1858 status: -2: No such file or directory
+02-19 13:05:00.474   752 32754 I system_server: libdebuggerd_client: started dumping process 1858
+02-19 13:05:00.475   283   283 I tombstoned: registered intercept for pid 1858 and type kDebuggerdJavaBacktrace
+02-19 13:05:00.476  1858  1868 I or.multidisplay: Thread[2,tid=1868,WaitingInMainSignalCatcherLoop,Thread*=0x7d8f4c4454b0,peer=0x2001d58,"Signal Catcher"]: reacting to signal 3
+02-19 13:05:00.477  1858  1868 I or.multidisplay: 
+02-19 13:05:00.468   752   752 W AnrConsumer: type=1400 audit(0.0:210): avc:  denied  { read } for  name="transactions" dev="binder" ino=1048587 scontext=u:r:system_server:s0 tcontext=u:object_r:binderfs_logs_transactions:s0 tclass=file permissive=0
+02-19 13:05:00.716   283   283 I tombstoned: received crash request for pid 1858
+02-19 13:05:00.716   283   283 I tombstoned: found intercept fd 512 for pid 1858 and type kDebuggerdJavaBacktrace
+02-19 13:05:00.717  1858  1868 I or.multidisplay: Wrote stack traces to tombstoned
+02-19 13:05:00.717   283   283 W tombstoned: skipping tombstone file creation due to intercept
+02-19 13:05:00.717   752 32754 I system_server: libdebuggerd_client: done dumping process 1858
+02-19 13:05:00.722   752 32754 I ActivityManager: Collecting stacks for pid 1336
+02-19 13:05:00.723   752 32754 E system_server: Could not open /dev/binderfs/binder_logs/transactions. Likely a permissions issue. errno: 2
+02-19 13:05:00.723   752 32754 E android.os.Debug: Failed to get binder state info for pid: 1336 status: -2: No such file or directory
+02-19 13:05:00.727   752 32754 I system_server: libdebuggerd_client: started dumping process 1336
+02-19 13:05:00.727   283   283 I tombstoned: registered intercept for pid 1336 and type kDebuggerdJavaBacktrace
+02-19 13:05:00.728  1336  1338 I m.android.phone: Thread[2,tid=1338,WaitingInMainSignalCatcherLoop,Thread*=0x7d8f4c42cf50,peer=0x2000cd8,"Signal Catcher"]: reacting to signal 3
+02-19 13:05:00.728  1336  1338 I m.android.phone: 
+02-19 13:05:00.720   752   752 W AnrConsumer: type=1400 audit(0.0:211): avc:  denied  { read } for  name="transactions" dev="binder" ino=1048587 scontext=u:r:system_server:s0 tcontext=u:object_r:binderfs_logs_transactions:s0 tclass=file permissive=0
+02-19 13:05:01.003   283   283 I tombstoned: received crash request for pid 1336
+02-19 13:05:01.004   283   283 I tombstoned: found intercept fd 512 for pid 1336 and type kDebuggerdJavaBacktrace
+02-19 13:05:01.006  1336  1338 I m.android.phone: Wrote stack traces to tombstoned
+02-19 13:05:01.006   283   283 W tombstoned: skipping tombstone file creation due to intercept
+02-19 13:05:01.008   752 32754 I system_server: libdebuggerd_client: done dumping process 1336
+02-19 13:05:01.016   752 32754 I ActivityManager: Collecting stacks for pid 1322
+02-19 13:05:01.018   752 32754 E system_server: Could not open /dev/binderfs/binder_logs/transactions. Likely a permissions issue. errno: 2
+02-19 13:05:01.018   752 32754 E android.os.Debug: Failed to get binder state info for pid: 1322 status: -2: No such file or directory
+02-19 13:05:01.021   752 32754 I system_server: libdebuggerd_client: started dumping process 1322
+02-19 13:05:01.023   283   283 I tombstoned: registered intercept for pid 1322 and type kDebuggerdJavaBacktrace
+02-19 13:05:01.027  1322  1324 I com.android.se: Thread[2,tid=1324,WaitingInMainSignalCatcherLoop,Thread*=0x7d8f4c42cf50,peer=0x2000d60,"Signal Catcher"]: reacting to signal 3
+02-19 13:05:01.028  1322  1324 I com.android.se: 
+02-19 13:05:01.012   752   752 W AnrConsumer: type=1400 audit(0.0:212): avc:  denied  { read } for  name="transactions" dev="binder" ino=1048587 scontext=u:r:system_server:s0 tcontext=u:object_r:binderfs_logs_transactions:s0 tclass=file permissive=0
+02-19 13:05:01.173 30659 30659 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.appset.service.START dat=chimera-action:/... xflg=0x4 cmp=com.google.android.gms/.chimera.GmsApiService }
+02-19 13:05:01.190   283   283 I tombstoned: received crash request for pid 1322
+02-19 13:05:01.190   283   283 I tombstoned: found intercept fd 512 for pid 1322 and type kDebuggerdJavaBacktrace
+02-19 13:05:01.191  1322  1324 I com.android.se: Wrote stack traces to tombstoned
+02-19 13:05:01.191   283   283 W tombstoned: skipping tombstone file creation due to intercept
+02-19 13:05:01.191   752 32754 I system_server: libdebuggerd_client: done dumping process 1322
+02-19 13:05:01.194 31011 31011 I Finsky  : [2] Memory trim requested to level 40
+02-19 13:05:01.196   752 32754 I ActivityManager: Collecting stacks for pid 1245
+02-19 13:05:01.197   752 32754 E system_server: Could not open /dev/binderfs/binder_logs/transactions. Likely a permissions issue. errno: 2
+02-19 13:05:01.197   752 32754 E android.os.Debug: Failed to get binder state info for pid: 1245 status: -2: No such file or directory
+02-19 13:05:01.200   752 32754 I system_server: libdebuggerd_client: started dumping process 1245
+02-19 13:05:01.202   283   283 I tombstoned: registered intercept for pid 1245 and type kDebuggerdJavaBacktrace
+02-19 13:05:01.203  1245  1251 I rkstack.process: Thread[2,tid=1251,WaitingInMainSignalCatcherLoop,Thread*=0x7d8f4c4306f0,peer=0x2001438,"Signal Catcher"]: reacting to signal 3
+02-19 13:05:01.204  1245  1251 I rkstack.process: 
+02-19 13:05:01.192   752   752 W AnrConsumer: type=1400 audit(0.0:213): avc:  denied  { read } for  name="transactions" dev="binder" ino=1048587 scontext=u:r:system_server:s0 tcontext=u:object_r:binderfs_logs_transactions:s0 tclass=file permissive=0
+02-19 13:05:01.222 31011 31011 I Finsky  : [2] Flushing in-memory image cache
+02-19 13:05:01.527 31011 31011 I Finsky  : [2] Memory trim requested to level 40
+02-19 13:05:01.527 31011 31011 I Finsky  : [2] Flushing in-memory image cache
+02-19 13:05:01.624  1245  1255 W rkstack.process: Suspending all threads took: 127.508ms
+02-19 13:05:01.792   283   283 I tombstoned: received crash request for pid 1245
+02-19 13:05:01.793   283   283 I tombstoned: found intercept fd 512 for pid 1245 and type kDebuggerdJavaBacktrace
+02-19 13:05:01.795  1245  1251 I rkstack.process: Wrote stack traces to tombstoned
+02-19 13:05:01.796   283   283 W tombstoned: skipping tombstone file creation due to intercept
+02-19 13:05:01.796 31011 31056 I Finsky  : [71] Current account updated in PVS
+02-19 13:05:01.799   752 32754 I system_server: libdebuggerd_client: done dumping process 1245
+02-19 13:05:01.799 31011 31056 I Finsky  : [71] Current account updated in PVS
+02-19 13:05:01.807   752 32754 I ActivityManager: Collecting stacks for pid 4449
+02-19 13:05:01.808   752 32754 E system_server: Could not open /dev/binderfs/binder_logs/transactions. Likely a permissions issue. errno: 2
+02-19 13:05:01.808   752 32754 E android.os.Debug: Failed to get binder state info for pid: 4449 status: -2: No such file or directory
+02-19 13:05:01.804   752   752 W AnrConsumer: type=1400 audit(0.0:214): avc:  denied  { read } for  name="transactions" dev="binder" ino=1048587 scontext=u:r:system_server:s0 tcontext=u:object_r:binderfs_logs_transactions:s0 tclass=file permissive=0
+02-19 13:05:01.819   752 32754 I system_server: libdebuggerd_client: started dumping process 4449
+02-19 13:05:01.819   283   283 I tombstoned: registered intercept for pid 4449 and type kDebuggerdJavaBacktrace
+02-19 13:05:01.820  4449  4452 I ndroid.systemui: Thread[2,tid=4452,WaitingInMainSignalCatcherLoop,Thread*=0x7d8f4c4454b0,peer=0x2002180,"Signal Catcher"]: reacting to signal 3
+02-19 13:05:01.820  4449  4452 I ndroid.systemui: 
+02-19 13:05:01.837 32388 32388 W WindowOnBackDispatcher: sendCancelIfRunning: isInProgress=false callback=android.view.ViewRootImpl$$ExternalSyntheticLambda13@de46e68
+02-19 13:05:01.838   752  2502 D CoreBackPreview: Window{6697d18 u0 PopupWindow:c29667c}: Setting back callback null
+02-19 13:05:02.049   283   283 I tombstoned: received crash request for pid 4449
+02-19 13:05:02.049   283   283 I tombstoned: found intercept fd 512 for pid 4449 and type kDebuggerdJavaBacktrace
+02-19 13:05:02.050  4449  4452 I ndroid.systemui: Wrote stack traces to tombstoned
+02-19 13:05:02.050   283   283 W tombstoned: skipping tombstone file creation due to intercept
+02-19 13:05:02.051   752 32754 I system_server: libdebuggerd_client: done dumping process 4449
+02-19 13:05:02.055   752 32754 I ActivityManager: dumpStackTraces nativepids=[219, 238, 249, 455, 457, 527, 531, 605, 615, 624, 627, 628, 633, 32719]
+02-19 13:05:02.055   752 32754 I ActivityManager: Collecting stacks for native pid 219
+02-19 13:05:02.055   752 32754 E system_server: Could not open /dev/binderfs/binder_logs/transactions. Likely a permissions issue. errno: 2
+02-19 13:05:02.055   752 32754 E android.os.Debug: Failed to get binder state info for pid: 219 status: -2: No such file or directory
+02-19 13:05:02.055   752 32754 I system_server: libdebuggerd_client: started dumping process 219
+02-19 13:05:02.056   283   283 I tombstoned: registered intercept for pid 219 and type kDebuggerdNativeBacktrace
+02-19 13:05:02.052   752   752 W AnrConsumer: type=1400 audit(0.0:215): avc:  denied  { read } for  name="transactions" dev="binder" ino=1048587 scontext=u:r:system_server:s0 tcontext=u:object_r:binderfs_logs_transactions:s0 tclass=file permissive=0
+02-19 13:05:02.072 32388   310 W unknown:ReactContext: initializeMessageQueueThreads() is called.
+02-19 13:05:02.074 32388 32388 W unknown:ReactNative: Packager connection already open, nooping.
+02-19 13:05:02.345 32388   316 W unknown:ReactContext: initializeMessageQueueThreads() is called.
+02-19 13:05:02.346 32388   316 W unknown:ReactNative: Fresco has already been initialized with a different config. The new Fresco configuration will be ignored!
+02-19 13:05:02.531   219   219 I libc    : Requested dump for pid 219 (servicemanager)
+02-19 13:05:02.710   324   324 I crash_dump64: obtaining output fd from tombstoned, type: kDebuggerdNativeBacktrace
+02-19 13:05:02.710   283   283 I tombstoned: received crash request for pid 219
+02-19 13:05:02.710   283   283 I tombstoned: found intercept fd 512 for pid 219 and type kDebuggerdNativeBacktrace
+02-19 13:05:02.711   324   324 I crash_dump64: performing dump of process 219 (target tid = 219)
+02-19 13:05:02.722   320   320 W dumpsys : Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: window
+02-19 13:05:02.730   752  2502 I system_server: AssetManager2(0x7d8fac4cd8b8) locale list changing from [] to [en-US]
+02-19 13:05:02.737   752  2502 I system_server: AssetManager2(0x7d8fac46fcb8) locale list changing from [] to [en-US]
+02-19 13:05:02.742   752  2502 I system_server: AssetManager2(0x7d8fac4c7198) locale list changing from [] to [en-US]
+02-19 13:05:02.835   752  2502 I system_server: AssetManager2(0x7d8fac4c1d38) locale list changing from [] to [en-US]
+02-19 13:05:02.852   283   283 W tombstoned: skipping tombstone file creation due to intercept
+02-19 13:05:02.852   752 32754 I system_server: libdebuggerd_client: done dumping process 219
+02-19 13:05:02.855   752 32754 I ActivityManager: Collecting stacks for native pid 238
+02-19 13:05:02.856   752 32754 E system_server: Could not open /dev/binderfs/binder_logs/transactions. Likely a permissions issue. errno: 2
+02-19 13:05:02.856   752 32754 E android.os.Debug: Failed to get binder state info for pid: 238 status: -2: No such file or directory
+02-19 13:05:02.857   752 32754 I system_server: libdebuggerd_client: started dumping process 238
+02-19 13:05:02.858   283   283 I tombstoned: registered intercept for pid 238 and type kDebuggerdNativeBacktrace
+02-19 13:05:02.852   752   752 W AnrConsumer: type=1400 audit(0.0:216): avc:  denied  { read } for  name="transactions" dev="binder" ino=1048587 scontext=u:r:system_server:s0 tcontext=u:object_r:binderfs_logs_transactions:s0 tclass=file permissive=0
+02-19 13:05:02.859   238   238 I libc    : Requested dump for pid 238 (binder:238_2)
+02-19 13:05:02.870   752  2502 I system_server: AssetManager2(0x7d8fac4c4c18) locale list changing from [] to [en-US]
+02-19 13:05:02.909   752  2502 I system_server: AssetManager2(0x7d8fac4bd238) locale list changing from [] to [en-US]
+02-19 13:05:02.936   331   331 F crash_dump64: crash_dump.cpp:656] failed to attach to thread 238: Permission denied
+02-19 13:05:02.936   283   283 I tombstoned: received crash request for pid 238
+02-19 13:05:02.937   283   283 I tombstoned: found registered intercept of type kDebuggerdNativeBacktrace for requested type kDebuggerdAnyIntercept
+02-19 13:05:02.937   283   283 I tombstoned: found intercept fd 512 for pid 238 and type kDebuggerdNativeBacktrace
+02-19 13:05:02.938   283   283 W tombstoned: crash socket received short read of length 0 (expected 12)
+02-19 13:05:02.938   752 32754 I system_server: libdebuggerd_client: done dumping process 238
+02-19 13:05:02.943   752 32754 I ActivityManager: Collecting stacks for native pid 249
+02-19 13:05:02.943   752 32754 E system_server: Could not open /dev/binderfs/binder_logs/transactions. Likely a permissions issue. errno: 2
+02-19 13:05:02.943   752 32754 E android.os.Debug: Failed to get binder state info for pid: 249 status: -2: No such file or directory
+02-19 13:05:02.944   752 32754 I system_server: libdebuggerd_client: started dumping process 249
+02-19 13:05:02.944   283   283 I tombstoned: registered intercept for pid 249 and type kDebuggerdNativeBacktrace
+02-19 13:05:02.945   249   249 I libc    : Requested dump for pid 249 (binder:249_2)
+02-19 13:05:02.967   334   334 F crash_dump64: crash_dump.cpp:656] failed to attach to thread 249: Permission denied
+02-19 13:05:02.968   283   283 I tombstoned: received crash request for pid 249
+02-19 13:05:02.968   283   283 I tombstoned: found registered intercept of type kDebuggerdNativeBacktrace for requested type kDebuggerdAnyIntercept
+02-19 13:05:02.968   283   283 I tombstoned: found intercept fd 512 for pid 249 and type kDebuggerdNativeBacktrace
+02-19 13:05:02.932   331   331 W crash_dump64: type=1400 audit(0.0:217): avc:  denied  { ptrace } for  scontext=u:r:crash_dump:s0 tcontext=u:r:vold:s0 tclass=process permissive=0
+02-19 13:05:02.970   752 32754 I system_server: libdebuggerd_client: done dumping process 249
+--------- beginning of crash
+02-19 13:05:02.971   238   238 F libc    : Unwind request: crash_dump helper failed to exec, or was killed
+02-19 13:05:02.972   283   283 W tombstoned: crash socket received short read of length 0 (expected 12)
+02-19 13:05:02.973   249   249 F libc    : Unwind request: crash_dump helper failed to exec, or was killed
+02-19 13:05:02.932   752   752 W AnrConsumer: type=1400 audit(0.0:218): avc:  denied  { read } for  name="transactions" dev="binder" ino=1048587 scontext=u:r:system_server:s0 tcontext=u:object_r:binderfs_logs_transactions:s0 tclass=file permissive=0
+02-19 13:05:02.940   334   334 W crash_dump64: type=1400 audit(0.0:219): avc:  denied  { ptrace } for  scontext=u:r:crash_dump:s0 tcontext=u:r:keystore:s0 tclass=process permissive=0 bug=b/376065666
+02-19 13:05:03.000   752 32754 I ActivityManager: Collecting stacks for native pid 455
+02-19 13:05:03.003   752 32754 E system_server: Could not open /dev/binderfs/binder_logs/transactions. Likely a permissions issue. errno: 2
+02-19 13:05:03.003   752 32754 E android.os.Debug: Failed to get binder state info for pid: 455 status: -2: No such file or directory
+02-19 13:05:03.004   752 32754 I system_server: libdebuggerd_client: started dumping process 455
+02-19 13:05:03.004   283   283 I tombstoned: registered intercept for pid 455 and type kDebuggerdNativeBacktrace
+02-19 13:05:03.005   455   455 I libc    : Requested dump for pid 455 (binder:455_4)
+02-19 13:05:03.021   752  1856 E TaskPersister: File error accessing recents directory (directory doesn't exist?).
+02-19 13:05:03.042   337   337 I crash_dump64: obtaining output fd from tombstoned, type: kDebuggerdNativeBacktrace
+02-19 13:05:03.044   283   283 I tombstoned: received crash request for pid 455
+02-19 13:05:03.044   283   283 I tombstoned: found intercept fd 512 for pid 455 and type kDebuggerdNativeBacktrace
+02-19 13:05:03.044   337   337 I crash_dump64: performing dump of process 455 (target tid = 455)
+02-19 13:05:03.295   283   283 W tombstoned: skipping tombstone file creation due to intercept
+02-19 13:05:03.295   752 32754 I system_server: libdebuggerd_client: done dumping process 455
+02-19 13:05:03.303   752 32754 I ActivityManager: Collecting stacks for native pid 457
+02-19 13:05:03.304   752 32754 E system_server: Could not open /dev/binderfs/binder_logs/transactions. Likely a permissions issue. errno: 2
+02-19 13:05:03.304   752 32754 E android.os.Debug: Failed to get binder state info for pid: 457 status: -2: No such file or directory
+02-19 13:05:03.305   752 32754 I system_server: libdebuggerd_client: started dumping process 457
+02-19 13:05:03.308   283   283 I tombstoned: registered intercept for pid 457 and type kDebuggerdNativeBacktrace
+02-19 13:05:03.314   457   457 I libc    : Requested dump for pid 457 (binder:457_2)
+02-19 13:05:03.300   752   752 W AnrConsumer: type=1400 audit(0.0:221): avc:  denied  { read } for  name="transactions" dev="binder" ino=1048587 scontext=u:r:system_server:s0 tcontext=u:object_r:binderfs_logs_transactions:s0 tclass=file permissive=0
+02-19 13:05:03.369   411   411 I crash_dump64: obtaining output fd from tombstoned, type: kDebuggerdNativeBacktrace
+02-19 13:05:03.370   283   283 I tombstoned: received crash request for pid 457
+02-19 13:05:03.370   283   283 I tombstoned: found intercept fd 512 for pid 457 and type kDebuggerdNativeBacktrace
+02-19 13:05:03.371   411   411 I crash_dump64: performing dump of process 457 (target tid = 457)
+02-19 13:05:03.397 32719 32722 I AidlLazyServiceRegistrar: Process has 0 (of 1 available) client(s) in use after notification artd has clients: 0
+02-19 13:05:03.397 32719 32722 I AidlLazyServiceRegistrar: Trying to shut down the service. No clients in use for any service in process.
+02-19 13:05:03.408 32719 32722 I AidlLazyServiceRegistrar: Unregistered all clients and exiting
+02-19 13:05:03.480   283   283 W tombstoned: skipping tombstone file creation due to intercept
+02-19 13:05:03.485   752 32754 I system_server: libdebuggerd_client: done dumping process 457
+02-19 13:05:03.501   752 32754 I ActivityManager: Collecting stacks for native pid 527
+02-19 13:05:03.501   752 32754 E system_server: Could not open /dev/binderfs/binder_logs/transactions. Likely a permissions issue. errno: 2
+02-19 13:05:03.501   752 32754 E android.os.Debug: Failed to get binder state info for pid: 527 status: -2: No such file or directory
+02-19 13:05:03.503   752 32754 I system_server: libdebuggerd_client: started dumping process 527
+02-19 13:05:03.504   283   283 I tombstoned: registered intercept for pid 527 and type kDebuggerdNativeBacktrace
+02-19 13:05:03.504   527   527 I libc    : Requested dump for pid 527 (audioserver)
+02-19 13:05:03.496   752   752 W AnrConsumer: type=1400 audit(0.0:222): avc:  denied  { read } for  name="transactions" dev="binder" ino=1048587 scontext=u:r:system_server:s0 tcontext=u:object_r:binderfs_logs_transactions:s0 tclass=file permissive=0
+02-19 13:05:03.555   429   429 I crash_dump64: obtaining output fd from tombstoned, type: kDebuggerdNativeBacktrace
+02-19 13:05:03.556   283   283 I tombstoned: received crash request for pid 527
+02-19 13:05:03.556   283   283 I tombstoned: found intercept fd 512 for pid 527 and type kDebuggerdNativeBacktrace
+02-19 13:05:03.556   429   429 I crash_dump64: performing dump of process 527 (target tid = 527)
+02-19 13:05:03.567 32388 32388 W unknown:ReactContext: initializeMessageQueueThreads() is called.
+02-19 13:05:03.612   752 32754 I system_server: libdebuggerd_client: done dumping process 527
+02-19 13:05:03.613   283   283 W tombstoned: skipping tombstone file creation due to intercept
+02-19 13:05:03.618   752 32754 I ActivityManager: Collecting stacks for native pid 531
+02-19 13:05:03.619   752 32754 E system_server: Could not open /dev/binderfs/binder_logs/transactions. Likely a permissions issue. errno: 2
+02-19 13:05:03.619   752 32754 E android.os.Debug: Failed to get binder state info for pid: 531 status: -2: No such file or directory
+02-19 13:05:03.620   752 32754 I system_server: libdebuggerd_client: started dumping process 531
+02-19 13:05:03.620   283   283 I tombstoned: registered intercept for pid 531 and type kDebuggerdNativeBacktrace
+02-19 13:05:03.622   531   531 I libc    : Requested dump for pid 531 (surfaceflinger)
+02-19 13:05:03.616   752   752 W AnrConsumer: type=1400 audit(0.0:223): avc:  denied  { read } for  name="transactions" dev="binder" ino=1048587 scontext=u:r:system_server:s0 tcontext=u:object_r:binderfs_logs_transactions:s0 tclass=file permissive=0
+02-19 13:05:03.712   434   434 I crash_dump64: obtaining output fd from tombstoned, type: kDebuggerdNativeBacktrace
+02-19 13:05:03.726   283   283 I tombstoned: received crash request for pid 531
+02-19 13:05:03.726   283   283 I tombstoned: found intercept fd 512 for pid 531 and type kDebuggerdNativeBacktrace
+02-19 13:05:03.726   434   434 I crash_dump64: performing dump of process 531 (target tid = 531)
+02-19 13:05:03.846   752  2502 W PackageConfigPersister: App-specific configuration not found for packageName: viva.republica.toss.test and userId: 0
+02-19 13:05:04.168   752 32754 I system_server: libdebuggerd_client: done dumping process 531
+02-19 13:05:04.168   283   283 W tombstoned: skipping tombstone file creation due to intercept
+02-19 13:05:04.197   752 32754 I ActivityManager: Collecting stacks for native pid 605
+02-19 13:05:04.197   752 32754 E system_server: Could not open /dev/binderfs/binder_logs/transactions. Likely a permissions issue. errno: 2
+02-19 13:05:04.197   752 32754 E android.os.Debug: Failed to get binder state info for pid: 605 status: -2: No such file or directory
+02-19 13:05:04.198   752 32754 I system_server: libdebuggerd_client: started dumping process 605
+02-19 13:05:04.201   283   283 I tombstoned: registered intercept for pid 605 and type kDebuggerdNativeBacktrace
+02-19 13:05:04.204   605   605 I libc    : Requested dump for pid 605 (drmserver)
+02-19 13:05:04.192   752   752 W AnrConsumer: type=1400 audit(0.0:224): avc:  denied  { read } for  name="transactions" dev="binder" ino=1048587 scontext=u:r:system_server:s0 tcontext=u:object_r:binderfs_logs_transactions:s0 tclass=file permissive=0
+02-19 13:05:04.243   441   441 I crash_dump64: obtaining output fd from tombstoned, type: kDebuggerdNativeBacktrace
+02-19 13:05:04.244   283   283 I tombstoned: received crash request for pid 605
+02-19 13:05:04.244   283   283 I tombstoned: found intercept fd 512 for pid 605 and type kDebuggerdNativeBacktrace
+02-19 13:05:04.244   441   441 I crash_dump64: performing dump of process 605 (target tid = 605)
+02-19 13:05:04.257   283   283 W tombstoned: skipping tombstone file creation due to intercept
+02-19 13:05:04.257   752 32754 I system_server: libdebuggerd_client: done dumping process 605
+02-19 13:05:04.264   752 32754 I ActivityManager: Collecting stacks for native pid 615
+02-19 13:05:04.265   752 32754 E system_server: Could not open /dev/binderfs/binder_logs/transactions. Likely a permissions issue. errno: 2
+02-19 13:05:04.265   752 32754 E android.os.Debug: Failed to get binder state info for pid: 615 status: -2: No such file or directory
+02-19 13:05:04.266   752 32754 I system_server: libdebuggerd_client: started dumping process 615
+02-19 13:05:04.266   283   283 I tombstoned: registered intercept for pid 615 and type kDebuggerdNativeBacktrace
+02-19 13:05:04.260   752   752 W AnrConsumer: type=1400 audit(0.0:225): avc:  denied  { read } for  name="transactions" dev="binder" ino=1048587 scontext=u:r:system_server:s0 tcontext=u:object_r:binderfs_logs_transactions:s0 tclass=file permissive=0
+02-19 13:05:04.274   615   615 I libc    : Requested dump for pid 615 (binder:615_2)
+02-19 13:05:04.307   446   446 I crash_dump64: obtaining output fd from tombstoned, type: kDebuggerdNativeBacktrace
+02-19 13:05:04.308   283   283 I tombstoned: received crash request for pid 615
+02-19 13:05:04.308   283   283 I tombstoned: found intercept fd 512 for pid 615 and type kDebuggerdNativeBacktrace
+02-19 13:05:04.309   446   446 I crash_dump64: performing dump of process 615 (target tid = 615)
+02-19 13:05:04.627   752 32754 I system_server: libdebuggerd_client: done dumping process 615
+02-19 13:05:04.627   283   283 W tombstoned: skipping tombstone file creation due to intercept
+02-19 13:05:04.639   752 32754 I ActivityManager: Collecting stacks for native pid 624
+02-19 13:05:04.639   752 32754 E system_server: Could not open /dev/binderfs/binder_logs/transactions. Likely a permissions issue. errno: 2
+02-19 13:05:04.639   752 32754 E android.os.Debug: Failed to get binder state info for pid: 624 status: -2: No such file or directory
+02-19 13:05:04.640   752 32754 I system_server: libdebuggerd_client: started dumping process 624
+02-19 13:05:04.641   283   283 I tombstoned: registered intercept for pid 624 and type kDebuggerdNativeBacktrace
+02-19 13:05:04.636   752   752 W AnrConsumer: type=1400 audit(0.0:226): avc:  denied  { read } for  name="transactions" dev="binder" ino=1048587 scontext=u:r:system_server:s0 tcontext=u:object_r:binderfs_logs_transactions:s0 tclass=file permissive=0
+02-19 13:05:04.722   449   449 W dumpsys : Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: package
+02-19 13:05:04.817   283   283 I tombstoned: received crash request for pid 624
+02-19 13:05:04.818   283   283 I tombstoned: found intercept fd 512 for pid 624 and type kDebuggerdNativeBacktrace
+02-19 13:05:05.411   283   283 W tombstoned: skipping tombstone file creation due to intercept
+02-19 13:05:05.411   752 32754 I system_server: libdebuggerd_client: done dumping process 624
+02-19 13:05:05.419   752 32754 I ActivityManager: Collecting stacks for native pid 627
+02-19 13:05:05.419   752 32754 E system_server: Could not open /dev/binderfs/binder_logs/transactions. Likely a permissions issue. errno: 2
+02-19 13:05:05.419   752 32754 E android.os.Debug: Failed to get binder state info for pid: 627 status: -2: No such file or directory
+02-19 13:05:05.421   752 32754 I system_server: libdebuggerd_client: started dumping process 627
+02-19 13:05:05.416   752   752 W AnrConsumer: type=1400 audit(0.0:227): avc:  denied  { read } for  name="transactions" dev="binder" ino=1048587 scontext=u:r:system_server:s0 tcontext=u:object_r:binderfs_logs_transactions:s0 tclass=file permissive=0
+02-19 13:05:05.440   283   283 I tombstoned: registered intercept for pid 627 and type kDebuggerdNativeBacktrace
+02-19 13:05:05.442   627   627 I libc    : Requested dump for pid 627 (mediametrics)
+02-19 13:05:05.517   459   459 I crash_dump64: obtaining output fd from tombstoned, type: kDebuggerdNativeBacktrace
+02-19 13:05:05.520   283   283 I tombstoned: received crash request for pid 627
+02-19 13:05:05.520   283   283 I tombstoned: found intercept fd 512 for pid 627 and type kDebuggerdNativeBacktrace
+02-19 13:05:05.521   459   459 I crash_dump64: performing dump of process 627 (target tid = 627)
+02-19 13:05:05.569   283   283 W tombstoned: skipping tombstone file creation due to intercept
+02-19 13:05:05.570   752 32754 I system_server: libdebuggerd_client: done dumping process 627
+02-19 13:05:05.586   453   453 I artd    : Starting artd
+02-19 13:05:05.587   453   453 I AidlLazyServiceRegistrar: Registering service artd
+02-19 13:05:05.589   752 32754 I ActivityManager: Collecting stacks for native pid 628
+02-19 13:05:05.596   752 32754 E system_server: Could not open /dev/binderfs/binder_logs/transactions. Likely a permissions issue. errno: 2
+02-19 13:05:05.596   752 32754 E android.os.Debug: Failed to get binder state info for pid: 628 status: -2: No such file or directory
+02-19 13:05:05.598   752 32754 I system_server: libdebuggerd_client: started dumping process 628
+02-19 13:05:05.599   453   453 I AidlLazyServiceRegistrar: Process has 1 (of 1 available) client(s) in use after notification artd has clients: 1
+02-19 13:05:05.603   283   283 I tombstoned: registered intercept for pid 628 and type kDebuggerdNativeBacktrace
+02-19 13:05:05.604   628   628 I libc    : Requested dump for pid 628 (mediaserver)
+02-19 13:05:05.584   752   752 W AnrConsumer: type=1400 audit(0.0:228): avc:  denied  { read } for  name="transactions" dev="binder" ino=1048587 scontext=u:r:system_server:s0 tcontext=u:object_r:binderfs_logs_transactions:s0 tclass=file permissive=0
+02-19 13:05:05.655   547   547 I crash_dump64: obtaining output fd from tombstoned, type: kDebuggerdNativeBacktrace
+02-19 13:05:05.656   283   283 I tombstoned: received crash request for pid 628
+02-19 13:05:05.656   283   283 I tombstoned: found intercept fd 512 for pid 628 and type kDebuggerdNativeBacktrace
+02-19 13:05:05.656   547   547 I crash_dump64: performing dump of process 628 (target tid = 628)
+02-19 13:05:05.668  1336  1556 D SatelliteController: iisInCarrierRoamingNbIotNtn: satellite is disabled
+02-19 13:05:05.789   283   283 W tombstoned: skipping tombstone file creation due to intercept
+02-19 13:05:05.790   752 32754 I system_server: libdebuggerd_client: done dumping process 628
+02-19 13:05:05.796   752 32754 I ActivityManager: Collecting stacks for native pid 633
+02-19 13:05:05.796   752 32754 E system_server: Could not open /dev/binderfs/binder_logs/transactions. Likely a permissions issue. errno: 2
+02-19 13:05:05.796   752 32754 E android.os.Debug: Failed to get binder state info for pid: 633 status: -2: No such file or directory
+02-19 13:05:05.798   752 32754 I system_server: libdebuggerd_client: started dumping process 633
+02-19 13:05:05.792   752   752 W AnrConsumer: type=1400 audit(0.0:229): avc:  denied  { read } for  name="transactions" dev="binder" ino=1048587 scontext=u:r:system_server:s0 tcontext=u:object_r:binderfs_logs_transactions:s0 tclass=file permissive=0
+02-19 13:05:05.806   283   283 I tombstoned: registered intercept for pid 633 and type kDebuggerdNativeBacktrace
+02-19 13:05:05.824   283   283 I tombstoned: received crash request for pid 633
+02-19 13:05:05.824   283   283 I tombstoned: found intercept fd 512 for pid 633 and type kDebuggerdNativeBacktrace
+02-19 13:05:06.309   373   373 W screencap: Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: SurfaceFlingerAIDL
+02-19 13:05:06.310   373   373 W BpBinder: Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
+02-19 13:05:06.310   373   373 W ProcessState: Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
+02-19 13:05:06.319   531   590 E HwcComposer: getLuts failed Status(-8, EX_SERVICE_SPECIFIC): '8: '
+02-19 13:05:06.319   531   590 E HWComposer: getLuts: getLuts failed for display 4619827259835644672: UNSUPPORTED (8)
+02-19 13:05:06.367   453   534 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~O-UZzK0jUU9NLgS3MODOZA==/com.google.android.gms-YQ2L6GsYyKuvu9MvIBK1EQ==/oat/x86_64/base.odex) is kOatUpToDate with filter 'speed-profile' executable 'false'
+02-19 13:05:06.454   453   534 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~O-UZzK0jUU9NLgS3MODOZA==/com.google.android.gms-YQ2L6GsYyKuvu9MvIBK1EQ==/oat/x86_64/split_AdsDynamite_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+02-19 13:05:06.473   453   534 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~O-UZzK0jUU9NLgS3MODOZA==/com.google.android.gms-YQ2L6GsYyKuvu9MvIBK1EQ==/oat/x86_64/split_CronetDynamite_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+02-19 13:05:06.539   283   283 W tombstoned: skipping tombstone file creation due to intercept
+02-19 13:05:06.540   752 32754 I system_server: libdebuggerd_client: done dumping process 633
+02-19 13:05:06.540   453   534 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~O-UZzK0jUU9NLgS3MODOZA==/com.google.android.gms-YQ2L6GsYyKuvu9MvIBK1EQ==/oat/x86_64/split_DynamiteLoader_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+02-19 13:05:06.543   752 32754 I ActivityManager: Collecting stacks for native pid 32719
+02-19 13:05:06.552   752 32754 E system_server: Could not open /dev/binderfs/binder_logs/transactions. Likely a permissions issue. errno: 2
+02-19 13:05:06.552   752 32754 E android.os.Debug: Failed to get binder state info for pid: 32719 status: -2: No such file or directory
+02-19 13:05:06.552   752 32754 E system_server: libdebuggerd_client: failed to get process tids
+02-19 13:05:06.552   752 32754 I system_server: libdebuggerd_client: started dumping process 32719
+02-19 13:05:06.553   283   283 I tombstoned: registered intercept for pid 32719 and type kDebuggerdNativeBacktrace
+02-19 13:05:06.554   752 32754 E system_server: libdebuggerd_client: failed to send signal to pid 32719: No such process
+02-19 13:05:06.554   283   283 I tombstoned: intercept for pid 32719 and type kDebuggerdNativeBacktrace terminated: due to input
+02-19 13:05:06.540   752   752 W AnrConsumer: type=1400 audit(0.0:230): avc:  denied  { read } for  name="transactions" dev="binder" ino=1048587 scontext=u:r:system_server:s0 tcontext=u:object_r:binderfs_logs_transactions:s0 tclass=file permissive=0
+02-19 13:05:06.560   752 32754 I ActivityManager: dumpStackTraces extraPids=[32388]
+02-19 13:05:06.561   752 32754 I ActivityManager: Collecting stacks for extra pid 32388
+02-19 13:05:06.561   537   537 W adbd    : timeout expired while flushing socket, closing
+02-19 13:05:06.561   752 32754 E system_server: Could not open /dev/binderfs/binder_logs/transactions. Likely a permissions issue. errno: 2
+02-19 13:05:06.561   752 32754 E android.os.Debug: Failed to get binder state info for pid: 32388 status: -2: No such file or directory
+02-19 13:05:06.556   752   752 W AnrConsumer: type=1400 audit(0.0:231): avc:  denied  { read } for  name="transactions" dev="binder" ino=1048587 scontext=u:r:system_server:s0 tcontext=u:object_r:binderfs_logs_transactions:s0 tclass=file permissive=0
+02-19 13:05:06.580   752 32754 I system_server: libdebuggerd_client: started dumping process 32388
+02-19 13:05:06.581   283   283 I tombstoned: registered intercept for pid 32388 and type kDebuggerdJavaBacktrace
+02-19 13:05:06.603   453   534 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~O-UZzK0jUU9NLgS3MODOZA==/com.google.android.gms-YQ2L6GsYyKuvu9MvIBK1EQ==/oat/x86_64/split_DynamiteModulesA_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+02-19 13:05:06.702   537   537 W adbd    : timeout expired while flushing socket, closing
+02-19 13:05:06.733   453   534 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~O-UZzK0jUU9NLgS3MODOZA==/com.google.android.gms-YQ2L6GsYyKuvu9MvIBK1EQ==/oat/x86_64/split_DynamiteModulesC_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+02-19 13:05:06.760   453   532 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~O-UZzK0jUU9NLgS3MODOZA==/com.google.android.gms-YQ2L6GsYyKuvu9MvIBK1EQ==/oat/x86_64/split_GoogleCertificates_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+02-19 13:05:06.800 32388 32390 I blica.toss.test: Thread[2,tid=32390,WaitingInMainSignalCatcherLoop,Thread*=0x7d8f4c4454b0,peer=0x2000588,"Signal Catcher"]: reacting to signal 3
+02-19 13:05:06.800 32388 32390 I blica.toss.test: 
+02-19 13:05:06.833   453   532 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~O-UZzK0jUU9NLgS3MODOZA==/com.google.android.gms-YQ2L6GsYyKuvu9MvIBK1EQ==/oat/x86_64/split_MapsDynamite_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+02-19 13:05:06.856   453   532 I artd    : GetBestInfo: odex next to the dex file (/data/app/~~O-UZzK0jUU9NLgS3MODOZA==/com.google.android.gms-YQ2L6GsYyKuvu9MvIBK1EQ==/oat/x86_64/split_MeasurementDynamite_installtime.odex) is kOatUpToDate with filter 'speed' executable 'false'
+02-19 13:05:06.863   453   532 I artd    : GetBestInfo: /data/app/~~O-UZzK0jUU9NLgS3MODOZA==/com.google.android.gms-YQ2L6GsYyKuvu9MvIBK1EQ==/split_maps_core_dynamite_ondemand.apk has no usable artifacts
+02-19 13:05:07.151   453   532 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/0000000c/dl-Appsearch.optional_250834100800.apk has no usable artifacts
+02-19 13:05:07.157   453   532 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000001/CronetDynamite.apk has no usable artifacts
+02-19 13:05:07.157   453   532 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000002/DynamiteLoader.apk has no usable artifacts
+02-19 13:05:07.158   453   534 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000005/GoogleCertificates.apk has no usable artifacts
+02-19 13:05:07.168   453   534 I artd    : GetBestInfo: /data/user_de/0/com.google.android.gms/app_chimera/m/00000009/dl-TfliteDynamiteDynamite.integ_252130102100800.apk has no usable artifacts
+02-19 13:05:07.278 32388   315 I ReactNativeJS: Running "shared" with {"initialProps":{"initialColorPreference":"light","loadingStartTs":1771473899893,"initialFontScale":"100"},"rootTag":51}
