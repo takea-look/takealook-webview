@@ -312,6 +312,16 @@
   - Verdict: Recents 상태에서도 explicit deeplink 직접 재진입 정상
   - Evidence: `artifacts/20260219_121019_adb_recents_then_explicit_direct/am_start_1.txt`, `artifacts/20260219_121019_adb_recents_then_explicit_direct/focus_on_recents.txt`, `artifacts/20260219_121019_adb_recents_then_explicit_direct/am_start_2.txt`, `artifacts/20260219_121019_adb_recents_then_explicit_direct/focus_after_reentry.txt`, `artifacts/20260219_121019_adb_recents_then_explicit_direct/after_reentry.png`, `artifacts/20260219_121019_adb_recents_then_explicit_direct/logcat_tail.txt`, `artifacts/20260219_121019_adb_recents_then_explicit_direct/log_hits.txt`
 
+- [x] **TC-ADB-RECENTS-IMPLICIT-DIRECT-01** (AVD) Recents 상태에서 implicit deeplink 직접 재진입 — **passed**
+  - Steps: explicit deeplink 진입 → `APP_SWITCH`로 recents 진입 → Home 없이 implicit deeplink 재실행
+  - Observed:
+    - recents 시점 focus: `NexusLauncherActivity`
+    - implicit 재실행: `Status: ok`, `LaunchState: UNKNOWN (0)`, `TotalTime: 0`, `WaitTime: 1694` (`intent has been delivered to currently running top-most instance`)
+    - 재진입 후 focus: `GraniteActivity`
+    - logcat 스캔에서 ANR/FATAL/obituary/"ANR likely to follow" 키워드 미검출
+  - Verdict: Recents 상태에서도 implicit deeplink 직접 재진입 정상
+  - Evidence: `artifacts/20260219_124934_adb_recents_implicit_direct/focus_on_recents.txt`, `artifacts/20260219_124934_adb_recents_implicit_direct/am_start_2_implicit.txt`, `artifacts/20260219_124934_adb_recents_implicit_direct/focus_after_reentry.txt`, `artifacts/20260219_124934_adb_recents_implicit_direct/after_reentry.png`, `artifacts/20260219_124934_adb_recents_implicit_direct/logcat_tail.txt`, `artifacts/20260219_124934_adb_recents_implicit_direct/log_hits.txt`
+
 - [x] **TC-ADB-SETTINGS-ROUNDTRIP-01** (AVD) Settings 왕복 후 deeplink 재진입 안정성 — **passed (with non-target process death log)**
   - Steps: explicit deeplink 진입 → Settings 앱 진입 → Home → explicit deeplink 재실행
   - Observed:
@@ -700,4 +710,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 12:49 KST
+- Last update: 2026-02-19 12:51 KST
