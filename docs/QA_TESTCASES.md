@@ -252,6 +252,15 @@
   - Verdict: Settings 왕복 후 deeplink 재진입 기능은 정상
   - Evidence: `artifacts/20260219_120646_adb_deeplink_after_settings_roundtrip/am_start_1.txt`, `artifacts/20260219_120646_adb_deeplink_after_settings_roundtrip/am_settings.txt`, `artifacts/20260219_120646_adb_deeplink_after_settings_roundtrip/focus_on_settings.txt`, `artifacts/20260219_120646_adb_deeplink_after_settings_roundtrip/am_start_2.txt`, `artifacts/20260219_120646_adb_deeplink_after_settings_roundtrip/focus_after_reentry.txt`, `artifacts/20260219_120646_adb_deeplink_after_settings_roundtrip/after_reentry.png`, `artifacts/20260219_120646_adb_deeplink_after_settings_roundtrip/logcat_tail.txt`, `artifacts/20260219_120646_adb_deeplink_after_settings_roundtrip/log_hits.txt`
 
+- [x] **TC-ADB-SETTINGS-HOME-RESUME-01** (AVD) Settings 진입 후 Home에서 앱 복귀 안정성 — **passed**
+  - Steps: Settings 실행 → Home 이동 → `monkey -p viva.republica.toss.test ... 1`로 앱 복귀
+  - Observed:
+    - Settings 실행: `Status: ok`, `LaunchState: HOT`, `WaitTime: 1223ms`, focus `SettingsHomepageActivity`
+    - resume 후 focus `GraniteActivity`
+    - logcat 스캔에서 ANR/FATAL/obituary/"ANR likely to follow" 키워드 미검출
+  - Verdict: 타 앱(Settings) 진입 후 Home 경유 복귀 플로우 정상
+  - Evidence: `artifacts/20260219_121532_adb_settings_home_resume/am_settings.txt`, `artifacts/20260219_121532_adb_settings_home_resume/focus_on_settings.txt`, `artifacts/20260219_121532_adb_settings_home_resume/monkey_resume.txt`, `artifacts/20260219_121532_adb_settings_home_resume/focus_after_resume.txt`, `artifacts/20260219_121532_adb_settings_home_resume/after_resume.png`, `artifacts/20260219_121532_adb_settings_home_resume/logcat_tail.txt`, `artifacts/20260219_121532_adb_settings_home_resume/log_hits.txt`
+
 - [x] **TC-ADB-APPSWITCH-DOUBLETAP-01** (AVD) 앱 활성 상태에서 App Switch 더블탭 복귀 — **failed (unstable focus)**
   - Steps: explicit deeplink 진입 후 `KEYCODE_APP_SWITCH` 2회 연속 입력
   - Observed:
@@ -528,4 +537,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 12:15 KST
+- Last update: 2026-02-19 12:17 KST
