@@ -270,6 +270,16 @@
   - Verdict: 동일 복합 launcher 상태에서 implicit 재진입도 안정적으로 성공
   - Evidence: `artifacts/20260219_131030_adb_home_recents_back_then_implicit_repeat/focus_after_home_recents_back.txt`, `artifacts/20260219_131030_adb_home_recents_back_then_implicit_repeat/am_start_implicit.txt`, `artifacts/20260219_131030_adb_home_recents_back_then_implicit_repeat/focus_after_start.txt`, `artifacts/20260219_131030_adb_home_recents_back_then_implicit_repeat/after_start.png`, `artifacts/20260219_131030_adb_home_recents_back_then_implicit_repeat/logcat_tail.txt`, `artifacts/20260219_131030_adb_home_recents_back_then_implicit_repeat/log_hits.txt`
 
+- [x] **TC-ADB-HOME-SLEEPWAKE-IMPLICIT-01** (AVD) Home→Sleep/Wake 후 implicit deeplink 진입 — **passed**
+  - Steps: `HOME` → `SLEEP/WAKE + unlock(82)` 후 implicit deeplink 실행
+  - Observed:
+    - wake 직후 focus: `NexusLauncherActivity`
+    - implicit `am start`: `Status: ok`, `LaunchState: HOT`, `TotalTime: 323ms`, `WaitTime: 338ms`
+    - 실행 후 focus: `GraniteActivity`
+    - logcat 스캔에서 ANR/FATAL/obituary/"ANR likely to follow" 키워드 미검출
+  - Verdict: Home 및 화면 sleep/wake 조합 이후에도 implicit deeplink 진입 정상
+  - Evidence: `artifacts/20260219_131223_adb_home_sleepwake_then_implicit/focus_after_wakeup.txt`, `artifacts/20260219_131223_adb_home_sleepwake_then_implicit/am_start_implicit.txt`, `artifacts/20260219_131223_adb_home_sleepwake_then_implicit/focus_after_start.txt`, `artifacts/20260219_131223_adb_home_sleepwake_then_implicit/after_start.png`, `artifacts/20260219_131223_adb_home_sleepwake_then_implicit/logcat_tail.txt`, `artifacts/20260219_131223_adb_home_sleepwake_then_implicit/log_hits.txt`
+
 - [x] **TC-ADB-HOME-BACK-IMPLICIT-01** (AVD) Home 후 Back 입력 상태에서 implicit deeplink 진입 — **passed**
   - Steps: `HOME` 입력 후 `BACK` 1회 입력 → implicit deeplink 실행
   - Observed:
@@ -798,4 +808,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 13:11 KST
+- Last update: 2026-02-19 13:13 KST
