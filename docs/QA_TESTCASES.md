@@ -75,6 +75,15 @@
   - Observed: 회전 전/중/후 모두 `GraniteActivity` 포커스 유지, 앱 이탈/크래시 미관찰
   - Evidence: `artifacts/20260219_090055_adb_rotate_stability/am_start.txt`, `artifacts/20260219_090055_adb_rotate_stability/focus_before_rotate.txt`, `artifacts/20260219_090055_adb_rotate_stability/focus_landscape.txt`, `artifacts/20260219_090055_adb_rotate_stability/focus_portrait.txt`, `artifacts/20260219_090055_adb_rotate_stability/before.png`, `artifacts/20260219_090055_adb_rotate_stability/landscape.png`, `artifacts/20260219_090055_adb_rotate_stability/portrait.png`
 
+- [x] **TC-ADB-ROTATE-02** (AVD) 화면 회전 3사이클 반복 안정성 — **passed**
+  - Steps: explicit deeplink 진입 후 `portrait→landscape→portrait` 회전 사이클 3회 반복
+  - Observed:
+    - `am start`: `Status: ok`, `LaunchState: UNKNOWN (0)`, `WaitTime: 145ms`
+    - 사이클 1~3의 landscape/portrait 모든 시점에서 focus `GraniteActivity` 유지
+    - logcat 스캔에서 ANR/FATAL/obituary 키워드 미검출
+  - Verdict: 반복 회전 시나리오에서도 포그라운드 유지 안정성 양호
+  - Evidence: `artifacts/20260219_103814_adb_rotate_3cycles/am_start.txt`, `artifacts/20260219_103814_adb_rotate_3cycles/focus_start.txt`, `artifacts/20260219_103814_adb_rotate_3cycles/focus_landscape_1.txt`, `artifacts/20260219_103814_adb_rotate_3cycles/focus_portrait_1.txt`, `artifacts/20260219_103814_adb_rotate_3cycles/focus_landscape_2.txt`, `artifacts/20260219_103814_adb_rotate_3cycles/focus_portrait_2.txt`, `artifacts/20260219_103814_adb_rotate_3cycles/focus_landscape_3.txt`, `artifacts/20260219_103814_adb_rotate_3cycles/focus_portrait_3.txt`, `artifacts/20260219_103814_adb_rotate_3cycles/landscape_1.png`, `artifacts/20260219_103814_adb_rotate_3cycles/portrait_1.png`, `artifacts/20260219_103814_adb_rotate_3cycles/landscape_2.png`, `artifacts/20260219_103814_adb_rotate_3cycles/portrait_2.png`, `artifacts/20260219_103814_adb_rotate_3cycles/landscape_3.png`, `artifacts/20260219_103814_adb_rotate_3cycles/portrait_3.png`, `artifacts/20260219_103814_adb_rotate_3cycles/logcat_tail.txt`, `artifacts/20260219_103814_adb_rotate_3cycles/log_hits.txt`
+
 - [x] **TC-ADB-BACK-01** (AVD) Deeplink 랜딩 후 Back key 반응성 — **failed (suspected)**
   - Steps: deeplink 진입 후 `KEYCODE_BACK` 1회 입력
   - Observed: back 전/후 focus 모두 `GraniteActivity`, 스크린샷 동일(변화 없음)
@@ -184,4 +193,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 10:37 KST
+- Last update: 2026-02-19 10:39 KST
