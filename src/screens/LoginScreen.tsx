@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Spacing } from '@toss/tds-mobile';
 import { getAccessToken } from '../api/client';
 
-const ENABLE_IDPW_LOGIN = import.meta.env.VITE_ENABLE_IDPW_LOGIN === 'true';
+const ENABLE_IDPW_LOGIN = import.meta.env.VITE_REGACY_LOGIN === 'true';
 
 export function LoginScreen() {
   const navigate = useNavigate();

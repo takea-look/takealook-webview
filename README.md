@@ -32,6 +32,7 @@ npm run dev
 ```bash
 VITE_API_BASE_URL=https://s1.takealook.my
 VITE_ENABLE_NICKNAME_UPDATE=true
+VITE_REGACY_LOGIN=false
 ```
 
 `.env`가 없거나 값이 비어있으면 기본값 `https://s1.takealook.my`를 사용합니다. (로컬 서버 테스트 시에는 `http://localhost:8080`로 변경)
@@ -39,6 +40,10 @@ VITE_ENABLE_NICKNAME_UPDATE=true
 `VITE_ENABLE_NICKNAME_UPDATE`는 닉네임 온보딩 활성화 스위치입니다.
 - `true`(기본): 닉네임 입력/저장 플로우 활성화
 - `false`: 닉네임 저장 UI 대신 "건너뛰고 시작" UX 제공 (백엔드 점검/비활성화 시 사용)
+
+`VITE_REGACY_LOGIN`은 레거시 ID/PW 로그인 UI 토글입니다.
+- `true`: 로그인 화면에 ID/PW 입력 폼 노출
+- `false`(기본): 토스 로그인만 노출
 
 ## 주요 스크립트
 
