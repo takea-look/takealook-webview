@@ -36,6 +36,15 @@
   - Verdict: deeplink 모드 전환(explicit→implicit) 시 진입 안정성 양호
   - Evidence: `artifacts/20260219_113356_adb_explicit_implicit_backtoback/am_start_explicit.txt`, `artifacts/20260219_113356_adb_explicit_implicit_backtoback/focus_after_explicit.txt`, `artifacts/20260219_113356_adb_explicit_implicit_backtoback/am_start_implicit.txt`, `artifacts/20260219_113356_adb_explicit_implicit_backtoback/focus_after_implicit.txt`, `artifacts/20260219_113356_adb_explicit_implicit_backtoback/after_implicit.png`, `artifacts/20260219_113356_adb_explicit_implicit_backtoback/logcat_tail.txt`, `artifacts/20260219_113356_adb_explicit_implicit_backtoback/log_hits.txt`
 
+- [x] **TC-ADB-DEEPLINK-MODE-SWITCH-02** (AVD) implicit→explicit 백투백 진입 안정성 — **passed**
+  - Steps: implicit deeplink 진입 확인 후 Home 이동, 이어서 explicit deeplink 실행
+  - Observed:
+    - implicit: `Status: ok`, `LaunchState: WARM`, `Activity: .MiniAppSchemeActivity`, `WaitTime: 534ms`, focus `GraniteActivity`
+    - explicit: `Status: ok`, `LaunchState: HOT`, `Activity: GraniteActivity`, `WaitTime: 341ms`, focus `GraniteActivity`
+    - logcat 스캔에서 ANR/FATAL/obituary 키워드 미검출
+  - Verdict: deeplink 모드 전환(implicit→explicit)도 안정적으로 동작
+  - Evidence: `artifacts/20260219_114523_adb_implicit_explicit_backtoback/am_start_implicit.txt`, `artifacts/20260219_114523_adb_implicit_explicit_backtoback/focus_after_implicit.txt`, `artifacts/20260219_114523_adb_implicit_explicit_backtoback/am_start_explicit.txt`, `artifacts/20260219_114523_adb_implicit_explicit_backtoback/focus_after_explicit.txt`, `artifacts/20260219_114523_adb_implicit_explicit_backtoback/after_explicit.png`, `artifacts/20260219_114523_adb_implicit_explicit_backtoback/logcat_tail.txt`, `artifacts/20260219_114523_adb_implicit_explicit_backtoback/log_hits.txt`
+
 - [x] **TC-ADB-LAUNCH-WAITTIME-01** (AVD) Explicit deeplink cold start 응답성(launch wait time) — **passed**
   - Command: `adb shell am start -W -n viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity -a android.intent.action.VIEW -d intoss://takealook`
   - Pass criteria: `Status: ok` 이고 포커스가 `GraniteActivity`로 진입
@@ -362,4 +371,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 11:44 KST
+- Last update: 2026-02-19 11:46 KST
