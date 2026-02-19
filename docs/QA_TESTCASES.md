@@ -398,8 +398,17 @@
   - Verdict: 2분 유휴 구간에서도 foreground 유지 안정성 확인
   - Evidence: `artifacts/20260219_104655_adb_idle_120s_stability/am_start.txt`, `artifacts/20260219_104655_adb_idle_120s_stability/focus_10s.txt`, `artifacts/20260219_104655_adb_idle_120s_stability/focus_120s.txt`, `artifacts/20260219_104655_adb_idle_120s_stability/shot_120s.png`, `artifacts/20260219_104655_adb_idle_120s_stability/logcat_tail.txt`, `artifacts/20260219_104655_adb_idle_120s_stability/log_hits.txt`
 
+- [x] **TC-ADB-NET-TOGGLE-FOCUS-01** (AVD) 네트워크 Off/On 토글 중 포커스 안정성 — **passed**
+  - Steps: explicit deeplink 진입 → `svc wifi/data disable` → `svc wifi/data enable`
+  - Observed:
+    - `am start`: `Status: ok`, `LaunchState: UNKNOWN (0)`, `WaitTime: 44ms`
+    - 네트워크 off/on 전 과정에서 focus 모두 `GraniteActivity` 유지
+    - logcat 스캔에서 ANR/FATAL/obituary 키워드 미검출
+  - Verdict: 네트워크 토글 구간에서 앱 포그라운드 안정성 양호
+  - Evidence: `artifacts/20260219_115246_adb_network_toggle_focus/am_start.txt`, `artifacts/20260219_115246_adb_network_toggle_focus/focus_before_toggle.txt`, `artifacts/20260219_115246_adb_network_toggle_focus/focus_offline.txt`, `artifacts/20260219_115246_adb_network_toggle_focus/focus_online_recovered.txt`, `artifacts/20260219_115246_adb_network_toggle_focus/after_recover.png`, `artifacts/20260219_115246_adb_network_toggle_focus/logcat_tail.txt`, `artifacts/20260219_115246_adb_network_toggle_focus/log_hits.txt`
+
 - Notes:
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 11:52 KST
+- Last update: 2026-02-19 11:54 KST
