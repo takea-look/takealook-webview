@@ -77,8 +77,14 @@
   - Verdict: 본 케이스는 알림창 복귀 검증 전 단계(앱 랜딩)에서 실패
   - Evidence: `artifacts/20260219_091924_adb_notification_shade/am_start.txt`, `artifacts/20260219_091924_adb_notification_shade/focus_before_shade.txt`, `artifacts/20260219_091924_adb_notification_shade/focus_after_close.txt`, `artifacts/20260219_091924_adb_notification_shade/before.png`, `artifacts/20260219_091924_adb_notification_shade/shade_open.png`, `artifacts/20260219_091924_adb_notification_shade/after.png`
 
+- [x] **TC-ADB-NOTISHADE-02** (AVD) 알림창 복귀 안정성 재검증(런처 fallback 재현 확인) — **failed (reproduced)**
+  - Steps: Home 상태에서 explicit deeplink 실행 → 5초 대기 후 focus 확인 → notification shade open/close
+  - Observed: `am start`가 `Status: ok`이나 `LaunchState: UNKNOWN (0)`, `WaitTime: 21041`; 시작 직후/알림창 닫은 후 모두 `NexusLauncherActivity` 유지
+  - Verdict: 랜딩 실패가 간헐이 아닌 재현 가능한 이슈로 확인됨 (알림창 자체 영향 검증 이전 단계에서 차단)
+  - Evidence: `artifacts/20260219_093226_adb_notishade_retest_stable/am_start.txt`, `artifacts/20260219_093226_adb_notishade_retest_stable/focus_before_start.txt`, `artifacts/20260219_093226_adb_notishade_retest_stable/focus_after_start.txt`, `artifacts/20260219_093226_adb_notishade_retest_stable/focus_after_close.txt`, `artifacts/20260219_093226_adb_notishade_retest_stable/after_start.png`, `artifacts/20260219_093226_adb_notishade_retest_stable/shade_open.png`, `artifacts/20260219_093226_adb_notishade_retest_stable/after_close.png`, `artifacts/20260219_093226_adb_notishade_retest_stable/logcat_tail.txt`
+
 - Notes:
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 09:20 KST
+- Last update: 2026-02-19 09:34 KST
