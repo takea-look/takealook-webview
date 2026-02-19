@@ -424,6 +424,17 @@
   - Verdict: 다중 App Switch 입력에서 포커스가 불안정하며 대상 앱 복귀 실패
   - Evidence: `artifacts/20260219_123924_adb_appswitch_triplepress_behavior/am_start.txt`, `artifacts/20260219_123924_adb_appswitch_triplepress_behavior/focus_after_switch_1.txt`, `artifacts/20260219_123924_adb_appswitch_triplepress_behavior/focus_after_switch_2.txt`, `artifacts/20260219_123924_adb_appswitch_triplepress_behavior/focus_after_switch_3.txt`, `artifacts/20260219_123924_adb_appswitch_triplepress_behavior/after_switch_3.png`, `artifacts/20260219_123924_adb_appswitch_triplepress_behavior/logcat_tail.txt`, `artifacts/20260219_123924_adb_appswitch_triplepress_behavior/log_hits.txt`
 
+- [x] **TC-ADB-APPSWITCH-TRIPLEPRESS-RECOVER-01** (AVD) App Switch 3회 후 deeplink 복구 — **passed (recoverable)**
+  - Steps: explicit deeplink 진입 → `KEYCODE_APP_SWITCH` 3회 입력 → explicit deeplink 재실행
+  - Observed:
+    - 1차 `am start`: `Status: ok`, `LaunchState: WARM`, `WaitTime: 1575ms`
+    - 스위치 후 포커스 변화: `NexusLauncherActivity` → `SettingsHomepageActivity` → `NexusLauncherActivity`
+    - 2차 `am start`(recover): `Status: ok`, `LaunchState: WARM`, `WaitTime: 1920ms`
+    - 복구 후 focus: `GraniteActivity`
+    - logcat 스캔에서 ANR/FATAL/obituary/"ANR likely to follow" 키워드 미검출
+  - Verdict: triple-press로 포커스는 깨지지만 deeplink 재실행으로 복구 가능
+  - Evidence: `artifacts/20260219_124137_adb_appswitch_triplepress_recover_deeplink/am_start_1.txt`, `artifacts/20260219_124137_adb_appswitch_triplepress_recover_deeplink/focus_after_switch_1.txt`, `artifacts/20260219_124137_adb_appswitch_triplepress_recover_deeplink/focus_after_switch_2.txt`, `artifacts/20260219_124137_adb_appswitch_triplepress_recover_deeplink/focus_after_switch_3.txt`, `artifacts/20260219_124137_adb_appswitch_triplepress_recover_deeplink/am_start_2_recover.txt`, `artifacts/20260219_124137_adb_appswitch_triplepress_recover_deeplink/focus_after_recover.txt`, `artifacts/20260219_124137_adb_appswitch_triplepress_recover_deeplink/after_recover.png`, `artifacts/20260219_124137_adb_appswitch_triplepress_recover_deeplink/logcat_tail.txt`, `artifacts/20260219_124137_adb_appswitch_triplepress_recover_deeplink/log_hits.txt`
+
 - [x] **TC-ADB-ROTATE-01** (AVD) Deeplink 진입 후 화면 회전(가로/세로) 안정성 — **passed**
   - Steps: deeplink 진입 → 강제 landscape(`user_rotation=1`) → portrait(`user_rotation=0`)
   - Observed: 회전 전/중/후 모두 `GraniteActivity` 포커스 유지, 앱 이탈/크래시 미관찰
@@ -660,4 +671,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 12:41 KST
+- Last update: 2026-02-19 12:43 KST
