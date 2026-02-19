@@ -231,6 +231,16 @@
   - Verdict: Recents 경유 후 Home을 거쳐도 deeplink 재진입 안정적
   - Evidence: `artifacts/20260219_120327_adb_recents_home_then_deeplink/am_start_1.txt`, `artifacts/20260219_120327_adb_recents_home_then_deeplink/focus_after_start_1.txt`, `artifacts/20260219_120327_adb_recents_home_then_deeplink/focus_after_recents_home.txt`, `artifacts/20260219_120327_adb_recents_home_then_deeplink/am_start_2.txt`, `artifacts/20260219_120327_adb_recents_home_then_deeplink/focus_after_start_2.txt`, `artifacts/20260219_120327_adb_recents_home_then_deeplink/after_start_2.png`, `artifacts/20260219_120327_adb_recents_home_then_deeplink/logcat_tail.txt`, `artifacts/20260219_120327_adb_recents_home_then_deeplink/log_hits.txt`
 
+- [x] **TC-ADB-SETTINGS-ROUNDTRIP-01** (AVD) Settings 왕복 후 deeplink 재진입 안정성 — **passed (with non-target process death log)**
+  - Steps: explicit deeplink 진입 → Settings 앱 진입 → Home → explicit deeplink 재실행
+  - Observed:
+    - 1차 `am start`: `Status: ok`, `LaunchState: HOT`, `WaitTime: 758ms`
+    - Settings 진입: `Status: ok`, `LaunchState: HOT`, `WaitTime: 16577ms`, focus `SettingsHomepageActivity`
+    - 2차 `am start`: `Status: ok`, `LaunchState: HOT`, `WaitTime: 4396ms`, focus `GraniteActivity`
+    - logcat 스캔에서 타 프로세스(`com.android.vending:instant_app_installer`) 종료 로그 1건, 대상 앱 ANR/FATAL/obituary 미검출
+  - Verdict: Settings 왕복 후 deeplink 재진입 기능은 정상
+  - Evidence: `artifacts/20260219_120646_adb_deeplink_after_settings_roundtrip/am_start_1.txt`, `artifacts/20260219_120646_adb_deeplink_after_settings_roundtrip/am_settings.txt`, `artifacts/20260219_120646_adb_deeplink_after_settings_roundtrip/focus_on_settings.txt`, `artifacts/20260219_120646_adb_deeplink_after_settings_roundtrip/am_start_2.txt`, `artifacts/20260219_120646_adb_deeplink_after_settings_roundtrip/focus_after_reentry.txt`, `artifacts/20260219_120646_adb_deeplink_after_settings_roundtrip/after_reentry.png`, `artifacts/20260219_120646_adb_deeplink_after_settings_roundtrip/logcat_tail.txt`, `artifacts/20260219_120646_adb_deeplink_after_settings_roundtrip/log_hits.txt`
+
 - [x] **TC-ADB-APPSWITCH-DOUBLETAP-01** (AVD) 앱 활성 상태에서 App Switch 더블탭 복귀 — **failed (unstable focus)**
   - Steps: explicit deeplink 진입 후 `KEYCODE_APP_SWITCH` 2회 연속 입력
   - Observed:
@@ -480,4 +490,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 12:06 KST
+- Last update: 2026-02-19 12:08 KST
