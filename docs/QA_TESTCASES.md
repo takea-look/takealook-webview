@@ -2059,4 +2059,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 20:34 KST
+- Last update: 2026-02-19 20:36 KST
