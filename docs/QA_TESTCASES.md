@@ -1779,8 +1779,18 @@
   - Verdict: 포커스는 복구되지만 `am start -W` timeout 발생으로 fail
   - Evidence: `artifacts/20260219_193842_adb_forcestop_then_explicit_baseline/pid_after_forcestop.txt`, `artifacts/20260219_193842_adb_forcestop_then_explicit_baseline/am_start_explicit.txt`, `artifacts/20260219_193842_adb_forcestop_then_explicit_baseline/focus_after_explicit.txt`, `artifacts/20260219_193842_adb_forcestop_then_explicit_baseline/after_explicit.png`, `artifacts/20260219_193842_adb_forcestop_then_explicit_baseline/logcat_tail.txt`, `artifacts/20260219_193842_adb_forcestop_then_explicit_baseline/log_hits.txt`
 
+- [x] **TC-ADB-FORCESTOP-IMPLICIT-BASELINE-01** (AVD) force-stop 후 implicit 딥링크 베이스라인 재진입 — **failed (launcher fallback + ANR warning)**
+  - Steps: `HOME` → `am force-stop viva.republica.toss.test` → implicit deeplink 실행
+  - Observed:
+    - force-stop 직후 pid 조회: 프로세스 미존재(정상 종료)
+    - implicit 재진입: `Status: ok`, `LaunchState: UNKNOWN (0)`, `Activity: .MiniAppSchemeActivity`, `WaitTime: 25377ms`
+    - 실행 후 focus: `NexusLauncherActivity` (재진입 실패)
+    - logcat: 대상 앱 obituary 1건(강제종료 맥락) + `Application ANR likely to follow` 1건 검출
+  - Verdict: implicit baseline 재진입이 launcher fallback이며 ANR 전조 키워드 동반으로 fail
+  - Evidence: `artifacts/20260219_194036_adb_forcestop_then_implicit_baseline/pid_after_forcestop.txt`, `artifacts/20260219_194036_adb_forcestop_then_implicit_baseline/am_start_implicit.txt`, `artifacts/20260219_194036_adb_forcestop_then_implicit_baseline/focus_after_implicit.txt`, `artifacts/20260219_194036_adb_forcestop_then_implicit_baseline/after_implicit.png`, `artifacts/20260219_194036_adb_forcestop_then_implicit_baseline/logcat_tail.txt`, `artifacts/20260219_194036_adb_forcestop_then_implicit_baseline/log_hits.txt`
+
 - Notes:
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 19:40 KST
+- Last update: 2026-02-19 19:41 KST
