@@ -212,6 +212,16 @@
   - Verdict: 최근앱(overview) 상태에서도 deeplink 복구 진입 정상
   - Evidence: `artifacts/20260219_104201_adb_recents_then_deeplink_recover/focus_on_recents.txt`, `artifacts/20260219_104201_adb_recents_then_deeplink_recover/recents.png`, `artifacts/20260219_104201_adb_recents_then_deeplink_recover/am_start.txt`, `artifacts/20260219_104201_adb_recents_then_deeplink_recover/focus_after_start.txt`, `artifacts/20260219_104201_adb_recents_then_deeplink_recover/after_start.png`, `artifacts/20260219_104201_adb_recents_then_deeplink_recover/logcat_tail.txt`, `artifacts/20260219_104201_adb_recents_then_deeplink_recover/log_hits.txt`
 
+- [x] **TC-ADB-RECENTS-HOME-DEEPLINK-01** (AVD) Recents 진입 후 Home 거쳐 deeplink 재진입 — **passed**
+  - Steps: explicit deeplink 진입 → `APP_SWITCH` → `HOME` → explicit deeplink 재실행
+  - Observed:
+    - 1차 `am start`: `Status: ok`, `LaunchState: HOT`, `WaitTime: 560ms`, focus `GraniteActivity`
+    - Recents 후 Home 시점 focus: `NexusLauncherActivity`
+    - 2차 `am start`: `Status: ok`, `LaunchState: HOT`, `WaitTime: 165ms`, focus `GraniteActivity`
+    - logcat 스캔에서 ANR/FATAL/obituary/"ANR likely to follow" 키워드 미검출
+  - Verdict: Recents 경유 후 Home을 거쳐도 deeplink 재진입 안정적
+  - Evidence: `artifacts/20260219_120327_adb_recents_home_then_deeplink/am_start_1.txt`, `artifacts/20260219_120327_adb_recents_home_then_deeplink/focus_after_start_1.txt`, `artifacts/20260219_120327_adb_recents_home_then_deeplink/focus_after_recents_home.txt`, `artifacts/20260219_120327_adb_recents_home_then_deeplink/am_start_2.txt`, `artifacts/20260219_120327_adb_recents_home_then_deeplink/focus_after_start_2.txt`, `artifacts/20260219_120327_adb_recents_home_then_deeplink/after_start_2.png`, `artifacts/20260219_120327_adb_recents_home_then_deeplink/logcat_tail.txt`, `artifacts/20260219_120327_adb_recents_home_then_deeplink/log_hits.txt`
+
 - [x] **TC-ADB-APPSWITCH-DOUBLETAP-01** (AVD) 앱 활성 상태에서 App Switch 더블탭 복귀 — **failed (unstable focus)**
   - Steps: explicit deeplink 진입 후 `KEYCODE_APP_SWITCH` 2회 연속 입력
   - Observed:
@@ -461,4 +471,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 12:03 KST
+- Last update: 2026-02-19 12:04 KST
