@@ -1430,8 +1430,20 @@
   - Verdict: Home 후 force-stop 이후 implicit 재진입이 재검증에서도 정상
   - Evidence: `artifacts/20260219_183234_adb_home_forcestop_then_implicit_repeat/am_start_1_explicit.txt`, `artifacts/20260219_183234_adb_home_forcestop_then_implicit_repeat/focus_after_explicit.txt`, `artifacts/20260219_183234_adb_home_forcestop_then_implicit_repeat/pid_after_forcestop.txt`, `artifacts/20260219_183234_adb_home_forcestop_then_implicit_repeat/am_start_2_implicit.txt`, `artifacts/20260219_183234_adb_home_forcestop_then_implicit_repeat/focus_after_implicit.txt`, `artifacts/20260219_183234_adb_home_forcestop_then_implicit_repeat/after_implicit.png`, `artifacts/20260219_183234_adb_home_forcestop_then_implicit_repeat/logcat_tail.txt`, `artifacts/20260219_183234_adb_home_forcestop_then_implicit_repeat/log_hits.txt`
 
+- [x] **TC-ADB-RECENTS-FORCESTOP-EXPLICIT-04** (AVD) Recents 상태 force-stop 후 explicit 재진입 추가 재검증 — **failed (ANR confirmed)**
+  - Steps: explicit deeplink 진입 → `APP_SWITCH`(Recents) → `am force-stop` → explicit deeplink 재실행
+  - Observed:
+    - 1차 explicit: `Status: ok`, `LaunchState: WARM`, `TotalTime: 731ms`, `WaitTime: 733ms`, focus `GraniteActivity`
+    - Recents 진입 후 focus: `GraniteActivity`
+    - force-stop 직후 pid 조회: 프로세스 미존재(정상 종료)
+    - 2차 explicit: `Status: ok`, `LaunchState: COLD`, `TotalTime: 21405ms`, `WaitTime: 21422ms`
+    - 2차 실행 후 focus: `Application Not Responding: viva.republica.toss.test`
+    - logcat에서 `ANR in viva.republica.toss.test` / `Completed ANR` / `Application ANR likely to follow` 검출
+  - Verdict: force-stop 이후 explicit 재진입 단계에서 ANR 재현으로 fail
+  - Evidence: `artifacts/20260219_183501_adb_recents_forcestop_then_explicit_v4/am_start_1_explicit.txt`, `artifacts/20260219_183501_adb_recents_forcestop_then_explicit_v4/focus_after_explicit_1.txt`, `artifacts/20260219_183501_adb_recents_forcestop_then_explicit_v4/focus_on_recents.txt`, `artifacts/20260219_183501_adb_recents_forcestop_then_explicit_v4/pid_after_forcestop.txt`, `artifacts/20260219_183501_adb_recents_forcestop_then_explicit_v4/am_start_2_explicit.txt`, `artifacts/20260219_183501_adb_recents_forcestop_then_explicit_v4/focus_after_explicit_2.txt`, `artifacts/20260219_183501_adb_recents_forcestop_then_explicit_v4/after_explicit_2.png`, `artifacts/20260219_183501_adb_recents_forcestop_then_explicit_v4/logcat_tail.txt`, `artifacts/20260219_183501_adb_recents_forcestop_then_explicit_v4/log_hits.txt`
+
 - Notes:
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 18:34 KST
+- Last update: 2026-02-19 18:36 KST
