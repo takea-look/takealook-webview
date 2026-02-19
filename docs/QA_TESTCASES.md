@@ -200,6 +200,16 @@
   - Verdict: Home 이탈 후 deeplink 재진입 동작 정상
   - Evidence: `artifacts/20260219_104005_adb_home_then_deeplink_reentry/am_start_1.txt`, `artifacts/20260219_104005_adb_home_then_deeplink_reentry/focus_after_start_1.txt`, `artifacts/20260219_104005_adb_home_then_deeplink_reentry/focus_on_home.txt`, `artifacts/20260219_104005_adb_home_then_deeplink_reentry/am_start_2.txt`, `artifacts/20260219_104005_adb_home_then_deeplink_reentry/focus_after_start_2.txt`, `artifacts/20260219_104005_adb_home_then_deeplink_reentry/after_start_1.png`, `artifacts/20260219_104005_adb_home_then_deeplink_reentry/after_start_2.png`, `artifacts/20260219_104005_adb_home_then_deeplink_reentry/logcat_tail.txt`, `artifacts/20260219_104005_adb_home_then_deeplink_reentry/log_hits.txt`
 
+- [x] **TC-ADB-HOME-BACK-DEEPLINK-01** (AVD) Home 후 Back 입력 상태에서 deeplink 진입 — **passed**
+  - Steps: `HOME` 입력 후 `BACK` 1회 입력 → explicit deeplink 실행
+  - Observed:
+    - Home+Back 후 focus: `NexusLauncherActivity`
+    - `am start`: `Status: ok`, `LaunchState: WARM`, `TotalTime: 738ms`, `WaitTime: 803ms`
+    - deeplink 실행 후 focus: `GraniteActivity`
+    - logcat 스캔에서 ANR/FATAL/obituary/"ANR likely to follow" 키워드 미검출
+  - Verdict: launcher 상태(Home+Back)에서도 deeplink 진입 정상
+  - Evidence: `artifacts/20260219_123245_adb_home_back_deeplink/focus_after_home_back.txt`, `artifacts/20260219_123245_adb_home_back_deeplink/am_start.txt`, `artifacts/20260219_123245_adb_home_back_deeplink/focus_after_start.txt`, `artifacts/20260219_123245_adb_home_back_deeplink/after_start.png`, `artifacts/20260219_123245_adb_home_back_deeplink/logcat_tail.txt`, `artifacts/20260219_123245_adb_home_back_deeplink/log_hits.txt`
+
 - [x] **TC-ADB-HOME-DEEPLINK-REPEAT3-01** (AVD) Home→explicit deeplink 3회 반복 진입 안정성 — **passed**
   - Steps: `Home → explicit deeplink` 시퀀스를 3회 연속 반복
   - Observed:
@@ -609,4 +619,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 12:32 KST
+- Last update: 2026-02-19 12:34 KST
