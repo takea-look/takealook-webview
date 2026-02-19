@@ -211,6 +211,16 @@
   - Verdict: 반복 Home 재진입 시나리오에서도 기능 안정성 양호
   - Evidence: `artifacts/20260219_115047_adb_home_deeplink_repeat3/am_start_1.txt`, `artifacts/20260219_115047_adb_home_deeplink_repeat3/am_start_2.txt`, `artifacts/20260219_115047_adb_home_deeplink_repeat3/am_start_3.txt`, `artifacts/20260219_115047_adb_home_deeplink_repeat3/focus_1.txt`, `artifacts/20260219_115047_adb_home_deeplink_repeat3/focus_2.txt`, `artifacts/20260219_115047_adb_home_deeplink_repeat3/focus_3.txt`, `artifacts/20260219_115047_adb_home_deeplink_repeat3/shot_1.png`, `artifacts/20260219_115047_adb_home_deeplink_repeat3/shot_2.png`, `artifacts/20260219_115047_adb_home_deeplink_repeat3/shot_3.png`, `artifacts/20260219_115047_adb_home_deeplink_repeat3/logcat_tail.txt`, `artifacts/20260219_115047_adb_home_deeplink_repeat3/log_hits.txt`
 
+- [x] **TC-ADB-HOME-IMPLICIT-REPEAT3-01** (AVD) Home→implicit deeplink 3회 반복 진입 안정성 — **passed**
+  - Steps: `Home → implicit deeplink` 시퀀스를 3회 연속 반복
+  - Observed:
+    - 1~3회 `am start` 모두 `Status: ok`, `LaunchState: HOT`
+    - `WaitTime`: `2015ms / 1248ms / 313ms`
+    - 1~3회 모두 focus `GraniteActivity` 유지
+    - logcat 스캔에서 ANR/FATAL/obituary/"ANR likely to follow" 키워드 미검출
+  - Verdict: implicit 경로 반복 Home 재진입 시나리오도 안정적으로 동작
+  - Evidence: `artifacts/20260219_122216_adb_home_implicit_repeat3/am_start_1.txt`, `artifacts/20260219_122216_adb_home_implicit_repeat3/am_start_2.txt`, `artifacts/20260219_122216_adb_home_implicit_repeat3/am_start_3.txt`, `artifacts/20260219_122216_adb_home_implicit_repeat3/focus_1.txt`, `artifacts/20260219_122216_adb_home_implicit_repeat3/focus_2.txt`, `artifacts/20260219_122216_adb_home_implicit_repeat3/focus_3.txt`, `artifacts/20260219_122216_adb_home_implicit_repeat3/shot_1.png`, `artifacts/20260219_122216_adb_home_implicit_repeat3/shot_2.png`, `artifacts/20260219_122216_adb_home_implicit_repeat3/shot_3.png`, `artifacts/20260219_122216_adb_home_implicit_repeat3/logcat_tail.txt`, `artifacts/20260219_122216_adb_home_implicit_repeat3/log_hits.txt`
+
 - [x] **TC-ADB-RECENTS-DEEPLINK-RECOVER-01** (AVD) Recent Apps 진입 후 deeplink 복구 진입 — **passed**
   - Steps: Home에서 Recent Apps 호출(`KEYCODE_APP_SWITCH`) → explicit deeplink 실행
   - Observed:
@@ -557,4 +567,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 12:21 KST
+- Last update: 2026-02-19 12:23 KST
