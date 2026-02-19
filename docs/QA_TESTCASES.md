@@ -122,6 +122,15 @@
   - Verdict: 잠금/해제 사이클 후 앱 포그라운드 유지 정상
   - Evidence: `artifacts/20260219_113753_adb_screen_off_on_resume/am_start.txt`, `artifacts/20260219_113753_adb_screen_off_on_resume/focus_before_sleep.txt`, `artifacts/20260219_113753_adb_screen_off_on_resume/power_after_sleep.txt`, `artifacts/20260219_113753_adb_screen_off_on_resume/focus_after_wakeup.txt`, `artifacts/20260219_113753_adb_screen_off_on_resume/after_wakeup.png`, `artifacts/20260219_113753_adb_screen_off_on_resume/logcat_tail.txt`, `artifacts/20260219_113753_adb_screen_off_on_resume/log_hits.txt`
 
+- [x] **TC-ADB-SCREENWAKE-IMPLICIT-01** (AVD) 화면 깨운 직후 implicit deeplink 진입 안정성 — **passed**
+  - Steps: `KEYCODE_SLEEP` → `KEYCODE_WAKEUP` + unlock(82) 후 implicit deeplink 실행
+  - Observed:
+    - implicit `am start`: `Status: ok`, `LaunchState: WARM`, `Activity: .MiniAppSchemeActivity`, `TotalTime: 548ms`, `WaitTime: 565ms`
+    - 실행 후 focus는 `GraniteActivity`
+    - logcat 스캔에서 ANR/FATAL/obituary 키워드 미검출
+  - Verdict: 화면 wake 직후에도 implicit deeplink 진입 정상
+  - Evidence: `artifacts/20260219_114205_adb_implicit_after_screen_wake/am_start_implicit.txt`, `artifacts/20260219_114205_adb_implicit_after_screen_wake/focus_after_implicit.txt`, `artifacts/20260219_114205_adb_implicit_after_screen_wake/after_implicit.png`, `artifacts/20260219_114205_adb_implicit_after_screen_wake/logcat_tail.txt`, `artifacts/20260219_114205_adb_implicit_after_screen_wake/log_hits.txt`
+
 - [x] **TC-ADB-HOME-DEEPLINK-REENTRY-01** (AVD) Home 이동 후 deeplink 재진입 안정성 — **passed**
   - Steps: explicit deeplink 1회 진입 → Home 이동 → explicit deeplink 재실행
   - Observed:
@@ -344,4 +353,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 11:41 KST
+- Last update: 2026-02-19 11:43 KST
