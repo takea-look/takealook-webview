@@ -71,8 +71,14 @@
   - Verdict: 태스크 전환 후 복귀 플로우 불안정/미동작
   - Evidence: `artifacts/20260219_091317_adb_task_switch_resume/am_start.txt`, `artifacts/20260219_091317_adb_task_switch_resume/am_settings.txt`, `artifacts/20260219_091317_adb_task_switch_resume/focus_target_before_switch.txt`, `artifacts/20260219_091317_adb_task_switch_resume/focus_on_settings.txt`, `artifacts/20260219_091317_adb_task_switch_resume/focus_after_return.txt`, `artifacts/20260219_091317_adb_task_switch_resume/before_switch.png`, `artifacts/20260219_091317_adb_task_switch_resume/on_settings.png`, `artifacts/20260219_091317_adb_task_switch_resume/after_return.png`
 
+- [x] **TC-ADB-NOTISHADE-01** (AVD) Deeplink 랜딩 후 알림창 열기/닫기 복귀 안정성 — **failed (launch unstable)**
+  - Steps: deeplink 진입 시도 → notification shade open/close
+  - Observed: `am start`는 `Status: ok`이나 `LaunchState: UNKNOWN (0)`, `WaitTime: 25849`; focus가 시작 전/후 모두 launcher(`NexusLauncherActivity`)로 유지
+  - Verdict: 본 케이스는 알림창 복귀 검증 전 단계(앱 랜딩)에서 실패
+  - Evidence: `artifacts/20260219_091924_adb_notification_shade/am_start.txt`, `artifacts/20260219_091924_adb_notification_shade/focus_before_shade.txt`, `artifacts/20260219_091924_adb_notification_shade/focus_after_close.txt`, `artifacts/20260219_091924_adb_notification_shade/before.png`, `artifacts/20260219_091924_adb_notification_shade/shade_open.png`, `artifacts/20260219_091924_adb_notification_shade/after.png`
+
 - Notes:
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 09:17 KST
+- Last update: 2026-02-19 09:20 KST
