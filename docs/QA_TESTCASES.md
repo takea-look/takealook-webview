@@ -231,6 +231,17 @@
   - Verdict: Recents 경유 후 Home을 거쳐도 deeplink 재진입 안정적
   - Evidence: `artifacts/20260219_120327_adb_recents_home_then_deeplink/am_start_1.txt`, `artifacts/20260219_120327_adb_recents_home_then_deeplink/focus_after_start_1.txt`, `artifacts/20260219_120327_adb_recents_home_then_deeplink/focus_after_recents_home.txt`, `artifacts/20260219_120327_adb_recents_home_then_deeplink/am_start_2.txt`, `artifacts/20260219_120327_adb_recents_home_then_deeplink/focus_after_start_2.txt`, `artifacts/20260219_120327_adb_recents_home_then_deeplink/after_start_2.png`, `artifacts/20260219_120327_adb_recents_home_then_deeplink/logcat_tail.txt`, `artifacts/20260219_120327_adb_recents_home_then_deeplink/log_hits.txt`
 
+- [x] **TC-ADB-RECENTS-EXPLICIT-DIRECT-01** (AVD) Recents 상태에서 explicit deeplink 직접 재진입 — **passed**
+  - Steps: explicit deeplink 진입 → `APP_SWITCH`로 recents 진입 → Home 없이 explicit deeplink 재실행
+  - Observed:
+    - 1차 `am start`: `Status: ok`, `LaunchState: HOT`, `WaitTime: 543ms`
+    - recents 시점 focus: `NexusLauncherActivity`
+    - 2차 `am start`: `Status: ok`, `LaunchState: UNKNOWN (0)`, `TotalTime: 0`, `WaitTime: 19` (`intent has been delivered to currently running top-most instance`)
+    - 재실행 후 focus: `GraniteActivity`
+    - logcat 스캔에서 ANR/FATAL/obituary/"ANR likely to follow" 키워드 미검출
+  - Verdict: Recents 상태에서도 explicit deeplink 직접 재진입 정상
+  - Evidence: `artifacts/20260219_121019_adb_recents_then_explicit_direct/am_start_1.txt`, `artifacts/20260219_121019_adb_recents_then_explicit_direct/focus_on_recents.txt`, `artifacts/20260219_121019_adb_recents_then_explicit_direct/am_start_2.txt`, `artifacts/20260219_121019_adb_recents_then_explicit_direct/focus_after_reentry.txt`, `artifacts/20260219_121019_adb_recents_then_explicit_direct/after_reentry.png`, `artifacts/20260219_121019_adb_recents_then_explicit_direct/logcat_tail.txt`, `artifacts/20260219_121019_adb_recents_then_explicit_direct/log_hits.txt`
+
 - [x] **TC-ADB-SETTINGS-ROUNDTRIP-01** (AVD) Settings 왕복 후 deeplink 재진입 안정성 — **passed (with non-target process death log)**
   - Steps: explicit deeplink 진입 → Settings 앱 진입 → Home → explicit deeplink 재실행
   - Observed:
@@ -499,4 +510,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 12:10 KST
+- Last update: 2026-02-19 12:12 KST
