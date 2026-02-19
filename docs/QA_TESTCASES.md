@@ -32,6 +32,16 @@
   - Observed: `Status: ok`, `TotalTime: 13146ms`, `WaitTime: 13153ms`, 포커스 `GraniteActivity` 확인
   - Evidence: `artifacts/20260219_062544_adb_launch_w_time/am_start.txt`, `artifacts/20260219_062544_adb_launch_w_time/focus.txt`, `artifacts/20260219_062544_adb_launch_w_time/launch.png`
 
+- [x] **TC-ADB-LAUNCH-WAITTIME-02** (AVD) Explicit deeplink 5회 연속 실행 응답 시간 분포 — **passed (high variance observed)**
+  - Steps: Home 상태에서 explicit deeplink `am start -W` 5회 연속 실행, 각 회차 focus 확인
+  - Observed:
+    - WaitTime: `529 / 9809 / 15464 / 101 / 167 ms`
+    - 통계: min `101ms`, max `15464ms`, avg `5214ms`, median `529ms`
+    - 1~5회 모두 focus `GraniteActivity` 유지
+    - LaunchState: `HOT, HOT, UNKNOWN(0), UNKNOWN(0), UNKNOWN(0)`
+  - Verdict: 랜딩 성공 자체는 안정적이나, 실행 응답 시간 변동폭이 큼(성능 플래키 가능성)
+  - Evidence: `artifacts/20260219_103145_adb_launch_time_5runs/am_start_1.txt`, `artifacts/20260219_103145_adb_launch_time_5runs/am_start_2.txt`, `artifacts/20260219_103145_adb_launch_time_5runs/am_start_3.txt`, `artifacts/20260219_103145_adb_launch_time_5runs/am_start_4.txt`, `artifacts/20260219_103145_adb_launch_time_5runs/am_start_5.txt`, `artifacts/20260219_103145_adb_launch_time_5runs/focus_1.txt`, `artifacts/20260219_103145_adb_launch_time_5runs/focus_2.txt`, `artifacts/20260219_103145_adb_launch_time_5runs/focus_3.txt`, `artifacts/20260219_103145_adb_launch_time_5runs/focus_4.txt`, `artifacts/20260219_103145_adb_launch_time_5runs/focus_5.txt`, `artifacts/20260219_103145_adb_launch_time_5runs/summary.txt`
+
 - [x] **TC-ADB-UI-TAP-01** (AVD) "건너뛰고 시작하기" tap responsiveness — **failed (confirmed)**
   - Setup: app focused on `viva.republica.toss.test/im.toss.rn.granite.core.GraniteActivity` after `intoss://takealook`.
   - Action: `adb shell input tap` on CTA 후보 좌표 3회 (`540 2100`, `540 2140`, `540 2050`)
@@ -156,4 +166,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 10:31 KST
+- Last update: 2026-02-19 10:33 KST
