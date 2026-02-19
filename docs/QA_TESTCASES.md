@@ -1749,8 +1749,18 @@
   - Verdict: Recents→Back→Home 이후 explicit 재진입 정상
   - Evidence: `artifacts/20260219_193334_adb_recents_back_home_then_explicit/am_start_1_implicit.txt`, `artifacts/20260219_193334_adb_recents_back_home_then_explicit/focus_after_implicit_1.txt`, `artifacts/20260219_193334_adb_recents_back_home_then_explicit/focus_after_recents_back_home.txt`, `artifacts/20260219_193334_adb_recents_back_home_then_explicit/am_start_2_explicit.txt`, `artifacts/20260219_193334_adb_recents_back_home_then_explicit/focus_after_explicit_2.txt`, `artifacts/20260219_193334_adb_recents_back_home_then_explicit/after_explicit_2.png`, `artifacts/20260219_193334_adb_recents_back_home_then_explicit/logcat_tail.txt`, `artifacts/20260219_193334_adb_recents_back_home_then_explicit/log_hits.txt`
 
+- [x] **TC-ADB-HOME-BACK-RECENTS-IMPLICIT-01** (AVD) Home→Back→Recents 후 implicit 딥링크 재진입 — **passed**
+  - Steps: explicit deeplink 진입 → `HOME` → `BACK` → `APP_SWITCH` → implicit deeplink 재실행
+  - Observed:
+    - 1차 explicit: `Status: ok`, `LaunchState: HOT`, `TotalTime: 803ms`, `WaitTime: 827ms`, focus `GraniteActivity`
+    - Home→Back→Recents 후 focus: `NexusLauncherActivity`
+    - 2차 implicit: `Status: ok`, `LaunchState: WARM`, `Activity: .MiniAppSchemeActivity`, `TotalTime: 405ms`, `WaitTime: 440ms`, focus `GraniteActivity`
+    - logcat 스캔에서 ANR/FATAL/obituary/"ANR likely to follow" 키워드 미검출
+  - Verdict: Home→Back→Recents 이후 implicit 재진입 정상
+  - Evidence: `artifacts/20260219_193518_adb_home_back_recents_then_implicit/am_start_1_explicit.txt`, `artifacts/20260219_193518_adb_home_back_recents_then_implicit/focus_after_explicit_1.txt`, `artifacts/20260219_193518_adb_home_back_recents_then_implicit/focus_after_home_back_recents.txt`, `artifacts/20260219_193518_adb_home_back_recents_then_implicit/am_start_2_implicit.txt`, `artifacts/20260219_193518_adb_home_back_recents_then_implicit/focus_after_implicit_2.txt`, `artifacts/20260219_193518_adb_home_back_recents_then_implicit/after_implicit_2.png`, `artifacts/20260219_193518_adb_home_back_recents_then_implicit/logcat_tail.txt`, `artifacts/20260219_193518_adb_home_back_recents_then_implicit/log_hits.txt`
+
 - Notes:
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 19:35 KST
+- Last update: 2026-02-19 19:36 KST
