@@ -1538,8 +1538,19 @@
   - Verdict: Home 이후 implicit 재진입 정상
   - Evidence: `artifacts/20260219_185450_adb_home_then_implicit_reentry/am_start_1_explicit.txt`, `artifacts/20260219_185450_adb_home_then_implicit_reentry/focus_after_explicit_1.txt`, `artifacts/20260219_185450_adb_home_then_implicit_reentry/focus_on_home.txt`, `artifacts/20260219_185450_adb_home_then_implicit_reentry/am_start_2_implicit.txt`, `artifacts/20260219_185450_adb_home_then_implicit_reentry/focus_after_implicit_2.txt`, `artifacts/20260219_185450_adb_home_then_implicit_reentry/after_implicit_2.png`, `artifacts/20260219_185450_adb_home_then_implicit_reentry/logcat_tail.txt`, `artifacts/20260219_185450_adb_home_then_implicit_reentry/log_hits.txt`
 
+- [x] **TC-ADB-RECENTS-EXPLICIT-REENTRY-02** (AVD) Recents 후 explicit 딥링크 재진입 재검증 — **failed (focus launcher fallback)**
+  - Steps: explicit deeplink 진입 → `APP_SWITCH`(Recents) → explicit deeplink 재실행
+  - Observed:
+    - 1차 explicit: `Status: ok`, `LaunchState: HOT`, `TotalTime: 489ms`, `WaitTime: 535ms`, focus `GraniteActivity`
+    - Recents 진입 후 focus: `GraniteActivity`
+    - 2차 explicit: `Status: ok`, `LaunchState: UNKNOWN (0)`, `intent has been delivered to currently running top-most instance`, `WaitTime: 45ms`
+    - 2차 실행 후 focus: `NexusLauncherActivity` (재진입 실패)
+    - logcat 스캔에서 ANR/FATAL/obituary/"ANR likely to follow" 키워드 미검출
+  - Verdict: `am start -W` 결과와 달리 최종 focus가 launcher여서 fail
+  - Evidence: `artifacts/20260219_185618_adb_recents_then_explicit_reentry_v2/am_start_1_explicit.txt`, `artifacts/20260219_185618_adb_recents_then_explicit_reentry_v2/focus_after_explicit_1.txt`, `artifacts/20260219_185618_adb_recents_then_explicit_reentry_v2/focus_on_recents.txt`, `artifacts/20260219_185618_adb_recents_then_explicit_reentry_v2/am_start_2_explicit.txt`, `artifacts/20260219_185618_adb_recents_then_explicit_reentry_v2/focus_after_explicit_2.txt`, `artifacts/20260219_185618_adb_recents_then_explicit_reentry_v2/after_explicit_2.png`, `artifacts/20260219_185618_adb_recents_then_explicit_reentry_v2/logcat_tail.txt`, `artifacts/20260219_185618_adb_recents_then_explicit_reentry_v2/log_hits.txt`
+
 - Notes:
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 18:56 KST
+- Last update: 2026-02-19 18:58 KST
