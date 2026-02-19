@@ -162,8 +162,17 @@
   - Verdict: 해당 실행에서는 최소 30초 구간 안정적으로 랜딩 상태 유지
   - Evidence: `artifacts/20260219_102925_adb_wait30_focus_stability/am_start.txt`, `artifacts/20260219_102925_adb_wait30_focus_stability/focus_5s.txt`, `artifacts/20260219_102925_adb_wait30_focus_stability/focus_30s.txt`, `artifacts/20260219_102925_adb_wait30_focus_stability/shot_5s.png`, `artifacts/20260219_102925_adb_wait30_focus_stability/shot_30s.png`, `artifacts/20260219_102925_adb_wait30_focus_stability/logcat_tail.txt`, `artifacts/20260219_102925_adb_wait30_focus_stability/log_hits.txt`
 
+- [x] **TC-ADB-FOCUS-STABLE-60S-01** (AVD) Deeplink 진입 후 60초 포커스 안정성 — **passed**
+  - Steps: explicit deeplink 실행 후 10초/60초 시점 focus 확인
+  - Observed:
+    - `am start`: `Status: ok`, `LaunchState: HOT`, `TotalTime: 606ms`, `WaitTime: 631ms`
+    - 10초/60초 모두 focus가 `GraniteActivity` 유지
+    - logcat 스캔에서 ANR/FATAL/obituary 키워드 미검출
+  - Verdict: 해당 실행에서는 최소 60초 구간 안정적으로 foreground 유지
+  - Evidence: `artifacts/20260219_103358_adb_focus_stable_60s/am_start.txt`, `artifacts/20260219_103358_adb_focus_stable_60s/focus_10s.txt`, `artifacts/20260219_103358_adb_focus_stable_60s/focus_60s.txt`, `artifacts/20260219_103358_adb_focus_stable_60s/shot_10s.png`, `artifacts/20260219_103358_adb_focus_stable_60s/shot_60s.png`, `artifacts/20260219_103358_adb_focus_stable_60s/logcat_tail.txt`, `artifacts/20260219_103358_adb_focus_stable_60s/log_hits.txt`
+
 - Notes:
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 10:33 KST
+- Last update: 2026-02-19 10:35 KST
