@@ -610,6 +610,15 @@
   - Verdict: force-stop 이후 cold 재진입이 이번 실행에서는 정상 동작
   - Evidence: `artifacts/20260219_121214_adb_explicit_after_force_stop/am_start.txt`, `artifacts/20260219_121214_adb_explicit_after_force_stop/focus_after_start.txt`, `artifacts/20260219_121214_adb_explicit_after_force_stop/after_start.png`, `artifacts/20260219_121214_adb_explicit_after_force_stop/logcat_tail.txt`, `artifacts/20260219_121214_adb_explicit_after_force_stop/log_hits.txt`
 
+- [x] **TC-ADB-FORCESTOP-RELAUNCH-03** (AVD) force-stop 후 explicit deeplink 2회 반복 cold 재진입 — **passed**
+  - Steps: `force-stop → explicit deeplink` 시퀀스를 2회 반복
+  - Observed:
+    - 1회차: `Status: ok`, `LaunchState: COLD`, `TotalTime: 16125ms`, `WaitTime: 16141ms`, focus `GraniteActivity`
+    - 2회차: `Status: ok`, `LaunchState: COLD`, `TotalTime: 4204ms`, `WaitTime: 4208ms`, focus `GraniteActivity`
+    - logcat에 대상 앱 obituary 1건(강제종료 맥락), ANR/FATAL/obituary(크래시성) 미검출
+  - Verdict: force-stop 이후 explicit cold 재진입 반복 시 기능적 진입은 안정적으로 성공
+  - Evidence: `artifacts/20260219_125739_adb_force_stop_then_explicit_2runs/am_start_1.txt`, `artifacts/20260219_125739_adb_force_stop_then_explicit_2runs/focus_1.txt`, `artifacts/20260219_125739_adb_force_stop_then_explicit_2runs/am_start_2.txt`, `artifacts/20260219_125739_adb_force_stop_then_explicit_2runs/focus_2.txt`, `artifacts/20260219_125739_adb_force_stop_then_explicit_2runs/after_run2.png`, `artifacts/20260219_125739_adb_force_stop_then_explicit_2runs/logcat_tail.txt`, `artifacts/20260219_125739_adb_force_stop_then_explicit_2runs/log_hits.txt`
+
 - [x] **TC-ADB-FORCESTOP-IMPLICIT-01** (AVD) force-stop 후 implicit deeplink 재진입 — **passed**
   - Steps: `am force-stop viva.republica.toss.test` 후 implicit deeplink 실행
   - Observed:
@@ -730,4 +739,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 12:57 KST
+- Last update: 2026-02-19 12:59 KST
