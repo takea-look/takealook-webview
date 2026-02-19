@@ -102,6 +102,17 @@
   - Verdict: 단일 BG/FG 복귀 플로우 정상
   - Evidence: `artifacts/20260219_112711_adb_deeplink_then_home_resume/am_start.txt`, `artifacts/20260219_112711_adb_deeplink_then_home_resume/focus_after_start.txt`, `artifacts/20260219_112711_adb_deeplink_then_home_resume/focus_after_home.txt`, `artifacts/20260219_112711_adb_deeplink_then_home_resume/focus_after_resume.txt`, `artifacts/20260219_112711_adb_deeplink_then_home_resume/monkey_resume.txt`, `artifacts/20260219_112711_adb_deeplink_then_home_resume/after_resume.png`, `artifacts/20260219_112711_adb_deeplink_then_home_resume/logcat_tail.txt`, `artifacts/20260219_112711_adb_deeplink_then_home_resume/log_hits.txt`
 
+- [x] **TC-ADB-BGFG-30S-HOME-01** (AVD) Home 30초 대기 후 복귀 안정성 — **passed**
+  - Steps: explicit deeplink 진입 → Home 이동 후 30초 대기 → `monkey resume`
+  - Observed:
+    - `am start`: `Status: ok`, `LaunchState: HOT`, `TotalTime: 456ms`, `WaitTime: 467ms`
+    - 진입 직후 focus: `GraniteActivity`
+    - Home 30초 후 focus: `NexusLauncherActivity`
+    - resume 후 focus: `GraniteActivity`
+    - logcat 스캔에서 ANR/FATAL/obituary 키워드 미검출
+  - Verdict: Home 장시간(30초) 이탈 후에도 복귀 안정성 양호
+  - Evidence: `artifacts/20260219_113954_adb_home_wait_resume_30s/am_start.txt`, `artifacts/20260219_113954_adb_home_wait_resume_30s/focus_after_start.txt`, `artifacts/20260219_113954_adb_home_wait_resume_30s/focus_after_home_30s.txt`, `artifacts/20260219_113954_adb_home_wait_resume_30s/focus_after_resume.txt`, `artifacts/20260219_113954_adb_home_wait_resume_30s/monkey_resume.txt`, `artifacts/20260219_113954_adb_home_wait_resume_30s/after_resume.png`, `artifacts/20260219_113954_adb_home_wait_resume_30s/logcat_tail.txt`, `artifacts/20260219_113954_adb_home_wait_resume_30s/log_hits.txt`
+
 - [x] **TC-ADB-SCREEN-SLEEP-WAKE-01** (AVD) 화면 OFF/ON 후 포그라운드 복귀 안정성 — **passed**
   - Steps: explicit deeplink 진입 → `KEYCODE_SLEEP` → `KEYCODE_WAKEUP` + unlock(82)
   - Observed:
@@ -333,4 +344,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 11:39 KST
+- Last update: 2026-02-19 11:41 KST
