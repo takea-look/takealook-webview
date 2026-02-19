@@ -95,6 +95,12 @@
   - Verdict: 본 케이스는 알림창 복귀 검증 전 단계(앱 랜딩)에서 실패
   - Evidence: `artifacts/20260219_091924_adb_notification_shade/am_start.txt`, `artifacts/20260219_091924_adb_notification_shade/focus_before_shade.txt`, `artifacts/20260219_091924_adb_notification_shade/focus_after_close.txt`, `artifacts/20260219_091924_adb_notification_shade/before.png`, `artifacts/20260219_091924_adb_notification_shade/shade_open.png`, `artifacts/20260219_091924_adb_notification_shade/after.png`
 
+- [x] **TC-ADB-FORCESTOP-RELAUNCH-01** (AVD) force-stop 후 explicit deeplink 재진입 안정성 — **failed**
+  - Steps: `am force-stop viva.republica.toss.test` → explicit deeplink `am start -W`
+  - Observed: `am start`는 `Status: ok`, `LaunchState: UNKNOWN (0)`, `WaitTime: 19516`; 5초 후 focus는 `NexusLauncherActivity`
+  - Verdict: force-stop 이후에도 deeplink 랜딩 실패 재현 (cold 재시작으로도 복구되지 않음)
+  - Evidence: `artifacts/20260219_101121_adb_forcestop_relaunch/process_after_forcestop.txt`, `artifacts/20260219_101121_adb_forcestop_relaunch/am_start.txt`, `artifacts/20260219_101121_adb_forcestop_relaunch/focus_after_start.txt`, `artifacts/20260219_101121_adb_forcestop_relaunch/after_start.png`, `artifacts/20260219_101121_adb_forcestop_relaunch/logcat_tail.txt`
+
 - [x] **TC-ADB-NOTISHADE-02** (AVD) 알림창 복귀 안정성 재검증(런처 fallback 재현 확인) — **failed (reproduced)**
   - Steps: Home 상태에서 explicit deeplink 실행 → 5초 대기 후 focus 확인 → notification shade open/close
   - Observed: `am start`가 `Status: ok`이나 `LaunchState: UNKNOWN (0)`, `WaitTime: 21041`; 시작 직후/알림창 닫은 후 모두 `NexusLauncherActivity` 유지
@@ -114,4 +120,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 10:10 KST
+- Last update: 2026-02-19 10:12 KST
