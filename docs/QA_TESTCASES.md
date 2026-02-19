@@ -1964,8 +1964,21 @@
   - Verdict: 초기 implicit 이후 앱이 ANR 상태로 고착되어 explicit 재진입 후에도 정상 포커스 복구 실패
   - Evidence: `artifacts/20260219_201437_adb_forcestop_implicit_back_explicit/pid_after_forcestop.txt`, `artifacts/20260219_201437_adb_forcestop_implicit_back_explicit/am_start_1_implicit.txt`, `artifacts/20260219_201437_adb_forcestop_implicit_back_explicit/focus_after_implicit.txt`, `artifacts/20260219_201437_adb_forcestop_implicit_back_explicit/focus_after_back.txt`, `artifacts/20260219_201437_adb_forcestop_implicit_back_explicit/am_start_2_explicit.txt`, `artifacts/20260219_201437_adb_forcestop_implicit_back_explicit/focus_after_explicit.txt`, `artifacts/20260219_201437_adb_forcestop_implicit_back_explicit/after_explicit.png`, `artifacts/20260219_201437_adb_forcestop_implicit_back_explicit/logcat_tail.txt`, `artifacts/20260219_201437_adb_forcestop_implicit_back_explicit/log_hits.txt`
 
+- [x] **TC-ADB-FORCESTOP-IMPLICIT-BACK-IMPLICIT-01** (AVD) force-stop 후 implicit 진입 뒤 Back→implicit 재진입 — **failed (app ANR persists)**
+  - Steps: `HOME` → `am force-stop viva.republica.toss.test` → implicit deeplink 실행 → `BACK` → implicit deeplink 재실행
+  - Observed:
+    - force-stop 직후 pid 조회: 프로세스 미존재(정상 종료)
+    - 1차 implicit: `Status: ok`, `LaunchState: COLD`, `Activity: .MiniAppSchemeActivity`, `TotalTime: 43706ms`, `WaitTime: 43741ms`
+    - 1차 실행 후 focus: `Application Not Responding: viva.republica.toss.test`
+    - Back 후 focus: `Application Not Responding: viva.republica.toss.test` 유지
+    - 2차 implicit: `Status: ok`, `LaunchState: UNKNOWN (0)`, top-most instance 인텐트 전달, `WaitTime: 11ms`
+    - 2차 실행 후 focus: `Application Not Responding: viva.republica.toss.test` 유지
+    - logcat: `ANR in viva.republica.toss.test`, `Completed ANR` 검출
+  - Verdict: force-stop 이후 implicit 경로에서 앱 ANR 상태 고착으로 fail
+  - Evidence: `artifacts/20260219_201721_adb_forcestop_implicit_back_implicit/pid_after_forcestop.txt`, `artifacts/20260219_201721_adb_forcestop_implicit_back_implicit/am_start_1_implicit.txt`, `artifacts/20260219_201721_adb_forcestop_implicit_back_implicit/focus_after_implicit_1.txt`, `artifacts/20260219_201721_adb_forcestop_implicit_back_implicit/focus_after_back.txt`, `artifacts/20260219_201721_adb_forcestop_implicit_back_implicit/am_start_2_implicit.txt`, `artifacts/20260219_201721_adb_forcestop_implicit_back_implicit/focus_after_implicit_2.txt`, `artifacts/20260219_201721_adb_forcestop_implicit_back_implicit/after_implicit_2.png`, `artifacts/20260219_201721_adb_forcestop_implicit_back_implicit/logcat_tail.txt`, `artifacts/20260219_201721_adb_forcestop_implicit_back_implicit/log_hits.txt`
+
 - Notes:
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 20:16 KST
+- Last update: 2026-02-19 20:19 KST
