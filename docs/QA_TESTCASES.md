@@ -407,8 +407,18 @@
   - Verdict: 네트워크 토글 구간에서 앱 포그라운드 안정성 양호
   - Evidence: `artifacts/20260219_115246_adb_network_toggle_focus/am_start.txt`, `artifacts/20260219_115246_adb_network_toggle_focus/focus_before_toggle.txt`, `artifacts/20260219_115246_adb_network_toggle_focus/focus_offline.txt`, `artifacts/20260219_115246_adb_network_toggle_focus/focus_online_recovered.txt`, `artifacts/20260219_115246_adb_network_toggle_focus/after_recover.png`, `artifacts/20260219_115246_adb_network_toggle_focus/logcat_tail.txt`, `artifacts/20260219_115246_adb_network_toggle_focus/log_hits.txt`
 
+- [x] **TC-ADB-AIRPLANE-TOGGLE-FOCUS-01** (AVD) 비행기모드 토글 시 포커스 안정성 — **passed (with permission limitation)**
+  - Steps: explicit deeplink 진입 → `settings put global airplane_mode_on 1/0` + `AIRPLANE_MODE` broadcast 시도
+  - Observed:
+    - `am start`: `Status: ok`, `LaunchState: HOT`, `WaitTime: 949ms`
+    - 토글 on/off 시점 모두 focus `GraniteActivity` 유지
+    - `AIRPLANE_MODE` broadcast는 권한 제한(SecurityException) 로그 발생
+    - logcat 스캔에서 ANR/FATAL/obituary 키워드 미검출
+  - Verdict: 권한 제한으로 시스템 broadcast 완전 검증은 불가했지만, 실행된 토글 시나리오에서 앱 포그라운드 안정성은 유지
+  - Evidence: `artifacts/20260219_115506_adb_airplane_toggle_focus/am_start.txt`, `artifacts/20260219_115506_adb_airplane_toggle_focus/focus_before_airplane.txt`, `artifacts/20260219_115506_adb_airplane_toggle_focus/focus_airplane_on.txt`, `artifacts/20260219_115506_adb_airplane_toggle_focus/focus_airplane_off.txt`, `artifacts/20260219_115506_adb_airplane_toggle_focus/airplane_on_broadcast.txt`, `artifacts/20260219_115506_adb_airplane_toggle_focus/airplane_off_broadcast.txt`, `artifacts/20260219_115506_adb_airplane_toggle_focus/after_airplane_off.png`, `artifacts/20260219_115506_adb_airplane_toggle_focus/logcat_tail.txt`, `artifacts/20260219_115506_adb_airplane_toggle_focus/log_hits.txt`
+
 - Notes:
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 11:54 KST
+- Last update: 2026-02-19 11:56 KST
