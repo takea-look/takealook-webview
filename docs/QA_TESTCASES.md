@@ -62,6 +62,15 @@
   - Verdict: Back 이벤트에 대한 화면 전환/종료 반응 미확인(추가 앱 내부 로그 필요)
   - Evidence: `artifacts/20260219_090238_adb_backpress_behavior/am_start.txt`, `artifacts/20260219_090238_adb_backpress_behavior/focus_before_back.txt`, `artifacts/20260219_090238_adb_backpress_behavior/focus_after_back.txt`, `artifacts/20260219_090238_adb_backpress_behavior/before_back.png`, `artifacts/20260219_090238_adb_backpress_behavior/after_back.png`
 
+- [x] **TC-ADB-BACK-02** (AVD) Back key 2회 입력 반응성 재검증 — **failed (blocked by launch fallback)**
+  - Steps: Home 상태에서 explicit deeplink 실행 → `KEYCODE_BACK` 2회 입력
+  - Observed:
+    - `am start`: `Status: ok`, `LaunchState: UNKNOWN (0)`, `WaitTime: 21191`
+    - back 전/1회 후/2회 후 focus 모두 `NexusLauncherActivity`
+    - before/back1 스크린샷 해시 동일, back2만 다른 해시(런처 화면 변화로 추정)
+  - Verdict: 앱 랜딩 실패로 Back 반응성을 앱 내부에서 검증하지 못함
+  - Evidence: `artifacts/20260219_100413_adb_backpress_double/am_start.txt`, `artifacts/20260219_100413_adb_backpress_double/focus_before_back.txt`, `artifacts/20260219_100413_adb_backpress_double/focus_after_back1.txt`, `artifacts/20260219_100413_adb_backpress_double/focus_after_back2.txt`, `artifacts/20260219_100413_adb_backpress_double/before_back.png`, `artifacts/20260219_100413_adb_backpress_double/after_back1.png`, `artifacts/20260219_100413_adb_backpress_double/after_back2.png`, `artifacts/20260219_100413_adb_backpress_double/screenshot_hashes.txt`, `artifacts/20260219_100413_adb_backpress_double/logcat_tail.txt`
+
 - [x] **TC-ADB-TASKSWITCH-01** (AVD) Deeplink 진입 후 타 앱 전환/복귀 안정성 — **failed**
   - Steps: deeplink 진입 → Settings 앱 전환 → 최근앱(App Switch)에서 이전 앱 복귀 시도
   - Observed:
@@ -96,4 +105,4 @@
   - Login: Toss login button is one-tap (auto login).
   - App capability: file upload only (no text message send).
 
-- Last update: 2026-02-19 10:00 KST
+- Last update: 2026-02-19 10:06 KST
