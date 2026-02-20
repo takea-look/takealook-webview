@@ -89,6 +89,8 @@ export function LoginScreen() {
       } catch {
         if (cancelled) return;
         setError('SNS 로그인에 실패했습니다. 잠시 후 다시 시도해주세요.');
+        // Clear callback params to avoid retry loops on /login.
+        navigate('/login', { replace: true });
       } finally {
         if (!cancelled) {
           setIsTossLoading(false);

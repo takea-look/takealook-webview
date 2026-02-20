@@ -56,6 +56,11 @@ function DeepLinkBridge() {
 
   useEffect(() => {
     const handleUnauthorized = () => {
+      // Prevent redirect loops while already on login screen.
+      if (window.location.pathname.startsWith('/login')) {
+        return
+      }
+
       const next = `${window.location.pathname}${window.location.search}`
       const params = new URLSearchParams({ next })
       navigate(`/login?${params.toString()}`, { replace: true })
