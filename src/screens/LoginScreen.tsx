@@ -29,9 +29,28 @@ export function LoginScreen() {
     if (snsCallbackParams) return;
     if (!getAccessToken()) return;
 
-    // Already authenticated users should never land on /login.
-    const safeNext = nextPath.startsWith('/login') ? '/' : nextPath;
-    navigate(safeNext, { replace: true });
+    let cancelled = false;
+
+    const verifyAndRedirect = async () => {
+      try {
+        const { getAuthMe } = await import('../api/auth');
+        await getAuthMe();
+        if (cancelled) return;
+
+        const safeNext = nextPath.startsWith('/login') ? '/' : nextPath;
+        navigate(safeNext, { replace: true });
+      } catch {
+        if (cancelled) return;
+        const { clearAccessToken } = await import('../api/client');
+        clearAccessToken();
+      }
+    };
+
+    void verifyAndRedirect();
+
+    return () => {
+      cancelled = true;
+    };
   }, [navigate, nextPath, snsCallbackParams]);
 
   useEffect(() => {
