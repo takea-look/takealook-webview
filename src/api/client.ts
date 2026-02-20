@@ -60,7 +60,12 @@ async function parseErrorResponse(response: Response): Promise<{ message: string
 }
 
 export function getAccessToken(): string | null {
-  return localStorage.getItem(TOKEN_KEY);
+  const token = localStorage.getItem(TOKEN_KEY);
+  if (!token || token === 'undefined' || token === 'null') {
+    localStorage.removeItem(TOKEN_KEY);
+    return null;
+  }
+  return token;
 }
 
 export function setAccessToken(token: string): void {
@@ -68,7 +73,12 @@ export function setAccessToken(token: string): void {
 }
 
 export function getRefreshToken(): string | null {
-  return localStorage.getItem(REFRESH_TOKEN_KEY);
+  const token = localStorage.getItem(REFRESH_TOKEN_KEY);
+  if (!token || token === 'undefined' || token === 'null') {
+    localStorage.removeItem(REFRESH_TOKEN_KEY);
+    return null;
+  }
+  return token;
 }
 
 export function setRefreshToken(token: string): void {

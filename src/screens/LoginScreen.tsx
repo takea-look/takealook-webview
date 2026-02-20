@@ -52,6 +52,9 @@ export function LoginScreen() {
         });
 
         if (cancelled) return;
+        if (!response?.accessToken) {
+          throw new Error('Missing accessToken in signin response');
+        }
 
         setAccessToken(response.accessToken);
         if (response.refreshToken) {
@@ -119,6 +122,9 @@ export function LoginScreen() {
       const { setAccessToken, setRefreshToken } = await import('../api/client');
 
       const response = await providerSignin('toss', { authorizationCode, referrer });
+      if (!response?.accessToken) {
+        throw new Error('Missing accessToken in toss signin response');
+      }
       setAccessToken(response.accessToken);
       if (response.refreshToken) {
         setRefreshToken(response.refreshToken);
