@@ -4,6 +4,13 @@ import { getAccessToken } from '../api/client';
 import { getMyProfile } from '../api/user';
 import { LoadingView } from './LoadingView';
 
+const DEBUG_AUTH_FLOW = import.meta.env.VITE_DEBUG_AUTH_FLOW === 'true';
+
+const debugAuthLog = (message: string, data: Record<string, unknown> = {}) => {
+  if (!DEBUG_AUTH_FLOW) return;
+  console.debug('[takealook/auth-debug]', message, data);
+};
+
 const NICKNAME_UPDATE_ENABLED = import.meta.env.VITE_ENABLE_NICKNAME_UPDATE === 'true';
 
 export function ProtectedRoute() {
@@ -14,14 +21,19 @@ export function ProtectedRoute() {
 
   useEffect(() => {
     async function checkProfile() {
-      if (!isAuthenticated) return;
+      if (!isAuthenticated) {
+        debugAuthLog('ProtectedRoute missing token', { path: location.pathname });
+        return;
+      }
 
       try {
         setLoading(true);
         const me = await getMyProfile();
+        debugAuthLog('ProtectedRoute getMyProfile ok', { hasNickname: !!me.nickname });
         setHasNickname(!!me.nickname);
       } catch (e) {
         // If profile fetch fails, don't hard-block app navigation.
+        debugAuthLog('ProtectedRoute getMyProfile fail', { error: String(e) });
         console.error('Failed to load profile in ProtectedRoute:', e);
         setHasNickname(true);
       } finally {
@@ -30,11 +42,12 @@ export function ProtectedRoute() {
     }
 
     checkProfile();
-  }, [isAuthenticated]);
+  }, [isAuthenticated, location.pathname, location.search]);
 
   if (!isAuthenticated) {
     const next = `${location.pathname}${location.search}`;
     const params = new URLSearchParams({ next });
+    debugAuthLog('ProtectedRoute redirect to login', { next });
     return <Navigate to={`/login?${params.toString()}`} replace />;
   }
 

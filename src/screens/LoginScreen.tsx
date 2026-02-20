@@ -4,6 +4,12 @@ import { Spacing } from '@toss/tds-mobile';
 import { clearAccessToken, isApiError } from '../api/client';
 
 const ENABLE_IDPW_LOGIN = import.meta.env.VITE_REGACY_LOGIN === 'true';
+const DEBUG_AUTH_FLOW = import.meta.env.VITE_DEBUG_AUTH_FLOW === 'true';
+
+const debugAuthLog = (message: string, data: Record<string, unknown> = {}) => {
+  if (!DEBUG_AUTH_FLOW) return;
+  console.debug('[takealook/auth-debug]', message, data);
+};
 
 export function LoginScreen() {
   const navigate = useNavigate();
@@ -61,7 +67,9 @@ export function LoginScreen() {
       const { providerSignin, getAuthMe } = await import('../api/auth');
       const { setAccessToken, setRefreshToken } = await import('../api/client');
 
+      debugAuthLog('toss login started', { hasAuthCode: !!authorizationCode });
       const response = await providerSignin('toss', { authorizationCode, referrer });
+      debugAuthLog('toss signin response', { hasAccessToken: !!response?.accessToken, hasRefreshToken: !!response?.refreshToken });
       if (!response?.accessToken) {
         throw new Error('Missing accessToken in toss signin response');
       }
@@ -70,9 +78,11 @@ export function LoginScreen() {
         setRefreshToken(response.refreshToken);
       }
       await getAuthMe();
+      debugAuthLog('toss getAuthMe ok', { safeNext: nextPath.startsWith('/login') ? '/' : nextPath });
       const safeNext = nextPath.startsWith('/login') ? '/' : nextPath;
       navigate(safeNext, { replace: true });
     } catch (error) {
+      debugAuthLog('toss login failed', { error: String(error) });
       clearAccessToken();
       if (isApiError(error) && error.status === 401) {
         setError('토큰 발급 후 인증 확인에 실패했어요. 앱계정 연동/서버 응답을 확인하세요.');

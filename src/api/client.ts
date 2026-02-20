@@ -2,6 +2,14 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://s1.takealook.
 const TOKEN_KEY = 'takealook_access_token';
 const REFRESH_TOKEN_KEY = 'takealook_refresh_token';
 const UNAUTHORIZED_THROTTLE_MS = 500;
+const DEBUG_AUTH_FLOW = import.meta.env.VITE_DEBUG_AUTH_FLOW === 'true';
+
+
+const debugAuthLog = (...args: unknown[]) => {
+  if (!DEBUG_AUTH_FLOW) return;
+  // eslint-disable-next-line no-console
+  console.debug('[takealook/auth-debug]', ...args);
+};
 
 type RefreshResponse = {
   accessToken: string;
@@ -89,12 +97,13 @@ export function setRefreshToken(token: string): void {
 let lastUnauthorizedAt = 0;
 
 function emitUnauthorized(): void {
-  // Let the app react (e.g., redirect to /login) without coupling this module to react-router.
   const now = Date.now();
   if (now - lastUnauthorizedAt < UNAUTHORIZED_THROTTLE_MS) {
+    debugAuthLog('emitUnauthorized skipped', { reason: 'throttle' });
     return;
   }
   lastUnauthorizedAt = now;
+  debugAuthLog('emitUnauthorized', { path: window.location.pathname + window.location.search });
   window.dispatchEvent(new CustomEvent('takealook:unauthorized'));
 }
 
@@ -109,10 +118,12 @@ async function refreshAccessToken(): Promise<void> {
     throw createApiError(401, 'Unauthorized');
   }
 
+  debugAuthLog('refresh start', { hasRefreshToken: true });
   const endpoints = ['/auth/toss/refresh', '/auth/refresh'];
   let response: Response | null = null;
 
   for (const endpoint of endpoints) {
+    debugAuthLog('refresh request', { endpoint });
     response = await fetch(`${API_BASE_URL}${endpoint}`, {
       method: 'POST',
       headers: {
@@ -125,6 +136,7 @@ async function refreshAccessToken(): Promise<void> {
       break
     }
 
+    debugAuthLog('refresh fallback', { endpoint, status: response.status });
     response = null
   }
 
@@ -133,10 +145,12 @@ async function refreshAccessToken(): Promise<void> {
       ? await parseErrorResponse(response)
       : { message: 'Unable to refresh token' };
 
+    debugAuthLog('refresh fail', { status: response?.status, message: parsedError.message });
     throw createApiError(response?.status || 401, parsedError.message, parsedError.code, parsedError.details);
   }
 
   const data = (await response.json()) as RefreshResponse;
+  debugAuthLog('refresh success', { hasAccessToken: !!data?.accessToken, hasRefreshToken: !!data?.refreshToken });
   if (!data?.accessToken) {
     throw createApiError(500, 'Invalid refresh response');
   }
@@ -199,13 +213,27 @@ export async function apiRequest<T>(
     });
   };
 
+  const startTime = Date.now();
+  const headersForLog = buildHeaders();
+  debugAuthLog('apiRequest start', {
+    endpoint,
+    method: restOptions.method || 'GET',
+    requiresAuth,
+    hasAuthorization: !!headersForLog.Authorization,
+    hasAccessTokenHeader: !!headersForLog.accessToken,
+    authorizationPreview: headersForLog.Authorization ? `${headersForLog.Authorization.slice(0, 18)}...` : null,
+  });
+
   let response = await request();
+
+  debugAuthLog('apiRequest first response', { endpoint, status: response.status, elapsedMs: Date.now() - startTime });
 
   if (response.status === 401 && requiresAuth) {
     try {
       await refreshAccessTokenOnce();
       response = await request();
-    } catch {
+    } catch (error) {
+      debugAuthLog('apiRequest refresh fail', { endpoint, error: String(error) });
       clearAccessToken();
       emitUnauthorized();
       throw createApiError(401, 'Unauthorized');
@@ -214,6 +242,7 @@ export async function apiRequest<T>(
 
   if (response.status === 401) {
     // Avoid redirect loops during unauthenticated flows (e.g., login/signin endpoints).
+    debugAuthLog('apiRequest unauthorized', { endpoint, requiresAuth });
     if (requiresAuth) {
       clearAccessToken();
       emitUnauthorized();
@@ -223,12 +252,21 @@ export async function apiRequest<T>(
 
   if (!response.ok) {
     const parsedError = await parseErrorResponse(response);
+    debugAuthLog('apiRequest error', {
+      endpoint,
+      status: response.status,
+      code: parsedError.code,
+      message: parsedError.message,
+    });
     throw createApiError(response.status, parsedError.message, parsedError.code, parsedError.details);
   }
 
   if (response.status === 204) {
+    debugAuthLog('apiRequest success', { endpoint, status: response.status });
     return {} as T;
   }
 
+  debugAuthLog('apiRequest success', { endpoint, status: response.status });
   return response.json();
 }
+

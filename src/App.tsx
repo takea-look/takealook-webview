@@ -33,6 +33,13 @@ function resolveDeepLinkTarget(payload: DeepLinkPayload): string | null {
   return null
 }
 
+const DEBUG_AUTH_FLOW = import.meta.env.VITE_DEBUG_AUTH_FLOW === 'true';
+
+function debugAuthLog(message: string, data: Record<string, unknown> = {}): void {
+  if (!DEBUG_AUTH_FLOW) return
+  console.debug('[takealook/auth-debug]', message, data)
+}
+
 function DeepLinkBridge() {
   const navigate = useNavigate()
   const lastUnauthorizedTarget = useRef<string | null>(null)
@@ -68,11 +75,13 @@ function DeepLinkBridge() {
 
       const next = `${window.location.pathname}${window.location.search}`
       if (lastUnauthorizedTarget.current === next) {
+        debugAuthLog('handleUnauthorized skip duplicate', { next })
         return
       }
 
       const params = new URLSearchParams({ next })
       const target = `/login?${params.toString()}`
+      debugAuthLog('handleUnauthorized redirect', { current: next, target })
 
       lastUnauthorizedTarget.current = next
       navigate(target, { replace: true })
