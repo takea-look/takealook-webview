@@ -104,7 +104,8 @@ export function LoginScreen() {
       if (response.refreshToken) {
         setRefreshToken(response.refreshToken);
       }
-      navigate(nextPath, { replace: true });
+      const safeNext = nextPath.startsWith('/login') ? '/' : nextPath;
+      navigate(safeNext, { replace: true });
     } catch {
       setError('아이디/비밀번호 로그인에 실패했습니다.');
     } finally {
@@ -130,7 +131,8 @@ export function LoginScreen() {
       if (response.refreshToken) {
         setRefreshToken(response.refreshToken);
       }
-      navigate(nextPath, { replace: true });
+      const safeNext = nextPath.startsWith('/login') ? '/' : nextPath;
+      navigate(safeNext, { replace: true });
     } catch {
       setError('SNS 로그인에 실패했습니다. 잠시 후 다시 시도해주세요.');
     } finally {
