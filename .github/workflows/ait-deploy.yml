@@ -59,11 +59,7 @@ jobs:
         id: qr
         run: |
           SCHEME='${{ steps.deploy.outputs.scheme }}'
-          ENCODED=$(python3 - <<'PY'
-import os, urllib.parse
-print(urllib.parse.quote(os.environ['SCHEME'], safe=''))
-PY
-)
+          ENCODED=$(node -e "console.log(encodeURIComponent(process.argv[1]))" "$SCHEME")
           QR_URL="https://quickchart.io/qr?size=420&text=${ENCODED}"
           echo "qr_url=$QR_URL" >> "$GITHUB_OUTPUT"
 
