@@ -25,16 +25,17 @@ export function LoginScreen() {
   }, [query]);
 
   useEffect(() => {
+    // If this is an SNS callback, handle callback first (do not short-circuit to redirect).
+    if (snsCallbackParams) return;
     if (!getAccessToken()) return;
 
     // Already authenticated users should never land on /login.
     const safeNext = nextPath.startsWith('/login') ? '/' : nextPath;
     navigate(safeNext, { replace: true });
-  }, [navigate, nextPath]);
+  }, [navigate, nextPath, snsCallbackParams]);
 
   useEffect(() => {
     if (!snsCallbackParams) return;
-    if (getAccessToken()) return;
 
     let cancelled = false;
 
