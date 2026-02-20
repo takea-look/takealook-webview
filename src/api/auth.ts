@@ -35,6 +35,13 @@ export async function getTossUserInfo(): Promise<TossUserInfo> {
   });
 }
 
+export async function getAuthMe(): Promise<unknown> {
+  return apiRequest<unknown>('/auth/me', {
+    method: 'GET',
+    requiresAuth: true,
+  });
+}
+
 export async function refreshToken(token: string): Promise<LoginResponse> {
   try {
     return await apiRequest<LoginResponse>('/auth/refresh', {

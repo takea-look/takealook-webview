@@ -62,6 +62,9 @@ export function LoginScreen() {
           setRefreshToken(response.refreshToken);
         }
 
+        const { getAuthMe } = await import('../api/auth');
+        await getAuthMe();
+
         const safeNext = nextPath.startsWith('/login') ? '/' : nextPath;
         navigate(safeNext, { replace: true });
       } catch {
@@ -96,7 +99,7 @@ export function LoginScreen() {
     try {
       setIsIdPwLoading(true);
       setError('');
-      const { signin } = await import('../api/auth');
+      const { signin, getAuthMe } = await import('../api/auth');
       const { setAccessToken, setRefreshToken } = await import('../api/client');
       const response = await signin({ username: username.trim(), password });
 
@@ -104,6 +107,7 @@ export function LoginScreen() {
       if (response.refreshToken) {
         setRefreshToken(response.refreshToken);
       }
+      await getAuthMe();
       const safeNext = nextPath.startsWith('/login') ? '/' : nextPath;
       navigate(safeNext, { replace: true });
     } catch {
@@ -120,7 +124,7 @@ export function LoginScreen() {
       const { appLogin } = await import('@apps-in-toss/web-framework');
       const { authorizationCode, referrer } = await appLogin();
 
-      const { providerSignin } = await import('../api/auth');
+      const { providerSignin, getAuthMe } = await import('../api/auth');
       const { setAccessToken, setRefreshToken } = await import('../api/client');
 
       const response = await providerSignin('toss', { authorizationCode, referrer });
@@ -131,6 +135,7 @@ export function LoginScreen() {
       if (response.refreshToken) {
         setRefreshToken(response.refreshToken);
       }
+      await getAuthMe();
       const safeNext = nextPath.startsWith('/login') ? '/' : nextPath;
       navigate(safeNext, { replace: true });
     } catch {
