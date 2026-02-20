@@ -95,8 +95,28 @@ jobs:
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: |
-          CONTENT=$(printf '✅ Apps in Toss 배포 완료\nScheme: %s\nQR: %s\n' '${{ steps.deploy.outputs.scheme }}' '${{ steps.qr.outputs.qr_url }}')
-          PAYLOAD=$(jq -n --arg content "$CONTENT" '{content:$content}')
+          PAYLOAD=$(jq -n \
+            --arg scheme '${{ steps.deploy.outputs.scheme }}' \
+            --arg qr '${{ steps.qr.outputs.qr_url }}' \
+            '{
+              username: "떼껄룩봇",
+              content: "✅ **Apps in Toss 배포 완료**",
+              embeds: [
+                {
+                  color: 3447003,
+                  title: "takealook 최신 배포",
+                  description: "아래 링크로 바로 테스트 가능해요.",
+                  fields: [
+                    { name: "Scheme", value: ("`" + $scheme + "`") },
+                    { name: "Quick Launch", value: ("[앱 열기](" + $scheme + ")") },
+                    { name: "QR", value: ("[QR 열기](" + $qr + ")") }
+                  ],
+                  image: { url: $qr },
+                  footer: { text: "takealook-webview GitHub Actions" }
+                }
+              ]
+            }')
+
           curl -sS -X POST "$DISCORD_WEBHOOK_URL" \
             -H 'Content-Type: application/json' \
             -d "$PAYLOAD"
