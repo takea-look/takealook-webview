@@ -181,8 +181,11 @@ export async function apiRequest<T>(
   }
 
   if (response.status === 401) {
-    clearAccessToken();
-    emitUnauthorized();
+    // Avoid redirect loops during unauthenticated flows (e.g., login/signin endpoints).
+    if (requiresAuth) {
+      clearAccessToken();
+      emitUnauthorized();
+    }
     throw createApiError(401, 'Unauthorized');
   }
 
