@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 import { LoginScreen } from './screens/LoginScreen'
 import { ChatRoomListScreen } from './screens/ChatRoomListScreen'
@@ -35,10 +35,10 @@ function resolveDeepLinkTarget(payload: DeepLinkPayload): string | null {
 
 function DeepLinkBridge() {
   const navigate = useNavigate()
-  let lastUnauthorizedTarget: string | null = null
+  const lastUnauthorizedTarget = useRef<string | null>(null)
 
   const clearUnauthorizedThrottle = () => {
-    lastUnauthorizedTarget = null
+    lastUnauthorizedTarget.current = null
   }
 
   useEffect(() => {
@@ -67,14 +67,14 @@ function DeepLinkBridge() {
       }
 
       const next = `${window.location.pathname}${window.location.search}`
-      if (lastUnauthorizedTarget === next) {
+      if (lastUnauthorizedTarget.current === next) {
         return
       }
 
       const params = new URLSearchParams({ next })
       const target = `/login?${params.toString()}`
 
-      lastUnauthorizedTarget = next
+      lastUnauthorizedTarget.current = next
       navigate(target, { replace: true })
       window.setTimeout(clearUnauthorizedThrottle, 600)
     }
