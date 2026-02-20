@@ -100,7 +100,7 @@ jobs:
             --arg qr '${{ steps.qr.outputs.qr_url }}' \
             '{
               username: "떼껄룩봇",
-              content: "✅ **Apps in Toss 배포 완료**",
+              content: ("✅ **Apps in Toss 배포 완료**\n`" + $scheme + "`") ,
               embeds: [
                 {
                   color: 3447003,
@@ -108,8 +108,8 @@ jobs:
                   description: "아래 링크로 바로 테스트 가능해요.",
                   fields: [
                     { name: "Scheme", value: ("`" + $scheme + "`") },
-                    { name: "Quick Launch", value: ("[앱 열기](" + $scheme + ")") },
-                    { name: "QR", value: ("[QR 열기](" + $qr + ")") }
+                    { name: "Quick Launch", value: "Discord 정책상 custom scheme 링크(intoss-private://)는 클릭 링크로 지원 안됨" },
+                    { name: "Open via QR", value: ("[QR 열기](" + $qr + ")") }
                   ],
                   image: { url: $qr },
                   footer: { text: "takealook-webview GitHub Actions" }
