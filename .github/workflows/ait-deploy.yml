@@ -1,0 +1,44 @@
+name: Build and Deploy .ait to Apps in Toss
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ait-deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy-ait:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build .ait bundle
+        run: npm run build
+
+      - name: Deploy to Apps in Toss
+        env:
+          TOSS_KEY: ${{ secrets.TOSS_KEY }}
+        run: |
+          if [ -z "$TOSS_KEY" ]; then
+            echo "TOSS_KEY secret is not set"
+            exit 1
+          fi
+          npx ait deploy --api-key "$TOSS_KEY"

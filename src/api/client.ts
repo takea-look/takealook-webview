@@ -150,6 +150,9 @@ export async function apiRequest<T>(
     if (requiresAuth) {
       const token = getAccessToken();
       if (token) {
+        // Preferred standard header
+        requestHeaders['Authorization'] = `Bearer ${token}`;
+        // Legacy compatibility header
         requestHeaders['accessToken'] = token;
       }
     }
