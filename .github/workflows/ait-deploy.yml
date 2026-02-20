@@ -86,8 +86,16 @@ PY
             echo "![Deploy QR](${{ steps.qr.outputs.qr_url }})"
           } >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Optional Discord notify (if secret exists)
-        if: ${{ secrets.DISCORD_WEBHOOK_URL != '' }}
+      - name: Require Discord webhook secret
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          if [ -z "$DISCORD_WEBHOOK_URL" ]; then
+            echo "DISCORD_WEBHOOK_URL secret is required"
+            exit 1
+          fi
+
+      - name: Notify Discord channel
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: |
