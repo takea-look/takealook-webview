@@ -34,11 +34,64 @@ jobs:
         run: npm run build
 
       - name: Deploy to Apps in Toss
+        id: deploy
         env:
           TOSS_KEY: ${{ secrets.TOSS_KEY }}
         run: |
+          set -eo pipefail
           if [ -z "$TOSS_KEY" ]; then
             echo "TOSS_KEY secret is not set"
             exit 1
           fi
-          npx ait deploy --api-key "$TOSS_KEY"
+
+          npx ait deploy --api-key "$TOSS_KEY" | tee deploy.log
+
+          SCHEME=$(grep -Eo 'intoss-private://[^[:space:]]+' deploy.log | tail -n 1 || true)
+          if [ -z "$SCHEME" ]; then
+            echo "Failed to extract intoss-private scheme from deploy output"
+            cat deploy.log
+            exit 1
+          fi
+
+          echo "scheme=$SCHEME" >> "$GITHUB_OUTPUT"
+
+      - name: Build QR URL and PNG
+        id: qr
+        run: |
+          SCHEME='${{ steps.deploy.outputs.scheme }}'
+          ENCODED=$(python3 - <<'PY'
+import os, urllib.parse
+print(urllib.parse.quote(os.environ['SCHEME'], safe=''))
+PY
+)
+          QR_URL="https://quickchart.io/qr?size=420&text=${ENCODED}"
+          echo "qr_url=$QR_URL" >> "$GITHUB_OUTPUT"
+
+          curl -fsSL "$QR_URL" -o takealook-deploy-qr.png
+
+      - name: Upload QR artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: takealook-deploy-qr
+          path: takealook-deploy-qr.png
+
+      - name: Write workflow summary
+        run: |
+          {
+            echo "## ✅ Apps in Toss deployment completed"
+            echo ""
+            echo "- **Scheme**: \`${{ steps.deploy.outputs.scheme }}\`"
+            echo "- **QR URL**: ${{ steps.qr.outputs.qr_url }}"
+            echo ""
+            echo "![Deploy QR](${{ steps.qr.outputs.qr_url }})"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Optional Discord notify (if secret exists)
+        if: ${{ secrets.DISCORD_WEBHOOK_URL != '' }}
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          CONTENT="✅ Apps in Toss 배포 완료\nScheme: ${{ steps.deploy.outputs.scheme }}\nQR: ${{ steps.qr.outputs.qr_url }}"
+          curl -sS -X POST "$DISCORD_WEBHOOK_URL" \
+            -H 'Content-Type: application/json' \
+            -d "{\"content\":\"${CONTENT//$'\n'/\\n}\"}"
