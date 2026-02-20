@@ -1,7 +1,6 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Spacing } from '@toss/tds-mobile';
-import { getAccessToken } from '../api/client';
 
 const ENABLE_IDPW_LOGIN = import.meta.env.VITE_REGACY_LOGIN === 'true';
 
@@ -15,95 +14,8 @@ export function LoginScreen() {
     return query.get('next') || '/';
   }, [query]);
 
-  const snsCallbackParams = useMemo(() => {
-    const provider = query.get('provider') || '';
-    const authorizationCode = query.get('authorizationCode') || '';
-    const referrer = query.get('referrer') || undefined;
-
-    if (!provider || !authorizationCode) return null;
-    return { provider, authorizationCode, referrer };
-  }, [query]);
-
-  useEffect(() => {
-    // If this is an SNS callback, handle callback first (do not short-circuit to redirect).
-    if (snsCallbackParams) return;
-    if (!getAccessToken()) return;
-
-    let cancelled = false;
-
-    const verifyAndRedirect = async () => {
-      try {
-        const { getAuthMe } = await import('../api/auth');
-        await getAuthMe();
-        if (cancelled) return;
-
-        const safeNext = nextPath.startsWith('/login') ? '/' : nextPath;
-        navigate(safeNext, { replace: true });
-      } catch {
-        if (cancelled) return;
-        const { clearAccessToken } = await import('../api/client');
-        clearAccessToken();
-      }
-    };
-
-    void verifyAndRedirect();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [navigate, nextPath, snsCallbackParams]);
-
-  useEffect(() => {
-    if (!snsCallbackParams) return;
-
-    let cancelled = false;
-
-    const run = async () => {
-      try {
-        setIsTossLoading(true);
-        setError('');
-
-        const { providerSignin } = await import('../api/auth');
-        const { setAccessToken, setRefreshToken } = await import('../api/client');
-
-        const response = await providerSignin(snsCallbackParams.provider, {
-          authorizationCode: snsCallbackParams.authorizationCode,
-          referrer: snsCallbackParams.referrer,
-        });
-
-        if (cancelled) return;
-        if (!response?.accessToken) {
-          throw new Error('Missing accessToken in signin response');
-        }
-
-        setAccessToken(response.accessToken);
-        if (response.refreshToken) {
-          setRefreshToken(response.refreshToken);
-        }
-
-        const { getAuthMe } = await import('../api/auth');
-        await getAuthMe();
-
-        const safeNext = nextPath.startsWith('/login') ? '/' : nextPath;
-        navigate(safeNext, { replace: true });
-      } catch {
-        if (cancelled) return;
-        setError('SNS 로그인에 실패했습니다. 잠시 후 다시 시도해주세요.');
-        // Clear callback params to avoid retry loops on /login.
-        navigate('/login', { replace: true });
-      } finally {
-        if (!cancelled) {
-          setIsTossLoading(false);
-        }
-      }
-    };
-
-    void run();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [navigate, nextPath, snsCallbackParams]);
+  // Intentionally do not auto-redirect or auto-callback-handle on /login.
+  // Login page should stay stable unless user explicitly taps a login action.
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
