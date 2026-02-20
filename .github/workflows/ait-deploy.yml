@@ -46,7 +46,7 @@ jobs:
 
           npx ait deploy --api-key "$TOSS_KEY" | tee deploy.log
 
-          SCHEME=$(grep -Eo 'intoss-private://[^[:space:]]+' deploy.log | tail -n 1 || true)
+          SCHEME=$(grep -Eo 'intoss-private://[^[:space:]]+' deploy.log | tail -n 1 | sed -E 's/\x1B\[[0-9;]*[mK]//g' || true)
           if [ -z "$SCHEME" ]; then
             echo "Failed to extract intoss-private scheme from deploy output"
             cat deploy.log
@@ -95,7 +95,8 @@ jobs:
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: |
-          CONTENT="✅ Apps in Toss 배포 완료\nScheme: ${{ steps.deploy.outputs.scheme }}\nQR: ${{ steps.qr.outputs.qr_url }}"
+          CONTENT=$(printf '✅ Apps in Toss 배포 완료\nScheme: %s\nQR: %s\n' '${{ steps.deploy.outputs.scheme }}' '${{ steps.qr.outputs.qr_url }}')
+          PAYLOAD=$(jq -n --arg content "$CONTENT" '{content:$content}')
           curl -sS -X POST "$DISCORD_WEBHOOK_URL" \
             -H 'Content-Type: application/json' \
-            -d "{\"content\":\"${CONTENT//$'\n'/\\n}\"}"
+            -d "$PAYLOAD"
