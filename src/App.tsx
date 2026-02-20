@@ -35,6 +35,11 @@ function resolveDeepLinkTarget(payload: DeepLinkPayload): string | null {
 
 function DeepLinkBridge() {
   const navigate = useNavigate()
+  let lastUnauthorizedTarget: string | null = null
+
+  const clearUnauthorizedThrottle = () => {
+    lastUnauthorizedTarget = null
+  }
 
   useEffect(() => {
     const handleDeepLinkMessage = (event: MessageEvent) => {
@@ -62,8 +67,16 @@ function DeepLinkBridge() {
       }
 
       const next = `${window.location.pathname}${window.location.search}`
+      if (lastUnauthorizedTarget === next) {
+        return
+      }
+
       const params = new URLSearchParams({ next })
-      navigate(`/login?${params.toString()}`, { replace: true })
+      const target = `/login?${params.toString()}`
+
+      lastUnauthorizedTarget = next
+      navigate(target, { replace: true })
+      window.setTimeout(clearUnauthorizedThrottle, 600)
     }
 
     window.addEventListener('takealook:unauthorized', handleUnauthorized)

@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Spacing } from '@toss/tds-mobile';
+import { isApiError } from '../api/client';
 
 const ENABLE_IDPW_LOGIN = import.meta.env.VITE_REGACY_LOGIN === 'true';
 
@@ -71,8 +72,12 @@ export function LoginScreen() {
       await getAuthMe();
       const safeNext = nextPath.startsWith('/login') ? '/' : nextPath;
       navigate(safeNext, { replace: true });
-    } catch {
-      setError('SNS 로그인에 실패했습니다. 잠시 후 다시 시도해주세요.');
+    } catch (error) {
+      if (isApiError(error) && error.status === 401) {
+        setError('토큰 발급 후 인증 확인에 실패했어요. 앱계정 연동/서버 응답을 확인하세요.');
+      } else {
+        setError('SNS 로그인에 실패했습니다. 잠시 후 다시 시도해주세요.');
+      }
     } finally {
       setIsTossLoading(false);
     }
