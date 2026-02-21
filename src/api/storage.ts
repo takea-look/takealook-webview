@@ -1,6 +1,28 @@
 import type { PresignedUrlResponse } from '../types/api';
 import { apiRequest } from './client';
 
+const getExtensionFromFileName = (filename: string): string => {
+  return filename.split('.').pop()?.toLowerCase() ?? '';
+};
+
+const getFallbackContentType = (file: File): string => {
+  const type = (file.type || '').toLowerCase().trim();
+  if (type) return type;
+
+  const ext = getExtensionFromFileName(file.name);
+  switch (ext) {
+    case 'png':
+      return 'image/png';
+    case 'jpg':
+    case 'jpeg':
+      return 'image/jpeg';
+    case 'webp':
+      return 'image/webp';
+    default:
+      return 'application/octet-stream';
+  }
+};
+
 export const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_BASE_URL || 'https://img.takealook.my';
 
 export async function getUploadUrl(roomId: number, contentType: string, sizeBytes?: number): Promise<PresignedUrlResponse> {
@@ -26,13 +48,15 @@ export async function uploadToR2(
     // Prefer XHR for upload progress.
     await new Promise<void>((resolve, reject) => {
       const xhr = new XMLHttpRequest();
+      const contentType = extraHeaders?.['Content-Type'] || getFallbackContentType(file);
       xhr.open('PUT', presignedUrl);
-      xhr.setRequestHeader('Content-Type', file.type);
       if (extraHeaders) {
         Object.entries(extraHeaders).forEach(([key, value]) => {
+          if (key.toLowerCase() === 'content-type') return;
           xhr.setRequestHeader(key, value);
         });
       }
+      xhr.setRequestHeader('Content-Type', contentType);
 
       xhr.upload.onprogress = (event) => {
         onProgress({ loaded: event.loaded, total: event.total || undefined });
@@ -42,7 +66,8 @@ export async function uploadToR2(
         if (xhr.status >= 200 && xhr.status < 300) {
           resolve();
         } else {
-          reject(new Error('Failed to upload file to R2'));
+          const details = `Status ${xhr.status}: ${xhr.statusText}`;
+          reject(new Error(`Failed to upload file to R2: ${details}`));
         }
       };
 
@@ -54,16 +79,23 @@ export async function uploadToR2(
     return;
   }
 
+  const contentType = extraHeaders?.['Content-Type'] || getFallbackContentType(file);
+  const headers = { ...(extraHeaders ?? {}) } as Record<string, string>;
+  for (const key of Object.keys(headers)) {
+    if (key.toLowerCase() === 'content-type') {
+      delete headers[key];
+    }
+  }
+  headers['Content-Type'] = contentType;
+
   const response = await fetch(presignedUrl, {
     method: 'PUT',
     body: file,
-    headers: {
-      'Content-Type': file.type,
-      ...(extraHeaders ?? {}),
-    },
+    headers,
   });
 
   if (!response.ok) {
-    throw new Error('Failed to upload file to R2');
+    const errorText = await response.text().catch(() => '');
+    throw new Error(`Failed to upload file to R2: Status ${response.status}: ${response.statusText}${errorText ? ` - ${errorText}` : ''}`);
   }
 }
