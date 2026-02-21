@@ -78,6 +78,11 @@ export interface WsTicket {
 
 export interface PresignedUrlResponse {
   url: string;
+  key: string;
+  canonicalUrl: string;
+  headers: Record<string, string>;
+  maxUploadBytes: number;
+  expiresInSeconds: number;
 }
 
 export interface TossLoginRequest {

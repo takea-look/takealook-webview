@@ -177,11 +177,10 @@ export function StoryEditorScreen() {
       }
 
       setIsSending(true);
-      const filename = `chat/${replyRoomId}/${Date.now()}.png`;
-      const { url: presignedUrl } = await getUploadUrl(filename, blob.size);
       const file = new File([blob], `reply_${Date.now()}.png`, { type: 'image/png' });
-      await uploadToR2(presignedUrl, file);
-      const imageUrl = getPublicImageUrl(filename);
+      const { url: presignedUrl, key, canonicalUrl, headers } = await getUploadUrl(replyRoomId, file.type, blob.size);
+      await uploadToR2(presignedUrl, file, undefined, headers);
+      const imageUrl = canonicalUrl || getPublicImageUrl(key);
 
       sendMessage(replyRoomId, imageUrl, senderId, replyToId);
       navigate(`/chat/${replyRoomId}`);

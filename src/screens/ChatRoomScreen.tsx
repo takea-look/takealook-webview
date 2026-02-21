@@ -461,16 +461,15 @@ export function ChatRoomScreen() {
             throw new Error('압축 후에도 파일이 10MB를 초과합니다. 더 작은 이미지를 선택해주세요.');
         }
 
-        const filename = `chat/${roomIdNum}/${Date.now()}.webp`;
-        const { url: presignedUrl } = await getUploadUrl(filename, optimizedFile.size);
+        const { url: presignedUrl, key, canonicalUrl, headers } = await getUploadUrl(roomIdNum, optimizedFile.type, optimizedFile.size);
 
         setUploadProgress({ loaded: 0, total: optimizedFile.size });
         await uploadToR2(presignedUrl, optimizedFile, (progress) => {
             setUploadProgress(progress);
-        });
+        }, headers);
         setUploadProgress(null);
 
-        const imageUrl = getPublicImageUrl(filename);
+        const imageUrl = canonicalUrl || getPublicImageUrl(key);
 
         sendMessage(roomIdNum, imageUrl, senderUserId, replyToMessageId);
     };

@@ -3,12 +3,11 @@ import { apiRequest } from './client';
 
 export const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_BASE_URL || 'https://img.takealook.my';
 
-export async function getUploadUrl(key: string, sizeBytes?: number): Promise<PresignedUrlResponse> {
-  const query = new URLSearchParams({ key });
-  if (sizeBytes != null) {
-    query.set('sizeBytes', String(sizeBytes));
-  }
-  return apiRequest<PresignedUrlResponse>(`/storage/upload?${query.toString()}`);
+export async function getUploadUrl(roomId: number, contentType: string, sizeBytes?: number): Promise<PresignedUrlResponse> {
+  return apiRequest<PresignedUrlResponse>('/uploads/presign', {
+    method: 'POST',
+    body: JSON.stringify({ roomId, contentType, sizeBytes }),
+  });
 }
 
 export function getPublicImageUrl(key: string): string {
@@ -21,6 +20,7 @@ export async function uploadToR2(
   presignedUrl: string,
   file: File,
   onProgress?: UploadProgressHandler,
+  extraHeaders?: Record<string, string>,
 ): Promise<void> {
   if (onProgress) {
     // Prefer XHR for upload progress.
@@ -28,6 +28,11 @@ export async function uploadToR2(
       const xhr = new XMLHttpRequest();
       xhr.open('PUT', presignedUrl);
       xhr.setRequestHeader('Content-Type', file.type);
+      if (extraHeaders) {
+        Object.entries(extraHeaders).forEach(([key, value]) => {
+          xhr.setRequestHeader(key, value);
+        });
+      }
 
       xhr.upload.onprogress = (event) => {
         onProgress({ loaded: event.loaded, total: event.total || undefined });
@@ -54,6 +59,7 @@ export async function uploadToR2(
     body: file,
     headers: {
       'Content-Type': file.type,
+      ...(extraHeaders ?? {}),
     },
   });
 
