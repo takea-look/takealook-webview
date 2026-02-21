@@ -461,7 +461,7 @@ export function ChatRoomScreen() {
             throw new Error('압축 후에도 파일이 10MB를 초과합니다. 더 작은 이미지를 선택해주세요.');
         }
 
-        const filename = `chat/${roomIdNum}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.webp`;
+        const filename = `chat/${roomIdNum}/${Date.now()}.webp`;
         const { url: presignedUrl } = await getUploadUrl(filename, optimizedFile.size);
 
         setUploadProgress({ loaded: 0, total: optimizedFile.size });

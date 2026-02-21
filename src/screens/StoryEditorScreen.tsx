@@ -177,7 +177,7 @@ export function StoryEditorScreen() {
       }
 
       setIsSending(true);
-      const filename = `chat/${replyRoomId}/${Date.now()}_reply.png`;
+      const filename = `chat/${replyRoomId}/${Date.now()}.png`;
       const { url: presignedUrl } = await getUploadUrl(filename, blob.size);
       const file = new File([blob], `reply_${Date.now()}.png`, { type: 'image/png' });
       await uploadToR2(presignedUrl, file);
