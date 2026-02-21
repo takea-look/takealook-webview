@@ -209,7 +209,7 @@ export function ChatRoomListScreen() {
                     참여 중인 채팅방이 없습니다.
                 </div>
             ) : (
-                <div style={{ margin: '0 -24px' }}>
+                <div style={{ margin: '0 -12px' }}>
                     <List>
                         {chatRooms.map(room => (
                             <ListRow
@@ -225,7 +225,7 @@ export function ChatRoomListScreen() {
                                         alignItems: 'center',
                                         justifyContent: 'center',
                                         fontSize: '24px',
-                                        marginLeft: '24px'
+                                        marginLeft: '12px'
                                     }}>
                                         💬
                                     </div>
@@ -246,7 +246,7 @@ export function ChatRoomListScreen() {
                                     />
                                 }
                                 right={
-                                    <div style={{ display: 'flex', alignItems: 'center', marginRight: '24px' }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', marginRight: '12px' }}>
                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                                             <path d="M10 17L15 12L10 7" stroke="#b0b8c1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                                         </svg>
