@@ -9,6 +9,7 @@ import { ProtectedRoute } from './components/ProtectedRoute'
 import { NicknameOnboardingScreen } from './screens/NicknameOnboardingScreen'
 import { SettingsScreen } from './screens/SettingsScreen'
 import { TabShell } from './components/TabShell'
+import { logAuthDebug } from './utils/authDebug'
 
 type DeepLinkPayload = {
   type?: 'deeplink'
@@ -33,11 +34,8 @@ function resolveDeepLinkTarget(payload: DeepLinkPayload): string | null {
   return null
 }
 
-const DEBUG_AUTH_FLOW = import.meta.env.VITE_DEBUG_AUTH_FLOW === 'true';
-
-function debugAuthLog(message: string, data: Record<string, unknown> = {}): void {
-  if (!DEBUG_AUTH_FLOW) return
-  console.debug('[takealook/auth-debug]', message, data)
+const debugAuthLog = (message: string, data: Record<string, unknown> = {}) => {
+  logAuthDebug(message, data)
 }
 
 function DeepLinkBridge() {

@@ -3,12 +3,10 @@ import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { getAccessToken } from '../api/client';
 import { getMyProfile } from '../api/user';
 import { LoadingView } from './LoadingView';
-
-const DEBUG_AUTH_FLOW = import.meta.env.VITE_DEBUG_AUTH_FLOW === 'true';
+import { logAuthDebug } from '../utils/authDebug';
 
 const debugAuthLog = (message: string, data: Record<string, unknown> = {}) => {
-  if (!DEBUG_AUTH_FLOW) return;
-  console.debug('[takealook/auth-debug]', message, data);
+  logAuthDebug(message, data);
 };
 
 const NICKNAME_UPDATE_ENABLED = import.meta.env.VITE_ENABLE_NICKNAME_UPDATE === 'true';

@@ -1,14 +1,12 @@
+import { logAuthDebug } from '../utils/authDebug';
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://s1.takealook.my';
 const TOKEN_KEY = 'takealook_access_token';
 const REFRESH_TOKEN_KEY = 'takealook_refresh_token';
 const UNAUTHORIZED_THROTTLE_MS = 500;
-const DEBUG_AUTH_FLOW = import.meta.env.VITE_DEBUG_AUTH_FLOW === 'true';
 
-
-const debugAuthLog = (...args: unknown[]) => {
-  if (!DEBUG_AUTH_FLOW) return;
-  // eslint-disable-next-line no-console
-  console.debug('[takealook/auth-debug]', ...args);
+const debugAuthLog = (message: string, data: Record<string, unknown> = {}) => {
+  logAuthDebug(message, data);
 };
 
 type RefreshResponse = {

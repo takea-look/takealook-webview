@@ -2,13 +2,12 @@ import { useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Spacing } from '@toss/tds-mobile';
 import { clearAccessToken, isApiError } from '../api/client';
+import { isAuthDebugEnabled, logAuthDebug, useAuthDebugLogs } from '../utils/authDebug';
 
 const ENABLE_IDPW_LOGIN = import.meta.env.VITE_REGACY_LOGIN === 'true';
-const DEBUG_AUTH_FLOW = import.meta.env.VITE_DEBUG_AUTH_FLOW === 'true';
 
 const debugAuthLog = (message: string, data: Record<string, unknown> = {}) => {
-  if (!DEBUG_AUTH_FLOW) return;
-  console.debug('[takealook/auth-debug]', message, data);
+  logAuthDebug(message, data);
 };
 
 export function LoginScreen() {
@@ -95,6 +94,7 @@ export function LoginScreen() {
   };
 
   const isLoading = isIdPwLoading || isTossLoading;
+  const debugLogs = useAuthDebugLogs();
 
   return (
     <div
@@ -285,6 +285,23 @@ export function LoginScreen() {
 
           {error && <p style={{ color: '#f04452', fontSize: '13px', marginTop: '12px', textAlign: 'center' }}>{error}</p>}
         </div>
+
+        {isAuthDebugEnabled && (
+          <div style={{ marginBottom: 16, borderRadius: 12, background: '#0b1220', color: '#d1e0ff', padding: 12, maxHeight: 220, overflow: 'auto' }}>
+            <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 8 }}>[DEBUG_AUTH_FLOW] auth logs</div>
+            {debugLogs.length === 0 ? (
+              <div style={{ fontSize: 11, opacity: 0.8 }}>로그 대기 중...</div>
+            ) : (
+              debugLogs.slice(-30).map((log, idx) => (
+                <div key={`${log.ts}-${idx}`} style={{ fontSize: 11, lineHeight: 1.4, marginBottom: 6, wordBreak: 'break-all' }}>
+                  <div style={{ color: '#8fb3ff' }}>{log.ts}</div>
+                  <div>{log.message}</div>
+                  <div style={{ opacity: 0.9 }}>{JSON.stringify(log.data)}</div>
+                </div>
+              ))
+            )}
+          </div>
+        )}
       </main>
     </div>
   );
