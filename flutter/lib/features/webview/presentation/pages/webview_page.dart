@@ -1,10 +1,20 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../../../core/config/env.dart';
+
+enum WebviewErrorType {
+  network,
+  dns,
+  timeout,
+  javascript,
+  ssl,
+  unknown,
+}
 
 class WebviewPage extends StatefulWidget {
   const WebviewPage({super.key});
@@ -25,6 +35,9 @@ class _WebviewPageState extends State<WebviewPage> {
   DateTime? _lastBackPressedAt;
   bool _isHandlingBack = false;
 
+  WebviewErrorType? _errorType;
+  int _consecutiveFailures = 0;
+
   @override
   void initState() {
     super.initState();
@@ -40,28 +53,33 @@ class _WebviewPageState extends State<WebviewPage> {
             });
           },
           onPageStarted: (url) {
-            debugPrint('[WebView] started: $url');
+            _logDev('started: $url');
             if (!mounted) return;
             setState(() {
               _hasError = false;
               _currentUrl = url;
+              _errorType = null;
             });
           },
           onPageFinished: (url) async {
-            debugPrint('[WebView] finished: $url');
+            _logDev('finished: $url');
             if (!mounted) return;
             final canGoBack = await _controller.canGoBack();
             if (!mounted) return;
             setState(() {
               _currentUrl = url;
               _canGoBack = canGoBack;
+              _consecutiveFailures = 0;
             });
           },
           onWebResourceError: (error) {
-            debugPrint('[WebView] error: ${error.description}');
+            final errorType = _classifyError(error);
+            _logDev('error(${error.errorCode}): ${error.description} -> $errorType');
             if (!mounted) return;
             setState(() {
               _hasError = true;
+              _errorType = errorType;
+              _consecutiveFailures += 1;
             });
           },
           onNavigationRequest: (request) {
@@ -82,6 +100,68 @@ class _WebviewPageState extends State<WebviewPage> {
         ),
       )
       ..loadRequest(Uri.parse(Env.feBaseUrl));
+  }
+
+  void _logDev(String message) {
+    if (kDebugMode) {
+      debugPrint('[WebView] $message');
+    }
+  }
+
+  WebviewErrorType _classifyError(WebResourceError error) {
+    final desc = error.description.toLowerCase();
+    final code = error.errorCode;
+
+    if (desc.contains('dns') || desc.contains('name not resolved')) {
+      return WebviewErrorType.dns;
+    }
+    if (desc.contains('timeout') || code == -8) {
+      return WebviewErrorType.timeout;
+    }
+    if (desc.contains('ssl') || desc.contains('certificate')) {
+      return WebviewErrorType.ssl;
+    }
+    if (desc.contains('javascript') || desc.contains('js')) {
+      return WebviewErrorType.javascript;
+    }
+    if (desc.contains('internet') || desc.contains('network') || code == -2) {
+      return WebviewErrorType.network;
+    }
+
+    return WebviewErrorType.unknown;
+  }
+
+  String _errorTitle() {
+    switch (_errorType) {
+      case WebviewErrorType.network:
+        return '네트워크 연결이 불안정해요.';
+      case WebviewErrorType.dns:
+        return '서버 주소를 찾지 못했어요.';
+      case WebviewErrorType.timeout:
+        return '응답이 지연되고 있어요.';
+      case WebviewErrorType.javascript:
+        return '페이지 스크립트 오류가 발생했어요.';
+      case WebviewErrorType.ssl:
+        return '보안 연결(SSL) 오류가 발생했어요.';
+      case WebviewErrorType.unknown:
+      case null:
+        return '페이지를 불러오지 못했습니다.';
+    }
+  }
+
+  String _errorDescription() {
+    if (_consecutiveFailures >= 3) {
+      return '여러 번 실패했습니다. 잠시 후 다시 시도하거나 네트워크 상태를 확인해주세요.';
+    }
+    return '아래 버튼으로 다시 시도할 수 있어요.';
+  }
+
+  Future<void> _retryLoad() async {
+    setState(() {
+      _hasError = false;
+      _progress = 0;
+    });
+    await _controller.loadRequest(Uri.parse(_currentUrl));
   }
 
   Future<void> _handleBackPressed() async {
@@ -173,21 +253,29 @@ class _WebviewPageState extends State<WebviewPage> {
             Expanded(
               child: _hasError
                   ? Center(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Text('페이지를 불러오지 못했습니다.'),
-                          const SizedBox(height: 12),
-                          FilledButton(
-                            onPressed: () {
-                              setState(() {
-                                _hasError = false;
-                              });
-                              _controller.loadRequest(Uri.parse(Env.feBaseUrl));
-                            },
-                            child: const Text('다시 시도'),
-                          ),
-                        ],
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 24),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              _errorTitle(),
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              _errorDescription(),
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                            const SizedBox(height: 12),
+                            FilledButton(
+                              onPressed: _retryLoad,
+                              child: const Text('다시 시도'),
+                            ),
+                          ],
+                        ),
                       ),
                     )
                   : WebViewWidget(controller: _controller),
