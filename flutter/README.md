@@ -30,6 +30,7 @@ flutter run \
 - Feature-first 폴더 경계 (`features/webview`)
 - `webview_flutter` 기반 FE URL 로딩
 - URL 변경 이벤트 추적/로그 + 진행률 인디케이터
+- Android 백 버튼 처리: WebView history 우선, 최상위에서 2회 백 버튼 시 종료
 - openWindow 대체 정책 (http/https는 내부, 기타 스킴은 외부 앱)
 
 ## Validation checklist
@@ -37,5 +38,7 @@ flutter run \
 - [ ] `flutter pub get`
 - [ ] `flutter analyze`
 - [ ] `flutter run`
+- [ ] Android 백 버튼 시나리오 수동 확인 (히스토리 있음/없음)
+- [ ] iOS 제스처/뒤로가기 시나리오 수동 확인
 
 현재 작업 환경에 Flutter SDK가 없어 실제 명령 실행은 CI/개발자 로컬에서 진행 필요.
