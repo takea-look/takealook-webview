@@ -1,10 +1,14 @@
+import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:app_links/app_links.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../../../../core/config/deeplink_config.dart';
 import '../../../../core/config/env.dart';
 
 enum WebviewErrorType {
@@ -17,9 +21,11 @@ enum WebviewErrorType {
 }
 
 class WebviewPage extends StatefulWidget {
-  const WebviewPage({super.key});
+  const WebviewPage({super.key, this.initialUri});
 
   static const routeName = '/';
+
+  final Uri? initialUri;
 
   @override
   State<WebviewPage> createState() => _WebviewPageState();
@@ -27,6 +33,9 @@ class WebviewPage extends StatefulWidget {
 
 class _WebviewPageState extends State<WebviewPage> {
   late final WebViewController _controller;
+
+  final AppLinks _appLinks = AppLinks();
+  StreamSubscription<Uri>? _deepLinkSub;
 
   int _progress = 0;
   String _currentUrl = Env.feBaseUrl;
@@ -42,8 +51,16 @@ class _WebviewPageState extends State<WebviewPage> {
   void initState() {
     super.initState();
 
+    final initialTarget = DeepLinkConfig.resolveToInitialWebUri(widget.initialUri);
+
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..addJavaScriptChannel(
+        'TakeaLookBridge',
+        onMessageReceived: (message) {
+          _handleBridgeMessage(message.message);
+        },
+      )
       ..setNavigationDelegate(
         NavigationDelegate(
           onProgress: (progress) {
@@ -99,7 +116,39 @@ class _WebviewPageState extends State<WebviewPage> {
           },
         ),
       )
-      ..loadRequest(Uri.parse(Env.feBaseUrl));
+      ..loadRequest(initialTarget);
+
+    _bindDeepLinks();
+  }
+
+  Future<void> _bindDeepLinks() async {
+    final initialLink = await _appLinks.getInitialLink();
+    if (initialLink != null) {
+      final target = DeepLinkConfig.resolveToInitialWebUri(initialLink);
+      _logDev('initial link resolved: $initialLink -> $target');
+      await _controller.loadRequest(target);
+    }
+
+    _deepLinkSub = _appLinks.uriLinkStream.listen((uri) async {
+      final target = DeepLinkConfig.resolveToInitialWebUri(uri);
+      _logDev('incoming link resolved: $uri -> $target');
+      await _controller.loadRequest(target);
+    });
+  }
+
+  void _handleBridgeMessage(String rawMessage) {
+    try {
+      final decoded = jsonDecode(rawMessage) as Map<String, dynamic>;
+      final type = decoded['type'] as String? ?? 'unknown';
+      _logDev('bridge message type=$type');
+
+      // 브릿지 인터페이스 초안:
+      // {"type":"session.sync","payload":{...},"requestId":"..."}
+      // {"type":"route.push","payload":{"path":"/foo"},"requestId":"..."}
+      // {"type":"error","code":"BRIDGE_INVALID_PAYLOAD","message":"..."}
+    } catch (_) {
+      _logDev('bridge error: BRIDGE_INVALID_PAYLOAD');
+    }
   }
 
   void _logDev(String message) {
@@ -205,6 +254,12 @@ class _WebviewPageState extends State<WebviewPage> {
     } finally {
       _isHandlingBack = false;
     }
+  }
+
+  @override
+  void dispose() {
+    _deepLinkSub?.cancel();
+    super.dispose();
   }
 
   @override

@@ -8,9 +8,15 @@ class AppRouter {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case WebviewPage.routeName:
+        final incomingUri = switch (settings.arguments) {
+          final Uri uri => uri,
+          final String text => Uri.tryParse(text),
+          _ => null,
+        };
+
         return MaterialPageRoute<void>(
           settings: settings,
-          builder: (_) => const WebviewPage(),
+          builder: (_) => WebviewPage(initialUri: incomingUri),
         );
       default:
         return MaterialPageRoute<void>(
