@@ -34,6 +34,8 @@ flutter run \
 - 실패 케이스 분류(네트워크/DNS/타임아웃/SSL/JS) + 재시도 복구 UX
 - 반복 실패 시 사용자 안내 강화
 - 개발 로그(debug)와 운영 로그 최소 노출 분리
+- 딥링크 수신(app_links) + 초기 URL 정규화
+- JS 브릿지 채널(`TakeaLookBridge`) 초안 연결
 - openWindow 대체 정책 (http/https는 내부, 기타 스킴은 외부 앱)
 
 ## Validation checklist
@@ -45,3 +47,7 @@ flutter run \
 - [ ] iOS 제스처/뒤로가기 시나리오 수동 확인
 
 현재 작업 환경에 Flutter SDK가 없어 실제 명령 실행은 CI/개발자 로컬에서 진행 필요.
+
+## DeepLink / Routing / Bridge 문서
+
+- 상세 정책: `docs/ROUTING_AND_BRIDGE.md`
