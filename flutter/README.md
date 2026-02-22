@@ -27,8 +27,10 @@ flutter run \
 
 - `MaterialApp` 엔트리 + 전역 에러 처리 골격
 - 중앙 라우터 (`core/router/app_router.dart`)
-- 공통 placeholder 위젯 (`Loading/Error/Empty`)
 - Feature-first 폴더 경계 (`features/webview`)
+- `webview_flutter` 기반 FE URL 로딩
+- URL 변경 이벤트 추적/로그 + 진행률 인디케이터
+- openWindow 대체 정책 (http/https는 내부, 기타 스킴은 외부 앱)
 
 ## Validation checklist
 
