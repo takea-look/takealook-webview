@@ -31,6 +31,9 @@ flutter run \
 - `webview_flutter` 기반 FE URL 로딩
 - URL 변경 이벤트 추적/로그 + 진행률 인디케이터
 - Android 백 버튼 처리: WebView history 우선, 최상위에서 2회 백 버튼 시 종료
+- 실패 케이스 분류(네트워크/DNS/타임아웃/SSL/JS) + 재시도 복구 UX
+- 반복 실패 시 사용자 안내 강화
+- 개발 로그(debug)와 운영 로그 최소 노출 분리
 - openWindow 대체 정책 (http/https는 내부, 기타 스킴은 외부 앱)
 
 ## Validation checklist
