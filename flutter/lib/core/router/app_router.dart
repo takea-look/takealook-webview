@@ -8,7 +8,7 @@ import '../../features/settings/presentation/pages/settings_page.dart';
 import '../../features/webview/presentation/pages/webview_page.dart';
 
 class AppRouter {
-  static const initialRoute = ChatListPage.routeName;
+  static const initialRoute = LoginPage.routeName;
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     final name = settings.name ?? '';
