@@ -50,6 +50,14 @@ class _TakeaLookAppState extends State<TakeaLookApp> {
       theme: TdsTheme.light(),
       navigatorKey: _navigatorKey,
       restorationScopeId: 'takealook_app',
+      builder: (context, child) {
+        final mq = MediaQuery.of(context);
+        final clamped = mq.textScaler.clamp(minScaleFactor: 1.0, maxScaleFactor: 1.3);
+        return MediaQuery(
+          data: mq.copyWith(textScaler: clamped),
+          child: child ?? const SizedBox.shrink(),
+        );
+      },
       onGenerateRoute: AppRouter.onGenerateRoute,
       initialRoute: AppRouter.initialRoute,
     );
