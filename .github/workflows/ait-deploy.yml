@@ -59,7 +59,7 @@ jobs:
 
       - name: Build Flutter web release
         working-directory: flutter
-        run: flutter build web --release
+        run: flutter build web --release --base-href /flutter/
 
       - name: Sync Flutter web bundle to Vite public
         run: |
