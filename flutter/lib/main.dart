@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'app/takealook_app.dart';
+import 'core/di/service_locator.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  setupDependencies();
 
   FlutterError.onError = (details) {
     Zone.current.handleUncaughtError(details.exception, details.stack ?? StackTrace.empty);

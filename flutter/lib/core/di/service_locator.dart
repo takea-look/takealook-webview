@@ -1,5 +1,8 @@
 import 'package:flutter/foundation.dart';
 
+import '../auth/auth_session_manager.dart';
+import '../auth/token_store.dart';
+
 /// App-level dependency entrypoint.
 ///
 /// Keep this lightweight: avoid pulling in global state management libs now.
@@ -34,9 +37,17 @@ class ServiceLocator {
 }
 
 void setupDependencies() {
-  // TODO(issue-197): add cross-cutting core dependencies.
+  final sl = ServiceLocator.instance;
+
+  if (!sl.has<TokenStore>()) {
+    sl.registerSingleton<TokenStore>(InMemoryTokenStore());
+  }
+
+  if (!sl.has<AuthSessionManager>()) {
+    sl.registerSingleton<AuthSessionManager>(AuthSessionManager(sl.get<TokenStore>()));
+  }
+
   if (kDebugMode) {
-    // Keep a lightweight boot log for architecture migration visibility.
     // ignore: avoid_print
     print('ServiceLocator initialized');
   }

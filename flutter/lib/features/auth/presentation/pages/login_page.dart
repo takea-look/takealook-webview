@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/auth/auth_session_manager.dart';
+import '../../../../core/di/service_locator.dart';
 import '../../../../shared/widgets/state_placeholders.dart';
 
 class LoginPage extends StatefulWidget {
@@ -14,10 +16,18 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _idController = TextEditingController();
   final _pwController = TextEditingController();
+  late final AuthSessionManager _auth;
 
   bool _loading = false;
   int _failureCount = 0;
   AppErrorCase? _errorCase;
+
+  @override
+  void initState() {
+    super.initState();
+    _auth = ServiceLocator.instance.get<AuthSessionManager>();
+    _auth.restoreSession();
+  }
 
   bool get _disabled => _idController.text.trim().isEmpty || _pwController.text.trim().isEmpty || _loading;
 
@@ -34,6 +44,14 @@ class _LoginPageState extends State<LoginPage> {
 
     final id = _idController.text.trim().toLowerCase();
     if (id == 'expired') {
+      await _auth.expireSession();
+      if (!_auth.shouldHandleUnauthorized()) {
+        setState(() {
+          _loading = false;
+        });
+        return;
+      }
+
       setState(() {
         _loading = false;
         _errorCase = AppErrorCase.unauthorized;
@@ -50,6 +68,8 @@ class _LoginPageState extends State<LoginPage> {
       });
       return;
     }
+
+    await _auth.saveTokens(accessToken: 'mock_access_$id', refreshToken: 'mock_refresh_$id');
 
     setState(() {
       _loading = false;
