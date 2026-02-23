@@ -54,5 +54,6 @@ flutter run \
 
 - 상세 정책: `docs/ROUTING_AND_BRIDGE.md`
 - 아키텍처/폴더 표준: `docs/ARCHITECTURE.md`
+- 릴리즈 준비 성능 체크: `docs/RELEASE_READINESS.md`
 - 회귀 방지 체크리스트: `docs/REGRESSION_TEST_CHECKLIST.md`
 - Parity 마이그레이션 체크리스트: `docs/PARITY_MIGRATION.md`
