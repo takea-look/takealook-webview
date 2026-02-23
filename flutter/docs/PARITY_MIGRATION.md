@@ -27,7 +27,7 @@
 ## Next implementation tasks
 
 1. Auth token store/refresh/unauthorized event hookup
-2. Chat API integration + reconnect UX
+2. Chat API integration + reconnect UX (현재: 상세 화면 Native baseline + 전송/실패/재전송 UX)
 3. MyPage API wiring 마무리 (현재는 Native UI + 저장/실패/인증만료 fallback baseline)
 4. Settings API persistence wiring (server sync)
 5. Bridge timeout/error contract implementation
