@@ -5,6 +5,8 @@ import 'dart:io';
 import 'package:app_links/app_links.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../core/theme/tds_theme.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -43,7 +45,8 @@ class _WebviewPageState extends State<WebviewPage> {
   void initState() {
     super.initState();
 
-    final initialTarget = DeepLinkConfig.resolveToInitialWebUri(widget.initialUri);
+    final initialTarget =
+        DeepLinkConfig.resolveToInitialWebUri(widget.initialUri);
     final initialRouteTarget = DeepLinkConfig.resolveToAppTarget(
       widget.initialUri,
       mode: DeepLinkStartMode.cold,
@@ -88,7 +91,8 @@ class _WebviewPageState extends State<WebviewPage> {
           },
           onWebResourceError: (error) {
             final errorCase = _classifyError(error);
-            _logDev('error(${error.errorCode}): ${error.description} -> $errorCase');
+            _logDev(
+                'error(${error.errorCode}): ${error.description} -> $errorCase');
             if (!mounted) return;
             setState(() {
               _hasError = true;
@@ -248,7 +252,7 @@ class _WebviewPageState extends State<WebviewPage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('TakeaLook WebView'),
+          title: const Text('TakeaLook WebView', style: TdsTypography.title),
           actions: [
             IconButton(
               onPressed: () => _controller.reload(),
@@ -262,7 +266,8 @@ class _WebviewPageState extends State<WebviewPage> {
             if (_progress < 100)
               LinearProgressIndicator(value: _progress / 100),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              padding: const EdgeInsets.symmetric(
+                  horizontal: TdsSpacing.md, vertical: TdsSpacing.sm),
               child: Row(
                 children: [
                   Icon(

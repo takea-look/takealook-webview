@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/theme/tds_theme.dart';
 import '../../../../shared/widgets/state_placeholders.dart';
 
 class LoginPage extends StatefulWidget {
@@ -19,7 +20,10 @@ class _LoginPageState extends State<LoginPage> {
   int _failureCount = 0;
   AppErrorCase? _errorCase;
 
-  bool get _disabled => _idController.text.trim().isEmpty || _pwController.text.trim().isEmpty || _loading;
+  bool get _disabled =>
+      _idController.text.trim().isEmpty ||
+      _pwController.text.trim().isEmpty ||
+      _loading;
 
   Future<void> _login() async {
     if (_disabled) return;
@@ -71,44 +75,42 @@ class _LoginPageState extends State<LoginPage> {
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('로그인')),
+      appBar: AppBar(title: const Text('로그인', style: TdsTypography.title)),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(TdsSpacing.lg),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text('TakeaLook', style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w700)),
-              const SizedBox(height: 8),
-              Text('기존 Web 로그인 UX를 Flutter Native로 이관한 1차 화면입니다.', style: theme.textTheme.bodyMedium),
-              const SizedBox(height: 20),
+              const Text('TakeaLook', style: TdsTypography.heading),
+              const SizedBox(height: TdsSpacing.sm),
+              Text('기존 Web 로그인 UX를 Flutter Native로 이관한 1차 화면입니다.',
+                  style: theme.textTheme.bodyMedium),
+              const SizedBox(height: TdsSpacing.xl),
               TextField(
                 controller: _idController,
                 textInputAction: TextInputAction.next,
                 onChanged: (_) => setState(() {}),
-                decoration: const InputDecoration(
-                  labelText: '아이디',
-                  border: OutlineInputBorder(),
-                ),
+                decoration: TdsComponentStyles.inputDecoration(hint: '아이디'),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: TdsSpacing.md),
               TextField(
                 controller: _pwController,
                 obscureText: true,
                 onChanged: (_) => setState(() {}),
                 onSubmitted: (_) => _login(),
-                decoration: const InputDecoration(
-                  labelText: '비밀번호',
-                  border: OutlineInputBorder(),
-                  helperText: '테스트: id=expired 또는 timeout 입력 시 실패 UX 확인',
-                ),
+                decoration: TdsComponentStyles.inputDecoration(hint: '비밀번호')
+                    .copyWith(
+                        helperText: '테스트: id=expired 또는 timeout 입력 시 실패 UX 확인'),
               ),
               const SizedBox(height: 16),
               FilledButton(
                 onPressed: _disabled ? null : _login,
-                child: Text(_loading ? '로그인 중...' : '로그인'),
+                style: TdsComponentStyles.primaryButton(),
+                child: Text(_loading ? '로그인 중...' : '로그인',
+                    style: const TextStyle(fontWeight: FontWeight.w600)),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: TdsSpacing.md),
               OutlinedButton(
                 onPressed: _loading
                     ? null

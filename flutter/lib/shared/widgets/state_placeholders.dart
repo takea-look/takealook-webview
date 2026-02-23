@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../core/theme/tds_theme.dart';
+
 enum AppErrorCase {
   network,
   timeout,
@@ -33,7 +35,8 @@ class LoadingPlaceholder extends StatelessWidget {
     return Center(
       child: Card(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+          padding: const EdgeInsets.symmetric(
+              horizontal: TdsSpacing.xxl, vertical: TdsSpacing.xl),
           child: content,
         ),
       ),
@@ -83,7 +86,7 @@ class RecoveryErrorPlaceholder extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
+        padding: const EdgeInsets.symmetric(horizontal: TdsSpacing.xxl),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
