@@ -47,5 +47,18 @@ jobs:
       - name: Flutter test
         run: flutter test
 
+      - name: Write CI summary
+        if: always()
+        run: |
+          {
+            echo "## Flutter CI result"
+            echo ""
+            echo "- analyze: completed"
+            echo "- test: completed"
+            echo "- build web: completed"
+            echo ""
+            echo "Regression checklist: flutter/docs/REGRESSION_TEST_CHECKLIST.md"
+          } >> "$GITHUB_STEP_SUMMARY"
+
       - name: Flutter build web --release
         run: flutter build web --release
