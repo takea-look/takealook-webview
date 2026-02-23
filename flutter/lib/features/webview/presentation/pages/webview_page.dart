@@ -44,6 +44,11 @@ class _WebviewPageState extends State<WebviewPage> {
     super.initState();
 
     final initialTarget = DeepLinkConfig.resolveToInitialWebUri(widget.initialUri);
+    final initialRouteTarget = DeepLinkConfig.resolveToAppTarget(
+      widget.initialUri,
+      mode: DeepLinkStartMode.cold,
+    );
+    _logDev('cold-start deep link route: ${initialRouteTarget.toRoutePath()}');
 
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
@@ -123,6 +128,11 @@ class _WebviewPageState extends State<WebviewPage> {
 
     _deepLinkSub = _appLinks.uriLinkStream.listen((uri) async {
       final target = DeepLinkConfig.resolveToInitialWebUri(uri);
+      final routeTarget = DeepLinkConfig.resolveToAppTarget(
+        uri,
+        mode: DeepLinkStartMode.warm,
+      );
+      _logDev('warm-start deep link route: ${routeTarget.toRoutePath()}');
       _logDev('incoming link resolved: $uri -> $target');
       await _controller.loadRequest(target);
     });

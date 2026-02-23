@@ -8,6 +8,7 @@
 - 앱 실행 중 `uriLinkStream`
 
 두 경우 모두 `DeepLinkConfig.resolveToInitialWebUri()`로 정규화 후 WebView에 로드한다.
+또한 `DeepLinkConfig.resolveToAppTarget(mode: cold|warm)`로 라우트 매핑을 분리해 추적한다.
 
 ### 허용 스킴
 
@@ -31,6 +32,17 @@
 - **외부 URL/앱 위임**
   - WebView navigation 시 비 http(s) 스킴
   - `url_launcher`로 외부 앱 실행
+
+## 2-1) 딥링크 라우트 매핑 테이블
+
+- `/` -> Home
+- `/chat` -> Chat list
+- `/chat/:id` -> Chat room
+- `/mypage` -> MyPage
+- `/settings` -> Settings
+- unknown/invalid path -> `/` (safe fallback)
+
+`intoss-private://...`는 `path` 쿼리를 우선 사용하고, 없으면 path를 사용한다.
 
 ## 3) 브릿지 인터페이스 초안
 
