@@ -90,7 +90,7 @@ jobs:
         run: |
           SHOULD_DEPLOY="true"
 
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.deploy }}" != "true" ]; then
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ github.event.inputs.deploy || 'true' }}" != "true" ]; then
             SHOULD_DEPLOY="false"
           fi
 
@@ -145,9 +145,9 @@ jobs:
             echo "## ✅ Flutter 기반 AIT 배포 완료"
             echo ""
             echo "- CI chain: pub get → analyze → test → build web"
-            echo "- AIT bundle: \\`takealook.ait\\`"
-            echo "- Flutter web artifact: \\`flutter/build/web\\`"
-            echo "- Scheme: \\`${{ steps.deploy.outputs.scheme }}\\`"
+            echo "- AIT bundle: takealook.ait"
+            echo "- Flutter web artifact: flutter/build/web"
+            echo "- Scheme: ${{ steps.deploy.outputs.scheme }}"
             echo "- QR URL: ${{ steps.qr.outputs.qr_url }}"
             echo ""
             echo "![Deploy QR](${{ steps.qr.outputs.qr_url }})"
@@ -175,11 +175,7 @@ jobs:
 
           MSG="✅ Flutter AIT 배포 완료\n- scheme: ${{ steps.deploy.outputs.scheme }}\n- qr: ${{ steps.qr.outputs.qr_url }}\n- run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           export MSG
-          PAYLOAD=$(python3 - <<'PY'
-import json, os
-print(json.dumps({"username":"떼껄룩봇","content":os.environ["MSG"]}, ensure_ascii=False))
-PY
-)
+          PAYLOAD=$(python3 -c 'import json, os; print(json.dumps({"username":"떼껄룩봇","content":os.environ["MSG"]}, ensure_ascii=False))')
           curl -sS -X POST "$DISCORD_WEBHOOK_URL" \
             -H 'Content-Type: application/json' \
             -d "$PAYLOAD"
@@ -196,11 +192,7 @@ PY
 
           MSG="❌ Flutter AIT 배포 실패\n- job: ${{ github.job }}\n- run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\n- 원인 확인: failed step logs"
           export MSG
-          PAYLOAD=$(python3 - <<'PY'
-import json, os
-print(json.dumps({"username":"떼껄룩봇","content":os.environ["MSG"]}, ensure_ascii=False))
-PY
-)
+          PAYLOAD=$(python3 -c 'import json, os; print(json.dumps({"username":"떼껄룩봇","content":os.environ["MSG"]}, ensure_ascii=False))')
           curl -sS -X POST "$DISCORD_WEBHOOK_URL" \
             -H 'Content-Type: application/json' \
             -d "$PAYLOAD"
