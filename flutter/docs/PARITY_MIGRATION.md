@@ -26,14 +26,13 @@
 
 ## Next implementation tasks
 
-1. Auth token store/refresh/unauthorized event hookup (현재: 로그인 Native baseline + 성공/실패/재시도/disabled + smoke test)
-2. Chat API integration + reconnect UX (현재: 목록/상세 Native baseline + 전송/실패/재전송/재전송 UX)
-3. MyPage API wiring 마무리 (현재는 Native UI + 저장/실패/인증만료 fallback baseline)
-4. Settings API persistence wiring (server sync)
-5. Bridge timeout/error contract implementation
-6. E2E + API contract snapshot
+1. Auth token store/refresh/unauthorized event hookup
+2. Chat API integration + reconnect UX
+3. MyPage/Settings real API wiring + error handling
+4. Bridge timeout/error contract implementation
+5. E2E + API contract snapshot
 
 ## Architecture status (Issue #197)
 
-- [ ] `data/domain/presentation` 템플릿 보강(기능별 골격 확정)
-- [ ] DI/라우팅 규칙 문서 링크 정리
+- [x] `data/domain/presentation` 템플릿 보강(기능별 골격 확정)
+- [x] DI/라우팅 규칙 문서 링크 정리
