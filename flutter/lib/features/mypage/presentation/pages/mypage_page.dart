@@ -86,7 +86,8 @@ class _MyPagePageState extends State<MyPagePage> {
     if (_loading) {
       return Scaffold(
         appBar: AppBar(title: const Text('마이페이지')),
-        body: const LoadingPlaceholder(showCard: true, message: '프로필 불러오는 중...'),
+        body:
+            const LoadingPlaceholder(showCard: true, message: '프로필 불러오는 중...'),
       );
     }
 

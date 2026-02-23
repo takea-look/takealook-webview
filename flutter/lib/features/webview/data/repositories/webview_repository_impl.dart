@@ -1,0 +1,3 @@
+class WebviewRepositoryImpl {
+  const WebviewRepositoryImpl();
+}

@@ -1,0 +1,3 @@
+class WebviewViewModel {
+  const WebviewViewModel();
+}

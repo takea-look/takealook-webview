@@ -1,0 +1,3 @@
+class ChatRepositoryImpl {
+  const ChatRepositoryImpl();
+}

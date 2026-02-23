@@ -1,0 +1,3 @@
+class MypageUseCase {
+  const MypageUseCase();
+}

@@ -35,5 +35,5 @@
 
 ## Architecture status (Issue #197)
 
-- [ ] `data/domain/presentation` 템플릿 보강(기능별 골격 확정)
-- [ ] DI/라우팅 규칙 문서 링크 정리
+- [x] `data/domain/presentation` 템플릿 보강(기능별 골격 확정)
+- [x] DI/라우팅 규칙 문서 링크 정리

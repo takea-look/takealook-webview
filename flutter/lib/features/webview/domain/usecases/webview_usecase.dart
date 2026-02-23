@@ -1,0 +1,3 @@
+class WebviewUseCase {
+  const WebviewUseCase();
+}

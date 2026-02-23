@@ -19,7 +19,10 @@ class _LoginPageState extends State<LoginPage> {
   int _failureCount = 0;
   AppErrorCase? _errorCase;
 
-  bool get _disabled => _idController.text.trim().isEmpty || _pwController.text.trim().isEmpty || _loading;
+  bool get _disabled =>
+      _idController.text.trim().isEmpty ||
+      _pwController.text.trim().isEmpty ||
+      _loading;
 
   Future<void> _login() async {
     if (_disabled) return;
@@ -78,9 +81,12 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text('TakeaLook', style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w700)),
+              Text('TakeaLook',
+                  style: theme.textTheme.headlineSmall
+                      ?.copyWith(fontWeight: FontWeight.w700)),
               const SizedBox(height: 8),
-              Text('기존 Web 로그인 UX를 Flutter Native로 이관한 1차 화면입니다.', style: theme.textTheme.bodyMedium),
+              Text('기존 Web 로그인 UX를 Flutter Native로 이관한 1차 화면입니다.',
+                  style: theme.textTheme.bodyMedium),
               const SizedBox(height: 20),
               TextField(
                 controller: _idController,

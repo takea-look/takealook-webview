@@ -1,0 +1,3 @@
+class AuthUseCase {
+  const AuthUseCase();
+}

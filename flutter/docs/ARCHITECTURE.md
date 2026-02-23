@@ -62,7 +62,7 @@ DI(의존성 주입)은 `core/di/service_locator.dart`에서 중앙 등록 후,
 ## 6) Issue #197 completion criteria
 
 - [x] `flutter/lib`를 `core/shared/features`로 표준화 유지
-- [ ] feature별 기본 구조 템플릿 정리 (`data/domain/presentation`)
+- [x] feature별 기본 구조 템플릿 정리 (`data/domain/presentation`)
 - [ ] 네이밍 컨벤션 문서화
-- [ ] DI 엔트리 포인트 확정
+- [x] DI 엔트리 포인트 확정
 - [ ] 문서화(`flutter/docs/ARCHITECTURE.md`) 완료

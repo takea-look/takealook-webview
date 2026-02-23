@@ -1,0 +1,3 @@
+class AuthViewModel {
+  const AuthViewModel();
+}

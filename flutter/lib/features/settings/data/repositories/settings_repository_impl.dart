@@ -1,0 +1,3 @@
+class SettingsRepositoryImpl {
+  const SettingsRepositoryImpl();
+}
