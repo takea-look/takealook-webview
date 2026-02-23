@@ -128,10 +128,14 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Notify Discord channel (optional)
-        if: ${{ secrets.DISCORD_WEBHOOK_URL != '' }}
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: |
+          if [ -z "$DISCORD_WEBHOOK_URL" ]; then
+            echo "DISCORD_WEBHOOK_URL not set. Skip Discord notification."
+            exit 0
+          fi
+
           PAYLOAD=$(jq -n \
             --arg scheme '${{ steps.deploy.outputs.scheme }}' \
             --arg qr '${{ steps.qr.outputs.qr_url }}' \
