@@ -44,9 +44,19 @@ class DeepLinkConfig {
     if (incoming == null) return base;
 
     final target = resolveToAppTarget(incoming, mode: DeepLinkStartMode.cold);
+
+    Map<String, String>? query;
+    if (incoming.scheme == 'takealook') {
+      query = Map<String, String>.from(incoming.queryParameters)..remove('path');
+    } else if (incoming.scheme == 'http' || incoming.scheme == 'https') {
+      query = incoming.queryParameters.isEmpty ? null : Map<String, String>.from(incoming.queryParameters);
+    } else if (incoming.scheme == 'intoss-private') {
+      query = Map<String, String>.from(incoming.queryParameters)..remove('path');
+    }
+
     return base.replace(
       path: target.path,
-      queryParameters: target.params.isEmpty ? null : target.params,
+      queryParameters: query == null || query.isEmpty ? null : query,
     );
   }
 
