@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/theme/tds_theme.dart';
+
 class ChatRoomPage extends StatefulWidget {
   const ChatRoomPage({super.key, required this.roomId});
 
@@ -121,14 +123,16 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('채팅방 #${widget.roomId}')),
+      appBar: AppBar(
+          title: Text('채팅방 #${widget.roomId}', style: TdsTypography.title)),
       body: Column(
         children: [
           Expanded(
             child: ListView.builder(
               controller: _scrollController,
               cacheExtent: 900,
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+              padding: const EdgeInsets.symmetric(
+                  horizontal: TdsSpacing.lg, vertical: TdsSpacing.lg),
               itemCount: _messages.length,
               itemBuilder: (context, index) {
                 final item = _messages[index];
@@ -144,7 +148,8 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
           SafeArea(
             top: false,
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(12, 8, 12, 12),
+              padding: const EdgeInsets.fromLTRB(
+                  TdsSpacing.md, TdsSpacing.sm, TdsSpacing.md, TdsSpacing.md),
               child: Row(
                 children: [
                   Expanded(
@@ -152,16 +157,14 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                       controller: _controller,
                       minLines: 1,
                       maxLines: 3,
-                      decoration: const InputDecoration(
-                        hintText: '메시지 입력',
-                        border: OutlineInputBorder(),
-                      ),
+                      decoration: TdsComponentStyles.inputDecoration(hint: '메시지 입력'),
                       onSubmitted: (_) => _sendMessage(),
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: TdsSpacing.sm),
                   FilledButton(
                     onPressed: _sendMessage,
+                    style: TdsComponentStyles.primaryButton(),
                     child: const Text('전송'),
                   ),
                 ],
@@ -183,7 +186,7 @@ class _MessageBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final align = message.mine ? Alignment.centerRight : Alignment.centerLeft;
-    final bg = message.mine ? const Color(0xFFDCEBFF) : Colors.white;
+    final bg = message.mine ? TdsColor.bubbleMine : TdsColor.white;
 
     final prefix = switch (message.type) {
       _MessageType.image => '🖼 ',
@@ -200,19 +203,20 @@ class _MessageBubble extends StatelessWidget {
     return Align(
       alignment: align,
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 6),
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        margin: const EdgeInsets.symmetric(vertical: TdsSpacing.xs),
+        padding: const EdgeInsets.symmetric(
+            horizontal: TdsSpacing.md, vertical: TdsSpacing.md),
         constraints: const BoxConstraints(maxWidth: 280),
         decoration: BoxDecoration(
           color: bg,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: const Color(0xFFE5E8EB)),
+          borderRadius: BorderRadius.circular(TdsRadius.md),
+          border: Border.all(color: TdsColor.line),
         ),
         child: Column(
           crossAxisAlignment:
               message.mine ? CrossAxisAlignment.end : CrossAxisAlignment.start,
           children: [
-            Text('$prefix${message.text}'),
+            Text('$prefix${message.text}', style: TdsTypography.body),
             const SizedBox(height: 6),
             Row(
               mainAxisSize: MainAxisSize.min,
@@ -222,12 +226,12 @@ class _MessageBubble extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 11,
                     color: message.status == _SendStatus.failed
-                        ? Colors.red
-                        : Colors.grey.shade600,
+                        ? TdsColor.error
+                        : TdsColor.textTertiary,
                   ),
                 ),
                 if (onRetry != null) ...[
-                  const SizedBox(width: 8),
+                  const SizedBox(width: TdsSpacing.sm),
                   TextButton(
                     onPressed: onRetry,
                     style: TextButton.styleFrom(

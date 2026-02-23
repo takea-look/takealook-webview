@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/auth/auth_session_manager.dart';
 import '../../../../core/di/service_locator.dart';
+import '../../../../core/theme/tds_theme.dart';
 import '../../../../features/auth/data/auth_api.dart';
 import '../../../../shared/widgets/state_placeholders.dart';
 
@@ -39,7 +40,10 @@ class _LoginPageState extends State<LoginPage> {
     _auth.restoreSession();
   }
 
-  bool get _disabled => _idController.text.trim().isEmpty || _pwController.text.trim().isEmpty || _loading;
+  bool get _disabled =>
+      _idController.text.trim().isEmpty ||
+      _pwController.text.trim().isEmpty ||
+      _loading;
 
   Future<void> _login() async {
     if (_disabled) return;
@@ -115,53 +119,49 @@ class _LoginPageState extends State<LoginPage> {
     final theme = Theme.of(context);
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: TdsColor.white,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: const EdgeInsets.symmetric(horizontal: TdsSpacing.lg),
           child: Column(
             children: [
               Expanded(
                 child: ListView(
                   children: [
-                    const SizedBox(height: 40),
+                    const SizedBox(height: TdsSpacing.xxl),
                     Center(
                       child: Container(
                         width: 80,
                         height: 80,
                         decoration: BoxDecoration(
-                          color: const Color(0xFF3182F6).withOpacity(0.06),
+                          color: TdsColor.primaryBlue.withOpacity(0.06),
                           borderRadius: BorderRadius.circular(26),
                         ),
                         alignment: Alignment.center,
-                        child: const Icon(Icons.camera_alt_rounded, color: Color(0xFF3182F6), size: 38),
+                        child: const Icon(Icons.camera_alt_rounded, color: TdsColor.primaryBlue, size: 38),
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: TdsSpacing.lg),
                     const Center(
                       child: Text(
                         '떼껄룩에 로그인하세요',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF191F28),
-                        ),
+                        style: TdsTypography.heading,
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: TdsSpacing.sm),
                     const Center(
                       child: Text(
                         'ID/PW로 로그인할 수 있어요',
-                        style: TextStyle(fontSize: 15, color: Color(0xFF8B95A1)),
+                        style: TdsTypography.body,
                       ),
                     ),
-                    const SizedBox(height: 32),
+                    const SizedBox(height: TdsSpacing.xl),
                     Container(
-                      padding: const EdgeInsets.all(18),
+                      padding: const EdgeInsets.all(TdsSpacing.lg),
                       decoration: BoxDecoration(
                         color: const Color(0xFFFCFCFD),
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(color: const Color(0xFFF2F4F6)),
+                        borderRadius: BorderRadius.circular(TdsRadius.lg),
+                        border: Border.all(color: TdsColor.line),
                       ),
                       child: Column(
                         children: [
@@ -170,33 +170,23 @@ class _LoginPageState extends State<LoginPage> {
                             textInputAction: TextInputAction.next,
                             onChanged: (_) => setState(() {}),
                             enabled: !_loading,
-                            decoration: const InputDecoration(
-                              hintText: '아이디',
-                              border: OutlineInputBorder(),
-                            ),
+                            decoration: TdsComponentStyles.inputDecoration(hint: '아이디'),
                           ),
-                          const SizedBox(height: 10),
+                          const SizedBox(height: TdsSpacing.sm),
                           TextField(
                             controller: _pwController,
                             obscureText: true,
                             enabled: !_loading,
                             onChanged: (_) => setState(() {}),
                             onSubmitted: (_) => _login(),
-                            decoration: const InputDecoration(
-                              hintText: '비밀번호',
-                              border: OutlineInputBorder(),
-                            ),
+                            decoration: TdsComponentStyles.inputDecoration(hint: '비밀번호'),
                           ),
-                          const SizedBox(height: 12),
+                          const SizedBox(height: TdsSpacing.md),
                           SizedBox(
                             width: double.infinity,
-                            child: FilledButton(
-                              style: FilledButton.styleFrom(
-                                minimumSize: const Size.fromHeight(46),
-                                backgroundColor: const Color(0xFF191F28),
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                              ),
+                            child: ElevatedButton(
                               onPressed: _disabled ? null : _login,
+                              style: TdsComponentStyles.primaryButton(),
                               child: Text(_loading ? '로그인 중...' : 'ID/PW로 로그인'),
                             ),
                           ),
@@ -204,12 +194,12 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     if (_errorCase != null) ...[
-                      const SizedBox(height: 16),
+                      const SizedBox(height: TdsSpacing.md),
                       Text(
                         _errorMessage ?? '로그인에 실패했습니다.',
-                        style: theme.textTheme.bodyMedium?.copyWith(color: Colors.red.shade700),
+                        style: theme.textTheme.bodyMedium?.copyWith(color: TdsColor.error),
                       ),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: TdsSpacing.md),
                       RecoveryErrorPlaceholder(
                         errorCase: _errorCase!,
                         failureCount: _failureCount,
@@ -217,13 +207,13 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ],
 
-                    const SizedBox(height: 20),
+                    const SizedBox(height: TdsSpacing.lg),
                     Container(
-                      padding: const EdgeInsets.all(12),
+                      padding: const EdgeInsets.all(TdsSpacing.md),
                       decoration: BoxDecoration(
                         color: const Color(0xFFFFF4E5),
-                        border: Border.all(color: const Color(0xFFFF9800), width: 2),
-                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: TdsColor.warning, width: 2),
+                        borderRadius: BorderRadius.circular(TdsRadius.md),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -232,12 +222,12 @@ class _LoginPageState extends State<LoginPage> {
                             'UI Probe Panel (디버그)',
                             style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
                           ),
-                          const SizedBox(height: 10),
+                          const SizedBox(height: TdsSpacing.sm),
                           const Text(
                             '이 패널이 보이면 Flutter 렌더링은 정상입니다.',
-                            style: TextStyle(fontSize: 12),
+                            style: TdsTypography.small,
                           ),
-                          const SizedBox(height: 10),
+                          const SizedBox(height: TdsSpacing.sm),
                           Row(
                             children: [
                               Expanded(
@@ -246,7 +236,7 @@ class _LoginPageState extends State<LoginPage> {
                                   child: const Text('Outlined'),
                                 ),
                               ),
-                              const SizedBox(width: 8),
+                              const SizedBox(width: TdsSpacing.sm),
                               Expanded(
                                 child: ElevatedButton(
                                   onPressed: () {},
@@ -255,22 +245,22 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 8),
+                          const SizedBox(height: TdsSpacing.sm),
                           SwitchListTile.adaptive(
                             dense: true,
                             contentPadding: EdgeInsets.zero,
-                            title: const Text('Switch Test'),
+                            title: const Text('Switch Test', style: TdsTypography.body),
                             value: _probeSwitch,
                             onChanged: (v) => setState(() => _probeSwitch = v),
                           ),
                           CheckboxListTile(
                             dense: true,
                             contentPadding: EdgeInsets.zero,
-                            title: const Text('Checkbox Test'),
+                            title: const Text('Checkbox Test', style: TdsTypography.body),
                             value: _probeCheck,
                             onChanged: (v) => setState(() => _probeCheck = v ?? false),
                           ),
-                          const SizedBox(height: 8),
+                          const SizedBox(height: TdsSpacing.sm),
                           DropdownButtonFormField<String>(
                             value: _probeDropdown,
                             items: const [
@@ -278,13 +268,10 @@ class _LoginPageState extends State<LoginPage> {
                               DropdownMenuItem(value: 'B', child: Text('Option B')),
                             ],
                             onChanged: (v) => setState(() => _probeDropdown = v ?? 'A'),
-                            decoration: const InputDecoration(
-                              labelText: 'Dropdown Test',
-                              border: OutlineInputBorder(),
-                            ),
+                            decoration: TdsComponentStyles.inputDecoration(hint: 'Dropdown Test'),
                           ),
-                          const SizedBox(height: 8),
-                          Text('Slider: ${_probeSlider.toStringAsFixed(0)}'),
+                          const SizedBox(height: TdsSpacing.sm),
+                          Text('Slider: ${_probeSlider.toStringAsFixed(0)}', style: TdsTypography.body),
                           Slider(
                             value: _probeSlider,
                             min: 0,
@@ -294,7 +281,7 @@ class _LoginPageState extends State<LoginPage> {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: TdsSpacing.lg),
                   ],
                 ),
               ),
