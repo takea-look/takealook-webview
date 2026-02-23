@@ -16,7 +16,7 @@ void main() {
     final listFinder = find.byType(ListView);
     await tester.drag(listFinder.first, const Offset(0, 300));
     await tester.pump();
-    await tester.pump(const Duration(milliseconds: 300));
+    await tester.pumpAndSettle(const Duration(milliseconds: 500));
 
     expect(find.textContaining('채팅방'), findsWidgets);
   });
