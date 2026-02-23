@@ -140,6 +140,7 @@ flutter build apk --debug
 
 ## 문서
 
+- 런타임 엔트리 정책(Flutter): `docs/RUNTIME_ENTRY.md`
 - E2E 테스트 플랜: `docs/E2E_TEST_PLAN.md`
 - Flutter CI/배포 파이프라인: `docs/CI_PIPELINE.md`
 - 백로그 문서: `docs/OPEN_ISSUE_BACKLOG.md`
