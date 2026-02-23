@@ -47,7 +47,8 @@ class _WebviewPageState extends State<WebviewPage> {
 
     _bridgeAdapter.init();
 
-    final initialTarget = DeepLinkConfig.resolveToInitialWebUri(widget.initialUri);
+    final initialTarget =
+        DeepLinkConfig.resolveToInitialWebUri(widget.initialUri);
     final initialRouteTarget = DeepLinkConfig.resolveToAppTarget(
       widget.initialUri,
       mode: DeepLinkStartMode.cold,
@@ -92,7 +93,8 @@ class _WebviewPageState extends State<WebviewPage> {
           },
           onWebResourceError: (error) {
             final errorCase = _classifyError(error);
-            _logDev('error(${error.errorCode}): ${error.description} -> $errorCase');
+            _logDev(
+                'error(${error.errorCode}): ${error.description} -> $errorCase');
             if (!mounted) return;
             setState(() {
               _hasError = true;

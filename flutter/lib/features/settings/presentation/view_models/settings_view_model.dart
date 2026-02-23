@@ -1,0 +1,3 @@
+class SettingsViewModel {
+  const SettingsViewModel();
+}

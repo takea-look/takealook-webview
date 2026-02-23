@@ -3,13 +3,17 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'app/takealook_app.dart';
+import 'core/di/service_locator.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
   FlutterError.onError = (details) {
-    Zone.current.handleUncaughtError(details.exception, details.stack ?? StackTrace.empty);
+    Zone.current.handleUncaughtError(
+        details.exception, details.stack ?? StackTrace.empty);
   };
+
+  setupDependencies();
 
   runZonedGuarded(
     () => runApp(const TakeaLookApp()),

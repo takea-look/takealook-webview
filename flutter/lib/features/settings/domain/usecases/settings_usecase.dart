@@ -1,0 +1,3 @@
+class SettingsUseCase {
+  const SettingsUseCase();
+}

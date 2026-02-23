@@ -1,0 +1,3 @@
+class WebviewState {
+  const WebviewState();
+}

@@ -108,7 +108,8 @@ class _ChatListPageState extends State<ChatListPage> {
     if (_loading) {
       return Scaffold(
         appBar: AppBar(title: const Text('채팅방 목록')),
-        body: const LoadingPlaceholder(showCard: true, message: '채팅방 불러오는 중...'),
+        body:
+            const LoadingPlaceholder(showCard: true, message: '채팅방 불러오는 중...'),
       );
     }
 
@@ -151,18 +152,22 @@ class _ChatListPageState extends State<ChatListPage> {
               leading: CircleAvatar(child: Text(room.name.substring(0, 1))),
               title: Row(
                 children: [
-                  Expanded(child: Text(room.name, overflow: TextOverflow.ellipsis)),
-                  Text(room.timeLabel, style: Theme.of(context).textTheme.bodySmall),
+                  Expanded(
+                      child: Text(room.name, overflow: TextOverflow.ellipsis)),
+                  Text(room.timeLabel,
+                      style: Theme.of(context).textTheme.bodySmall),
                 ],
               ),
-              subtitle: Text(room.lastMessage, maxLines: 1, overflow: TextOverflow.ellipsis),
+              subtitle: Text(room.lastMessage,
+                  maxLines: 1, overflow: TextOverflow.ellipsis),
               trailing: room.unread > 0
                   ? CircleAvatar(
                       radius: 11,
                       backgroundColor: Colors.red,
                       child: Text(
                         '${room.unread}',
-                        style: const TextStyle(fontSize: 11, color: Colors.white),
+                        style:
+                            const TextStyle(fontSize: 11, color: Colors.white),
                       ),
                     )
                   : null,

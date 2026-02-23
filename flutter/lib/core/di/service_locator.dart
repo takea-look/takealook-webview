@@ -1,14 +1,21 @@
 import 'package:flutter/foundation.dart';
 
-/// App-level dependency entrypoint.
-///
-/// Keep this lightweight: avoid pulling in global state management libs now.
-/// When a feature grows, register factories/services here and inject
-/// via constructors from feature-level composition points.
-class ServiceLocator {
-  static final ServiceLocator _instance = ServiceLocator._internal();
+import '../config/env.dart';
 
-  ServiceLocator._internal();
+class AppDependencies {
+  const AppDependencies({
+    required this.feBaseUrl,
+    required this.apiBaseUrl,
+  });
+
+  final String feBaseUrl;
+  final String apiBaseUrl;
+}
+
+class ServiceLocator {
+  ServiceLocator._();
+
+  static final ServiceLocator _instance = ServiceLocator._();
 
   static ServiceLocator get instance => _instance;
 
@@ -34,9 +41,17 @@ class ServiceLocator {
 }
 
 void setupDependencies() {
-  // TODO(issue-197): add cross-cutting core dependencies.
+  final locator = ServiceLocator.instance;
+  if (!locator.has<AppDependencies>()) {
+    locator.registerSingleton<AppDependencies>(
+      const AppDependencies(
+        feBaseUrl: Env.feBaseUrl,
+        apiBaseUrl: Env.apiBaseUrl,
+      ),
+    );
+  }
+
   if (kDebugMode) {
-    // Keep a lightweight boot log for architecture migration visibility.
     // ignore: avoid_print
     print('ServiceLocator initialized');
   }

@@ -1,0 +1,3 @@
+class MypageViewModel {
+  const MypageViewModel();
+}
