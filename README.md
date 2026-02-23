@@ -1,6 +1,14 @@
 # takealook-webview
 
-takealook WebView 프로젝트입니다. **현재 메인은 Flutter(`flutter/`) 기준으로 운영**하며, 기존 React Web 코드는 병행 유지합니다.
+takealook WebView 프로젝트입니다.
+
+## ⚠️ 운영 원칙 (중요)
+
+- 이 저장소의 **공식 메인 런타임은 Flutter(`flutter/`)** 입니다.
+- `src/`는 **Legacy React (유지보수 전용)** 입니다.
+- 신규 기능/구조 변경은 `flutter/` 기준으로만 진행합니다.
+
+자세한 구조 정책: `docs/REPOSITORY_STRUCTURE.md`
 
 ## Flutter 메인 개발 (권장)
 
@@ -19,7 +27,7 @@ GitHub Actions도 Flutter 기준으로 동작합니다.
 - Node.js 20+
 - npm 10+
 
-## 빠른 시작 (로컬 실행)
+## 빠른 시작 (Legacy React 로컬 실행)
 
 ```bash
 # 1) 의존성 설치
@@ -121,9 +129,14 @@ npm run build
 PR 전에 아래를 반드시 실행하세요.
 
 ```bash
-npm run lint
-npm run build
+cd flutter
+flutter pub get
+flutter analyze
+flutter test
+flutter build apk --debug
 ```
+
+> 레거시 React(`src/`) 수정이 있는 경우에만 추가로 `npm run lint`, `npm run build`를 수행합니다.
 
 ## 문서
 
