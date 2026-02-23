@@ -26,8 +26,8 @@
 
 ## Next implementation tasks
 
-1. Auth token store/refresh/unauthorized event hookup (현재: 로그인 Native baseline + 성공/실패/재시도/disabled + smoke test)
-2. Chat API integration + reconnect UX (현재: 목록/상세 Native baseline + 전송/실패/재전송/재전송 UX)
+1. Auth token store/refresh/unauthorized event hookup (현재: AuthSessionManager + TokenStore + 401 throttle + 상태전이 테스트)
+2. Chat API integration + reconnect UX (현재: 목록/상세 Native baseline + 전송/실패/재전송 UX)
 3. MyPage API wiring 마무리 (현재는 Native UI + 저장/실패/인증만료 fallback baseline)
 4. Settings API persistence wiring (server sync)
 5. Bridge timeout/error contract implementation
