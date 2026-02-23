@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../core/router/app_router.dart';
+import '../core/theme/tds_theme.dart';
 
 class TakeaLookApp extends StatelessWidget {
   const TakeaLookApp({super.key});
@@ -10,10 +11,7 @@ class TakeaLookApp extends StatelessWidget {
     return MaterialApp(
       title: 'TakeaLook',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF3D5AFE)),
-        useMaterial3: true,
-      ),
+      theme: TdsTheme.light(),
       onGenerateRoute: AppRouter.onGenerateRoute,
       initialRoute: AppRouter.initialRoute,
     );
