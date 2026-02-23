@@ -1,4 +1,4 @@
-name: Flutter Android Build
+name: Flutter AIT Build & Deploy
 
 on:
   push:
@@ -9,17 +9,13 @@ permissions:
   contents: read
 
 concurrency:
-  group: flutter-build-${{ github.ref }}
+  group: flutter-ait-deploy-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  build-android:
+  build-and-deploy-ait:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
-
-    defaults:
-      run:
-        working-directory: flutter
+    timeout-minutes: 40
 
     steps:
       - name: Checkout
@@ -37,32 +33,98 @@ jobs:
           channel: stable
           cache: true
 
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
       - name: Flutter pub get
+        working-directory: flutter
         run: flutter pub get
 
       - name: Flutter analyze
+        working-directory: flutter
         run: flutter analyze
 
       - name: Flutter test
+        working-directory: flutter
         run: flutter test
 
-      - name: Build Android debug APK
-        run: flutter build apk --debug
+      - name: Build Flutter web release
+        working-directory: flutter
+        run: flutter build web --release
 
-      - name: Upload APK artifact
+      - name: Sync Flutter web bundle to Vite public
+        run: |
+          rm -rf public/flutter
+          mkdir -p public/flutter
+          cp -R flutter/build/web/. public/flutter/
+
+      - name: Install web dependencies
+        run: npm ci
+
+      - name: Build AIT bundle (Vite + ait)
+        env:
+          VITE_DEBUG_AUTH_FLOW: "true"
+        run: npm run build
+
+      - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: flutter-app-debug-apk
-          path: flutter/build/app/outputs/flutter-apk/app-debug.apk
+          name: takealook-artifacts
+          path: |
+            takealook.ait
+            flutter/build/web
+
+      - name: Deploy to Apps in Toss
+        id: deploy
+        env:
+          TOSS_KEY: ${{ secrets.TOSS_KEY }}
+        run: |
+          set -eo pipefail
+          if [ -z "$TOSS_KEY" ]; then
+            echo "TOSS_KEY secret is not set"
+            exit 1
+          fi
+
+          npx ait deploy --api-key "$TOSS_KEY" | tee deploy.log
+
+          SCHEME=$(grep -Eo 'intoss-private://[^[:space:]]+' deploy.log | tail -n 1 | sed -E 's/\x1B\[[0-9;]*[mK]//g' || true)
+          if [ -z "$SCHEME" ]; then
+            echo "Failed to extract intoss-private scheme from deploy output"
+            cat deploy.log
+            exit 1
+          fi
+
+          echo "scheme=$SCHEME" >> "$GITHUB_OUTPUT"
+
+      - name: Build QR URL and PNG
+        id: qr
+        run: |
+          SCHEME='${{ steps.deploy.outputs.scheme }}'
+          ENCODED=$(node -e "console.log(encodeURIComponent(process.argv[1]))" "$SCHEME")
+          QR_URL="https://quickchart.io/qr?size=420&text=${ENCODED}"
+          echo "qr_url=$QR_URL" >> "$GITHUB_OUTPUT"
+          curl -fsSL "$QR_URL" -o takealook-deploy-qr.png
+
+      - name: Upload QR artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: takealook-deploy-qr
+          path: takealook-deploy-qr.png
 
       - name: Write workflow summary
         run: |
           {
-            echo "## ✅ Flutter Android build completed"
+            echo "## ✅ Flutter 기반 AIT 배포 완료"
             echo ""
-            echo "- analyze: passed"
-            echo "- test: passed"
-            echo "- apk: flutter/build/app/outputs/flutter-apk/app-debug.apk"
+            echo "- Flutter analyze/test/web build: passed"
+            echo "- AIT bundle: `takealook.ait`"
+            echo "- Scheme: `${{ steps.deploy.outputs.scheme }}`"
+            echo "- QR URL: ${{ steps.qr.outputs.qr_url }}"
+            echo ""
+            echo "![Deploy QR](${{ steps.qr.outputs.qr_url }})"
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Notify Discord channel (optional)
@@ -70,18 +132,26 @@ jobs:
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: |
-          PAYLOAD=$(jq -n '{
-            username: "떼껄룩봇",
-            content: "✅ Flutter Android build 완료 (main)",
-            embeds: [
-              {
-                color: 5763719,
-                title: "takealook-webview Flutter CI",
-                description: "analyze/test/build(apk) 모두 통과",
-                footer: { text: "GitHub Actions" }
-              }
-            ]
-          }')
+          PAYLOAD=$(jq -n \
+            --arg scheme '${{ steps.deploy.outputs.scheme }}' \
+            --arg qr '${{ steps.qr.outputs.qr_url }}' \
+            '{
+              username: "떼껄룩봇",
+              content: ("✅ **Flutter AIT 배포 완료**\n`" + $scheme + "`") ,
+              embeds: [
+                {
+                  color: 5763719,
+                  title: "takealook-webview Flutter AIT",
+                  description: "Flutter web 빌드 + AIT 번들 + 배포 완료",
+                  fields: [
+                    { name: "Scheme", value: ("`" + $scheme + "`") },
+                    { name: "Open via QR", value: ("[QR 열기](" + $qr + ")") }
+                  ],
+                  image: { url: $qr },
+                  footer: { text: "GitHub Actions" }
+                }
+              ]
+            }')
 
           curl -sS -X POST "$DISCORD_WEBHOOK_URL" \
             -H 'Content-Type: application/json' \
