@@ -135,6 +135,8 @@ class _ChatListPageState extends State<ChatListPage> {
       body: RefreshIndicator(
         onRefresh: _refresh,
         child: ListView.separated(
+          cacheExtent: 800,
+          itemExtent: 84,
           itemCount: _rooms.length + 1,
           separatorBuilder: (_, __) => const Divider(height: 1),
           itemBuilder: (context, i) {
