@@ -84,9 +84,9 @@ class _MyPagePageState extends State<MyPagePage> {
   @override
   Widget build(BuildContext context) {
     if (_loading) {
-      return const Scaffold(
-        appBar: AppBar(title: Text('마이페이지')),
-        body: LoadingPlaceholder(showCard: true, message: '프로필 불러오는 중...'),
+      return Scaffold(
+        appBar: AppBar(title: const Text('마이페이지')),
+        body: const LoadingPlaceholder(showCard: true, message: '프로필 불러오는 중...'),
       );
     }
 
