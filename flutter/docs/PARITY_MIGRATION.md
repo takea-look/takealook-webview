@@ -36,4 +36,5 @@
 ## Architecture status (Issue #197)
 
 - [ ] `data/domain/presentation` 템플릿 보강(기능별 골격 확정)
+- [x] API 클라이언트 + 공통 에러모델 + DI 등록 골격 반영
 - [ ] DI/라우팅 규칙 문서 링크 정리
