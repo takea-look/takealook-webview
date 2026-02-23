@@ -36,3 +36,12 @@ jobs:
 
       - name: Run web build
         run: npm run build
+
+      - name: Flutter analyze
+        run: flutter analyze --no-fatal-infos
+
+      - name: Flutter test
+        run: flutter test
+
+      - name: Flutter build web --release
+        run: flutter build web --release
