@@ -74,7 +74,15 @@ SDK 어댑터: `lib/core/bridge/apps_in_toss_bridge.dart`
 - `initFailed`: SDK 초기화 실패
 - `hostFailure`: 호스트 처리 실패
 
-## 4) 보안/품질 메모
+## 4) Lifecycle 정책 (Apps in Toss)
+
+- `LifecycleCoordinator`로 앱 lifecycle observer 관리
+- 백그라운드 -> 복귀(`resumed`) 시 refresh signal 발행
+- 중복 호출 방지: resume debounce(기본 2초)
+- 라우트 복원 정책: 현재 화면 유지(`restorationScopeId` 기반)
+- 이상 동작 로그 포인트: state change / debounce drop / resume refresh emit
+
+## 5) 보안/품질 메모
 
 - 운영 환경에서 민감정보 포함 로그 출력 금지
 - 상세 로그는 debug 모드에서만 출력
