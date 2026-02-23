@@ -48,6 +48,12 @@
 
 JavaScript channel 이름: `TakeaLookBridge`
 
+SDK 어댑터: `lib/core/bridge/apps_in_toss_bridge.dart`
+
+- init 시점/실패 로그 처리
+- requestId 기반 pending response 상관관계 처리
+- timeout 기본값(5s) 및 오류코드 표준화
+
 메시지 형식(JSON):
 
 ```json
@@ -62,9 +68,11 @@ JavaScript channel 이름: `TakeaLookBridge`
 
 ### 에러 코드 초안
 
-- `BRIDGE_INVALID_PAYLOAD`: JSON 파싱 실패/포맷 불일치
-- `BRIDGE_UNSUPPORTED_TYPE`: 정의되지 않은 type
-- `BRIDGE_TIMEOUT`: 앱-웹 브릿지 응답 타임아웃(추후)
+- `invalidPayload`: JSON 파싱 실패/포맷 불일치
+- `unsupportedType`: 정의되지 않은 type
+- `timeout`: 앱-웹 브릿지 응답 타임아웃
+- `initFailed`: SDK 초기화 실패
+- `hostFailure`: 호스트 처리 실패
 
 ## 4) 보안/품질 메모
 
