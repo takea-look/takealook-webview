@@ -173,9 +173,29 @@ jobs:
             exit 0
           fi
 
-          MSG="✅ Flutter AIT 배포 완료\n- scheme: ${{ steps.deploy.outputs.scheme }}\n- qr: ${{ steps.qr.outputs.qr_url }}\n- run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          export MSG
-          PAYLOAD=$(python3 -c 'import json, os; print(json.dumps({"username":"떼껄룩봇","content":os.environ["MSG"]}, ensure_ascii=False))')
+          PAYLOAD=$(jq -n \
+            --arg scheme '${{ steps.deploy.outputs.scheme }}' \
+            --arg qr '${{ steps.qr.outputs.qr_url }}' \
+            --arg runUrl 'https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}' \
+            '{
+              username: "떼껄룩봇",
+              content: "✅ **Flutter AIT 배포 완료**",
+              embeds: [
+                {
+                  color: 5763719,
+                  title: "takealook-webview 배포 결과",
+                  description: "Flutter 기반 AIT 번들 배포가 완료되었습니다.",
+                  fields: [
+                    { name: "Scheme", value: ("`" + $scheme + "`") },
+                    { name: "QR", value: ("[열기](" + $qr + ")") },
+                    { name: "Run", value: ("[GitHub Actions](" + $runUrl + ")") }
+                  ],
+                  image: { url: $qr },
+                  footer: { text: "takealook-webview / Flutter AIT" }
+                }
+              ]
+            }')
+
           curl -sS -X POST "$DISCORD_WEBHOOK_URL" \
             -H 'Content-Type: application/json' \
             -d "$PAYLOAD"
