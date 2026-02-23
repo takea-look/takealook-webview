@@ -1,4 +1,4 @@
-name: Build and Deploy .ait to Apps in Toss
+name: Flutter Android Build
 
 on:
   push:
@@ -9,115 +9,79 @@ permissions:
   contents: read
 
 concurrency:
-  group: ait-deploy-${{ github.ref }}
+  group: flutter-build-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  deploy-ait:
+  build-android:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
+
+    defaults:
+      run:
+        working-directory: flutter
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
         with:
-          node-version: 20
-          cache: npm
+          distribution: temurin
+          java-version: '17'
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
 
-      - name: Build .ait bundle
-        env:
-          VITE_DEBUG_AUTH_FLOW: "true"
-        run: npm run build
+      - name: Flutter pub get
+        run: flutter pub get
 
-      - name: Deploy to Apps in Toss
-        id: deploy
-        env:
-          TOSS_KEY: ${{ secrets.TOSS_KEY }}
-        run: |
-          set -eo pipefail
-          if [ -z "$TOSS_KEY" ]; then
-            echo "TOSS_KEY secret is not set"
-            exit 1
-          fi
+      - name: Flutter analyze
+        run: flutter analyze
 
-          npx ait deploy --api-key "$TOSS_KEY" | tee deploy.log
+      - name: Flutter test
+        run: flutter test
 
-          SCHEME=$(grep -Eo 'intoss-private://[^[:space:]]+' deploy.log | tail -n 1 | sed -E 's/\x1B\[[0-9;]*[mK]//g' || true)
-          if [ -z "$SCHEME" ]; then
-            echo "Failed to extract intoss-private scheme from deploy output"
-            cat deploy.log
-            exit 1
-          fi
+      - name: Build Android debug APK
+        run: flutter build apk --debug
 
-          echo "scheme=$SCHEME" >> "$GITHUB_OUTPUT"
-
-      - name: Build QR URL and PNG
-        id: qr
-        run: |
-          SCHEME='${{ steps.deploy.outputs.scheme }}'
-          ENCODED=$(node -e "console.log(encodeURIComponent(process.argv[1]))" "$SCHEME")
-          QR_URL="https://quickchart.io/qr?size=420&text=${ENCODED}"
-          echo "qr_url=$QR_URL" >> "$GITHUB_OUTPUT"
-
-          curl -fsSL "$QR_URL" -o takealook-deploy-qr.png
-
-      - name: Upload QR artifact
+      - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: takealook-deploy-qr
-          path: takealook-deploy-qr.png
+          name: flutter-app-debug-apk
+          path: flutter/build/app/outputs/flutter-apk/app-debug.apk
 
       - name: Write workflow summary
         run: |
           {
-            echo "## ✅ Apps in Toss deployment completed"
+            echo "## ✅ Flutter Android build completed"
             echo ""
-            echo "- **Scheme**: \`${{ steps.deploy.outputs.scheme }}\`"
-            echo "- **QR URL**: ${{ steps.qr.outputs.qr_url }}"
-            echo ""
-            echo "![Deploy QR](${{ steps.qr.outputs.qr_url }})"
+            echo "- analyze: passed"
+            echo "- test: passed"
+            echo "- apk: flutter/build/app/outputs/flutter-apk/app-debug.apk"
           } >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Require Discord webhook secret
+      - name: Notify Discord channel (optional)
+        if: ${{ secrets.DISCORD_WEBHOOK_URL != '' }}
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: |
-          if [ -z "$DISCORD_WEBHOOK_URL" ]; then
-            echo "DISCORD_WEBHOOK_URL secret is required"
-            exit 1
-          fi
-
-      - name: Notify Discord channel
-        env:
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-        run: |
-          PAYLOAD=$(jq -n \
-            --arg scheme '${{ steps.deploy.outputs.scheme }}' \
-            --arg qr '${{ steps.qr.outputs.qr_url }}' \
-            '{
-              username: "떼껄룩봇",
-              content: ("✅ **Apps in Toss 배포 완료**\n`" + $scheme + "`") ,
-              embeds: [
-                {
-                  color: 3447003,
-                  title: "takealook 최신 배포",
-                  description: "아래 링크로 바로 테스트 가능해요.",
-                  fields: [
-                    { name: "Scheme", value: ("`" + $scheme + "`") },
-                    { name: "Quick Launch", value: "Discord 정책상 custom scheme 링크(intoss-private://)는 클릭 링크로 지원 안됨" },
-                    { name: "Open via QR", value: ("[QR 열기](" + $qr + ")") }
-                  ],
-                  image: { url: $qr },
-                  footer: { text: "takealook-webview GitHub Actions" }
-                }
-              ]
-            }')
+          PAYLOAD=$(jq -n '{
+            username: "떼껄룩봇",
+            content: "✅ Flutter Android build 완료 (main)",
+            embeds: [
+              {
+                color: 5763719,
+                title: "takealook-webview Flutter CI",
+                description: "analyze/test/build(apk) 모두 통과",
+                footer: { text: "GitHub Actions" }
+              }
+            ]
+          }')
 
           curl -sS -X POST "$DISCORD_WEBHOOK_URL" \
             -H 'Content-Type: application/json' \
