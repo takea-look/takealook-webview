@@ -106,9 +106,9 @@ class _ChatListPageState extends State<ChatListPage> {
   @override
   Widget build(BuildContext context) {
     if (_loading) {
-      return const Scaffold(
-        appBar: AppBar(title: Text('채팅방 목록')),
-        body: LoadingPlaceholder(showCard: true, message: '채팅방 불러오는 중...'),
+      return Scaffold(
+        appBar: AppBar(title: const Text('채팅방 목록')),
+        body: const LoadingPlaceholder(showCard: true, message: '채팅방 불러오는 중...'),
       );
     }
 
@@ -124,9 +124,9 @@ class _ChatListPageState extends State<ChatListPage> {
     }
 
     if (_rooms.isEmpty) {
-      return const Scaffold(
-        appBar: AppBar(title: Text('채팅방 목록')),
-        body: EmptyPlaceholder(message: '채팅방이 없습니다.'),
+      return Scaffold(
+        appBar: AppBar(title: const Text('채팅방 목록')),
+        body: const EmptyPlaceholder(message: '채팅방이 없습니다.'),
       );
     }
 
