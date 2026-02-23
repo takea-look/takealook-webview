@@ -79,6 +79,7 @@ void setupDependencies() {
   }
 
   if (kDebugMode) {
+    // Keep a lightweight boot log for architecture migration visibility.
     // ignore: avoid_print
     print('ServiceLocator initialized');
   }
