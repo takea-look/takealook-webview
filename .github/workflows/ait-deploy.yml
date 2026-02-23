@@ -59,13 +59,14 @@ jobs:
 
       - name: Build Flutter web release
         working-directory: flutter
-        run: flutter build web --release --base-href /flutter/
+        run: flutter build web --release
 
-      - name: Sync Flutter web bundle to Vite public
+      - name: Sync Flutter web bundle to Vite public (root hosting)
         run: |
           rm -rf public/flutter
-          mkdir -p public/flutter
-          cp -R flutter/build/web/. public/flutter/
+          rm -f public/index.flutter.html
+          cp -R flutter/build/web/. public/
+          mv public/index.html public/index.flutter.html
 
       - name: Install web dependencies
         run: npm ci
