@@ -1,6 +1,18 @@
 # takealook-webview
 
-takealook WebView 프론트엔드 (React + TypeScript + Vite)
+takealook WebView 프로젝트입니다. **현재 메인은 Flutter(`flutter/`) 기준으로 운영**하며, 기존 React Web 코드는 병행 유지합니다.
+
+## Flutter 메인 개발 (권장)
+
+```bash
+cd flutter
+flutter pub get
+flutter analyze
+flutter test
+flutter build apk --debug
+```
+
+GitHub Actions도 Flutter 기준으로 동작합니다.
 
 ## 요구사항
 
