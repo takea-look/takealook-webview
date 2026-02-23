@@ -22,3 +22,9 @@
 3. MyPage/Settings real API wiring + error handling
 4. Bridge timeout/error contract implementation
 5. E2E + API contract snapshot
+
+
+## Architecture status (Issue #197)
+
+- [ ] `data/domain/presentation` 템플릿 보강(기능별 골격 확정)
+- [ ] DI/라우팅 규칙 문서 링크 정리
