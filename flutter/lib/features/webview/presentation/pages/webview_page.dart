@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../../../../core/bridge/apps_in_toss_bridge.dart';
 import '../../../../core/config/deeplink_config.dart';
 import '../../../../core/config/env.dart';
 import '../../../../shared/widgets/state_placeholders.dart';
@@ -27,6 +28,7 @@ class _WebviewPageState extends State<WebviewPage> {
   late final WebViewController _controller;
 
   final AppLinks _appLinks = AppLinks();
+  final AppsInTossBridgeAdapter _bridgeAdapter = AppsInTossBridgeAdapter();
   StreamSubscription<Uri>? _deepLinkSub;
 
   int _progress = 0;
@@ -42,6 +44,8 @@ class _WebviewPageState extends State<WebviewPage> {
   @override
   void initState() {
     super.initState();
+
+    _bridgeAdapter.init();
 
     final initialTarget = DeepLinkConfig.resolveToInitialWebUri(widget.initialUri);
     final initialRouteTarget = DeepLinkConfig.resolveToAppTarget(
@@ -139,17 +143,20 @@ class _WebviewPageState extends State<WebviewPage> {
   }
 
   void _handleBridgeMessage(String rawMessage) {
+    _bridgeAdapter.handleIncomingRawMessage(rawMessage);
+
     try {
       final decoded = jsonDecode(rawMessage) as Map<String, dynamic>;
       final type = decoded['type'] as String? ?? 'unknown';
-      _logDev('bridge message type=$type');
+      final requestId = decoded['requestId']?.toString() ?? '-';
+      _logDev('bridge message type=$type requestId=$requestId');
 
       // 브릿지 인터페이스 초안:
       // {"type":"session.sync","payload":{...},"requestId":"..."}
       // {"type":"route.push","payload":{"path":"/foo"},"requestId":"..."}
-      // {"type":"error","code":"BRIDGE_INVALID_PAYLOAD","message":"..."}
+      // {"type":"error","code":"invalidPayload","message":"..."}
     } catch (_) {
-      _logDev('bridge error: BRIDGE_INVALID_PAYLOAD');
+      _logDev('bridge error: invalidPayload');
     }
   }
 
