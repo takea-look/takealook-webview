@@ -31,8 +31,9 @@ flutter run \
 - `webview_flutter` 기반 FE URL 로딩
 - URL 변경 이벤트 추적/로그 + 진행률 인디케이터
 - Android 백 버튼 처리: WebView history 우선, 최상위에서 2회 백 버튼 시 종료
-- 실패 케이스 분류(네트워크/DNS/타임아웃/SSL/JS) + 재시도 복구 UX
-- 반복 실패 시 사용자 안내 강화
+- 공통 에러/복구 UX 컴포넌트(`RecoveryErrorPlaceholder`) 기반 재시도 표준화
+- 네트워크/타임아웃/권한/알수없음 케이스 공통 처리
+- 반복 실패 횟수 기반 안내문 강화
 - 개발 로그(debug)와 운영 로그 최소 노출 분리
 - 딥링크 수신(app_links) + 초기 URL 정규화
 - JS 브릿지 채널(`TakeaLookBridge`) 초안 연결
