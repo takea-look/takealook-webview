@@ -6,9 +6,8 @@
     <title>takealook-webview</title>
     <script>
       (function () {
-        // Apps in Toss runtime can fail directory-style routing (/flutter/).
-        // Use explicit static entry file to avoid rewrite dependency.
-        var target = '/flutter/index.html';
+        // Apps in Toss runtime should open Flutter web static entry directly.
+        var target = '/index.flutter.html';
         var suffix = '';
         if (window.location.search) suffix += window.location.search;
         if (window.location.hash) suffix += window.location.hash;
