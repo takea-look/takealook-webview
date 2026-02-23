@@ -36,6 +36,7 @@ flutter run \
 - 개발 로그(debug)와 운영 로그 최소 노출 분리
 - 딥링크 수신(app_links) + 초기 URL 정규화
 - JS 브릿지 채널(`TakeaLookBridge`) 초안 연결
+- Auth/Chat/MyPage/Settings parity 라우트 스캐폴드(`/login`, `/chat`, `/chat/:roomId`, `/mypage`, `/settings`)
 - openWindow 대체 정책 (http/https는 내부, 기타 스킴은 외부 앱)
 
 ## Validation checklist
@@ -51,3 +52,4 @@ flutter run \
 ## DeepLink / Routing / Bridge 문서
 
 - 상세 정책: `docs/ROUTING_AND_BRIDGE.md`
+- Parity 마이그레이션 체크리스트: `docs/PARITY_MIGRATION.md`
