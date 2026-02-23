@@ -12,6 +12,7 @@ void main() {
 
     coordinator.didChangeAppLifecycleState(AppLifecycleState.resumed);
     coordinator.didChangeAppLifecycleState(AppLifecycleState.resumed);
+    await tester.pump();
 
     expect(count, 1);
 

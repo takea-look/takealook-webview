@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 
 import '../auth/auth_session_manager.dart';
 import '../auth/token_store.dart';
+import '../config/env.dart';
+import '../network/api_client.dart';
 
 /// App-level dependency entrypoint.
 ///
@@ -45,6 +47,15 @@ void setupDependencies() {
 
   if (!sl.has<AuthSessionManager>()) {
     sl.registerSingleton<AuthSessionManager>(AuthSessionManager(sl.get<TokenStore>()));
+  }
+
+  if (!sl.has<ApiClient>()) {
+    sl.registerSingleton<ApiClient>(
+      ApiClient(
+        baseUrl: Env.apiBaseUrl,
+        tokenStore: sl.get<TokenStore>(),
+      ),
+    );
   }
 
   if (kDebugMode) {
