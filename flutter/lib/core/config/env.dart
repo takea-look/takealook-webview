@@ -5,5 +5,5 @@ class Env {
       String.fromEnvironment('FE_BASE_URL', defaultValue: 'https://takealook.my');
 
   static const String apiBaseUrl =
-      String.fromEnvironment('API_BASE_URL', defaultValue: 'https://api.takealook.my');
+      String.fromEnvironment('API_BASE_URL', defaultValue: 'https://s1.takealook.my');
 }

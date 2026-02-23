@@ -13,7 +13,7 @@ void main() {
       ),
     );
 
-    final buttonFinder = find.widgetWithText(FilledButton, '로그인');
+    final buttonFinder = find.widgetWithText(FilledButton, 'ID/PW로 로그인');
     FilledButton button = tester.widget(buttonFinder);
     expect(button.onPressed, isNull);
 

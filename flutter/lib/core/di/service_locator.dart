@@ -1,5 +1,8 @@
 import 'package:flutter/foundation.dart';
 
+import 'package:dio/dio.dart';
+
+import '../../features/auth/data/auth_api.dart';
 import '../auth/auth_session_manager.dart';
 import '../auth/token_store.dart';
 import '../config/env.dart';
@@ -56,6 +59,23 @@ void setupDependencies() {
         tokenStore: sl.get<TokenStore>(),
       ),
     );
+  }
+
+  if (!sl.has<Dio>()) {
+    sl.registerSingleton<Dio>(
+      Dio(
+        BaseOptions(
+          baseUrl: Env.apiBaseUrl,
+          connectTimeout: const Duration(seconds: 8),
+          receiveTimeout: const Duration(seconds: 8),
+          headers: const {'Content-Type': 'application/json'},
+        ),
+      ),
+    );
+  }
+
+  if (!sl.has<AuthApi>()) {
+    sl.registerSingleton<AuthApi>(AuthApi(sl.get<Dio>()));
   }
 
   if (kDebugMode) {
