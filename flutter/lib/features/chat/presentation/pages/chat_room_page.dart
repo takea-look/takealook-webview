@@ -13,28 +13,28 @@ class ChatRoomPage extends StatefulWidget {
 
 class _ChatRoomPageState extends State<ChatRoomPage> {
   final _messages = <_ChatMessage>[
-    _ChatMessage(
+    const _ChatMessage(
       id: 'm1',
       text: '안녕하세요 👋',
       mine: false,
       type: _MessageType.text,
       status: _SendStatus.sent,
     ),
-    _ChatMessage(
+    const _ChatMessage(
       id: 'm2',
       text: 'Flutter Native 채팅 화면 테스트 중이에요.',
       mine: true,
       type: _MessageType.text,
       status: _SendStatus.sent,
     ),
-    _ChatMessage(
+    const _ChatMessage(
       id: 'm3',
       text: 'https://takealook.my/help',
       mine: false,
       type: _MessageType.link,
       status: _SendStatus.sent,
     ),
-    _ChatMessage(
+    const _ChatMessage(
       id: 'm4',
       text: '[image] profile_sample.jpg',
       mine: false,
