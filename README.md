@@ -141,6 +141,8 @@ flutter build apk --debug
 ## 문서
 
 - 런타임 엔트리 정책(Flutter): `docs/RUNTIME_ENTRY.md`
+- Flutter 단일 운영 릴리즈 노트: `docs/FLUTTER_SINGLE_RUNTIME_RELEASE.md`
+- 배포 후 모니터링 체크리스트(24~48h): `docs/POST_DEPLOY_MONITORING.md`
 - E2E 테스트 플랜: `docs/E2E_TEST_PLAN.md`
 - Flutter CI/배포 파이프라인: `docs/CI_PIPELINE.md`
 - 백로그 문서: `docs/OPEN_ISSUE_BACKLOG.md`
