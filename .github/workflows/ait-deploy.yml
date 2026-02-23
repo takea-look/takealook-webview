@@ -4,6 +4,12 @@ on:
   push:
     branches: ["main"]
   workflow_dispatch:
+    inputs:
+      deploy:
+        description: "Run AIT deploy step (requires TOSS_KEY)"
+        required: false
+        default: true
+        type: boolean
 
 permissions:
   contents: read
@@ -77,17 +83,33 @@ jobs:
             takealook.ait
             flutter/build/web
 
+      - name: Evaluate deploy availability
+        id: gate
+        env:
+          TOSS_KEY: ${{ secrets.TOSS_KEY }}
+        run: |
+          SHOULD_DEPLOY="true"
+
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.deploy }}" != "true" ]; then
+            SHOULD_DEPLOY="false"
+          fi
+
+          if [ -z "$TOSS_KEY" ]; then
+            SHOULD_DEPLOY="false"
+            echo "reason=TOSS_KEY secret missing" >> "$GITHUB_OUTPUT"
+          else
+            echo "reason=ready" >> "$GITHUB_OUTPUT"
+          fi
+
+          echo "should_deploy=$SHOULD_DEPLOY" >> "$GITHUB_OUTPUT"
+
       - name: Deploy to Apps in Toss
         id: deploy
+        if: steps.gate.outputs.should_deploy == 'true'
         env:
           TOSS_KEY: ${{ secrets.TOSS_KEY }}
         run: |
           set -eo pipefail
-          if [ -z "$TOSS_KEY" ]; then
-            echo "TOSS_KEY secret is not set"
-            exit 1
-          fi
-
           npx ait deploy --api-key "$TOSS_KEY" | tee deploy.log
 
           SCHEME=$(grep -Eo 'intoss-private://[^[:space:]]+' deploy.log | tail -n 1 | sed -E 's/\x1B\[[0-9;]*[mK]//g' || true)
@@ -101,6 +123,7 @@ jobs:
 
       - name: Build QR URL and PNG
         id: qr
+        if: steps.gate.outputs.should_deploy == 'true'
         run: |
           SCHEME='${{ steps.deploy.outputs.scheme }}'
           ENCODED=$(node -e "console.log(encodeURIComponent(process.argv[1]))" "$SCHEME")
@@ -109,25 +132,39 @@ jobs:
           curl -fsSL "$QR_URL" -o takealook-deploy-qr.png
 
       - name: Upload QR artifact
+        if: steps.gate.outputs.should_deploy == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: takealook-deploy-qr
           path: takealook-deploy-qr.png
 
-      - name: Write workflow summary
+      - name: Write workflow summary (deployed)
+        if: steps.gate.outputs.should_deploy == 'true' && success()
         run: |
           {
             echo "## ✅ Flutter 기반 AIT 배포 완료"
             echo ""
-            echo "- Flutter analyze/test/web build: passed"
-            echo "- AIT bundle: `takealook.ait`"
-            echo "- Scheme: `${{ steps.deploy.outputs.scheme }}`"
+            echo "- CI chain: pub get → analyze → test → build web"
+            echo "- AIT bundle: \\`takealook.ait\\`"
+            echo "- Flutter web artifact: \\`flutter/build/web\\`"
+            echo "- Scheme: \\`${{ steps.deploy.outputs.scheme }}\\`"
             echo "- QR URL: ${{ steps.qr.outputs.qr_url }}"
             echo ""
             echo "![Deploy QR](${{ steps.qr.outputs.qr_url }})"
           } >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Notify Discord channel (optional)
+      - name: Write workflow summary (skipped)
+        if: steps.gate.outputs.should_deploy != 'true'
+        run: |
+          {
+            echo "## ℹ️ AIT deploy skipped"
+            echo ""
+            echo "- reason: ${{ steps.gate.outputs.reason }}"
+            echo "- CI chain and artifact upload were completed"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Notify Discord (success)
+        if: steps.gate.outputs.should_deploy == 'true' && success()
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: |
@@ -136,27 +173,34 @@ jobs:
             exit 0
           fi
 
-          PAYLOAD=$(jq -n \
-            --arg scheme '${{ steps.deploy.outputs.scheme }}' \
-            --arg qr '${{ steps.qr.outputs.qr_url }}' \
-            '{
-              username: "떼껄룩봇",
-              content: ("✅ **Flutter AIT 배포 완료**\n`" + $scheme + "`") ,
-              embeds: [
-                {
-                  color: 5763719,
-                  title: "takealook-webview Flutter AIT",
-                  description: "Flutter web 빌드 + AIT 번들 + 배포 완료",
-                  fields: [
-                    { name: "Scheme", value: ("`" + $scheme + "`") },
-                    { name: "Open via QR", value: ("[QR 열기](" + $qr + ")") }
-                  ],
-                  image: { url: $qr },
-                  footer: { text: "GitHub Actions" }
-                }
-              ]
-            }')
+          MSG="✅ Flutter AIT 배포 완료\n- scheme: ${{ steps.deploy.outputs.scheme }}\n- qr: ${{ steps.qr.outputs.qr_url }}\n- run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          export MSG
+          PAYLOAD=$(python3 - <<'PY'
+import json, os
+print(json.dumps({"username":"떼껄룩봇","content":os.environ["MSG"]}, ensure_ascii=False))
+PY
+)
+          curl -sS -X POST "$DISCORD_WEBHOOK_URL" \
+            -H 'Content-Type: application/json' \
+            -d "$PAYLOAD"
 
+      - name: Notify Discord (failure)
+        if: failure()
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          if [ -z "$DISCORD_WEBHOOK_URL" ]; then
+            echo "DISCORD_WEBHOOK_URL not set. Skip Discord notification."
+            exit 0
+          fi
+
+          MSG="❌ Flutter AIT 배포 실패\n- job: ${{ github.job }}\n- run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\n- 원인 확인: failed step logs"
+          export MSG
+          PAYLOAD=$(python3 - <<'PY'
+import json, os
+print(json.dumps({"username":"떼껄룩봇","content":os.environ["MSG"]}, ensure_ascii=False))
+PY
+)
           curl -sS -X POST "$DISCORD_WEBHOOK_URL" \
             -H 'Content-Type: application/json' \
             -d "$PAYLOAD"

@@ -1,21 +1,22 @@
-name: Flutter Lint Check
+name: Flutter CI
 
 on:
   pull_request:
   push:
     branches: ["main"]
+  workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: flutter-lint-${{ github.ref }}
+  group: flutter-ci-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  flutter-lint:
+  flutter-ci:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
 
     defaults:
       run:
@@ -42,3 +43,9 @@ jobs:
 
       - name: Flutter analyze
         run: flutter analyze
+
+      - name: Flutter test
+        run: flutter test
+
+      - name: Flutter build web --release
+        run: flutter build web --release
