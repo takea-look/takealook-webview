@@ -330,10 +330,9 @@ export function ChatRoomScreen() {
         return candidates[0];
     };
 
-    const triggerSwipeReply = useCallback((msg: UserChatMessage) => {
-        const src = resolveImageUrl(msg);
+    const triggerSwipeReply = useCallback((msg: UserChatMessage, src: string) => {
         if (!src || msg.isBlinded || msg.id == null) {
-            showToast('이미지 URL 필드 불일치: 원본 메시지 스키마 확인 필요', 'error');
+            showToast('이미지 URL 없음', 'error');
             return;
         }
 
