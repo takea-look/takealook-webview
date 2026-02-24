@@ -244,33 +244,46 @@ function StickerNode({ layer, controller }: { layer: StickerLayer; controller: E
   }
 
   return (
-    <KonvaImage
-      id={layer.id}
-      image={img}
-      x={layer.transform.position.x}
-      y={layer.transform.position.y}
-      offsetX={layer.size.x / 2}
-      offsetY={layer.size.y / 2}
-      width={layer.size.x}
-      height={layer.size.y}
-      rotation={rotationDeg}
-      scaleX={layer.transform.scale}
-      scaleY={layer.transform.scale}
-      draggable={true}
-      onClick={() => controller.select(layer.id)}
-      onTap={() => controller.select(layer.id)}
-      onDragEnd={(e: Konva.KonvaEventObject<DragEvent>) => {
-        controller.setTransform(layer.id, { position: { x: e.target.x(), y: e.target.y() } });
-      }}
-      onTransformEnd={(e: Konva.KonvaEventObject<Event>) => {
-        const n = e.target;
-        controller.setTransform(layer.id, {
-          position: { x: n.x(), y: n.y() },
-          scale: n.scaleX(),
-          rotation: (n.rotation() * Math.PI) / 180,
-        });
-      }}
-    />
+    <>
+      <KonvaImage
+        id={layer.id}
+        image={img}
+        x={layer.transform.position.x}
+        y={layer.transform.position.y}
+        offsetX={layer.size.x / 2}
+        offsetY={layer.size.y / 2}
+        width={layer.size.x}
+        height={layer.size.y}
+        rotation={rotationDeg}
+        scaleX={layer.transform.scale}
+        scaleY={layer.transform.scale}
+        draggable={true}
+        onClick={() => controller.select(layer.id)}
+        onTap={() => controller.select(layer.id)}
+        onDragEnd={(e: Konva.KonvaEventObject<DragEvent>) => {
+          controller.setTransform(layer.id, { position: { x: e.target.x(), y: e.target.y() } });
+        }}
+        onTransformEnd={(e: Konva.KonvaEventObject<Event>) => {
+          const n = e.target;
+          controller.setTransform(layer.id, {
+            position: { x: n.x(), y: n.y() },
+            scale: n.scaleX(),
+            rotation: (n.rotation() * Math.PI) / 180,
+          });
+        }}
+      />
+      <Rect
+        x={layer.transform.position.x - (layer.size.x * layer.transform.scale) / 2}
+        y={layer.transform.position.y - (layer.size.y * layer.transform.scale) / 2}
+        width={layer.size.x * layer.transform.scale}
+        height={layer.size.y * layer.transform.scale}
+        rotation={rotationDeg}
+        stroke="#FFD400"
+        strokeWidth={3}
+        dash={[10, 6]}
+        listening={false}
+      />
+    </>
   );
 }
 

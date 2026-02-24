@@ -387,14 +387,16 @@ export function StoryEditorScreen() {
             ? sticker.thumbnailUrl
             : sticker.imageUrl;
 
-          controller.addSticker({
+          const stickerId = controller.addSticker({
             src: stickerSrc,
             at: {
               // StoryStage logical center (1080x1920)
               x: 540,
               y: 960,
             },
+            size: { x: 360, y: 360 },
           });
+          controller.bringToFront(stickerId);
 
           setSendError('');
           setStickerPickerOpen(false);
