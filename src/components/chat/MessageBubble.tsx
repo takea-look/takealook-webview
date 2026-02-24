@@ -23,7 +23,7 @@ type MessageBubbleProps = {
     onTouchStart: (messageId: number | undefined, e: React.TouchEvent) => void;
     onTouchMove: (message: UserChatMessage, e: React.TouchEvent) => void;
     onTouchEnd: (message?: UserChatMessage, e?: React.TouchEvent) => void;
-    onSwipeReply: (message: UserChatMessage) => void;
+    onSwipeStoryEditor: (message: UserChatMessage) => void;
     onSelectReaction: (messageId: number | undefined, emoji: string) => void;
     onReportEntry: (messageId: number | undefined) => void;
     onImageClick: (imageUrl: string) => void;
@@ -45,7 +45,7 @@ export function MessageBubble({
     onTouchStart,
     onTouchMove,
     onTouchEnd,
-    onSwipeReply,
+    onSwipeStoryEditor,
     onSelectReaction,
     onReportEntry,
     onImageClick,
@@ -68,7 +68,7 @@ export function MessageBubble({
 
             if (!swipeTriggeredRef.current && mx > 24 && Math.abs(my) < 70 && Math.abs(mx) > Math.abs(my)) {
                 swipeTriggeredRef.current = true;
-                onSwipeReply(message);
+                onSwipeStoryEditor(message);
                 if (event && typeof (event as Event).preventDefault === 'function') {
                     (event as Event).preventDefault();
                 }
