@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getChatMessages, reportChatMessage } from '../api/chat';
 import { getPublicImageUrl, getUploadUrl, uploadToR2 } from '../api/storage';
 import { downsampleImageFile } from '../utils/image';
@@ -22,6 +22,7 @@ export function ChatRoomScreen() {
     const SWIPE_DEBUG = import.meta.env.VITE_DEBUG_SWIPE === 'true';
     const SWIPE_DEBUG_BUILD_TAG = import.meta.env.VITE_DEBUG_SWIPE ? `swipe:${import.meta.env.VITE_DEBUG_SWIPE}` : 'swipe:undefined';
     const { roomId } = useParams<{ roomId: string }>();
+    const navigate = useNavigate();
     const [historyMessages, setHistoryMessages] = useState<UserChatMessage[]>([]);
     const [hasMoreHistory, setHasMoreHistory] = useState(true);
     const [isLoadingHistory, setIsLoadingHistory] = useState(false);
@@ -335,10 +336,22 @@ export function ChatRoomScreen() {
     }, [openReactionMenu]);
 
     const triggerSwipeReply = useCallback((msg: UserChatMessage) => {
-        if (msg.id == null) return;
-        setReplyTarget(msg);
-        showToast('답장 대상으로 설정했어요.', 'success');
-    }, [showToast]);
+        if (!msg.imageUrl || msg.isBlinded || msg.id == null) {
+            showToast('이미지 메시지에서만 스와이프 답장이 가능해요.', 'error');
+            return;
+        }
+
+        const roomIdNum = Number(roomId);
+        if (!Number.isFinite(roomIdNum)) return;
+
+        const query = new URLSearchParams({
+            src: msg.imageUrl,
+            roomId: String(roomIdNum),
+            replyToId: String(msg.id),
+        });
+
+        navigate(`/story-editor?${query.toString()}`);
+    }, [navigate, roomId, showToast]);
 
     const handleMessagePointerMove = useCallback((msg: UserChatMessage, e: React.PointerEvent) => {
         if (swipeTargetMessageIdRef.current !== msg.id) return;
@@ -812,7 +825,7 @@ export function ChatRoomScreen() {
                                 onTouchStart={handleMessageTouchStart}
                                 onTouchMove={handleMessageTouchMove}
                                 onTouchEnd={handleMessageTouchEnd}
-                                onSwipeReply={triggerSwipeReply}
+                                onSwipeStoryEditor={triggerSwipeReply}
                                 onSelectReaction={handleReactionSelect}
                                 onReportEntry={handleReportEntry}
                                 onImageClick={handleImageClick}
