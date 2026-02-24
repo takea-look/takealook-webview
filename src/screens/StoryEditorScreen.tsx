@@ -27,6 +27,10 @@ export function StoryEditorScreen() {
 
   const { controller, state } = useEditorController(initialBaseSrc ? { baseSrc: initialBaseSrc } : undefined);
 
+  useEffect(() => {
+    controller.setBaseImage(initialBaseSrc ?? null);
+  }, [controller, initialBaseSrc]);
+
   const {
     isConnected,
     connectionStatus,
