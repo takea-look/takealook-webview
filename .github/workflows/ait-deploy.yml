@@ -61,6 +61,30 @@ jobs:
         working-directory: flutter
         run: flutter build web --release
 
+      - name: Patch Flutter bootstrap for in-app runtime stability
+        run: |
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+
+          p = Path('flutter/build/web/flutter_bootstrap.js')
+          s = p.read_text(encoding='utf-8')
+
+          # 1) Remove empty build candidate if present (e.g. builds:[{...},{}]).
+          s = re.sub(r',\s*\{\s*\}\s*\]', ']', s)
+
+          # 2) Disable service worker for Apps in Toss runtime to avoid stale-cache splash lock.
+          s = re.sub(
+              r'_flutter\.loader\.load\(\{\s*serviceWorkerSettings\s*:\s*\{[\s\S]*?\}\s*\}\);',
+              '_flutter.loader.load({});',
+              s,
+              count=1,
+          )
+
+          p.write_text(s, encoding='utf-8')
+          print('patched flutter_bootstrap.js')
+          PY
+
       - name: Sync Flutter web bundle to Vite public (root hosting)
         run: |
           rm -rf public/flutter
