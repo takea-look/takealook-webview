@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useDrag } from '@use-gesture/react';
 import { Button, Text } from '@toss/tds-mobile';
 import { UserIcon } from '../icons';
@@ -8,6 +8,7 @@ import { MessageType } from '../../types/api';
 type ReactionCount = { emoji: string; count: number };
 
 type MessageBubbleProps = {
+    enableSwipeDebug?: boolean;
     message: UserChatMessage;
     myUserId: number | null;
     timeString: string;
@@ -29,6 +30,7 @@ type MessageBubbleProps = {
 };
 
 export function MessageBubble({
+    enableSwipeDebug = false,
     message,
     myUserId,
     timeString,
@@ -53,9 +55,13 @@ export function MessageBubble({
     const canRenderImage = !!message.imageUrl && !isBlinded;
     const shouldRenderBlindPlaceholder = isBlinded || (message.type === MessageType.CHAT && !message.imageUrl);
     const swipeTriggeredRef = useRef(false);
+    const [swipeDebug, setSwipeDebug] = useState('');
 
     const bindSwipe = useDrag(
         ({ first, last, movement: [mx, my], event }) => {
+            if (enableSwipeDebug) {
+                setSwipeDebug(`mx:${Math.round(mx)} my:${Math.round(my)} active:${!last}`);
+            }
             if (first) {
                 swipeTriggeredRef.current = false;
             }
@@ -202,6 +208,18 @@ export function MessageBubble({
                         </div>
                     )}
                 </div>
+                {enableSwipeDebug && swipeDebug && (
+                    <div style={{
+                        marginTop: '4px',
+                        fontSize: '10px',
+                        color: '#F04452',
+                        background: 'rgba(240,68,82,0.08)',
+                        borderRadius: '6px',
+                        padding: '2px 6px'
+                    }}>
+                        {swipeDebug}
+                    </div>
+                )}
                 {reactionMenuOpen && (
                     <div
                         style={{

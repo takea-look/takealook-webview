@@ -42,6 +42,7 @@ jobs:
       - name: Build AIT bundle (Web FE)
         env:
           VITE_DEBUG_AUTH_FLOW: "true"
+          VITE_DEBUG_SWIPE: "true"
         run: npm run build
 
       - name: Upload build artifacts
