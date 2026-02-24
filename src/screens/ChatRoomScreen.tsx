@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { getChatMessages, reportChatMessage } from '../api/chat';
 import { getPublicImageUrl, getUploadUrl, uploadToR2 } from '../api/storage';
 import { downsampleImageFile } from '../utils/image';
@@ -19,7 +19,6 @@ import Download from "yet-another-react-lightbox/plugins/download";
 import "yet-another-react-lightbox/styles.css";
 
 export function ChatRoomScreen() {
-    const navigate = useNavigate();
     const { roomId } = useParams<{ roomId: string }>();
     const [historyMessages, setHistoryMessages] = useState<UserChatMessage[]>([]);
     const [hasMoreHistory, setHasMoreHistory] = useState(true);
@@ -307,14 +306,19 @@ export function ChatRoomScreen() {
         }
     }, [reportConfirmMessageId, showToast]);
 
+    const resetSwipeState = useCallback(() => {
+        swipeTargetMessageIdRef.current = null;
+        swipeStartXRef.current = null;
+        swipeStartYRef.current = null;
+        swipeTriggeredRef.current = false;
+    }, []);
+
     const handleMessagePointerDown = useCallback((messageId: number | undefined, e?: React.PointerEvent) => {
         if (reactionTimeoutRef.current != null) {
             clearTimeout(reactionTimeoutRef.current);
         }
 
-        if (messageId == null) {
-            return;
-        }
+        if (messageId == null) return;
 
         if (e) {
             swipeTargetMessageIdRef.current = messageId;
@@ -328,8 +332,13 @@ export function ChatRoomScreen() {
         }, 500);
     }, [openReactionMenu]);
 
+    const triggerSwipeReply = useCallback((msg: UserChatMessage) => {
+        if (msg.id == null) return;
+        setReplyTarget(msg);
+        showToast('답장 대상으로 설정했어요.', 'success');
+    }, [showToast]);
+
     const handleMessagePointerMove = useCallback((msg: UserChatMessage, e: React.PointerEvent) => {
-        if (!msg.imageUrl || msg.isBlinded) return;
         if (swipeTargetMessageIdRef.current !== msg.id) return;
         if (swipeStartXRef.current == null || swipeStartYRef.current == null) return;
         if (swipeTriggeredRef.current) return;
@@ -338,33 +347,70 @@ export function ChatRoomScreen() {
         const dy = e.clientY - swipeStartYRef.current;
 
         // Horizontal swipe detection (right swipe).
-        if (dx > 45 && Math.abs(dy) < 40) {
+        if (dx > 36 && Math.abs(dy) < 48) {
             swipeTriggeredRef.current = true;
-
-            const roomIdNum = Number(roomId);
-            if (!Number.isFinite(roomIdNum) || msg.id == null) return;
-
-            const query = new URLSearchParams({
-                src: msg.imageUrl,
-                roomId: String(roomIdNum),
-                replyToId: String(msg.id),
-            });
-
-            navigate(`/story-editor?${query.toString()}`);
+            if (reactionTimeoutRef.current != null) {
+                clearTimeout(reactionTimeoutRef.current);
+                reactionTimeoutRef.current = null;
+            }
+            triggerSwipeReply(msg);
         }
-    }, [navigate, roomId]);
+    }, [triggerSwipeReply]);
 
     const handleMessagePointerUp = useCallback(() => {
         if (reactionTimeoutRef.current != null) {
             clearTimeout(reactionTimeoutRef.current);
             reactionTimeoutRef.current = null;
         }
+        resetSwipeState();
+    }, [resetSwipeState]);
 
-        swipeTargetMessageIdRef.current = null;
-        swipeStartXRef.current = null;
-        swipeStartYRef.current = null;
+    const handleMessageTouchStart = useCallback((messageId: number | undefined, e: React.TouchEvent) => {
+        if (messageId == null) return;
+        const t = e.touches[0];
+        if (!t) return;
+
+        if (reactionTimeoutRef.current != null) {
+            clearTimeout(reactionTimeoutRef.current);
+        }
+
+        swipeTargetMessageIdRef.current = messageId;
+        swipeStartXRef.current = t.clientX;
+        swipeStartYRef.current = t.clientY;
         swipeTriggeredRef.current = false;
-    }, []);
+
+        reactionTimeoutRef.current = setTimeout(() => {
+            openReactionMenu(messageId);
+        }, 500);
+    }, [openReactionMenu]);
+
+    const handleMessageTouchMove = useCallback((msg: UserChatMessage, e: React.TouchEvent) => {
+        const t = e.touches[0];
+        if (!t) return;
+        if (swipeTargetMessageIdRef.current !== msg.id) return;
+        if (swipeStartXRef.current == null || swipeStartYRef.current == null) return;
+        if (swipeTriggeredRef.current) return;
+
+        const dx = t.clientX - swipeStartXRef.current;
+        const dy = t.clientY - swipeStartYRef.current;
+
+        if (dx > 36 && Math.abs(dy) < 48) {
+            swipeTriggeredRef.current = true;
+            if (reactionTimeoutRef.current != null) {
+                clearTimeout(reactionTimeoutRef.current);
+                reactionTimeoutRef.current = null;
+            }
+            triggerSwipeReply(msg);
+        }
+    }, [triggerSwipeReply]);
+
+    const handleMessageTouchEnd = useCallback(() => {
+        if (reactionTimeoutRef.current != null) {
+            clearTimeout(reactionTimeoutRef.current);
+            reactionTimeoutRef.current = null;
+        }
+        resetSwipeState();
+    }, [resetSwipeState]);
 
     const allMessages = normalizeMessages([...historyMessages, ...wsMessages]);
     const slides = allMessages
@@ -719,6 +765,9 @@ export function ChatRoomScreen() {
                                 onPointerDown={handleMessagePointerDown}
                                 onPointerMove={handleMessagePointerMove}
                                 onPointerUp={handleMessagePointerUp}
+                                onTouchStart={handleMessageTouchStart}
+                                onTouchMove={handleMessageTouchMove}
+                                onTouchEnd={handleMessageTouchEnd}
                                 onSelectReaction={handleReactionSelect}
                                 onReportEntry={handleReportEntry}
                                 onImageClick={handleImageClick}
