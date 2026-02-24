@@ -18,7 +18,7 @@ type MessageBubbleProps = {
     onSetReplyTarget: (message: UserChatMessage) => void;
     onPointerDown: (messageId: number | undefined, e?: React.PointerEvent) => void;
     onPointerUp: () => void;
-    onReplyToStoryEditor: (message: UserChatMessage) => void;
+    onReplyToStoryEditor: (message: UserChatMessage, imageUrl: string) => void;
     onSelectReaction: (messageId: number | undefined, emoji: string) => void;
     onReportEntry: (messageId: number | undefined) => void;
     onImageClick: (imageUrl: string) => void;
@@ -152,7 +152,7 @@ export function MessageBubble({
                             }}>
                                 <button
                                     type="button"
-                                    onClick={() => onReplyToStoryEditor(message)}
+                                    onClick={() => resolvedImageUrl && onReplyToStoryEditor(message, resolvedImageUrl)}
                                     style={{
                                         border: 'none',
                                         borderRadius: '999px',
