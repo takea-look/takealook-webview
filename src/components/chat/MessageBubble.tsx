@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { useDrag } from '@use-gesture/react';
 import { Button, Text } from '@toss/tds-mobile';
 import { UserIcon } from '../icons';
 import type { UserChatMessage } from '../../types/api';
@@ -21,6 +22,7 @@ type MessageBubbleProps = {
     onTouchStart: (messageId: number | undefined, e: React.TouchEvent) => void;
     onTouchMove: (message: UserChatMessage, e: React.TouchEvent) => void;
     onTouchEnd: (message?: UserChatMessage, e?: React.TouchEvent) => void;
+    onSwipeReply: (message: UserChatMessage) => void;
     onSelectReaction: (messageId: number | undefined, emoji: string) => void;
     onReportEntry: (messageId: number | undefined) => void;
     onImageClick: (imageUrl: string) => void;
@@ -41,6 +43,7 @@ export function MessageBubble({
     onTouchStart,
     onTouchMove,
     onTouchEnd,
+    onSwipeReply,
     onSelectReaction,
     onReportEntry,
     onImageClick,
@@ -49,6 +52,33 @@ export function MessageBubble({
     const isBlinded = message.isBlinded === true;
     const canRenderImage = !!message.imageUrl && !isBlinded;
     const shouldRenderBlindPlaceholder = isBlinded || (message.type === MessageType.CHAT && !message.imageUrl);
+    const swipeTriggeredRef = useRef(false);
+
+    const bindSwipe = useDrag(
+        ({ first, last, movement: [mx, my], event }) => {
+            if (first) {
+                swipeTriggeredRef.current = false;
+            }
+
+            if (!swipeTriggeredRef.current && mx > 24 && Math.abs(my) < 70 && Math.abs(mx) > Math.abs(my)) {
+                swipeTriggeredRef.current = true;
+                onSwipeReply(message);
+                if (event && typeof (event as Event).preventDefault === 'function') {
+                    (event as Event).preventDefault();
+                }
+            }
+
+            if (last) {
+                swipeTriggeredRef.current = false;
+            }
+        },
+        {
+            axis: 'x',
+            filterTaps: true,
+            preventScroll: true,
+            pointer: { touch: true },
+        },
+    );
 
     return (
         <div style={{
@@ -84,6 +114,7 @@ export function MessageBubble({
                 )}
 
                 <div
+                    {...bindSwipe()}
                     onContextMenu={(e) => {
                         e.preventDefault();
                         onOpenReactionMenu(message.id);
