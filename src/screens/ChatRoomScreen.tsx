@@ -21,8 +21,10 @@ import "yet-another-react-lightbox/styles.css";
 export function ChatRoomScreen() {
     const SWIPE_DEBUG = import.meta.env.VITE_DEBUG_SWIPE === 'true';
     const SWIPE_DEBUG_BUILD_TAG = import.meta.env.VITE_DEBUG_SWIPE ? `swipe:${import.meta.env.VITE_DEBUG_SWIPE}` : 'swipe:undefined';
-    const touchX = (t: Touch) => (Number.isFinite(t.screenX) ? t.screenX : (Number.isFinite(t.pageX) ? t.pageX : t.clientX));
-    const touchY = (t: Touch) => (Number.isFinite(t.screenY) ? t.screenY : (Number.isFinite(t.pageY) ? t.pageY : t.clientY));
+    const touchX = (t: { screenX: number; pageX: number; clientX: number }) =>
+        (Number.isFinite(t.screenX) ? t.screenX : (Number.isFinite(t.pageX) ? t.pageX : t.clientX));
+    const touchY = (t: { screenY: number; pageY: number; clientY: number }) =>
+        (Number.isFinite(t.screenY) ? t.screenY : (Number.isFinite(t.pageY) ? t.pageY : t.clientY));
     const { roomId } = useParams<{ roomId: string }>();
     const navigate = useNavigate();
     const [historyMessages, setHistoryMessages] = useState<UserChatMessage[]>([]);
