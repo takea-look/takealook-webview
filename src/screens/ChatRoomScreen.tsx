@@ -331,8 +331,8 @@ export function ChatRoomScreen() {
     };
 
     const triggerSwipeReply = useCallback((msg: UserChatMessage, src: string) => {
-        if (!src || msg.isBlinded) {
-            showToast('이미지 URL 없음', 'error');
+        if (!src) {
+            showToast(`이미지 URL 없음 (src=${String(src)})`, 'error');
             return;
         }
 
