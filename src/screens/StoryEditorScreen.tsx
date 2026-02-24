@@ -278,7 +278,17 @@ export function StoryEditorScreen() {
           <img
             src={initialBaseSrc}
             alt="src-probe"
-            style={{ position: 'absolute', width: 1, height: 1, opacity: 0, pointerEvents: 'none' }}
+            style={{
+              position: 'absolute',
+              inset: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'contain',
+              zIndex: 0,
+              pointerEvents: 'none',
+              opacity: srcProbeStatus === 'loaded' ? 1 : 0,
+              background: '#000',
+            }}
             onLoad={() => setSrcProbeStatus('loaded')}
             onError={() => setSrcProbeStatus('error')}
           />
