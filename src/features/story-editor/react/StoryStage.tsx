@@ -40,6 +40,7 @@ export function StoryStage({ state, controller, viewportWidth, viewportHeight }:
       height: STORY_H,
       transform: `translate(-50%, -50%) scale(${scale})`,
       transformOrigin: 'top left',
+      zIndex: 1,
     };
   }, [scale]);
 
