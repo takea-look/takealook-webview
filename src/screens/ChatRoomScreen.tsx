@@ -336,11 +336,14 @@ export function ChatRoomScreen() {
             return;
         }
 
+        // common typo guard: .jepg -> .jpeg
+        const normalizedSrc = src.replace(/\.jepg(\?|$)/i, '.jpeg$1');
+
         const roomIdNum = Number(roomId);
         if (!Number.isFinite(roomIdNum)) return;
 
         const query = new URLSearchParams({
-            src,
+            src: normalizedSrc,
             roomId: String(roomIdNum),
         });
         if (msg.id != null) {

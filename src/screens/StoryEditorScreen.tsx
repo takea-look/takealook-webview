@@ -29,7 +29,7 @@ export function StoryEditorScreen() {
 
   useEffect(() => {
     controller.setBaseImage(initialBaseSrc ?? null);
-    setSrcProbeStatus('idle');
+    setSrcProbeStatus(initialBaseSrc ? 'idle' : 'error');
   }, [controller, initialBaseSrc]);
 
   const {
