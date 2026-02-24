@@ -25,15 +25,12 @@ type MessageBubbleProps = {
 };
 
 function resolveImageUrl(message: UserChatMessage): string | undefined {
-    const direct = message.imageUrl;
-    if (direct && direct.length > 0) return direct;
-
     const anyMsg = message as UserChatMessage & { content?: string; fileUrl?: string; image?: string };
-    const candidates = [anyMsg.content, anyMsg.fileUrl, anyMsg.image].filter((v): v is string => !!v);
-    for (const v of candidates) {
-        if (/^https?:\/\//i.test(v)) return v;
-    }
-    return undefined;
+    const candidates = [message.imageUrl, anyMsg.content, anyMsg.fileUrl, anyMsg.image]
+        .filter((v): v is string => typeof v === 'string')
+        .map((v) => v.trim())
+        .filter((v) => v.length > 0);
+    return candidates[0];
 }
 
 export function MessageBubble({

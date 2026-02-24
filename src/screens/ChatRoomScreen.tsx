@@ -322,10 +322,12 @@ export function ChatRoomScreen() {
     }, [openReactionMenu, SWIPE_DEBUG]);
 
     const resolveImageUrl = (msg: UserChatMessage): string | undefined => {
-        if (msg.imageUrl) return msg.imageUrl;
         const anyMsg = msg as UserChatMessage & { content?: string; fileUrl?: string; image?: string };
-        const candidates = [anyMsg.content, anyMsg.fileUrl, anyMsg.image].filter((v): v is string => !!v);
-        return candidates.find((v) => /^https?:\/\//i.test(v));
+        const candidates = [msg.imageUrl, anyMsg.content, anyMsg.fileUrl, anyMsg.image]
+            .filter((v): v is string => typeof v === 'string')
+            .map((v) => v.trim())
+            .filter((v) => v.length > 0);
+        return candidates[0];
     };
 
     const triggerSwipeReply = useCallback((msg: UserChatMessage) => {
@@ -359,8 +361,9 @@ export function ChatRoomScreen() {
 
     const allMessages = normalizeMessages([...historyMessages, ...wsMessages]);
     const slides = allMessages
-.filter(msg => msg.imageUrl && !msg.isBlinded)
-        .map(msg => ({ src: msg.imageUrl! }));
+        .map((msg) => ({ msg, src: resolveImageUrl(msg) }))
+        .filter(({ msg, src }) => !!src && !msg.isBlinded)
+        .map(({ src }) => ({ src: src! }));
 
     const handleCameraClick = () => {
         fileInputRef.current?.click();
