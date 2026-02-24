@@ -1,5 +1,4 @@
-import React, { useRef, useState } from 'react';
-import { useDrag } from '@use-gesture/react';
+import React, { useState } from 'react';
 import { Button, Text } from '@toss/tds-mobile';
 import { UserIcon } from '../icons';
 import type { UserChatMessage } from '../../types/api';
@@ -18,12 +17,8 @@ type MessageBubbleProps = {
     onOpenReactionMenu: (messageId: number | undefined) => void;
     onSetReplyTarget: (message: UserChatMessage) => void;
     onPointerDown: (messageId: number | undefined, e?: React.PointerEvent) => void;
-    onPointerMove: (message: UserChatMessage, e: React.PointerEvent) => void;
     onPointerUp: () => void;
-    onTouchStart: (messageId: number | undefined, e: React.TouchEvent) => void;
-    onTouchMove: (message: UserChatMessage, e: React.TouchEvent) => void;
-    onTouchEnd: (message?: UserChatMessage, e?: React.TouchEvent) => void;
-    onSwipeStoryEditor: (message: UserChatMessage) => void;
+    onReplyToStoryEditor: (message: UserChatMessage) => void;
     onSelectReaction: (messageId: number | undefined, emoji: string) => void;
     onReportEntry: (messageId: number | undefined) => void;
     onImageClick: (imageUrl: string) => void;
@@ -40,12 +35,8 @@ export function MessageBubble({
     onOpenReactionMenu,
     onSetReplyTarget,
     onPointerDown,
-    onPointerMove,
     onPointerUp,
-    onTouchStart,
-    onTouchMove,
-    onTouchEnd,
-    onSwipeStoryEditor,
+    onReplyToStoryEditor,
     onSelectReaction,
     onReportEntry,
     onImageClick,
@@ -54,37 +45,7 @@ export function MessageBubble({
     const isBlinded = message.isBlinded === true;
     const canRenderImage = !!message.imageUrl && !isBlinded;
     const shouldRenderBlindPlaceholder = isBlinded || (message.type === MessageType.CHAT && !message.imageUrl);
-    const swipeTriggeredRef = useRef(false);
-    const [swipeDebug, setSwipeDebug] = useState('');
-
-    const bindSwipe = useDrag(
-        ({ first, last, movement: [mx, my], event }) => {
-            if (enableSwipeDebug) {
-                setSwipeDebug(`mx:${Math.round(mx)} my:${Math.round(my)} active:${!last}`);
-            }
-            if (first) {
-                swipeTriggeredRef.current = false;
-            }
-
-            if (!swipeTriggeredRef.current && mx > 24 && Math.abs(my) < 70 && Math.abs(mx) > Math.abs(my)) {
-                swipeTriggeredRef.current = true;
-                onSwipeStoryEditor(message);
-                if (event && typeof (event as Event).preventDefault === 'function') {
-                    (event as Event).preventDefault();
-                }
-            }
-
-            if (last) {
-                swipeTriggeredRef.current = false;
-            }
-        },
-        {
-            axis: 'x',
-            filterTaps: true,
-            preventScroll: true,
-            pointer: { touch: true },
-        },
-    );
+    const [swipeDebug] = useState('swipe-disabled');
 
     return (
         <div style={{
@@ -120,20 +81,14 @@ export function MessageBubble({
                 )}
 
                 <div
-                    {...bindSwipe()}
                     onContextMenu={(e) => {
                         e.preventDefault();
                         onOpenReactionMenu(message.id);
                     }}
                     onDoubleClick={() => onSetReplyTarget(message)}
                     onPointerDown={(e) => onPointerDown(message.id, e)}
-                    onPointerMove={(e) => onPointerMove(message, e)}
                     onPointerUp={onPointerUp}
                     onPointerLeave={onPointerUp}
-                    onTouchStart={(e) => onTouchStart(message.id, e)}
-                    onTouchMove={(e) => onTouchMove(message, e)}
-                    onTouchEnd={(e) => onTouchEnd(message, e)}
-                    onTouchCancel={(e) => onTouchEnd(message, e)}
                     style={{
                         borderRadius: isMyMessage ? '20px 4px 20px 20px' : '4px 20px 20px 20px',
                         overflow: 'hidden',
@@ -171,14 +126,38 @@ export function MessageBubble({
                         </div>
                     )}
                     {canRenderImage && message.imageUrl && (
-                        <img
-                            src={message.imageUrl}
-                            alt="Chat"
-                            draggable={false}
-                            onDragStart={(e) => e.preventDefault()}
-                            style={{ display: 'block', maxWidth: '100%', maxHeight: '300px', objectFit: 'cover', cursor: 'pointer' }}
-                            onClick={() => message.imageUrl && onImageClick(message.imageUrl)}
-                        />
+                        <>
+                            <img
+                                src={message.imageUrl}
+                                alt="Chat"
+                                draggable={false}
+                                onDragStart={(e) => e.preventDefault()}
+                                style={{ display: 'block', maxWidth: '100%', maxHeight: '300px', objectFit: 'cover', cursor: 'pointer' }}
+                                onClick={() => message.imageUrl && onImageClick(message.imageUrl)}
+                            />
+                            <div style={{
+                                display: 'flex',
+                                justifyContent: isMyMessage ? 'flex-end' : 'flex-start',
+                                padding: '6px 8px 0',
+                            }}>
+                                <button
+                                    type="button"
+                                    onClick={() => onReplyToStoryEditor(message)}
+                                    style={{
+                                        border: 'none',
+                                        borderRadius: '999px',
+                                        padding: '6px 10px',
+                                        fontSize: '12px',
+                                        fontWeight: 700,
+                                        cursor: 'pointer',
+                                        background: isMyMessage ? 'rgba(255,255,255,0.22)' : '#EAF1FF',
+                                        color: isMyMessage ? '#fff' : '#1B64DA',
+                                    }}
+                                >
+                                    ↪ 답장하기
+                                </button>
+                            </div>
+                        </>
                     )}
                     {reactionCounts.length > 0 && (
                         <div style={{
