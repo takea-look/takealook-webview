@@ -69,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
       await _authApi.getAuthMe(accessToken: response.accessToken);
 
       if (!mounted) return;
-      Navigator.of(context).pushReplacementNamed('/chat');
+      Navigator.of(context).pushNamedAndRemoveUntil('/chat', (route) => false);
     } on DioException catch (e) {
       if (!mounted) return;
       final status = e.response?.statusCode;

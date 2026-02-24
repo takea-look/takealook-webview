@@ -49,7 +49,8 @@ class _TakeaLookAppState extends State<TakeaLookApp> {
       debugShowCheckedModeBanner: false,
       theme: TdsTheme.light(),
       navigatorKey: _navigatorKey,
-      restorationScopeId: 'takealook_app',
+      // Disable state restoration to avoid stale route stack resurrecting
+      // previous sessions (which can skip login and hide bootstrap diagnostics).
       builder: (context, child) {
         final mq = MediaQuery.of(context);
         final clamped = mq.textScaler.clamp(minScaleFactor: 1.0, maxScaleFactor: 1.3);
