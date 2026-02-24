@@ -24,6 +24,18 @@ type MessageBubbleProps = {
     onImageClick: (imageUrl: string) => void;
 };
 
+function resolveImageUrl(message: UserChatMessage): string | undefined {
+    const direct = message.imageUrl;
+    if (direct && direct.length > 0) return direct;
+
+    const anyMsg = message as UserChatMessage & { content?: string; fileUrl?: string; image?: string };
+    const candidates = [anyMsg.content, anyMsg.fileUrl, anyMsg.image].filter((v): v is string => !!v);
+    for (const v of candidates) {
+        if (/^https?:\/\//i.test(v)) return v;
+    }
+    return undefined;
+}
+
 export function MessageBubble({
     enableSwipeDebug = false,
     message,
@@ -43,8 +55,9 @@ export function MessageBubble({
 }: MessageBubbleProps) {
     const isMyMessage = message.sender.id === myUserId;
     const isBlinded = message.isBlinded === true;
-    const canRenderImage = !!message.imageUrl && !isBlinded;
-    const shouldRenderBlindPlaceholder = isBlinded || (message.type === MessageType.CHAT && !message.imageUrl);
+    const resolvedImageUrl = resolveImageUrl(message);
+    const canRenderImage = !!resolvedImageUrl && !isBlinded;
+    const shouldRenderBlindPlaceholder = isBlinded || (message.type === MessageType.CHAT && !resolvedImageUrl);
     const [swipeDebug] = useState('swipe-disabled');
 
     return (
@@ -125,15 +138,15 @@ export function MessageBubble({
                             </Text>
                         </div>
                     )}
-                    {canRenderImage && message.imageUrl && (
+                    {canRenderImage && resolvedImageUrl && (
                         <>
                             <img
-                                src={message.imageUrl}
+                                src={resolvedImageUrl}
                                 alt="Chat"
                                 draggable={false}
                                 onDragStart={(e) => e.preventDefault()}
                                 style={{ display: 'block', maxWidth: '100%', maxHeight: '300px', objectFit: 'cover', cursor: 'pointer' }}
-                                onClick={() => message.imageUrl && onImageClick(message.imageUrl)}
+                                onClick={() => resolvedImageUrl && onImageClick(resolvedImageUrl)}
                             />
                             <div style={{
                                 display: 'flex',

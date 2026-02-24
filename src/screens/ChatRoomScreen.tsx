@@ -321,9 +321,17 @@ export function ChatRoomScreen() {
         }, 500);
     }, [openReactionMenu, SWIPE_DEBUG]);
 
+    const resolveImageUrl = (msg: UserChatMessage): string | undefined => {
+        if (msg.imageUrl) return msg.imageUrl;
+        const anyMsg = msg as UserChatMessage & { content?: string; fileUrl?: string; image?: string };
+        const candidates = [anyMsg.content, anyMsg.fileUrl, anyMsg.image].filter((v): v is string => !!v);
+        return candidates.find((v) => /^https?:\/\//i.test(v));
+    };
+
     const triggerSwipeReply = useCallback((msg: UserChatMessage) => {
-        if (!msg.imageUrl || msg.isBlinded || msg.id == null) {
-            showToast('이미지 메시지에서만 답장하기를 사용할 수 있어요.', 'error');
+        const src = resolveImageUrl(msg);
+        if (!src || msg.isBlinded || msg.id == null) {
+            showToast('이미지 URL 필드 불일치: 원본 메시지 스키마 확인 필요', 'error');
             return;
         }
 
@@ -331,7 +339,7 @@ export function ChatRoomScreen() {
         if (!Number.isFinite(roomIdNum)) return;
 
         const query = new URLSearchParams({
-            src: msg.imageUrl,
+            src,
             roomId: String(roomIdNum),
             replyToId: String(msg.id),
         });
