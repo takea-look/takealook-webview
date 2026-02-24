@@ -792,6 +792,7 @@ export function ChatRoomScreen() {
                                 onTouchStart={handleMessageTouchStart}
                                 onTouchMove={handleMessageTouchMove}
                                 onTouchEnd={handleMessageTouchEnd}
+                                onSwipeReply={triggerSwipeReply}
                                 onSelectReaction={handleReactionSelect}
                                 onReportEntry={handleReportEntry}
                                 onImageClick={handleImageClick}
