@@ -394,7 +394,12 @@ export function ChatRoomScreen() {
         const dx = t.clientX - swipeStartXRef.current;
         const dy = t.clientY - swipeStartYRef.current;
 
-        if (dx > 36 && Math.abs(dy) < 48) {
+        // When horizontal intent is clear, stop page-scroll stealing the gesture.
+        if (Math.abs(dx) > 12 && Math.abs(dx) > Math.abs(dy)) {
+            e.preventDefault();
+        }
+
+        if (dx > 28 && Math.abs(dy) < 64) {
             swipeTriggeredRef.current = true;
             if (reactionTimeoutRef.current != null) {
                 clearTimeout(reactionTimeoutRef.current);
@@ -404,13 +409,32 @@ export function ChatRoomScreen() {
         }
     }, [triggerSwipeReply]);
 
-    const handleMessageTouchEnd = useCallback(() => {
+    const handleMessageTouchEnd = useCallback((msg?: UserChatMessage, e?: React.TouchEvent) => {
+        // Fallback: some runtimes emit minimal touchmove; detect swipe on touchend too.
+        if (
+            msg &&
+            !swipeTriggeredRef.current &&
+            swipeTargetMessageIdRef.current === msg.id &&
+            swipeStartXRef.current != null &&
+            swipeStartYRef.current != null &&
+            e &&
+            e.changedTouches[0]
+        ) {
+            const t = e.changedTouches[0];
+            const dx = t.clientX - swipeStartXRef.current;
+            const dy = t.clientY - swipeStartYRef.current;
+            if (dx > 28 && Math.abs(dy) < 64) {
+                swipeTriggeredRef.current = true;
+                triggerSwipeReply(msg);
+            }
+        }
+
         if (reactionTimeoutRef.current != null) {
             clearTimeout(reactionTimeoutRef.current);
             reactionTimeoutRef.current = null;
         }
         resetSwipeState();
-    }, [resetSwipeState]);
+    }, [resetSwipeState, triggerSwipeReply]);
 
     const allMessages = normalizeMessages([...historyMessages, ...wsMessages]);
     const slides = allMessages

@@ -20,7 +20,7 @@ type MessageBubbleProps = {
     onPointerUp: () => void;
     onTouchStart: (messageId: number | undefined, e: React.TouchEvent) => void;
     onTouchMove: (message: UserChatMessage, e: React.TouchEvent) => void;
-    onTouchEnd: () => void;
+    onTouchEnd: (message?: UserChatMessage, e?: React.TouchEvent) => void;
     onSelectReaction: (messageId: number | undefined, emoji: string) => void;
     onReportEntry: (messageId: number | undefined) => void;
     onImageClick: (imageUrl: string) => void;
@@ -95,8 +95,8 @@ export function MessageBubble({
                     onPointerLeave={onPointerUp}
                     onTouchStart={(e) => onTouchStart(message.id, e)}
                     onTouchMove={(e) => onTouchMove(message, e)}
-                    onTouchEnd={onTouchEnd}
-                    onTouchCancel={onTouchEnd}
+                    onTouchEnd={(e) => onTouchEnd(message, e)}
+                    onTouchCancel={(e) => onTouchEnd(message, e)}
                     style={{
                         borderRadius: isMyMessage ? '20px 4px 20px 20px' : '4px 20px 20px 20px',
                         overflow: 'hidden',
