@@ -21,10 +21,6 @@ import "yet-another-react-lightbox/styles.css";
 export function ChatRoomScreen() {
     const SWIPE_DEBUG = import.meta.env.VITE_DEBUG_SWIPE === 'true';
     const SWIPE_DEBUG_BUILD_TAG = import.meta.env.VITE_DEBUG_SWIPE ? `swipe:${import.meta.env.VITE_DEBUG_SWIPE}` : 'swipe:undefined';
-    const touchX = (t: { screenX: number; pageX: number; clientX: number }) =>
-        (Number.isFinite(t.screenX) ? t.screenX : (Number.isFinite(t.pageX) ? t.pageX : t.clientX));
-    const touchY = (t: { screenY: number; pageY: number; clientY: number }) =>
-        (Number.isFinite(t.screenY) ? t.screenY : (Number.isFinite(t.pageY) ? t.pageY : t.clientY));
     const { roomId } = useParams<{ roomId: string }>();
     const navigate = useNavigate();
     const [historyMessages, setHistoryMessages] = useState<UserChatMessage[]>([]);
@@ -58,10 +54,6 @@ export function ChatRoomScreen() {
     const chatContainerRef = useRef<HTMLDivElement>(null);
     const isAtBottomRef = useRef(true);
 
-    const swipeTargetMessageIdRef = useRef<number | null>(null);
-    const swipeStartXRef = useRef<number | null>(null);
-    const swipeStartYRef = useRef<number | null>(null);
-    const swipeTriggeredRef = useRef(false);
     const [swipeDebugEvent, setSwipeDebugEvent] = useState('idle');
 
     const REACTION_EMOJIS = ['👍', '😂', '❤️', '😮', '🔥', '👏'];
@@ -314,13 +306,6 @@ export function ChatRoomScreen() {
         }
     }, [reportConfirmMessageId, showToast]);
 
-    const resetSwipeState = useCallback(() => {
-        swipeTargetMessageIdRef.current = null;
-        swipeStartXRef.current = null;
-        swipeStartYRef.current = null;
-        swipeTriggeredRef.current = false;
-    }, []);
-
     const handleMessagePointerDown = useCallback((messageId: number | undefined, e?: React.PointerEvent) => {
         if (SWIPE_DEBUG) {
             setSwipeDebugEvent(`pointerdown id=${String(messageId)} x=${Math.round(e?.clientX ?? -1)} y=${Math.round(e?.clientY ?? -1)}`);
@@ -331,21 +316,14 @@ export function ChatRoomScreen() {
 
         if (messageId == null) return;
 
-        if (e) {
-            swipeTargetMessageIdRef.current = messageId;
-            swipeStartXRef.current = e.clientX;
-            swipeStartYRef.current = e.clientY;
-            swipeTriggeredRef.current = false;
-        }
-
         reactionTimeoutRef.current = setTimeout(() => {
             openReactionMenu(messageId);
         }, 500);
-    }, [openReactionMenu]);
+    }, [openReactionMenu, SWIPE_DEBUG]);
 
     const triggerSwipeReply = useCallback((msg: UserChatMessage) => {
         if (!msg.imageUrl || msg.isBlinded || msg.id == null) {
-            showToast('이미지 메시지에서만 스와이프 답장이 가능해요.', 'error');
+            showToast('이미지 메시지에서만 답장하기를 사용할 수 있어요.', 'error');
             return;
         }
 
@@ -361,124 +339,15 @@ export function ChatRoomScreen() {
         navigate(`/story-editor?${query.toString()}`);
     }, [navigate, roomId, showToast]);
 
-    const handleMessagePointerMove = useCallback((msg: UserChatMessage, e: React.PointerEvent) => {
-        if (swipeTargetMessageIdRef.current !== msg.id) return;
-        if (swipeStartXRef.current == null || swipeStartYRef.current == null) return;
-        if (swipeTriggeredRef.current) return;
-
-        const dx = e.clientX - swipeStartXRef.current;
-        const dy = e.clientY - swipeStartYRef.current;
-        if (SWIPE_DEBUG) {
-            setSwipeDebugEvent(`pointermove id=${String(msg.id)} dx=${Math.round(dx)} dy=${Math.round(dy)}`);
-        }
-
-        // Horizontal swipe detection (right swipe).
-        if (dx > 36 && Math.abs(dy) < 48) {
-            swipeTriggeredRef.current = true;
-            if (reactionTimeoutRef.current != null) {
-                clearTimeout(reactionTimeoutRef.current);
-                reactionTimeoutRef.current = null;
-            }
-            triggerSwipeReply(msg);
-        }
-    }, [triggerSwipeReply]);
-
     const handleMessagePointerUp = useCallback(() => {
+        if (SWIPE_DEBUG) {
+            setSwipeDebugEvent('pointerup (swipe disabled, use reply button)');
+        }
         if (reactionTimeoutRef.current != null) {
             clearTimeout(reactionTimeoutRef.current);
             reactionTimeoutRef.current = null;
         }
-        resetSwipeState();
-    }, [resetSwipeState]);
-
-    const handleMessageTouchStart = useCallback((messageId: number | undefined, e: React.TouchEvent) => {
-        if (messageId == null) return;
-        const t = e.touches[0];
-        if (!t) return;
-        const sx = touchX(t);
-        const sy = touchY(t);
-        if (SWIPE_DEBUG) {
-            setSwipeDebugEvent(`touchstart id=${String(messageId)} x=${Math.round(sx)} y=${Math.round(sy)}`);
-        }
-
-        if (reactionTimeoutRef.current != null) {
-            clearTimeout(reactionTimeoutRef.current);
-        }
-
-        swipeTargetMessageIdRef.current = messageId;
-        swipeStartXRef.current = sx;
-        swipeStartYRef.current = sy;
-        swipeTriggeredRef.current = false;
-
-        reactionTimeoutRef.current = setTimeout(() => {
-            openReactionMenu(messageId);
-        }, 500);
-    }, [openReactionMenu]);
-
-    const handleMessageTouchMove = useCallback((msg: UserChatMessage, e: React.TouchEvent) => {
-        const t = e.touches[0];
-        if (!t) return;
-        if (swipeTargetMessageIdRef.current !== msg.id) return;
-        if (swipeStartXRef.current == null || swipeStartYRef.current == null) return;
-        if (swipeTriggeredRef.current) return;
-
-        const cx = touchX(t);
-        const cy = touchY(t);
-        const dx = cx - swipeStartXRef.current;
-        const dy = cy - swipeStartYRef.current;
-        if (SWIPE_DEBUG) {
-            setSwipeDebugEvent(`touchmove id=${String(msg.id)} dx=${Math.round(dx)} dy=${Math.round(dy)}`);
-        }
-
-        // When horizontal intent is clear, stop page-scroll stealing the gesture.
-        if (Math.abs(dx) > 12 && Math.abs(dx) > Math.abs(dy)) {
-            e.preventDefault();
-        }
-
-        if (dx > 28 && Math.abs(dy) < 64) {
-            swipeTriggeredRef.current = true;
-            if (reactionTimeoutRef.current != null) {
-                clearTimeout(reactionTimeoutRef.current);
-                reactionTimeoutRef.current = null;
-            }
-            triggerSwipeReply(msg);
-        }
-    }, [triggerSwipeReply]);
-
-    const handleMessageTouchEnd = useCallback((msg?: UserChatMessage, e?: React.TouchEvent) => {
-        if (SWIPE_DEBUG) {
-            const t = e?.changedTouches?.[0];
-            const ex = t ? touchX(t) : -1;
-            const ey = t ? touchY(t) : -1;
-            setSwipeDebugEvent(`touchend id=${String(msg?.id)} x=${Math.round(ex)} y=${Math.round(ey)} triggered=${String(swipeTriggeredRef.current)}`);
-        }
-        // Fallback: some runtimes emit minimal touchmove; detect swipe on touchend too.
-        if (
-            msg &&
-            !swipeTriggeredRef.current &&
-            swipeTargetMessageIdRef.current === msg.id &&
-            swipeStartXRef.current != null &&
-            swipeStartYRef.current != null &&
-            e &&
-            e.changedTouches[0]
-        ) {
-            const t = e.changedTouches[0];
-            const ex = touchX(t);
-            const ey = touchY(t);
-            const dx = ex - swipeStartXRef.current;
-            const dy = ey - swipeStartYRef.current;
-            if (dx > 28 && Math.abs(dy) < 64) {
-                swipeTriggeredRef.current = true;
-                triggerSwipeReply(msg);
-            }
-        }
-
-        if (reactionTimeoutRef.current != null) {
-            clearTimeout(reactionTimeoutRef.current);
-            reactionTimeoutRef.current = null;
-        }
-        resetSwipeState();
-    }, [resetSwipeState, triggerSwipeReply]);
+    }, [SWIPE_DEBUG]);
 
     const allMessages = normalizeMessages([...historyMessages, ...wsMessages]);
     const slides = allMessages
@@ -853,12 +722,8 @@ export function ChatRoomScreen() {
                                 onOpenReactionMenu={openReactionMenu}
                                 onSetReplyTarget={setReplyTarget}
                                 onPointerDown={handleMessagePointerDown}
-                                onPointerMove={handleMessagePointerMove}
                                 onPointerUp={handleMessagePointerUp}
-                                onTouchStart={handleMessageTouchStart}
-                                onTouchMove={handleMessageTouchMove}
-                                onTouchEnd={handleMessageTouchEnd}
-                                onSwipeStoryEditor={triggerSwipeReply}
+                                onReplyToStoryEditor={triggerSwipeReply}
                                 onSelectReaction={handleReactionSelect}
                                 onReportEntry={handleReportEntry}
                                 onImageClick={handleImageClick}
