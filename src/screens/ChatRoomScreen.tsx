@@ -19,6 +19,7 @@ import Download from "yet-another-react-lightbox/plugins/download";
 import "yet-another-react-lightbox/styles.css";
 
 export function ChatRoomScreen() {
+    const SWIPE_DEBUG = import.meta.env.VITE_DEBUG_SWIPE === 'true';
     const { roomId } = useParams<{ roomId: string }>();
     const [historyMessages, setHistoryMessages] = useState<UserChatMessage[]>([]);
     const [hasMoreHistory, setHasMoreHistory] = useState(true);
@@ -778,6 +779,7 @@ export function ChatRoomScreen() {
                         <React.Fragment key={`${msg.createdAt}-${index}`}>
                             {isNewDay && <DateDivider />}
                             <MessageBubble
+                                enableSwipeDebug={SWIPE_DEBUG}
                                 message={msg}
                                 myUserId={myUserId}
                                 timeString={timeString}
