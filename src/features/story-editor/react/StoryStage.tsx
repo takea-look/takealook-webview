@@ -118,15 +118,28 @@ export function StoryStage({ state, controller, viewportWidth, viewportHeight }:
           {baseImage && baseRect ? (
             <KonvaImage image={baseImage} x={baseRect.x} y={baseRect.y} width={baseRect.width} height={baseRect.height} />
           ) : (
-            <KonvaText
-              text="Load an image to start"
-              x={40}
-              y={60}
-              width={STORY_W - 80}
-              fontSize={28}
-              align="center"
-              fill="#b0b8c1"
-            />
+            <>
+              <KonvaText
+                text={state.base.src ? '이미지 로드 실패 (src 전달됨)' : 'Load an image to start'}
+                x={40}
+                y={60}
+                width={STORY_W - 80}
+                fontSize={28}
+                align="center"
+                fill="#b0b8c1"
+              />
+              {state.base.src && (
+                <KonvaText
+                  text={`src: ${state.base.src.slice(0, 120)}`}
+                  x={40}
+                  y={120}
+                  width={STORY_W - 80}
+                  fontSize={18}
+                  align="center"
+                  fill="#8B95A1"
+                />
+              )}
+            </>
           )}
 
           {state.layers.map((layer) => {
