@@ -20,7 +20,8 @@ export function ProtectedRoute() {
   useEffect(() => {
     async function checkProfile() {
       if (!isAuthenticated) {
-        debugAuthLog('ProtectedRoute missing token', { path: location.pathname });
+        debugAuthLog('ProtectedRoute missing token', { path: window.location.pathname });
+        setLoading(false);
         return;
       }
 
@@ -39,8 +40,10 @@ export function ProtectedRoute() {
       }
     }
 
+    // Profile gate check only on auth-state change to avoid
+    // route-change flicker (full-screen loading flash) on every navigation.
     checkProfile();
-  }, [isAuthenticated, location.pathname, location.search]);
+  }, [isAuthenticated]);
 
   if (!isAuthenticated) {
     const next = `${location.pathname}${location.search}`;
