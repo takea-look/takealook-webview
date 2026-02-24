@@ -50,6 +50,7 @@ export function StoryEditorScreen() {
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const lastObjectUrlRef = useRef<string | null>(null);
+  const stickerObjectUrlsRef = useRef<string[]>([]);
 
   const [textEditorOpen, setTextEditorOpen] = useState(false);
   const [textDraft, setTextDraft] = useState('');
@@ -73,6 +74,10 @@ export function StoryEditorScreen() {
     return () => {
       if (lastObjectUrlRef.current) URL.revokeObjectURL(lastObjectUrlRef.current);
       lastObjectUrlRef.current = null;
+      for (const url of stickerObjectUrlsRef.current) {
+        URL.revokeObjectURL(url);
+      }
+      stickerObjectUrlsRef.current = [];
     };
   }, []);
 
@@ -154,6 +159,20 @@ export function StoryEditorScreen() {
     const url = URL.createObjectURL(file);
     lastObjectUrlRef.current = url;
     controller.setBaseImage(url);
+  };
+
+  const resolveStickerRenderableSrc = async (url: string): Promise<string> => {
+    try {
+      const res = await fetch(url, { credentials: 'include' });
+      if (!res.ok) return url;
+      const blob = await res.blob();
+      if (!blob || blob.size === 0) return url;
+      const objectUrl = URL.createObjectURL(blob);
+      stickerObjectUrlsRef.current.push(objectUrl);
+      return objectUrl;
+    } catch {
+      return url;
+    }
   };
 
   const runExport = async () => {
@@ -381,11 +400,13 @@ export function StoryEditorScreen() {
           void loadStickerCategories();
         }}
         onSelectCategory={categoryId => setSelectedStickerCategoryId(categoryId)}
-        onPickSticker={sticker => {
-          // In embedded runtimes, original imageUrl may be blocked while thumbnail is renderable.
-          const stickerSrc = (sticker.thumbnailUrl && sticker.thumbnailUrl.length > 0)
+        onPickSticker={async sticker => {
+          // In embedded runtimes, direct remote URL may fail in canvas image decode.
+          // Prefer thumbnail and convert to object URL when possible.
+          const rawSrc = (sticker.thumbnailUrl && sticker.thumbnailUrl.length > 0)
             ? sticker.thumbnailUrl
             : sticker.imageUrl;
+          const stickerSrc = await resolveStickerRenderableSrc(rawSrc);
 
           const stickerId = controller.addSticker({
             src: stickerSrc,
