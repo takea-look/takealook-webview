@@ -58,6 +58,7 @@ export function ChatRoomScreen() {
     const swipeStartXRef = useRef<number | null>(null);
     const swipeStartYRef = useRef<number | null>(null);
     const swipeTriggeredRef = useRef(false);
+    const [swipeDebugEvent, setSwipeDebugEvent] = useState('idle');
 
     const REACTION_EMOJIS = ['👍', '😂', '❤️', '😮', '🔥', '👏'];
 
@@ -317,6 +318,9 @@ export function ChatRoomScreen() {
     }, []);
 
     const handleMessagePointerDown = useCallback((messageId: number | undefined, e?: React.PointerEvent) => {
+        if (SWIPE_DEBUG) {
+            setSwipeDebugEvent(`pointerdown id=${String(messageId)} x=${Math.round(e?.clientX ?? -1)} y=${Math.round(e?.clientY ?? -1)}`);
+        }
         if (reactionTimeoutRef.current != null) {
             clearTimeout(reactionTimeoutRef.current);
         }
@@ -360,6 +364,9 @@ export function ChatRoomScreen() {
 
         const dx = e.clientX - swipeStartXRef.current;
         const dy = e.clientY - swipeStartYRef.current;
+        if (SWIPE_DEBUG) {
+            setSwipeDebugEvent(`pointermove id=${String(msg.id)} dx=${Math.round(dx)} dy=${Math.round(dy)}`);
+        }
 
         // Horizontal swipe detection (right swipe).
         if (dx > 36 && Math.abs(dy) < 48) {
@@ -384,6 +391,9 @@ export function ChatRoomScreen() {
         if (messageId == null) return;
         const t = e.touches[0];
         if (!t) return;
+        if (SWIPE_DEBUG) {
+            setSwipeDebugEvent(`touchstart id=${String(messageId)} x=${Math.round(t.clientX)} y=${Math.round(t.clientY)}`);
+        }
 
         if (reactionTimeoutRef.current != null) {
             clearTimeout(reactionTimeoutRef.current);
@@ -408,6 +418,9 @@ export function ChatRoomScreen() {
 
         const dx = t.clientX - swipeStartXRef.current;
         const dy = t.clientY - swipeStartYRef.current;
+        if (SWIPE_DEBUG) {
+            setSwipeDebugEvent(`touchmove id=${String(msg.id)} dx=${Math.round(dx)} dy=${Math.round(dy)}`);
+        }
 
         // When horizontal intent is clear, stop page-scroll stealing the gesture.
         if (Math.abs(dx) > 12 && Math.abs(dx) > Math.abs(dy)) {
@@ -425,6 +438,10 @@ export function ChatRoomScreen() {
     }, [triggerSwipeReply]);
 
     const handleMessageTouchEnd = useCallback((msg?: UserChatMessage, e?: React.TouchEvent) => {
+        if (SWIPE_DEBUG) {
+            const t = e?.changedTouches?.[0];
+            setSwipeDebugEvent(`touchend id=${String(msg?.id)} x=${Math.round(t?.clientX ?? -1)} y=${Math.round(t?.clientY ?? -1)} triggered=${String(swipeTriggeredRef.current)}`);
+        }
         // Fallback: some runtimes emit minimal touchmove; detect swipe on touchend too.
         if (
             msg &&
@@ -727,14 +744,18 @@ export function ChatRoomScreen() {
                     top: '70px',
                     right: '12px',
                     zIndex: 9999,
-                    background: 'rgba(240,68,82,0.9)',
+                    background: 'rgba(240,68,82,0.95)',
                     color: '#fff',
                     fontSize: '11px',
                     fontWeight: 800,
                     borderRadius: '8px',
-                    padding: '6px 8px'
+                    padding: '8px 10px',
+                    maxWidth: '80vw'
                 }}>
-                    SWIPE DEBUG ON ({SWIPE_DEBUG_BUILD_TAG})
+                    <div>SWIPE DEBUG ON ({SWIPE_DEBUG_BUILD_TAG})</div>
+                    <div style={{ fontSize: '10px', fontWeight: 600, marginTop: '4px', opacity: 0.95 }}>
+                        {swipeDebugEvent}
+                    </div>
                 </div>
             )}
 
