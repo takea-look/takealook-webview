@@ -20,6 +20,7 @@ import "yet-another-react-lightbox/styles.css";
 
 export function ChatRoomScreen() {
     const SWIPE_DEBUG = import.meta.env.VITE_DEBUG_SWIPE === 'true';
+    const SWIPE_DEBUG_BUILD_TAG = import.meta.env.VITE_DEBUG_SWIPE ? `swipe:${import.meta.env.VITE_DEBUG_SWIPE}` : 'swipe:undefined';
     const { roomId } = useParams<{ roomId: string }>();
     const [historyMessages, setHistoryMessages] = useState<UserChatMessage[]>([]);
     const [hasMoreHistory, setHasMoreHistory] = useState(true);
@@ -704,6 +705,23 @@ export function ChatRoomScreen() {
                     >
                         재시도
                     </Button>
+                </div>
+            )}
+
+            {SWIPE_DEBUG && (
+                <div style={{
+                    position: 'fixed',
+                    top: '70px',
+                    right: '12px',
+                    zIndex: 9999,
+                    background: 'rgba(240,68,82,0.9)',
+                    color: '#fff',
+                    fontSize: '11px',
+                    fontWeight: 800,
+                    borderRadius: '8px',
+                    padding: '6px 8px'
+                }}>
+                    SWIPE DEBUG ON ({SWIPE_DEBUG_BUILD_TAG})
                 </div>
             )}
 
