@@ -380,13 +380,21 @@ export function StoryEditorScreen() {
         }}
         onSelectCategory={categoryId => setSelectedStickerCategoryId(categoryId)}
         onPickSticker={sticker => {
+          // In embedded runtimes, original imageUrl may be blocked while thumbnail is renderable.
+          const stickerSrc = (sticker.thumbnailUrl && sticker.thumbnailUrl.length > 0)
+            ? sticker.thumbnailUrl
+            : sticker.imageUrl;
+
           controller.addSticker({
-            src: sticker.imageUrl,
+            src: stickerSrc,
             at: {
-              x: Math.max(60, width / 2),
-              y: Math.max(60, height / 2),
+              // StoryStage logical center (1080x1920)
+              x: 540,
+              y: 960,
             },
           });
+
+          setSendError('');
           setStickerPickerOpen(false);
         }}
       />
