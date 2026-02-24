@@ -21,6 +21,8 @@ import "yet-another-react-lightbox/styles.css";
 export function ChatRoomScreen() {
     const SWIPE_DEBUG = import.meta.env.VITE_DEBUG_SWIPE === 'true';
     const SWIPE_DEBUG_BUILD_TAG = import.meta.env.VITE_DEBUG_SWIPE ? `swipe:${import.meta.env.VITE_DEBUG_SWIPE}` : 'swipe:undefined';
+    const touchX = (t: Touch) => (Number.isFinite(t.screenX) ? t.screenX : (Number.isFinite(t.pageX) ? t.pageX : t.clientX));
+    const touchY = (t: Touch) => (Number.isFinite(t.screenY) ? t.screenY : (Number.isFinite(t.pageY) ? t.pageY : t.clientY));
     const { roomId } = useParams<{ roomId: string }>();
     const navigate = useNavigate();
     const [historyMessages, setHistoryMessages] = useState<UserChatMessage[]>([]);
@@ -391,8 +393,10 @@ export function ChatRoomScreen() {
         if (messageId == null) return;
         const t = e.touches[0];
         if (!t) return;
+        const sx = touchX(t);
+        const sy = touchY(t);
         if (SWIPE_DEBUG) {
-            setSwipeDebugEvent(`touchstart id=${String(messageId)} x=${Math.round(t.clientX)} y=${Math.round(t.clientY)}`);
+            setSwipeDebugEvent(`touchstart id=${String(messageId)} x=${Math.round(sx)} y=${Math.round(sy)}`);
         }
 
         if (reactionTimeoutRef.current != null) {
@@ -400,8 +404,8 @@ export function ChatRoomScreen() {
         }
 
         swipeTargetMessageIdRef.current = messageId;
-        swipeStartXRef.current = t.clientX;
-        swipeStartYRef.current = t.clientY;
+        swipeStartXRef.current = sx;
+        swipeStartYRef.current = sy;
         swipeTriggeredRef.current = false;
 
         reactionTimeoutRef.current = setTimeout(() => {
@@ -416,8 +420,10 @@ export function ChatRoomScreen() {
         if (swipeStartXRef.current == null || swipeStartYRef.current == null) return;
         if (swipeTriggeredRef.current) return;
 
-        const dx = t.clientX - swipeStartXRef.current;
-        const dy = t.clientY - swipeStartYRef.current;
+        const cx = touchX(t);
+        const cy = touchY(t);
+        const dx = cx - swipeStartXRef.current;
+        const dy = cy - swipeStartYRef.current;
         if (SWIPE_DEBUG) {
             setSwipeDebugEvent(`touchmove id=${String(msg.id)} dx=${Math.round(dx)} dy=${Math.round(dy)}`);
         }
@@ -440,7 +446,9 @@ export function ChatRoomScreen() {
     const handleMessageTouchEnd = useCallback((msg?: UserChatMessage, e?: React.TouchEvent) => {
         if (SWIPE_DEBUG) {
             const t = e?.changedTouches?.[0];
-            setSwipeDebugEvent(`touchend id=${String(msg?.id)} x=${Math.round(t?.clientX ?? -1)} y=${Math.round(t?.clientY ?? -1)} triggered=${String(swipeTriggeredRef.current)}`);
+            const ex = t ? touchX(t) : -1;
+            const ey = t ? touchY(t) : -1;
+            setSwipeDebugEvent(`touchend id=${String(msg?.id)} x=${Math.round(ex)} y=${Math.round(ey)} triggered=${String(swipeTriggeredRef.current)}`);
         }
         // Fallback: some runtimes emit minimal touchmove; detect swipe on touchend too.
         if (
@@ -453,8 +461,10 @@ export function ChatRoomScreen() {
             e.changedTouches[0]
         ) {
             const t = e.changedTouches[0];
-            const dx = t.clientX - swipeStartXRef.current;
-            const dy = t.clientY - swipeStartYRef.current;
+            const ex = touchX(t);
+            const ey = touchY(t);
+            const dx = ex - swipeStartXRef.current;
+            const dy = ey - swipeStartYRef.current;
             if (dx > 28 && Math.abs(dy) < 64) {
                 swipeTriggeredRef.current = true;
                 triggerSwipeReply(msg);
