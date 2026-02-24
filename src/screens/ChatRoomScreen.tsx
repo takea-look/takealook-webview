@@ -331,7 +331,7 @@ export function ChatRoomScreen() {
     };
 
     const triggerSwipeReply = useCallback((msg: UserChatMessage, src: string) => {
-        if (!src || msg.isBlinded || msg.id == null) {
+        if (!src || msg.isBlinded) {
             showToast('이미지 URL 없음', 'error');
             return;
         }
@@ -342,8 +342,10 @@ export function ChatRoomScreen() {
         const query = new URLSearchParams({
             src,
             roomId: String(roomIdNum),
-            replyToId: String(msg.id),
         });
+        if (msg.id != null) {
+            query.set('replyToId', String(msg.id));
+        }
 
         navigate(`/story-editor?${query.toString()}`);
     }, [navigate, roomId, showToast]);
