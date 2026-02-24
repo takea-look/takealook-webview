@@ -26,6 +26,11 @@ class _LoginPageState extends State<LoginPage> {
   AppErrorCase? _errorCase;
   String? _errorMessage;
 
+  bool _probeSwitch = true;
+  bool _probeCheck = false;
+  double _probeSlider = 30;
+  String _probeDropdown = 'A';
+
   @override
   void initState() {
     super.initState();
@@ -211,6 +216,85 @@ class _LoginPageState extends State<LoginPage> {
                         onRetry: _login,
                       ),
                     ],
+
+                    const SizedBox(height: 20),
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFFFF4E5),
+                        border: Border.all(color: const Color(0xFFFF9800), width: 2),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'UI Probe Panel (디버그)',
+                            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+                          ),
+                          const SizedBox(height: 10),
+                          const Text(
+                            '이 패널이 보이면 Flutter 렌더링은 정상입니다.',
+                            style: TextStyle(fontSize: 12),
+                          ),
+                          const SizedBox(height: 10),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: OutlinedButton(
+                                  onPressed: () {},
+                                  child: const Text('Outlined'),
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: ElevatedButton(
+                                  onPressed: () {},
+                                  child: const Text('Elevated'),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 8),
+                          SwitchListTile.adaptive(
+                            dense: true,
+                            contentPadding: EdgeInsets.zero,
+                            title: const Text('Switch Test'),
+                            value: _probeSwitch,
+                            onChanged: (v) => setState(() => _probeSwitch = v),
+                          ),
+                          CheckboxListTile(
+                            dense: true,
+                            contentPadding: EdgeInsets.zero,
+                            title: const Text('Checkbox Test'),
+                            value: _probeCheck,
+                            onChanged: (v) => setState(() => _probeCheck = v ?? false),
+                          ),
+                          const SizedBox(height: 8),
+                          DropdownButtonFormField<String>(
+                            value: _probeDropdown,
+                            items: const [
+                              DropdownMenuItem(value: 'A', child: Text('Option A')),
+                              DropdownMenuItem(value: 'B', child: Text('Option B')),
+                            ],
+                            onChanged: (v) => setState(() => _probeDropdown = v ?? 'A'),
+                            decoration: const InputDecoration(
+                              labelText: 'Dropdown Test',
+                              border: OutlineInputBorder(),
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text('Slider: ${_probeSlider.toStringAsFixed(0)}'),
+                          Slider(
+                            value: _probeSlider,
+                            min: 0,
+                            max: 100,
+                            onChanged: (v) => setState(() => _probeSlider = v),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 24),
                   ],
                 ),
               ),
