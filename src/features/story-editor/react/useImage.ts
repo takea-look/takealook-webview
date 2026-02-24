@@ -9,17 +9,31 @@ export function useImage(src: string | null | undefined, crossOrigin: string | n
     }
 
     let cancelled = false;
-    const img = new Image();
-    if (crossOrigin) img.crossOrigin = crossOrigin;
-    img.onload = () => {
-      if (cancelled) return;
-      setImage(img);
+
+    const load = (withCors: boolean) => {
+      const img = new Image();
+      if (withCors && crossOrigin) img.crossOrigin = crossOrigin;
+
+      img.onload = () => {
+        if (cancelled) return;
+        setImage(img);
+      };
+
+      img.onerror = () => {
+        if (cancelled) return;
+        // Some runtimes block CORS-mode image requests for canvas base image.
+        // Retry once without crossOrigin so rendering can still proceed.
+        if (withCors) {
+          load(false);
+          return;
+        }
+        setImage(null);
+      };
+
+      img.src = src;
     };
-    img.onerror = () => {
-      if (cancelled) return;
-      setImage(null);
-    };
-    img.src = src;
+
+    load(true);
 
     return () => {
       cancelled = true;
