@@ -29,6 +29,7 @@ export function StoryEditorScreen() {
 
   useEffect(() => {
     controller.setBaseImage(initialBaseSrc ?? null);
+    setSrcProbeStatus('idle');
   }, [controller, initialBaseSrc]);
 
   const {
@@ -42,6 +43,7 @@ export function StoryEditorScreen() {
   const [senderId, setSenderId] = useState<number | null>(null);
   const [sendError, setSendError] = useState('');
   const [isSending, setIsSending] = useState(false);
+  const [srcProbeStatus, setSrcProbeStatus] = useState<'idle' | 'loaded' | 'error'>('idle');
 
   const stageHostRef = useRef<HTMLDivElement | null>(null);
   const { width, height } = useElementSize(stageHostRef);
@@ -249,6 +251,38 @@ export function StoryEditorScreen() {
         }}
       >
         <StoryStage state={state} controller={controller} viewportWidth={width} viewportHeight={height} />
+
+        <div
+          style={{
+            position: 'absolute',
+            top: 10,
+            right: 10,
+            zIndex: 9999,
+            maxWidth: '88vw',
+            background: 'rgba(0,0,0,0.75)',
+            color: '#fff',
+            border: '1px solid rgba(255,255,255,0.2)',
+            borderRadius: 8,
+            padding: '8px 10px',
+            fontSize: 11,
+            lineHeight: 1.35,
+          }}
+        >
+          <div><b>Story src probe</b></div>
+          <div>query src: {initialBaseSrc ? initialBaseSrc.slice(0, 90) : '(none)'}</div>
+          <div>state src: {state.base.src ? state.base.src.slice(0, 90) : '(none)'}</div>
+          <div>img load: {srcProbeStatus}</div>
+        </div>
+
+        {initialBaseSrc ? (
+          <img
+            src={initialBaseSrc}
+            alt="src-probe"
+            style={{ position: 'absolute', width: 1, height: 1, opacity: 0, pointerEvents: 'none' }}
+            onLoad={() => setSrcProbeStatus('loaded')}
+            onError={() => setSrcProbeStatus('error')}
+          />
+        ) : null}
       </div>
 
       <footer
