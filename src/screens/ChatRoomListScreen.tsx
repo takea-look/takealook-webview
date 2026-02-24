@@ -279,7 +279,7 @@ export function ChatRoomListScreen() {
                         alignItems: 'flex-end',
                         justifyContent: 'center',
                         padding: '24px',
-                        zIndex: 100,
+                        zIndex: 2100,
                     }}
                     onClick={handleCloseCreate}
                 >
@@ -410,7 +410,7 @@ export function ChatRoomListScreen() {
                         alignItems: 'flex-end',
                         justifyContent: 'center',
                         padding: '24px',
-                        zIndex: 110,
+                        zIndex: 2100,
                     }}
                     onClick={handleCloseJoin}
                 >
