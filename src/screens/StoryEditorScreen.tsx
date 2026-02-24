@@ -272,6 +272,8 @@ export function StoryEditorScreen() {
           <div>query src: {initialBaseSrc ? initialBaseSrc.slice(0, 90) : '(none)'}</div>
           <div>state src: {state.base.src ? state.base.src.slice(0, 90) : '(none)'}</div>
           <div>img load: {srcProbeStatus}</div>
+          <div>layers: {state.layers.length}</div>
+          <div>stickers: {state.layers.filter(l => l.kind === 'sticker').length}</div>
         </div>
 
         {initialBaseSrc ? (

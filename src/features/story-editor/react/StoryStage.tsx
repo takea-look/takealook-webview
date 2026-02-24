@@ -206,12 +206,47 @@ function TextNode({ layer, controller }: { layer: TextLayer; controller: EditorC
 }
 
 function StickerNode({ layer, controller }: { layer: StickerLayer; controller: EditorController }) {
-  const img = useImage(layer.src);
+  // For embedded runtimes, avoid CORS mode for sticker assets.
+  const img = useImage(layer.src, null);
   const rotationDeg = (layer.transform.rotation * 180) / Math.PI;
+
+  if (!img) {
+    return (
+      <>
+        <Rect
+          id={layer.id}
+          x={layer.transform.position.x - layer.size.x / 2}
+          y={layer.transform.position.y - layer.size.y / 2}
+          width={layer.size.x}
+          height={layer.size.y}
+          stroke="#F04452"
+          dash={[8, 6]}
+          strokeWidth={3}
+          cornerRadius={12}
+          onClick={() => controller.select(layer.id)}
+          onTap={() => controller.select(layer.id)}
+          draggable={true}
+          onDragEnd={(e: Konva.KonvaEventObject<DragEvent>) => {
+            controller.setTransform(layer.id, { position: { x: e.target.x() + layer.size.x / 2, y: e.target.y() + layer.size.y / 2 } });
+          }}
+        />
+        <KonvaText
+          text="Sticker load fail"
+          x={layer.transform.position.x - layer.size.x / 2 + 8}
+          y={layer.transform.position.y - 10}
+          width={layer.size.x - 16}
+          fontSize={18}
+          fill="#F04452"
+          align="center"
+        />
+      </>
+    );
+  }
+
   return (
     <KonvaImage
       id={layer.id}
-      image={img ?? undefined}
+      image={img}
       x={layer.transform.position.x}
       y={layer.transform.position.y}
       offsetX={layer.size.x / 2}
