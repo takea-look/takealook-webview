@@ -59,7 +59,7 @@ jobs:
 
       - name: Build Flutter web release
         working-directory: flutter
-        run: flutter build web --release
+        run: flutter build web --release --no-web-resources-cdn
 
       - name: Patch Flutter bootstrap for in-app runtime stability
         run: |
