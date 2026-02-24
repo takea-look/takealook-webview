@@ -1,22 +1,12 @@
 <!doctype html>
-<html lang="ko">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>takealook-webview</title>
-    <script>
-      (function () {
-        // Apps in Toss runtime should open Flutter web static entry directly.
-        var target = '/index.flutter.html';
-        var qs = window.location.search ? window.location.search.replace(/^\?/, '') : '';
-        var cacheBust = 'v=' + Date.now();
-        var combined = qs ? (qs + '&' + cacheBust) : cacheBust;
-        var suffix = '?' + combined + (window.location.hash || '');
-        window.location.replace(target + suffix);
-      })();
-    </script>
   </head>
   <body>
-    <noscript>Flutter runtime requires JavaScript enabled.</noscript>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

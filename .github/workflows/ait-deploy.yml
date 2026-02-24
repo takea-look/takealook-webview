@@ -1,4 +1,4 @@
-name: Flutter AIT Build & Deploy
+name: Web FE AIT Build & Deploy
 
 on:
   push:
@@ -15,87 +15,31 @@ permissions:
   contents: read
 
 concurrency:
-  group: flutter-ait-deploy-${{ github.ref }}
+  group: web-ait-deploy-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   build-and-deploy-ait:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 30
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Java 17
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: '17'
-
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: stable
-          cache: true
-
-      - name: Set up Node.js 20
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
 
-      - name: Flutter pub get
-        working-directory: flutter
-        run: flutter pub get
-
-      - name: Flutter analyze
-        working-directory: flutter
-        run: flutter analyze --no-fatal-infos
-
-      - name: Flutter test
-        working-directory: flutter
-        run: flutter test
-
-      - name: Build Flutter web release
-        working-directory: flutter
-        run: flutter build web --release --no-web-resources-cdn
-
-      - name: Patch Flutter bootstrap for in-app runtime stability
-        run: |
-          python3 - <<'PY'
-          import re
-          from pathlib import Path
-
-          p = Path('flutter/build/web/flutter_bootstrap.js')
-          s = p.read_text(encoding='utf-8')
-
-          # 1) Remove empty build candidate if present (e.g. builds:[{...},{}]).
-          s = re.sub(r',\s*\{\s*\}\s*\]', ']', s)
-
-          # 2) Disable service worker for Apps in Toss runtime to avoid stale-cache splash lock.
-          s = re.sub(
-              r'_flutter\.loader\.load\(\{\s*serviceWorkerSettings\s*:\s*\{[\s\S]*?\}\s*\}\);',
-              '_flutter.loader.load({});',
-              s,
-              count=1,
-          )
-
-          p.write_text(s, encoding='utf-8')
-          print('patched flutter_bootstrap.js')
-          PY
-
-      - name: Sync Flutter web bundle to Vite public (root hosting)
-        run: |
-          rm -rf public/flutter
-          rm -f public/index.flutter.html
-          cp -R flutter/build/web/. public/
-          mv public/index.html public/index.flutter.html
-
-      - name: Install web dependencies
+      - name: Install dependencies
         run: npm ci
 
-      - name: Build AIT bundle (Vite + ait)
+      - name: Lint
+        run: npm run lint
+
+      - name: Build AIT bundle (Web FE)
         env:
           VITE_DEBUG_AUTH_FLOW: "true"
         run: npm run build
@@ -103,10 +47,10 @@ jobs:
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: takealook-artifacts
+          name: web-fe-artifacts
           path: |
             takealook.ait
-            flutter/build/web
+            dist
 
       - name: Evaluate deploy availability
         id: gate
@@ -156,45 +100,12 @@ jobs:
           echo "qr_url=$QR_URL" >> "$GITHUB_OUTPUT"
           curl -fsSL "$QR_URL" -o takealook-deploy-qr.png
 
-      - name: Upload QR artifact
-        if: steps.gate.outputs.should_deploy == 'true'
-        uses: actions/upload-artifact@v4
-        with:
-          name: takealook-deploy-qr
-          path: takealook-deploy-qr.png
-
-      - name: Write workflow summary (deployed)
-        if: steps.gate.outputs.should_deploy == 'true' && success()
-        run: |
-          {
-            echo "## ✅ Flutter 기반 AIT 배포 완료"
-            echo ""
-            echo "- CI chain: pub get → analyze → test → build web"
-            echo "- AIT bundle: takealook.ait"
-            echo "- Flutter web artifact: flutter/build/web"
-            echo "- Scheme: ${{ steps.deploy.outputs.scheme }}"
-            echo "- QR URL: ${{ steps.qr.outputs.qr_url }}"
-            echo ""
-            echo "![Deploy QR](${{ steps.qr.outputs.qr_url }})"
-          } >> "$GITHUB_STEP_SUMMARY"
-
-      - name: Write workflow summary (skipped)
-        if: steps.gate.outputs.should_deploy != 'true'
-        run: |
-          {
-            echo "## ℹ️ AIT deploy skipped"
-            echo ""
-            echo "- reason: ${{ steps.gate.outputs.reason }}"
-            echo "- CI chain and artifact upload were completed"
-          } >> "$GITHUB_STEP_SUMMARY"
-
       - name: Notify Discord (success)
         if: steps.gate.outputs.should_deploy == 'true' && success()
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: |
           if [ -z "$DISCORD_WEBHOOK_URL" ]; then
-            echo "DISCORD_WEBHOOK_URL not set. Skip Discord notification."
             exit 0
           fi
 
@@ -204,19 +115,19 @@ jobs:
             --arg runUrl 'https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}' \
             '{
               username: "떼껄룩봇",
-              content: "✅ **Flutter AIT 배포 완료**",
+              content: "✅ **Web FE AIT 배포 완료**",
               embeds: [
                 {
-                  color: 5763719,
-                  title: "takealook-webview 배포 결과",
-                  description: "Flutter 기반 AIT 번들 배포가 완료되었습니다.",
+                  color: 3447003,
+                  title: "takealook-webview (src/main)",
+                  description: "React Web FE 기준 AIT 배포",
                   fields: [
                     { name: "Scheme", value: ("`" + $scheme + "`") },
                     { name: "QR", value: ("[열기](" + $qr + ")") },
                     { name: "Run", value: ("[GitHub Actions](" + $runUrl + ")") }
                   ],
                   image: { url: $qr },
-                  footer: { text: "takealook-webview / Flutter AIT" }
+                  footer: { text: "takealook-webview / Web FE" }
                 }
               ]
             }')
@@ -231,13 +142,9 @@ jobs:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: |
           if [ -z "$DISCORD_WEBHOOK_URL" ]; then
-            echo "DISCORD_WEBHOOK_URL not set. Skip Discord notification."
             exit 0
           fi
-
-          MSG="❌ Flutter AIT 배포 실패\n- job: ${{ github.job }}\n- run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\n- 원인 확인: failed step logs"
+          MSG="❌ Web FE AIT 배포 실패\n- run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           export MSG
           PAYLOAD=$(python3 -c 'import json, os; print(json.dumps({"username":"떼껄룩봇","content":os.environ["MSG"]}, ensure_ascii=False))')
-          curl -sS -X POST "$DISCORD_WEBHOOK_URL" \
-            -H 'Content-Type: application/json' \
-            -d "$PAYLOAD"
+          curl -sS -X POST "$DISCORD_WEBHOOK_URL" -H 'Content-Type: application/json' -d "$PAYLOAD"
