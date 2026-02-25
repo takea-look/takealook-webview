@@ -460,8 +460,29 @@ export function StoryEditorScreen() {
         const url = URL.createObjectURL(blob);
         exportPreviewUrlRef.current = url;
         setExportPreviewUrl(url);
+
+        // Ensure preview canvas always exists, even when html2canvas capture failed.
+        if (!previewCanvas) {
+          try {
+            const bitmap = await createImageBitmap(blob);
+            const c = document.createElement('canvas');
+            c.width = bitmap.width;
+            c.height = bitmap.height;
+            const ctx = c.getContext('2d');
+            if (ctx) {
+              ctx.drawImage(bitmap, 0, 0);
+              previewCanvas = c;
+            }
+          } catch {
+            previewCanvas = null;
+          }
+        }
+
         exportPreviewCanvasRef.current = previewCanvas;
         setExportPreviewOpen(true);
+        if (!previewCanvas) {
+          setSendError('미리보기 렌더에 실패했어요. 저장 버튼으로 바로 시도해주세요.');
+        }
         return;
       }
 
@@ -707,6 +728,11 @@ export function StoryEditorScreen() {
             onClick={(e) => e.stopPropagation()}
           >
             <div ref={exportPreviewMountRef} style={{ width: '100%', maxHeight: '70vh', overflow: 'auto', background: '#000' }} />
+            {!exportPreviewCanvasRef.current && (
+              <div style={{ color: '#fff', fontSize: 13, padding: 12, textAlign: 'center' }}>
+                미리보기 렌더 실패 (저장은 시도 가능)
+              </div>
+            )}
             <div style={{ display: 'flex', gap: 8, padding: 12, background: '#16181d' }}>
               <button type="button" onClick={downloadExportPreview} style={{ ...primaryPillStyle, flex: 1 }}>
                 저장
