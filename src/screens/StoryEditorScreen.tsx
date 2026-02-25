@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useEditorController } from '../features/story-editor/core/useEditorController';
 import { StoryStage } from '../features/story-editor/react/StoryStage';
 import { useElementSize } from '../features/story-editor/react/useElementSize';
-import type { Layer } from '../features/story-editor/core/types';
+import type { Layer, StickerLayer } from '../features/story-editor/core/types';
 import { useWebSocket } from '../hooks/useWebSocket';
 import { getMyProfile } from '../api/user';
 import { getPublicImageUrl, getUploadUrl, uploadToR2 } from '../api/storage';
@@ -67,6 +67,21 @@ export function StoryEditorScreen() {
     if (!state.selectedId) return null;
     return state.layers.find(l => l.id === state.selectedId) ?? null;
   }, [state.layers, state.selectedId]);
+
+  const stickerLayers = useMemo(
+    () => state.layers.filter((l): l is StickerLayer => l.kind === 'sticker'),
+    [state.layers],
+  );
+
+  const storyScale = useMemo(() => {
+    if (width <= 0 || height <= 0) return 0;
+    return Math.min(width / 1080, height / 1920);
+  }, [width, height]);
+
+  const storyRenderW = 1080 * storyScale;
+  const storyRenderH = 1920 * storyScale;
+  const storyOffsetX = (width - storyRenderW) / 2;
+  const storyOffsetY = (height - storyRenderH) / 2;
 
   const exporting = state.exportRequest != null;
 
@@ -270,6 +285,34 @@ export function StoryEditorScreen() {
         }}
       >
         <StoryStage state={state} controller={controller} viewportWidth={width} viewportHeight={height} />
+
+        {/* Runtime fallback renderer: force sticker visibility via DOM overlay */}
+        {stickerLayers.map((layer) => {
+          const size = layer.size.x * layer.transform.scale * storyScale;
+          const left = storyOffsetX + (layer.transform.position.x * storyScale) - size / 2;
+          const top = storyOffsetY + (layer.transform.position.y * storyScale) - size / 2;
+          const deg = (layer.transform.rotation * 180) / Math.PI;
+
+          return (
+            <img
+              key={`html-${layer.id}`}
+              src={layer.src}
+              alt="sticker-fallback"
+              style={{
+                position: 'absolute',
+                left,
+                top,
+                width: size,
+                height: size,
+                objectFit: 'contain',
+                transform: `rotate(${deg}deg)`,
+                transformOrigin: 'center center',
+                zIndex: 6,
+                pointerEvents: 'none',
+              }}
+            />
+          );
+        })}
 
         <div
           style={{
