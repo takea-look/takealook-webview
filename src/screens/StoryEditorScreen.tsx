@@ -44,12 +44,14 @@ export function StoryEditorScreen() {
   const [sendError, setSendError] = useState('');
   const [isSending, setIsSending] = useState(false);
   const [srcProbeStatus, setSrcProbeStatus] = useState<'idle' | 'loaded' | 'error'>('idle');
+  const [exportPreviewUrl, setExportPreviewUrl] = useState<string | null>(null);
 
   const stageHostRef = useRef<HTMLDivElement | null>(null);
   const { width, height } = useElementSize(stageHostRef);
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const lastObjectUrlRef = useRef<string | null>(null);
+  const exportPreviewUrlRef = useRef<string | null>(null);
   const stickerObjectUrlsRef = useRef<string[]>([]);
 
   const [textEditorOpen, setTextEditorOpen] = useState(false);
@@ -290,6 +292,8 @@ export function StoryEditorScreen() {
     return () => {
       if (lastObjectUrlRef.current) URL.revokeObjectURL(lastObjectUrlRef.current);
       lastObjectUrlRef.current = null;
+      if (exportPreviewUrlRef.current) URL.revokeObjectURL(exportPreviewUrlRef.current);
+      exportPreviewUrlRef.current = null;
       for (const url of stickerObjectUrlsRef.current) {
         URL.revokeObjectURL(url);
       }
@@ -398,12 +402,12 @@ export function StoryEditorScreen() {
       const blob = await controller.requestExport({ mime: 'image/png', pixelRatio: 2 });
 
       if (!isReplyFlow) {
+        if (exportPreviewUrlRef.current) {
+          URL.revokeObjectURL(exportPreviewUrlRef.current);
+        }
         const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `story_${Date.now()}.png`;
-        a.click();
-        URL.revokeObjectURL(url);
+        exportPreviewUrlRef.current = url;
+        setExportPreviewUrl(url);
         return;
       }
 
@@ -431,6 +435,22 @@ export function StoryEditorScreen() {
     } finally {
       setIsSending(false);
     }
+  };
+
+  const closeExportPreview = () => {
+    if (exportPreviewUrlRef.current) {
+      URL.revokeObjectURL(exportPreviewUrlRef.current);
+      exportPreviewUrlRef.current = null;
+    }
+    setExportPreviewUrl(null);
+  };
+
+  const downloadExportPreview = () => {
+    if (!exportPreviewUrl) return;
+    const a = document.createElement('a');
+    a.href = exportPreviewUrl;
+    a.download = `story_${Date.now()}.png`;
+    a.click();
   };
 
   return (
@@ -604,6 +624,48 @@ export function StoryEditorScreen() {
           />
         ) : null}
       </div>
+
+      {exportPreviewUrl && !isReplyFlow && (
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 12000,
+            background: 'rgba(0,0,0,0.82)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '20px',
+          }}
+          onClick={closeExportPreview}
+        >
+          <div
+            style={{
+              width: 'min(92vw, 520px)',
+              maxHeight: '86vh',
+              borderRadius: '16px',
+              overflow: 'hidden',
+              background: '#111',
+              border: '1px solid rgba(255,255,255,0.12)',
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={exportPreviewUrl}
+              alt="export-preview"
+              style={{ width: '100%', maxHeight: '70vh', objectFit: 'contain', display: 'block', background: '#000' }}
+            />
+            <div style={{ display: 'flex', gap: 8, padding: 12, background: '#16181d' }}>
+              <button type="button" onClick={downloadExportPreview} style={{ ...primaryPillStyle, flex: 1 }}>
+                저장
+              </button>
+              <button type="button" onClick={closeExportPreview} style={{ ...textButtonStyle, flex: 1, border: '1px solid rgba(255,255,255,0.2)', borderRadius: 999 }}>
+                닫기
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <footer
         style={{
