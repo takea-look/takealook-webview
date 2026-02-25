@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useEditorController } from '../features/story-editor/core/useEditorController';
 import { StoryStage } from '../features/story-editor/react/StoryStage';
 import { useElementSize } from '../features/story-editor/react/useElementSize';
-import type { Layer, StickerLayer } from '../features/story-editor/core/types';
+import type { Layer, StickerLayer, TextLayer } from '../features/story-editor/core/types';
 import { useWebSocket } from '../hooks/useWebSocket';
 import { getMyProfile } from '../api/user';
 import { getPublicImageUrl, getUploadUrl, uploadToR2 } from '../api/storage';
@@ -72,6 +72,10 @@ export function StoryEditorScreen() {
     () => state.layers.filter((l): l is StickerLayer => l.kind === 'sticker'),
     [state.layers],
   );
+  const textLayers = useMemo(
+    () => state.layers.filter((l): l is TextLayer => l.kind === 'text'),
+    [state.layers],
+  );
 
   const storyScale = useMemo(() => {
     if (width <= 0 || height <= 0) return 0;
@@ -82,6 +86,38 @@ export function StoryEditorScreen() {
   const storyRenderH = 1920 * storyScale;
   const storyOffsetX = (width - storyRenderW) / 2;
   const storyOffsetY = (height - storyRenderH) / 2;
+
+  const dragRef = useRef<{ id: string; startX: number; startY: number; originX: number; originY: number } | null>(null);
+
+  const beginLayerDrag = (layer: Layer, e: React.PointerEvent) => {
+    if (storyScale <= 0) return;
+    e.preventDefault();
+    e.stopPropagation();
+    dragRef.current = {
+      id: layer.id,
+      startX: e.clientX,
+      startY: e.clientY,
+      originX: layer.transform.position.x,
+      originY: layer.transform.position.y,
+    };
+    controller.select(layer.id);
+  };
+
+  const moveLayerDrag = (e: React.PointerEvent) => {
+    if (!dragRef.current || storyScale <= 0) return;
+    const dx = (e.clientX - dragRef.current.startX) / storyScale;
+    const dy = (e.clientY - dragRef.current.startY) / storyScale;
+    controller.setTransform(dragRef.current.id, {
+      position: {
+        x: dragRef.current.originX + dx,
+        y: dragRef.current.originY + dy,
+      },
+    });
+  };
+
+  const endLayerDrag = () => {
+    dragRef.current = null;
+  };
 
   const exporting = state.exportRequest != null;
 
@@ -283,10 +319,13 @@ export function StoryEditorScreen() {
           overflow: 'hidden',
           touchAction: 'none',
         }}
+        onPointerMove={moveLayerDrag}
+        onPointerUp={endLayerDrag}
+        onPointerCancel={endLayerDrag}
       >
         <StoryStage state={state} controller={controller} viewportWidth={width} viewportHeight={height} />
 
-        {/* Runtime fallback renderer: force sticker visibility via DOM overlay */}
+        {/* Runtime fallback renderer: force sticker/text visibility via DOM overlay */}
         {stickerLayers.map((layer) => {
           const size = layer.size.x * layer.transform.scale * storyScale;
           const left = storyOffsetX + (layer.transform.position.x * storyScale) - size / 2;
@@ -298,6 +337,7 @@ export function StoryEditorScreen() {
               key={`html-${layer.id}`}
               src={layer.src}
               alt="sticker-fallback"
+              onPointerDown={(e) => beginLayerDrag(layer, e)}
               style={{
                 position: 'absolute',
                 left,
@@ -308,9 +348,45 @@ export function StoryEditorScreen() {
                 transform: `rotate(${deg}deg)`,
                 transformOrigin: 'center center',
                 zIndex: 6,
-                pointerEvents: 'none',
+                pointerEvents: 'auto',
+                touchAction: 'none',
+                cursor: 'grab',
               }}
             />
+          );
+        })}
+
+        {textLayers.map((layer) => {
+          const left = storyOffsetX + (layer.transform.position.x * storyScale) - (420 * storyScale) / 2;
+          const top = storyOffsetY + (layer.transform.position.y * storyScale) - (layer.style.fontSize * storyScale) / 2;
+          const deg = (layer.transform.rotation * 180) / Math.PI;
+
+          return (
+            <div
+              key={`html-text-${layer.id}`}
+              onPointerDown={(e) => beginLayerDrag(layer, e)}
+              style={{
+                position: 'absolute',
+                left,
+                top,
+                width: 420 * storyScale,
+                transform: `rotate(${deg}deg) scale(${layer.transform.scale})`,
+                transformOrigin: 'center center',
+                zIndex: 7,
+                pointerEvents: 'auto',
+                touchAction: 'none',
+                cursor: 'grab',
+                color: layer.style.fill,
+                fontSize: Math.max(14, layer.style.fontSize * storyScale),
+                fontFamily: layer.style.fontFamily,
+                fontWeight: 700,
+                textAlign: 'center',
+                textShadow: '0 1px 2px rgba(0,0,0,0.45)',
+                userSelect: 'none',
+              }}
+            >
+              {layer.text}
+            </div>
           );
         })}
 
