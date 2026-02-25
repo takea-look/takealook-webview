@@ -88,6 +88,10 @@ export function StoryEditorScreen() {
   const storyOffsetY = (height - storyRenderH) / 2;
 
   const dragRef = useRef<{ id: string; startX: number; startY: number; originX: number; originY: number } | null>(null);
+  const stickerGestureLayerIdRef = useRef<string | null>(null);
+  const stickerPointersRef = useRef<Record<number, { x: number; y: number }>>({});
+  const stickerDragRef = useRef<{ id: string; pointerId: number; startX: number; startY: number; originX: number; originY: number } | null>(null);
+  const stickerPinchRef = useRef<{ id: string; startDistance: number; startScale: number } | null>(null);
 
   const beginLayerDrag = (layer: Layer, e: React.PointerEvent) => {
     if (storyScale <= 0) return;
@@ -117,6 +121,105 @@ export function StoryEditorScreen() {
 
   const endLayerDrag = () => {
     dragRef.current = null;
+  };
+
+  const resetStickerGesture = () => {
+    stickerGestureLayerIdRef.current = null;
+    stickerPointersRef.current = {};
+    stickerDragRef.current = null;
+    stickerPinchRef.current = null;
+  };
+
+  const handleStickerPointerDown = (layer: StickerLayer, e: React.PointerEvent) => {
+    if (storyScale <= 0) return;
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (stickerGestureLayerIdRef.current && stickerGestureLayerIdRef.current !== layer.id) {
+      resetStickerGesture();
+    }
+
+    stickerGestureLayerIdRef.current = layer.id;
+    stickerPointersRef.current[e.pointerId] = { x: e.clientX, y: e.clientY };
+
+    const pointerIds = Object.keys(stickerPointersRef.current).map(Number);
+    controller.select(layer.id);
+
+    if (pointerIds.length >= 2) {
+      const [a, b] = pointerIds;
+      const p1 = stickerPointersRef.current[a];
+      const p2 = stickerPointersRef.current[b];
+      if (p1 && p2) {
+        const startDistance = Math.hypot(p2.x - p1.x, p2.y - p1.y) || 1;
+        stickerPinchRef.current = {
+          id: layer.id,
+          startDistance,
+          startScale: layer.transform.scale,
+        };
+        stickerDragRef.current = null;
+      }
+      return;
+    }
+
+    stickerDragRef.current = {
+      id: layer.id,
+      pointerId: e.pointerId,
+      startX: e.clientX,
+      startY: e.clientY,
+      originX: layer.transform.position.x,
+      originY: layer.transform.position.y,
+    };
+  };
+
+  const handleStickerPointerMove = (layer: StickerLayer, e: React.PointerEvent) => {
+    if (storyScale <= 0) return;
+    if (stickerGestureLayerIdRef.current !== layer.id) return;
+    if (!(e.pointerId in stickerPointersRef.current)) return;
+
+    stickerPointersRef.current[e.pointerId] = { x: e.clientX, y: e.clientY };
+
+    const pointerIds = Object.keys(stickerPointersRef.current).map(Number);
+    if (pointerIds.length >= 2 && stickerPinchRef.current?.id === layer.id) {
+      const [a, b] = pointerIds;
+      const p1 = stickerPointersRef.current[a];
+      const p2 = stickerPointersRef.current[b];
+      if (!p1 || !p2) return;
+
+      const currentDistance = Math.hypot(p2.x - p1.x, p2.y - p1.y) || 1;
+      const ratio = currentDistance / stickerPinchRef.current.startDistance;
+      const nextScale = Math.min(5, Math.max(0.2, stickerPinchRef.current.startScale * ratio));
+      controller.setTransform(layer.id, { scale: nextScale });
+      return;
+    }
+
+    if (stickerDragRef.current && stickerDragRef.current.id === layer.id && stickerDragRef.current.pointerId === e.pointerId) {
+      const dx = (e.clientX - stickerDragRef.current.startX) / storyScale;
+      const dy = (e.clientY - stickerDragRef.current.startY) / storyScale;
+      controller.setTransform(layer.id, {
+        position: {
+          x: stickerDragRef.current.originX + dx,
+          y: stickerDragRef.current.originY + dy,
+        },
+      });
+    }
+  };
+
+  const handleStickerPointerUp = (layer: StickerLayer, e: React.PointerEvent) => {
+    if (stickerGestureLayerIdRef.current !== layer.id) return;
+
+    delete stickerPointersRef.current[e.pointerId];
+
+    if (stickerDragRef.current?.pointerId === e.pointerId) {
+      stickerDragRef.current = null;
+    }
+
+    const remaining = Object.keys(stickerPointersRef.current).length;
+    if (remaining < 2) {
+      stickerPinchRef.current = null;
+    }
+    if (remaining === 0) {
+      resetStickerGesture();
+    }
   };
 
   const exporting = state.exportRequest != null;
@@ -337,7 +440,10 @@ export function StoryEditorScreen() {
               key={`html-${layer.id}`}
               src={layer.src}
               alt="sticker-fallback"
-              onPointerDown={(e) => beginLayerDrag(layer, e)}
+              onPointerDown={(e) => handleStickerPointerDown(layer, e)}
+              onPointerMove={(e) => handleStickerPointerMove(layer, e)}
+              onPointerUp={(e) => handleStickerPointerUp(layer, e)}
+              onPointerCancel={(e) => handleStickerPointerUp(layer, e)}
               style={{
                 position: 'absolute',
                 left,
