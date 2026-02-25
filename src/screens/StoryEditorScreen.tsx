@@ -91,7 +91,13 @@ export function StoryEditorScreen() {
   const stickerGestureLayerIdRef = useRef<string | null>(null);
   const stickerPointersRef = useRef<Record<number, { x: number; y: number }>>({});
   const stickerDragRef = useRef<{ id: string; pointerId: number; startX: number; startY: number; originX: number; originY: number } | null>(null);
-  const stickerPinchRef = useRef<{ id: string; startDistance: number; startScale: number } | null>(null);
+  const stickerPinchRef = useRef<{
+    id: string;
+    startDistance: number;
+    startScale: number;
+    startAngle: number;
+    startRotation: number;
+  } | null>(null);
 
   const beginLayerDrag = (layer: Layer, e: React.PointerEvent) => {
     if (storyScale <= 0) return;
@@ -151,10 +157,13 @@ export function StoryEditorScreen() {
       const p2 = stickerPointersRef.current[b];
       if (p1 && p2) {
         const startDistance = Math.hypot(p2.x - p1.x, p2.y - p1.y) || 1;
+        const startAngle = Math.atan2(p2.y - p1.y, p2.x - p1.x);
         stickerPinchRef.current = {
           id: layer.id,
           startDistance,
           startScale: layer.transform.scale,
+          startAngle,
+          startRotation: layer.transform.rotation,
         };
         stickerDragRef.current = null;
       }
@@ -188,7 +197,15 @@ export function StoryEditorScreen() {
       const currentDistance = Math.hypot(p2.x - p1.x, p2.y - p1.y) || 1;
       const ratio = currentDistance / stickerPinchRef.current.startDistance;
       const nextScale = Math.min(5, Math.max(0.2, stickerPinchRef.current.startScale * ratio));
-      controller.setTransform(layer.id, { scale: nextScale });
+
+      const currentAngle = Math.atan2(p2.y - p1.y, p2.x - p1.x);
+      const angleDelta = currentAngle - stickerPinchRef.current.startAngle;
+      const nextRotation = stickerPinchRef.current.startRotation + angleDelta;
+
+      controller.setTransform(layer.id, {
+        scale: nextScale,
+        rotation: nextRotation,
+      });
       return;
     }
 
