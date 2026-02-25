@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import html2canvas from 'html2canvas';
 import { useEditorController } from '../features/story-editor/core/useEditorController';
 import { StoryStage } from '../features/story-editor/react/StoryStage';
 import { useElementSize } from '../features/story-editor/react/useElementSize';
@@ -408,7 +409,21 @@ export function StoryEditorScreen() {
     try {
       setSendError('');
 
-      const blob = await controller.requestExport({ mime: 'image/png', pixelRatio: 2 });
+      let blob: Blob;
+      if (stageHostRef.current) {
+        const canvas = await html2canvas(stageHostRef.current, {
+          backgroundColor: '#000',
+          scale: 2,
+          useCORS: true,
+          allowTaint: true,
+          logging: false,
+        });
+        const maybeBlob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
+        if (!maybeBlob) throw new Error('Export canvas toBlob failed');
+        blob = maybeBlob;
+      } else {
+        blob = await controller.requestExport({ mime: 'image/png', pixelRatio: 2 });
+      }
 
       if (!isReplyFlow) {
         if (exportPreviewUrlRef.current) {
