@@ -444,11 +444,10 @@ export function StoryEditorScreen() {
         }}
         onSelectCategory={categoryId => setSelectedStickerCategoryId(categoryId)}
         onPickSticker={async sticker => {
-          // In embedded runtimes, direct remote URL may fail in canvas image decode.
-          // Prefer thumbnail and convert to object URL when possible.
-          const rawSrc = (sticker.thumbnailUrl && sticker.thumbnailUrl.length > 0)
-            ? sticker.thumbnailUrl
-            : sticker.imageUrl;
+          // Prefer original sticker image URL. Fallback to thumbnail only if missing.
+          const rawSrc = (sticker.imageUrl && sticker.imageUrl.length > 0)
+            ? sticker.imageUrl
+            : (sticker.thumbnailUrl ?? '');
           const stickerSrc = await resolveStickerRenderableSrc(rawSrc);
 
           const stickerId = controller.addSticker({
