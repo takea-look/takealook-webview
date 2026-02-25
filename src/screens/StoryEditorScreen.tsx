@@ -45,6 +45,7 @@ export function StoryEditorScreen() {
   const [isSending, setIsSending] = useState(false);
   const [srcProbeStatus, setSrcProbeStatus] = useState<'idle' | 'loaded' | 'error'>('idle');
   const [exportPreviewUrl, setExportPreviewUrl] = useState<string | null>(null);
+  const [exportPreviewDataUrl, setExportPreviewDataUrl] = useState<string | null>(null);
 
   const stageHostRef = useRef<HTMLDivElement | null>(null);
   const { width, height } = useElementSize(stageHostRef);
@@ -395,6 +396,14 @@ export function StoryEditorScreen() {
     }
   };
 
+  const blobToDataUrl = (blob: Blob): Promise<string> =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(String(reader.result));
+      reader.onerror = () => reject(reader.error);
+      reader.readAsDataURL(blob);
+    });
+
   const runExport = async () => {
     try {
       setSendError('');
@@ -408,6 +417,15 @@ export function StoryEditorScreen() {
         const url = URL.createObjectURL(blob);
         exportPreviewUrlRef.current = url;
         setExportPreviewUrl(url);
+
+        // In some in-app webviews, blob: preview rendering is blocked.
+        // Fallback to data URL for reliable modal preview.
+        try {
+          const dataUrl = await blobToDataUrl(blob);
+          setExportPreviewDataUrl(dataUrl);
+        } catch {
+          setExportPreviewDataUrl(null);
+        }
         return;
       }
 
@@ -443,6 +461,7 @@ export function StoryEditorScreen() {
       exportPreviewUrlRef.current = null;
     }
     setExportPreviewUrl(null);
+    setExportPreviewDataUrl(null);
   };
 
   const downloadExportPreview = () => {
@@ -651,7 +670,7 @@ export function StoryEditorScreen() {
             onClick={(e) => e.stopPropagation()}
           >
             <img
-              src={exportPreviewUrl}
+              src={exportPreviewDataUrl ?? exportPreviewUrl}
               alt="export-preview"
               style={{ width: '100%', maxHeight: '70vh', objectFit: 'contain', display: 'block', background: '#000' }}
             />
