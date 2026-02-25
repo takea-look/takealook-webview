@@ -98,6 +98,8 @@ export function StoryEditorScreen() {
     startAngle: number;
     startRotation: number;
   } | null>(null);
+  const rafIdRef = useRef<number | null>(null);
+  const pendingTransformRef = useRef<{ id: string; patch: Partial<Layer['transform']> } | null>(null);
 
   const beginLayerDrag = (layer: Layer, e: React.PointerEvent) => {
     if (storyScale <= 0) return;
@@ -117,7 +119,7 @@ export function StoryEditorScreen() {
     if (!dragRef.current || storyScale <= 0) return;
     const dx = (e.clientX - dragRef.current.startX) / storyScale;
     const dy = (e.clientY - dragRef.current.startY) / storyScale;
-    controller.setTransform(dragRef.current.id, {
+    queueTransform(dragRef.current.id, {
       position: {
         x: dragRef.current.originX + dx,
         y: dragRef.current.originY + dy,
@@ -127,6 +129,19 @@ export function StoryEditorScreen() {
 
   const endLayerDrag = () => {
     dragRef.current = null;
+  };
+
+  const queueTransform = (id: string, patch: Partial<Layer['transform']>) => {
+    pendingTransformRef.current = { id, patch };
+    if (rafIdRef.current != null) return;
+
+    rafIdRef.current = requestAnimationFrame(() => {
+      rafIdRef.current = null;
+      const pending = pendingTransformRef.current;
+      pendingTransformRef.current = null;
+      if (!pending) return;
+      controller.setTransform(pending.id, pending.patch);
+    });
   };
 
   const resetStickerGesture = () => {
@@ -202,7 +217,7 @@ export function StoryEditorScreen() {
       const angleDelta = currentAngle - stickerPinchRef.current.startAngle;
       const nextRotation = stickerPinchRef.current.startRotation + angleDelta;
 
-      controller.setTransform(layer.id, {
+      queueTransform(layer.id, {
         scale: nextScale,
         rotation: nextRotation,
       });
@@ -212,7 +227,7 @@ export function StoryEditorScreen() {
     if (stickerDragRef.current && stickerDragRef.current.id === layer.id && stickerDragRef.current.pointerId === e.pointerId) {
       const dx = (e.clientX - stickerDragRef.current.startX) / storyScale;
       const dy = (e.clientY - stickerDragRef.current.startY) / storyScale;
-      controller.setTransform(layer.id, {
+      queueTransform(layer.id, {
         position: {
           x: stickerDragRef.current.originX + dx,
           y: stickerDragRef.current.originY + dy,
@@ -249,6 +264,10 @@ export function StoryEditorScreen() {
         URL.revokeObjectURL(url);
       }
       stickerObjectUrlsRef.current = [];
+      if (rafIdRef.current != null) {
+        cancelAnimationFrame(rafIdRef.current);
+        rafIdRef.current = null;
+      }
     };
   }, []);
 
