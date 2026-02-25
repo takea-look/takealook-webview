@@ -98,20 +98,22 @@ export function StoryEditorScreen() {
     startAngle: number;
     startRotation: number;
   } | null>(null);
-  const rafIdRef = useRef<number | null>(null);
-  const pendingTransformRef = useRef<{ id: string; patch: Partial<Layer['transform']> } | null>(null);
+  const [liveTransforms, setLiveTransforms] = useState<Record<string, Layer['transform']>>({});
+  const liveTransformsRef = useRef<Record<string, Layer['transform']>>({});
 
   const beginLayerDrag = (layer: Layer, e: React.PointerEvent) => {
     if (storyScale <= 0) return;
     e.preventDefault();
     e.stopPropagation();
+    const t = getEffectiveTransform(layer);
     dragRef.current = {
       id: layer.id,
       startX: e.clientX,
       startY: e.clientY,
-      originX: layer.transform.position.x,
-      originY: layer.transform.position.y,
+      originX: t.position.x,
+      originY: t.position.y,
     };
+    setLiveTransform(layer.id, t);
     controller.select(layer.id);
   };
 
@@ -119,7 +121,13 @@ export function StoryEditorScreen() {
     if (!dragRef.current || storyScale <= 0) return;
     const dx = (e.clientX - dragRef.current.startX) / storyScale;
     const dy = (e.clientY - dragRef.current.startY) / storyScale;
-    queueTransform(dragRef.current.id, {
+    const prev = liveTransformsRef.current[dragRef.current.id] ?? {
+      position: { x: dragRef.current.originX, y: dragRef.current.originY },
+      scale: 1,
+      rotation: 0,
+    };
+    setLiveTransform(dragRef.current.id, {
+      ...prev,
       position: {
         x: dragRef.current.originX + dx,
         y: dragRef.current.originY + dy,
@@ -128,21 +136,30 @@ export function StoryEditorScreen() {
   };
 
   const endLayerDrag = () => {
+    if (dragRef.current) {
+      const id = dragRef.current.id;
+      const live = liveTransformsRef.current[id];
+      if (live) {
+        controller.setTransform(id, live);
+        clearLiveTransform(id);
+      }
+    }
     dragRef.current = null;
   };
 
-  const queueTransform = (id: string, patch: Partial<Layer['transform']>) => {
-    pendingTransformRef.current = { id, patch };
-    if (rafIdRef.current != null) return;
-
-    rafIdRef.current = requestAnimationFrame(() => {
-      rafIdRef.current = null;
-      const pending = pendingTransformRef.current;
-      pendingTransformRef.current = null;
-      if (!pending) return;
-      controller.setTransform(pending.id, pending.patch);
-    });
+  const setLiveTransform = (id: string, next: Layer['transform']) => {
+    liveTransformsRef.current = { ...liveTransformsRef.current, [id]: next };
+    setLiveTransforms(liveTransformsRef.current);
   };
+
+  const clearLiveTransform = (id: string) => {
+    const next = { ...liveTransformsRef.current };
+    delete next[id];
+    liveTransformsRef.current = next;
+    setLiveTransforms(next);
+  };
+
+  const getEffectiveTransform = (layer: Layer) => liveTransforms[layer.id] ?? layer.transform;
 
   const resetStickerGesture = () => {
     stickerGestureLayerIdRef.current = null;
@@ -164,6 +181,8 @@ export function StoryEditorScreen() {
     stickerPointersRef.current[e.pointerId] = { x: e.clientX, y: e.clientY };
 
     const pointerIds = Object.keys(stickerPointersRef.current).map(Number);
+    const t = getEffectiveTransform(layer);
+    setLiveTransform(layer.id, t);
     controller.select(layer.id);
 
     if (pointerIds.length >= 2) {
@@ -173,25 +192,27 @@ export function StoryEditorScreen() {
       if (p1 && p2) {
         const startDistance = Math.hypot(p2.x - p1.x, p2.y - p1.y) || 1;
         const startAngle = Math.atan2(p2.y - p1.y, p2.x - p1.x);
+        const t2 = getEffectiveTransform(layer);
         stickerPinchRef.current = {
           id: layer.id,
           startDistance,
-          startScale: layer.transform.scale,
+          startScale: t2.scale,
           startAngle,
-          startRotation: layer.transform.rotation,
+          startRotation: t2.rotation,
         };
         stickerDragRef.current = null;
       }
       return;
     }
 
+    const t3 = getEffectiveTransform(layer);
     stickerDragRef.current = {
       id: layer.id,
       pointerId: e.pointerId,
       startX: e.clientX,
       startY: e.clientY,
-      originX: layer.transform.position.x,
-      originY: layer.transform.position.y,
+      originX: t3.position.x,
+      originY: t3.position.y,
     };
   };
 
@@ -217,7 +238,9 @@ export function StoryEditorScreen() {
       const angleDelta = currentAngle - stickerPinchRef.current.startAngle;
       const nextRotation = stickerPinchRef.current.startRotation + angleDelta;
 
-      queueTransform(layer.id, {
+      const prev = liveTransformsRef.current[layer.id] ?? getEffectiveTransform(layer);
+      setLiveTransform(layer.id, {
+        ...prev,
         scale: nextScale,
         rotation: nextRotation,
       });
@@ -227,7 +250,9 @@ export function StoryEditorScreen() {
     if (stickerDragRef.current && stickerDragRef.current.id === layer.id && stickerDragRef.current.pointerId === e.pointerId) {
       const dx = (e.clientX - stickerDragRef.current.startX) / storyScale;
       const dy = (e.clientY - stickerDragRef.current.startY) / storyScale;
-      queueTransform(layer.id, {
+      const prev = liveTransformsRef.current[layer.id] ?? getEffectiveTransform(layer);
+      setLiveTransform(layer.id, {
+        ...prev,
         position: {
           x: stickerDragRef.current.originX + dx,
           y: stickerDragRef.current.originY + dy,
@@ -250,6 +275,11 @@ export function StoryEditorScreen() {
       stickerPinchRef.current = null;
     }
     if (remaining === 0) {
+      const live = liveTransformsRef.current[layer.id];
+      if (live) {
+        controller.setTransform(layer.id, live);
+        clearLiveTransform(layer.id);
+      }
       resetStickerGesture();
     }
   };
@@ -264,10 +294,6 @@ export function StoryEditorScreen() {
         URL.revokeObjectURL(url);
       }
       stickerObjectUrlsRef.current = [];
-      if (rafIdRef.current != null) {
-        cancelAnimationFrame(rafIdRef.current);
-        rafIdRef.current = null;
-      }
     };
   }, []);
 
@@ -466,10 +492,11 @@ export function StoryEditorScreen() {
 
         {/* Runtime fallback renderer: force sticker/text visibility via DOM overlay */}
         {stickerLayers.map((layer) => {
-          const size = layer.size.x * layer.transform.scale * storyScale;
-          const left = storyOffsetX + (layer.transform.position.x * storyScale) - size / 2;
-          const top = storyOffsetY + (layer.transform.position.y * storyScale) - size / 2;
-          const deg = (layer.transform.rotation * 180) / Math.PI;
+          const t = getEffectiveTransform(layer);
+          const size = layer.size.x * t.scale * storyScale;
+          const left = storyOffsetX + (t.position.x * storyScale) - size / 2;
+          const top = storyOffsetY + (t.position.y * storyScale) - size / 2;
+          const deg = (t.rotation * 180) / Math.PI;
 
           return (
             <img
@@ -499,9 +526,10 @@ export function StoryEditorScreen() {
         })}
 
         {textLayers.map((layer) => {
-          const left = storyOffsetX + (layer.transform.position.x * storyScale) - (420 * storyScale) / 2;
-          const top = storyOffsetY + (layer.transform.position.y * storyScale) - (layer.style.fontSize * storyScale) / 2;
-          const deg = (layer.transform.rotation * 180) / Math.PI;
+          const t = getEffectiveTransform(layer);
+          const left = storyOffsetX + (t.position.x * storyScale) - (420 * storyScale) / 2;
+          const top = storyOffsetY + (t.position.y * storyScale) - (layer.style.fontSize * storyScale) / 2;
+          const deg = (t.rotation * 180) / Math.PI;
 
           return (
             <div
@@ -512,7 +540,7 @@ export function StoryEditorScreen() {
                 left,
                 top,
                 width: 420 * storyScale,
-                transform: `rotate(${deg}deg) scale(${layer.transform.scale})`,
+                transform: `rotate(${deg}deg) scale(${t.scale})`,
                 transformOrigin: 'center center',
                 zIndex: 7,
                 pointerEvents: 'auto',
