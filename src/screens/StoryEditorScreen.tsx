@@ -419,6 +419,53 @@ export function StoryEditorScreen() {
     }
   };
 
+
+  const blobToCanvas = async (blob: Blob): Promise<HTMLCanvasElement | null> => {
+    // 1) Fast path: createImageBitmap
+    try {
+      if (typeof createImageBitmap === 'function') {
+        const bitmap = await createImageBitmap(blob);
+        const c = document.createElement('canvas');
+        c.width = bitmap.width;
+        c.height = bitmap.height;
+        const ctx = c.getContext('2d');
+        if (ctx) {
+          ctx.drawImage(bitmap, 0, 0);
+          return c;
+        }
+      }
+    } catch {
+      // continue fallback
+    }
+
+    // 2) Fallback: FileReader(data URL) -> <img> -> canvas
+    try {
+      const dataUrl = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result));
+        reader.onerror = () => reject(reader.error);
+        reader.readAsDataURL(blob);
+      });
+
+      const img = await new Promise<HTMLImageElement>((resolve, reject) => {
+        const i = new Image();
+        i.onload = () => resolve(i);
+        i.onerror = () => reject(new Error('img decode failed'));
+        i.src = dataUrl;
+      });
+
+      const c = document.createElement('canvas');
+      c.width = img.naturalWidth || img.width;
+      c.height = img.naturalHeight || img.height;
+      const ctx = c.getContext('2d');
+      if (!ctx) return null;
+      ctx.drawImage(img, 0, 0);
+      return c;
+    } catch {
+      return null;
+    }
+  };
+
   const runExport = async () => {
     try {
       setSendError('');
@@ -461,21 +508,9 @@ export function StoryEditorScreen() {
         exportPreviewUrlRef.current = url;
         setExportPreviewUrl(url);
 
-        // Ensure preview canvas always exists, even when html2canvas capture failed.
+        // Ensure preview canvas exists even when html2canvas path failed.
         if (!previewCanvas) {
-          try {
-            const bitmap = await createImageBitmap(blob);
-            const c = document.createElement('canvas');
-            c.width = bitmap.width;
-            c.height = bitmap.height;
-            const ctx = c.getContext('2d');
-            if (ctx) {
-              ctx.drawImage(bitmap, 0, 0);
-              previewCanvas = c;
-            }
-          } catch {
-            previewCanvas = null;
-          }
+          previewCanvas = await blobToCanvas(blob);
         }
 
         exportPreviewCanvasRef.current = previewCanvas;
