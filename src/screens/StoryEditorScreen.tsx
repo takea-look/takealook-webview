@@ -409,20 +409,31 @@ export function StoryEditorScreen() {
     try {
       setSendError('');
 
-      let blob: Blob;
+      let blob: Blob | null = null;
+
+      // 1) Prefer DOM capture (includes fallback overlays)
       if (stageHostRef.current) {
-        const canvas = await html2canvas(stageHostRef.current, {
-          backgroundColor: '#000',
-          scale: 2,
-          useCORS: true,
-          allowTaint: true,
-          logging: false,
-        });
-        const maybeBlob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
-        if (!maybeBlob) throw new Error('Export canvas toBlob failed');
-        blob = maybeBlob;
-      } else {
+        try {
+          const canvas = await html2canvas(stageHostRef.current, {
+            backgroundColor: '#000',
+            scale: 2,
+            useCORS: true,
+            allowTaint: true,
+            logging: false,
+          });
+          blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
+        } catch {
+          blob = null;
+        }
+      }
+
+      // 2) Fallback to Konva export if DOM capture failed
+      if (!blob) {
         blob = await controller.requestExport({ mime: 'image/png', pixelRatio: 2 });
+      }
+
+      if (!blob) {
+        throw new Error('Export blob unavailable');
       }
 
       if (!isReplyFlow) {
