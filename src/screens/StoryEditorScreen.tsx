@@ -46,7 +46,7 @@ export function StoryEditorScreen() {
   const [isSending, setIsSending] = useState(false);
   const [srcProbeStatus, setSrcProbeStatus] = useState<'idle' | 'loaded' | 'error'>('idle');
   const [exportPreviewUrl, setExportPreviewUrl] = useState<string | null>(null);
-  const [exportPreviewDataUrl, setExportPreviewDataUrl] = useState<string | null>(null);
+  const [exportPreviewOpen, setExportPreviewOpen] = useState(false);
 
   const stageHostRef = useRef<HTMLDivElement | null>(null);
   const { width, height } = useElementSize(stageHostRef);
@@ -54,6 +54,8 @@ export function StoryEditorScreen() {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const lastObjectUrlRef = useRef<string | null>(null);
   const exportPreviewUrlRef = useRef<string | null>(null);
+  const exportPreviewCanvasRef = useRef<HTMLCanvasElement | null>(null);
+  const exportPreviewMountRef = useRef<HTMLDivElement | null>(null);
   const stickerObjectUrlsRef = useRef<string[]>([]);
 
   const [textEditorOpen, setTextEditorOpen] = useState(false);
@@ -296,12 +298,32 @@ export function StoryEditorScreen() {
       lastObjectUrlRef.current = null;
       if (exportPreviewUrlRef.current) URL.revokeObjectURL(exportPreviewUrlRef.current);
       exportPreviewUrlRef.current = null;
+      exportPreviewCanvasRef.current = null;
       for (const url of stickerObjectUrlsRef.current) {
         URL.revokeObjectURL(url);
       }
       stickerObjectUrlsRef.current = [];
     };
   }, []);
+
+  useEffect(() => {
+    const mount = exportPreviewMountRef.current;
+    if (!mount) return;
+    mount.innerHTML = '';
+    const canvas = exportPreviewCanvasRef.current;
+    if (canvas) {
+      const clone = document.createElement('canvas');
+      clone.width = canvas.width;
+      clone.height = canvas.height;
+      const ctx = clone.getContext('2d');
+      if (ctx) ctx.drawImage(canvas, 0, 0);
+      clone.style.width = '100%';
+      clone.style.height = 'auto';
+      clone.style.display = 'block';
+      clone.style.background = '#000';
+      mount.appendChild(clone);
+    }
+  }, [exportPreviewOpen]);
 
   useEffect(() => {
     if (!isReplyFlow || replyRoomId == null) return;
@@ -397,19 +419,12 @@ export function StoryEditorScreen() {
     }
   };
 
-  const blobToDataUrl = (blob: Blob): Promise<string> =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(String(reader.result));
-      reader.onerror = () => reject(reader.error);
-      reader.readAsDataURL(blob);
-    });
-
   const runExport = async () => {
     try {
       setSendError('');
 
       let blob: Blob | null = null;
+      let previewCanvas: HTMLCanvasElement | null = null;
 
       // 1) Prefer DOM capture (includes fallback overlays)
       if (stageHostRef.current) {
@@ -421,9 +436,11 @@ export function StoryEditorScreen() {
             allowTaint: true,
             logging: false,
           });
+          previewCanvas = canvas;
           blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
         } catch {
           blob = null;
+          previewCanvas = null;
         }
       }
 
@@ -443,15 +460,8 @@ export function StoryEditorScreen() {
         const url = URL.createObjectURL(blob);
         exportPreviewUrlRef.current = url;
         setExportPreviewUrl(url);
-
-        // In some in-app webviews, blob: preview rendering is blocked.
-        // Fallback to data URL for reliable modal preview.
-        try {
-          const dataUrl = await blobToDataUrl(blob);
-          setExportPreviewDataUrl(dataUrl);
-        } catch {
-          setExportPreviewDataUrl(null);
-        }
+        exportPreviewCanvasRef.current = previewCanvas;
+        setExportPreviewOpen(true);
         return;
       }
 
@@ -487,7 +497,8 @@ export function StoryEditorScreen() {
       exportPreviewUrlRef.current = null;
     }
     setExportPreviewUrl(null);
-    setExportPreviewDataUrl(null);
+    exportPreviewCanvasRef.current = null;
+    setExportPreviewOpen(false);
   };
 
   const downloadExportPreview = () => {
@@ -670,7 +681,7 @@ export function StoryEditorScreen() {
         ) : null}
       </div>
 
-      {exportPreviewUrl && !isReplyFlow && (
+      {exportPreviewOpen && !isReplyFlow && (
         <div
           style={{
             position: 'fixed',
@@ -695,11 +706,7 @@ export function StoryEditorScreen() {
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            <img
-              src={exportPreviewDataUrl ?? exportPreviewUrl}
-              alt="export-preview"
-              style={{ width: '100%', maxHeight: '70vh', objectFit: 'contain', display: 'block', background: '#000' }}
-            />
+            <div ref={exportPreviewMountRef} style={{ width: '100%', maxHeight: '70vh', overflow: 'auto', background: '#000' }} />
             <div style={{ display: 'flex', gap: 8, padding: 12, background: '#16181d' }}>
               <button type="button" onClick={downloadExportPreview} style={{ ...primaryPillStyle, flex: 1 }}>
                 저장
