@@ -106,21 +106,31 @@ export async function uploadToR2(
   }
   headers['Content-Type'] = contentType;
 
-  const tryFetchUpload = async (method: 'POST' | 'PUT'): Promise<Response> => {
+  type Attempt = { method: 'POST' | 'PUT'; withHeaders: boolean };
+  const attempts: Attempt[] = [
+    { method: 'POST', withHeaders: true },
+    { method: 'PUT', withHeaders: true },
+    { method: 'POST', withHeaders: false },
+    { method: 'PUT', withHeaders: false },
+  ];
+
+  const tryFetchUpload = async (attempt: Attempt): Promise<Response> => {
     return fetch(presignedUrl, {
-      method,
+      method: attempt.method,
       body: file,
-      headers,
+      ...(attempt.withHeaders ? { headers } : {}),
     });
   };
 
   if (onProgress) {
-    // XHR branch for upload progress + method fallback (POST -> PUT)
-    const uploadWithMethod = (method: 'POST' | 'PUT') =>
+    // XHR branch for upload progress + robust method/header fallback.
+    const uploadAttempt = (attempt: Attempt) =>
       new Promise<number>((resolve, reject) => {
         const xhr = new XMLHttpRequest();
-        xhr.open(method, presignedUrl);
-        Object.entries(headers).forEach(([k, v]) => xhr.setRequestHeader(k, v));
+        xhr.open(attempt.method, presignedUrl);
+        if (attempt.withHeaders) {
+          Object.entries(headers).forEach(([k, v]) => xhr.setRequestHeader(k, v));
+        }
 
         xhr.upload.onprogress = (event) => {
           onProgress({ loaded: event.loaded, total: event.total || undefined });
@@ -131,26 +141,27 @@ export async function uploadToR2(
         xhr.send(file);
       });
 
-    const postStatus = await uploadWithMethod('POST');
-    if (postStatus >= 200 && postStatus < 300) return;
-
-    if (postStatus === 405) {
-      const putStatus = await uploadWithMethod('PUT');
-      if (putStatus >= 200 && putStatus < 300) return;
-      throw new Error(`Failed to upload file to R2: Status ${putStatus}`);
+    const failedStatuses: string[] = [];
+    for (const attempt of attempts) {
+      const status = await uploadAttempt(attempt);
+      if (status >= 200 && status < 300) return;
+      failedStatuses.push(`${attempt.method}/${attempt.withHeaders ? 'headers' : 'no-headers'}=${status}`);
     }
 
-    throw new Error(`Failed to upload file to R2: Status ${postStatus}`);
+    throw new Error(`Failed to upload file to R2: ${failedStatuses.join(', ')}`);
   }
 
   // No-progress branch
-  let response = await tryFetchUpload('POST');
-  if (!response.ok && response.status === 405) {
-    response = await tryFetchUpload('PUT');
+  const failedResponses: string[] = [];
+  for (const attempt of attempts) {
+    const response = await tryFetchUpload(attempt);
+    if (response.ok) return;
+
+    const body = await response.text().catch(() => '');
+    failedResponses.push(
+      `${attempt.method}/${attempt.withHeaders ? 'headers' : 'no-headers'}=${response.status}${body ? `:${body.slice(0, 120)}` : ''}`,
+    );
   }
 
-  if (!response.ok) {
-    const errorText = await response.text().catch(() => '');
-    throw new Error(`Failed to upload file to R2: Status ${response.status}: ${response.statusText}${errorText ? ` - ${errorText}` : ''}`);
-  }
+  throw new Error(`Failed to upload file to R2: ${failedResponses.join(', ')}`);
 }
