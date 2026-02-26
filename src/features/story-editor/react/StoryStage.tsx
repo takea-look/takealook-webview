@@ -86,6 +86,9 @@ export function StoryStage({ state, controller, viewportWidth, viewportHeight }:
     if (!stage) return;
     const req = state.exportRequest;
 
+  // export 직전에 강제 렌더링
+  stage.batchDraw();
+
     (async () => {
       try {
         const blob = await exportStageToBlob(stage, req);
