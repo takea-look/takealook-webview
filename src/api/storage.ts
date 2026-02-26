@@ -32,8 +32,27 @@ export async function getUploadUrl(roomId: number, contentType: string, sizeByte
     ...(typeof sizeBytes === 'number' ? { sizeBytes: String(sizeBytes) } : {}),
   });
 
-  // Backend contract: get presigned URL via GET, then upload file to that URL with POST.
-  const raw = await apiRequest<PresignedUrlResponse | { presignedUrl?: string; url?: string; key?: string; canonicalUrl?: string; headers?: Record<string, string> } | string>(`/uploads/presign?${qs.toString()}`);
+  type RawPresign = PresignedUrlResponse | {
+    presignedUrl?: string;
+    url?: string;
+    key?: string;
+    canonicalUrl?: string;
+    headers?: Record<string, string>;
+    maxUploadBytes?: number;
+    expiresInSeconds?: number;
+  } | string;
+
+  let raw: RawPresign;
+  try {
+    // Requested flow: GET presign first.
+    raw = await apiRequest<RawPresign>(`/uploads/presign?${qs.toString()}`);
+  } catch {
+    // Compatibility fallback for older backend contracts.
+    raw = await apiRequest<RawPresign>('/uploads/presign', {
+      method: 'POST',
+      body: JSON.stringify({ roomId, contentType, sizeBytes }),
+    });
+  }
 
   if (typeof raw === 'string') {
     return {
@@ -46,7 +65,15 @@ export async function getUploadUrl(roomId: number, contentType: string, sizeByte
     };
   }
 
-  const ext = raw as { presignedUrl?: string; url?: string; key?: string; canonicalUrl?: string; headers?: Record<string, string>; maxUploadBytes?: number; expiresInSeconds?: number };
+  const ext = raw as {
+    presignedUrl?: string;
+    url?: string;
+    key?: string;
+    canonicalUrl?: string;
+    headers?: Record<string, string>;
+    maxUploadBytes?: number;
+    expiresInSeconds?: number;
+  };
   const url = ext.url || ext.presignedUrl || '';
   return {
     url,
@@ -70,41 +97,6 @@ export async function uploadToR2(
   onProgress?: UploadProgressHandler,
   extraHeaders?: Record<string, string>,
 ): Promise<void> {
-  if (onProgress) {
-    // Prefer XHR for upload progress.
-    await new Promise<void>((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      const contentType = extraHeaders?.['Content-Type'] || getFallbackContentType(file);
-      xhr.open('POST', presignedUrl);
-      if (extraHeaders) {
-        Object.entries(extraHeaders).forEach(([key, value]) => {
-          if (key.toLowerCase() === 'content-type') return;
-          xhr.setRequestHeader(key, value);
-        });
-      }
-      xhr.setRequestHeader('Content-Type', contentType);
-
-      xhr.upload.onprogress = (event) => {
-        onProgress({ loaded: event.loaded, total: event.total || undefined });
-      };
-
-      xhr.onload = () => {
-        if (xhr.status >= 200 && xhr.status < 300) {
-          resolve();
-        } else {
-          const details = `Status ${xhr.status}: ${xhr.statusText}`;
-          reject(new Error(`Failed to upload file to R2: ${details}`));
-        }
-      };
-
-      xhr.onerror = () => reject(new Error('Failed to upload file to R2'));
-
-      xhr.send(file);
-    });
-
-    return;
-  }
-
   const contentType = extraHeaders?.['Content-Type'] || getFallbackContentType(file);
   const headers = { ...(extraHeaders ?? {}) } as Record<string, string>;
   for (const key of Object.keys(headers)) {
@@ -114,11 +106,48 @@ export async function uploadToR2(
   }
   headers['Content-Type'] = contentType;
 
-  const response = await fetch(presignedUrl, {
-    method: 'POST',
-    body: file,
-    headers,
-  });
+  const tryFetchUpload = async (method: 'POST' | 'PUT'): Promise<Response> => {
+    return fetch(presignedUrl, {
+      method,
+      body: file,
+      headers,
+    });
+  };
+
+  if (onProgress) {
+    // XHR branch for upload progress + method fallback (POST -> PUT)
+    const uploadWithMethod = (method: 'POST' | 'PUT') =>
+      new Promise<number>((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open(method, presignedUrl);
+        Object.entries(headers).forEach(([k, v]) => xhr.setRequestHeader(k, v));
+
+        xhr.upload.onprogress = (event) => {
+          onProgress({ loaded: event.loaded, total: event.total || undefined });
+        };
+
+        xhr.onload = () => resolve(xhr.status);
+        xhr.onerror = () => reject(new Error('Failed to upload file to R2'));
+        xhr.send(file);
+      });
+
+    const postStatus = await uploadWithMethod('POST');
+    if (postStatus >= 200 && postStatus < 300) return;
+
+    if (postStatus === 405) {
+      const putStatus = await uploadWithMethod('PUT');
+      if (putStatus >= 200 && putStatus < 300) return;
+      throw new Error(`Failed to upload file to R2: Status ${putStatus}`);
+    }
+
+    throw new Error(`Failed to upload file to R2: Status ${postStatus}`);
+  }
+
+  // No-progress branch
+  let response = await tryFetchUpload('POST');
+  if (!response.ok && response.status === 405) {
+    response = await tryFetchUpload('PUT');
+  }
 
   if (!response.ok) {
     const errorText = await response.text().catch(() => '');
