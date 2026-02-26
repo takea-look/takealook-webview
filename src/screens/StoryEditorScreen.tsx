@@ -44,6 +44,7 @@ export function StoryEditorScreen() {
   const [senderId, setSenderId] = useState<number | null>(null);
   const [sendError, setSendError] = useState('');
   const [isSending, setIsSending] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
   const [srcProbeStatus, setSrcProbeStatus] = useState<'idle' | 'loaded' | 'error'>('idle');
   const [exportPreviewUrl, setExportPreviewUrl] = useState<string | null>(null);
   const [exportPreviewOpen, setExportPreviewOpen] = useState(false);
@@ -288,6 +289,13 @@ export function StoryEditorScreen() {
       }
       resetStickerGesture();
     }
+  };
+
+  const pushToast = (message: string) => {
+    setToastMessage(message);
+    window.setTimeout(() => {
+      setToastMessage((prev) => (prev === message ? '' : prev));
+    }, 3200);
   };
 
   const exporting = state.exportRequest != null;
@@ -541,7 +549,10 @@ export function StoryEditorScreen() {
       navigate(`/chat/${replyRoomId}`);
     } catch (err) {
       console.error('Export/send failed:', err);
-      setSendError('전송에 실패했습니다. 잠시 후 다시 시도해주세요.');
+      const detail = err instanceof Error ? err.message : String(err);
+      const msg = `전송 실패: ${detail}`;
+      setSendError(msg);
+      pushToast(msg);
     } finally {
       setIsSending(false);
     }
@@ -777,6 +788,29 @@ export function StoryEditorScreen() {
               </button>
             </div>
           </div>
+        </div>
+      )}
+
+      {toastMessage && (
+        <div
+          style={{
+            position: 'fixed',
+            left: '50%',
+            bottom: 92,
+            transform: 'translateX(-50%)',
+            zIndex: 13000,
+            maxWidth: '88vw',
+            padding: '10px 14px',
+            borderRadius: 999,
+            background: 'rgba(240,68,82,0.92)',
+            color: '#fff',
+            fontSize: 13,
+            fontWeight: 700,
+            textAlign: 'center',
+            boxShadow: '0 6px 20px rgba(0,0,0,0.25)',
+          }}
+        >
+          {toastMessage}
         </div>
       )}
 
