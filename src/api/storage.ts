@@ -26,10 +26,36 @@ const getFallbackContentType = (file: File): string => {
 export const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_BASE_URL || 'https://img.takealook.my';
 
 export async function getUploadUrl(roomId: number, contentType: string, sizeBytes?: number): Promise<PresignedUrlResponse> {
-  return apiRequest<PresignedUrlResponse>('/uploads/presign', {
-    method: 'POST',
-    body: JSON.stringify({ roomId, contentType, sizeBytes }),
+  const qs = new URLSearchParams({
+    roomId: String(roomId),
+    contentType,
+    ...(typeof sizeBytes === 'number' ? { sizeBytes: String(sizeBytes) } : {}),
   });
+
+  // Backend contract: get presigned URL via GET, then upload file to that URL with POST.
+  const raw = await apiRequest<PresignedUrlResponse | { presignedUrl?: string; url?: string; key?: string; canonicalUrl?: string; headers?: Record<string, string> } | string>(`/uploads/presign?${qs.toString()}`);
+
+  if (typeof raw === 'string') {
+    return {
+      url: raw,
+      key: '',
+      canonicalUrl: '',
+      headers: {},
+      maxUploadBytes: 0,
+      expiresInSeconds: 0,
+    };
+  }
+
+  const ext = raw as { presignedUrl?: string; url?: string; key?: string; canonicalUrl?: string; headers?: Record<string, string>; maxUploadBytes?: number; expiresInSeconds?: number };
+  const url = ext.url || ext.presignedUrl || '';
+  return {
+    url,
+    key: ext.key ?? '',
+    canonicalUrl: ext.canonicalUrl ?? '',
+    headers: ext.headers ?? {},
+    maxUploadBytes: ext.maxUploadBytes ?? 0,
+    expiresInSeconds: ext.expiresInSeconds ?? 0,
+  };
 }
 
 export function getPublicImageUrl(key: string): string {
@@ -49,7 +75,7 @@ export async function uploadToR2(
     await new Promise<void>((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       const contentType = extraHeaders?.['Content-Type'] || getFallbackContentType(file);
-      xhr.open('PUT', presignedUrl);
+      xhr.open('POST', presignedUrl);
       if (extraHeaders) {
         Object.entries(extraHeaders).forEach(([key, value]) => {
           if (key.toLowerCase() === 'content-type') return;
@@ -89,7 +115,7 @@ export async function uploadToR2(
   headers['Content-Type'] = contentType;
 
   const response = await fetch(presignedUrl, {
-    method: 'PUT',
+    method: 'POST',
     body: file,
     headers,
   });
