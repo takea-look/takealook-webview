@@ -128,6 +128,7 @@ export async function uploadToR2(
       new Promise<number>((resolve, reject) => {
         const xhr = new XMLHttpRequest();
         xhr.open(attempt.method, presignedUrl);
+        xhr.timeout = 15000;
         if (attempt.withHeaders) {
           Object.entries(headers).forEach(([k, v]) => xhr.setRequestHeader(k, v));
         }
@@ -137,15 +138,22 @@ export async function uploadToR2(
         };
 
         xhr.onload = () => resolve(xhr.status);
-        xhr.onerror = () => reject(new Error('Failed to upload file to R2'));
+        xhr.onerror = () => reject(new Error(`xhr-error status=${xhr.status || 0}`));
+        xhr.ontimeout = () => reject(new Error(`xhr-timeout status=${xhr.status || 0}`));
+        xhr.onabort = () => reject(new Error(`xhr-abort status=${xhr.status || 0}`));
         xhr.send(file);
       });
 
     const failedStatuses: string[] = [];
     for (const attempt of attempts) {
-      const status = await uploadAttempt(attempt);
-      if (status >= 200 && status < 300) return;
-      failedStatuses.push(`${attempt.method}/${attempt.withHeaders ? 'headers' : 'no-headers'}=${status}`);
+      try {
+        const status = await uploadAttempt(attempt);
+        if (status >= 200 && status < 300) return;
+        failedStatuses.push(`${attempt.method}/${attempt.withHeaders ? 'headers' : 'no-headers'}=${status}`);
+      } catch (err) {
+        const reason = err instanceof Error ? err.message : String(err);
+        failedStatuses.push(`${attempt.method}/${attempt.withHeaders ? 'headers' : 'no-headers'}=${reason}`);
+      }
     }
 
     throw new Error(`Failed to upload file to R2: ${failedStatuses.join(', ')}`);
@@ -154,13 +162,18 @@ export async function uploadToR2(
   // No-progress branch
   const failedResponses: string[] = [];
   for (const attempt of attempts) {
-    const response = await tryFetchUpload(attempt);
-    if (response.ok) return;
+    try {
+      const response = await tryFetchUpload(attempt);
+      if (response.ok) return;
 
-    const body = await response.text().catch(() => '');
-    failedResponses.push(
-      `${attempt.method}/${attempt.withHeaders ? 'headers' : 'no-headers'}=${response.status}${body ? `:${body.slice(0, 120)}` : ''}`,
-    );
+      const body = await response.text().catch(() => '');
+      failedResponses.push(
+        `${attempt.method}/${attempt.withHeaders ? 'headers' : 'no-headers'}=${response.status}${body ? `:${body.slice(0, 120)}` : ''}`,
+      );
+    } catch (err) {
+      const reason = err instanceof Error ? err.message : String(err);
+      failedResponses.push(`${attempt.method}/${attempt.withHeaders ? 'headers' : 'no-headers'}=fetch-error:${reason}`);
+    }
   }
 
   throw new Error(`Failed to upload file to R2: ${failedResponses.join(', ')}`);
