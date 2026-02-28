@@ -97,6 +97,21 @@ export async function uploadToR2(
   onProgress?: UploadProgressHandler,
   extraHeaders?: Record<string, string>,
 ): Promise<void> {
+  const uploadUrlInfo = (() => {
+    try {
+      const u = new URL(presignedUrl);
+      return {
+        host: u.host,
+        scheme: u.protocol.replace(':', ''),
+      };
+    } catch {
+      return { host: 'invalid-url', scheme: 'unknown' };
+    }
+  })();
+
+  const online = typeof navigator !== 'undefined' ? String(navigator.onLine) : 'unknown';
+  const ua = typeof navigator !== 'undefined' ? navigator.userAgent : 'unknown';
+  const uaBrief = ua.length > 80 ? `${ua.slice(0, 80)}...` : ua;
   const contentType = extraHeaders?.['Content-Type'] || getFallbackContentType(file);
   const headers = { ...(extraHeaders ?? {}) } as Record<string, string>;
   for (const key of Object.keys(headers)) {
@@ -156,7 +171,7 @@ export async function uploadToR2(
       }
     }
 
-    throw new Error(`Failed to upload file to R2: ${failedStatuses.join(', ')}`);
+    throw new Error(`Failed to upload file to R2: ${failedStatuses.join(', ')} | host=${uploadUrlInfo.host} scheme=${uploadUrlInfo.scheme} online=${online} ua=${uaBrief}`);
   }
 
   // No-progress branch
@@ -176,5 +191,5 @@ export async function uploadToR2(
     }
   }
 
-  throw new Error(`Failed to upload file to R2: ${failedResponses.join(', ')}`);
+  throw new Error(`Failed to upload file to R2: ${failedResponses.join(', ')} | host=${uploadUrlInfo.host} scheme=${uploadUrlInfo.scheme} online=${online} ua=${uaBrief}`);
 }
