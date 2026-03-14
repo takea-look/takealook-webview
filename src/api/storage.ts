@@ -91,6 +91,41 @@ export function getPublicImageUrl(key: string): string {
 
 export type UploadProgressHandler = (progress: { loaded: number; total?: number }) => void;
 
+const getHeaderValue = (headers: Record<string, string> | undefined, headerName: string): string | undefined => {
+  if (!headers) return undefined;
+  const target = headerName.toLowerCase();
+  for (const [key, value] of Object.entries(headers)) {
+    if (key.toLowerCase() === target) return value;
+  }
+  return undefined;
+};
+
+const buildUploadHeaders = (file: File, extraHeaders?: Record<string, string>): Record<string, string> => {
+  const headers = { ...(extraHeaders ?? {}) } as Record<string, string>;
+  const providedContentType = getHeaderValue(headers, 'Content-Type');
+
+  for (const key of Object.keys(headers)) {
+    if (key.toLowerCase() === 'content-type') {
+      delete headers[key];
+    }
+  }
+
+  headers['Content-Type'] = providedContentType || getFallbackContentType(file);
+  return headers;
+};
+
+const getUploadMethod = (presignedUrl: string): 'PUT' | 'POST' => {
+  try {
+    const u = new URL(presignedUrl);
+    const operation = u.searchParams.get('x-id')?.toLowerCase();
+    if (operation === 'postobject') return 'POST';
+    if (operation === 'putobject') return 'PUT';
+  } catch {
+    // Default method below.
+  }
+  return 'PUT';
+};
+
 export async function uploadToR2(
   presignedUrl: string,
   file: File,
@@ -112,41 +147,17 @@ export async function uploadToR2(
   const online = typeof navigator !== 'undefined' ? String(navigator.onLine) : 'unknown';
   const ua = typeof navigator !== 'undefined' ? navigator.userAgent : 'unknown';
   const uaBrief = ua.length > 80 ? `${ua.slice(0, 80)}...` : ua;
-  const contentType = extraHeaders?.['Content-Type'] || getFallbackContentType(file);
-  const headers = { ...(extraHeaders ?? {}) } as Record<string, string>;
-  for (const key of Object.keys(headers)) {
-    if (key.toLowerCase() === 'content-type') {
-      delete headers[key];
-    }
-  }
-  headers['Content-Type'] = contentType;
-
-  type Attempt = { method: 'POST' | 'PUT'; withHeaders: boolean };
-  const attempts: Attempt[] = [
-    { method: 'POST', withHeaders: true },
-    { method: 'PUT', withHeaders: true },
-    { method: 'POST', withHeaders: false },
-    { method: 'PUT', withHeaders: false },
-  ];
-
-  const tryFetchUpload = async (attempt: Attempt): Promise<Response> => {
-    return fetch(presignedUrl, {
-      method: attempt.method,
-      body: file,
-      ...(attempt.withHeaders ? { headers } : {}),
-    });
-  };
+  const headers = buildUploadHeaders(file, extraHeaders);
+  const method = getUploadMethod(presignedUrl);
 
   if (onProgress) {
-    // XHR branch for upload progress + robust method/header fallback.
-    const uploadAttempt = (attempt: Attempt) =>
+    // XHR branch for upload progress.
+    const upload = () =>
       new Promise<number>((resolve, reject) => {
         const xhr = new XMLHttpRequest();
-        xhr.open(attempt.method, presignedUrl);
+        xhr.open(method, presignedUrl);
         xhr.timeout = 15000;
-        if (attempt.withHeaders) {
-          Object.entries(headers).forEach(([k, v]) => xhr.setRequestHeader(k, v));
-        }
+        Object.entries(headers).forEach(([k, v]) => xhr.setRequestHeader(k, v));
 
         xhr.upload.onprogress = (event) => {
           onProgress({ loaded: event.loaded, total: event.total || undefined });
@@ -159,37 +170,28 @@ export async function uploadToR2(
         xhr.send(file);
       });
 
-    const failedStatuses: string[] = [];
-    for (const attempt of attempts) {
-      try {
-        const status = await uploadAttempt(attempt);
-        if (status >= 200 && status < 300) return;
-        failedStatuses.push(`${attempt.method}/${attempt.withHeaders ? 'headers' : 'no-headers'}=${status}`);
-      } catch (err) {
-        const reason = err instanceof Error ? err.message : String(err);
-        failedStatuses.push(`${attempt.method}/${attempt.withHeaders ? 'headers' : 'no-headers'}=${reason}`);
-      }
+    try {
+      const status = await upload();
+      if (status >= 200 && status < 300) return;
+      throw new Error(`status=${status}`);
+    } catch (err) {
+      const reason = err instanceof Error ? err.message : String(err);
+      throw new Error(`Failed to upload file to R2: ${method}/headers=${reason} | host=${uploadUrlInfo.host} scheme=${uploadUrlInfo.scheme} online=${online} ua=${uaBrief}`);
     }
-
-    throw new Error(`Failed to upload file to R2: ${failedStatuses.join(', ')} | host=${uploadUrlInfo.host} scheme=${uploadUrlInfo.scheme} online=${online} ua=${uaBrief}`);
   }
 
   // No-progress branch
-  const failedResponses: string[] = [];
-  for (const attempt of attempts) {
-    try {
-      const response = await tryFetchUpload(attempt);
-      if (response.ok) return;
-
-      const body = await response.text().catch(() => '');
-      failedResponses.push(
-        `${attempt.method}/${attempt.withHeaders ? 'headers' : 'no-headers'}=${response.status}${body ? `:${body.slice(0, 120)}` : ''}`,
-      );
-    } catch (err) {
-      const reason = err instanceof Error ? err.message : String(err);
-      failedResponses.push(`${attempt.method}/${attempt.withHeaders ? 'headers' : 'no-headers'}=fetch-error:${reason}`);
-    }
+  try {
+    const response = await fetch(presignedUrl, {
+      method,
+      body: file,
+      headers,
+    });
+    if (response.ok) return;
+    const body = await response.text().catch(() => '');
+    throw new Error(`${method}/headers=${response.status}${body ? `:${body.slice(0, 120)}` : ''}`);
+  } catch (err) {
+    const reason = err instanceof Error ? err.message : String(err);
+    throw new Error(`Failed to upload file to R2: ${reason} | host=${uploadUrlInfo.host} scheme=${uploadUrlInfo.scheme} online=${online} ua=${uaBrief}`);
   }
-
-  throw new Error(`Failed to upload file to R2: ${failedResponses.join(', ')} | host=${uploadUrlInfo.host} scheme=${uploadUrlInfo.scheme} online=${online} ua=${uaBrief}`);
 }
