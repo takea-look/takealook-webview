@@ -38,20 +38,24 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Flutter pub get
-        run: flutter pub get
-
       - name: Run lint
         run: npm run lint
 
       - name: Run web build
         run: npm run build
 
+      - name: Flutter pub get
+        working-directory: flutter
+        run: flutter pub get
+
       - name: Flutter analyze
+        working-directory: flutter
         run: flutter analyze --no-fatal-infos
 
       - name: Flutter test
+        working-directory: flutter
         run: flutter test
 
       - name: Flutter build web --release
+        working-directory: flutter
         run: flutter build web --release
