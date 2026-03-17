@@ -46,16 +46,16 @@ jobs:
 
       - name: Flutter pub get
         working-directory: flutter
-        run: flutter pub get
+        run: cd flutter && flutter pub get
 
       - name: Flutter analyze
         working-directory: flutter
-        run: flutter analyze --no-fatal-infos
+        run: cd flutter && flutter analyze --no-fatal-infos
 
       - name: Flutter test
         working-directory: flutter
-        run: flutter test
+        run: cd flutter && flutter test
 
       - name: Flutter build web --release
         working-directory: flutter
-        run: flutter build web --release
+        run: cd flutter && flutter build web --release
