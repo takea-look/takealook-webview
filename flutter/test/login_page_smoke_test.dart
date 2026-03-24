@@ -13,14 +13,19 @@ void main() {
       ),
     );
 
+    // Wait for initial frame to render
+    await tester.pumpAndSettle();
+
     final buttonFinder = find.widgetWithText(FilledButton, 'ID/PW로 로그인');
     FilledButton button = tester.widget(buttonFinder);
     expect(button.onPressed, isNull);
 
     await tester.enterText(find.byType(TextField).first, 'user');
     await tester.enterText(find.byType(TextField).at(1), 'pw');
-    await tester.pump();
-
+    
+    // Wait for text fields to update
+    await tester.pumpAndSettle();
+    
     button = tester.widget(buttonFinder);
     expect(button.onPressed, isNotNull);
   });
