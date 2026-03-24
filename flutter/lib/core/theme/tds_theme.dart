@@ -156,6 +156,14 @@ class TdsTheme {
       filledButtonTheme: FilledButtonThemeData(
         style: TdsComponentStyles.primaryButton(),
       ),
+      cardTheme: CardTheme(
+        color: TdsColor.white,
+        elevation: 0,
+        margin: EdgeInsets.zero,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(TdsComponentStyles.cardRadius),
+        ),
+      ),
     );
   }
 
