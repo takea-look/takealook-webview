@@ -33,7 +33,42 @@ jobs:
           node-version: 20
           cache: npm
 
-      - name: Install dependencies
+      - name: Setup Flutter
+        if: hashFiles('flutter/**') != ''
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.0'
+          channel: 'stable'
+          cache: true
+
+      - name: Flutter pub get
+        if: hashFiles('flutter/**') != ''
+        working-directory: flutter
+        run: flutter pub get
+
+      - name: Flutter analyze
+        if: hashFiles('flutter/**') != ''
+        working-directory: flutter
+        run: flutter analyze --no-fatal-infos
+
+      - name: Flutter test
+        if: hashFiles('flutter/**') != ''
+        working-directory: flutter
+        run: flutter test
+
+      - name: Build Flutter web release
+        if: hashFiles('flutter/**') != ''
+        working-directory: flutter
+        run: flutter build web --release --base-href /flutter/
+
+      - name: Sync Flutter web bundle to Vite public
+        if: hashFiles('flutter/**') != ''
+        run: |
+          rm -rf public/flutter
+          mkdir -p public/flutter
+          cp -R flutter/build/web/. public/flutter/
+
+      - name: Install web dependencies
         run: npm ci
 
       - name: Lint
