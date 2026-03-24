@@ -29,6 +29,7 @@ jobs:
           cache: npm
 
       - name: Setup Flutter
+        if: hashFiles('flutter/**') != ''
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.19.0'
@@ -45,17 +46,21 @@ jobs:
         run: npm run build
 
       - name: Flutter pub get
+        if: hashFiles('flutter/**') != ''
         working-directory: flutter
-        run: cd flutter && flutter pub get
+        run: flutter pub get
 
       - name: Flutter analyze
+        if: hashFiles('flutter/**') != ''
         working-directory: flutter
-        run: cd flutter && flutter analyze --no-fatal-infos
+        run: flutter analyze --no-fatal-infos
 
       - name: Flutter test
+        if: hashFiles('flutter/**') != ''
         working-directory: flutter
-        run: cd flutter && flutter test
+        run: flutter test
 
       - name: Flutter build web --release
+        if: hashFiles('flutter/**') != ''
         working-directory: flutter
-        run: cd flutter && flutter build web --release
+        run: flutter build web --release
