@@ -153,12 +153,6 @@ class TdsTheme {
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: TdsComponentStyles.primaryButton(),
       ),
-      cardTheme: CardThemeData(
-        color: TdsColor.white,
-        elevation: 0,
-        margin: EdgeInsets.zero,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(TdsComponentStyles.cardRadius),
         ),
       ),
       filledButtonTheme: FilledButtonThemeData(
