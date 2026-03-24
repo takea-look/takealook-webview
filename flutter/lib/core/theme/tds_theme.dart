@@ -153,8 +153,6 @@ class TdsTheme {
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: TdsComponentStyles.primaryButton(),
       ),
-        ),
-      ),
       filledButtonTheme: FilledButtonThemeData(
         style: TdsComponentStyles.primaryButton(),
       ),
