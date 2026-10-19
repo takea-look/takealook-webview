@@ -488,6 +488,7 @@ export function StoryEditorScreen() {
             useCORS: true,
             allowTaint: true,
             logging: false,
+            ignoreElements: (element) => element.hasAttribute('data-preview-ignore'),
           });
           previewCanvas = capturedCanvas;
         } catch (err) {
@@ -505,6 +506,22 @@ export function StoryEditorScreen() {
             console.warn('Story editor DOM capture could not be serialized:', err);
             blob = null;
           }
+
+          // Some WebViews reject toBlob while still supporting toDataURL.
+          if (!blob) {
+            try {
+              const dataUrl = capturedCanvas.toDataURL('image/png');
+              const dataUrlBlob = await fetch(dataUrl).then((response) => response.blob());
+              blob = dataUrlBlob.size > 0 ? dataUrlBlob : null;
+            } catch (err) {
+              console.warn('Story editor DOM capture could not be serialized as a data URL:', err);
+              blob = null;
+            }
+          }
+
+          // Keep the canvas preview only when the saved Blob came from it.
+          // Otherwise preview the same Konva fallback Blob used by Save/send.
+          if (!blob) previewCanvas = null;
         }
       }
 
@@ -713,6 +730,7 @@ export function StoryEditorScreen() {
         })}
 
         <div
+          data-preview-ignore="true"
           style={{
             position: 'absolute',
             top: 10,
@@ -740,6 +758,7 @@ export function StoryEditorScreen() {
           <img
             src={initialBaseSrc}
             alt="src-probe"
+            data-preview-ignore="true"
             style={{
               position: 'absolute',
               inset: 0,
