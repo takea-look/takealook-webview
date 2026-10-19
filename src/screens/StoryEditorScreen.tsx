@@ -320,16 +320,13 @@ export function StoryEditorScreen() {
     mount.innerHTML = '';
     const canvas = exportPreviewCanvasRef.current;
     if (canvas) {
-      const clone = document.createElement('canvas');
-      clone.width = canvas.width;
-      clone.height = canvas.height;
-      const ctx = clone.getContext('2d');
-      if (ctx) ctx.drawImage(canvas, 0, 0);
-      clone.style.width = '100%';
-      clone.style.height = 'auto';
-      clone.style.display = 'block';
-      clone.style.background = '#000';
-      mount.appendChild(clone);
+      // html2canvas/blobToCanvas already produced the preview canvas. Mount it
+      // directly: copying it into a second canvas can fail in embedded WebViews.
+      canvas.style.width = '100%';
+      canvas.style.height = 'auto';
+      canvas.style.display = 'block';
+      canvas.style.background = '#000';
+      mount.appendChild(canvas);
     }
   }, [exportPreviewOpen]);
 
@@ -483,19 +480,31 @@ export function StoryEditorScreen() {
 
       // 1) Prefer DOM capture (includes fallback overlays)
       if (stageHostRef.current) {
+        let capturedCanvas: HTMLCanvasElement | null = null;
         try {
-          const canvas = await html2canvas(stageHostRef.current, {
+          capturedCanvas = await html2canvas(stageHostRef.current, {
             backgroundColor: '#000',
             scale: 2,
             useCORS: true,
             allowTaint: true,
             logging: false,
           });
-          previewCanvas = canvas;
-          blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
-        } catch {
-          blob = null;
+          previewCanvas = capturedCanvas;
+        } catch (err) {
+          console.warn('Story editor DOM capture failed:', err);
           previewCanvas = null;
+        }
+
+        // Serialization can fail (for example, a tainted canvas) even when
+        // html2canvas produced a drawable canvas. Keep that canvas for preview
+        // and fall back to Konva only for the upload/download Blob.
+        if (capturedCanvas) {
+          try {
+            blob = await new Promise<Blob | null>((resolve) => capturedCanvas!.toBlob(resolve, 'image/png'));
+          } catch (err) {
+            console.warn('Story editor DOM capture could not be serialized:', err);
+            blob = null;
+          }
         }
       }
 
